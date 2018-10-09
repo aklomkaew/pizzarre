@@ -12,7 +12,10 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.TableCollection;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
 
 
 public abstract class DatabaseTable {
@@ -62,6 +65,31 @@ public abstract class DatabaseTable {
 			Table table = iterator.next();
 			System.out.println(table.getTableName());
 		}
-		
+	}
+	
+	public void printTable(String name) {
+		System.out.println("Printing items in table: " + name);
+		ScanRequest scanRequest = new ScanRequest().withTableName(name);
+		ScanResult result = client.scan(scanRequest);
+		for (Map<String, AttributeValue> item : result.getItems()) {
+			System.out.println(item);
+		}
+	}
+
+	public void deleteTable(String name) throws InterruptedException {
+		DynamoDB dynamoDB = new DynamoDB(client);
+		Table delTable = dynamoDB.getTable(name);
+
+		try {
+			delTable.delete();
+			delTable.waitForDelete();
+			System.out.println("Successfully deleted " + name);
+		} catch (Exception e) {
+			System.err.println("Cannot delete " + name);
+			System.err.println(e.getMessage());
+		}
+
+		System.out.println("\nUpdated list: ");
+		listAllTables();
 	}
 }

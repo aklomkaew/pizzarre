@@ -12,20 +12,20 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.*;
 
 @SuppressWarnings({ "restriction", "unused" })
 public class Gui extends Application {
 	
-	//private Inventory_old inventory;
-	
 	private Inventory inventory;
+	private static int orderNum = 1;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		inventory = new Inventory();
 		
 		System.out.println("\nBefore: ");
-		inventory.printTable();
+		inventory.printTable("my-inventory-table");
 		
 		Label nameLbl = new Label("Mark your selection: ");
 		
@@ -55,14 +55,39 @@ public class Gui extends Application {
         Button submitBtn = new Button("Submit");
         Button exitBtn = new Button("Exit");
         
+        ArrayList<Pizza> pizzaList = new ArrayList<Pizza>();
+        ArrayList<CheckBox> cbList = new ArrayList<CheckBox>();
+        String pizzaName = "testPizza";
+        
+        cbList.add(crustCb);
+        cbList.add(sauceCb);
+        cbList.add(cheeseCb);
+        cbList.add(pepperoniCb);
+        cbList.add(greenPepperCb);
+        
         submitBtn.setOnAction(e -> { 
-        	handleCheckBoxes(crustCb, sauceCb, cheeseCb, pepperoniCb, greenPepperCb);
+        	Pizza p = createPizza(pizzaName, cbList);
+        	pizzaList.add(p);
         	System.out.println("\nAfter");
-        	inventory.printTable();
+        	inventory.printTable("my-inventory-table");
         });
         
         exitBtn.setOnAction(e -> Platform.exit());
-                
+        
+        Cart cart = new Cart(orderNum, pizzaList);
+        HashMap<Integer, Cart> orders = new HashMap<Integer, Cart>();	// key = orderNumber
+        
+        // not editing mode
+        if(!orders.containsKey(orderNum)) {
+        	orders.put(orderNum, cart);
+        }
+        else {
+        	System.out.println("Error: Attempting to replace existing order");
+        }
+        orderNum++;		// can be reset at the "end of the day"
+        
+        updateActiveOrders(orders);
+        
         VBox root = new VBox();
         
         root.setSpacing(5);
@@ -74,26 +99,27 @@ public class Gui extends Application {
         stage.show();
 	}
 	
-	private void handleCheckBoxes(CheckBox crust, CheckBox sauce, CheckBox cheese, 
-			CheckBox pepperoni, CheckBox greenPepper) {
+	private void updateActiveOrders(HashMap<Integer, Cart> orders) {
+		// iterate through and if status is active, add to active page
 		
+		// if inactive
+	}
+	
+	private Pizza createPizza(String pizzaName, ArrayList<CheckBox> cbList) {
+		Pizza pizza = new Pizza();
+		ArrayList<String> toppings = new ArrayList<String>();
 		int quantity = 1;
 		
-		if(crust.isSelected()) {
-			inventory.decreaseQuantity(crust.getId(), quantity);
+		for(CheckBox cb : cbList) {
+			if(cb.isSelected()) {
+				inventory.decreaseQuantity(cb.getId(), quantity);
+				toppings.add(cb.getId());
+			}
 		}
-		if(sauce.isSelected()) {
-			inventory.decreaseQuantity(sauce.getId(), quantity);
-		}
-		if(cheese.isSelected()) {
-			inventory.decreaseQuantity(cheese.getId(), quantity);
-		}
-		if(pepperoni.isSelected()) {
-			inventory.decreaseQuantity(pepperoni.getId(), quantity);
-		}
-		if(greenPepper.isSelected()) {
-			inventory.decreaseQuantity(greenPepper.getId(), quantity);
-		}
+		
+		pizza.addAllToppings(toppings);
+		
+		return pizza;
 	}
 
 	public static void main(String[] args) {

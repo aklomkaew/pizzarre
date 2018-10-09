@@ -42,7 +42,7 @@ public class Inventory extends DatabaseTable {
 		client = getClient();
 
 		this.table = createNewTable();
-		initTable(table);
+		initTable();
 	}
 
 	public Table createNewTable() throws InterruptedException {
@@ -84,16 +84,16 @@ public class Inventory extends DatabaseTable {
 		return table;
 	}
 
-	public void initTable(Table tableToAdd) {
+	public void initTable() { //Table tableToAdd) {
 		System.out.println("\nInitializing table " + tableName);
 
-		if(tableToAdd == null) {
+		if(table == null) {
 			System.out.println("Table is null");
 			return;
 		}
 		
 		Item item = putItem("crust", 10);
-		PutItemOutcome outcome = tableToAdd.putItem(item);
+		PutItemOutcome outcome = table.putItem(item);
 		System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
 
 		item = putItem("cheese", 10);
@@ -125,6 +125,11 @@ public class Inventory extends DatabaseTable {
 			return;
 		}
 		
+//		if(table.getItem(toppingName) == null) {
+//			System.out.println(toppingName + " is not in inventory");
+//			return;
+//		}
+		
 		Map<String, String> expressionAttributeNames = new HashMap<String, String>();
 		expressionAttributeNames.put("#q", "quantity");
 		
@@ -136,33 +141,5 @@ public class Inventory extends DatabaseTable {
 				"set #q = #q - :val",
 				expressionAttributeNames,
 				expressionAttributeValues);
-	}
-
-	public void printTable() {
-		System.out.println("Printing items in table: " + tableName);
-		ScanRequest scanRequest = new ScanRequest().withTableName(tableName);
-		ScanResult result = client.scan(scanRequest);
-		for (Map<String, AttributeValue> item : result.getItems()) {
-			System.out.println(item);
-		}
-	}
-
-	public void deleteTable() throws InterruptedException {
-		if (dynamoDB == null) {
-			dynamoDB = new DynamoDB(client);
-		}
-		Table delTable = dynamoDB.getTable(tableName);
-
-		try {
-			delTable.delete();
-			delTable.waitForDelete();
-			System.out.println("Successfully deleted " + tableName);
-		} catch (Exception e) {
-			System.err.println("Cannot delete " + tableName);
-			System.err.println(e.getMessage());
-		}
-
-		System.out.println("\nUpdated list: ");
-		listAllTables();
 	}
 }
