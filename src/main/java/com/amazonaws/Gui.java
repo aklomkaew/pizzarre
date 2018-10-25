@@ -16,8 +16,6 @@ import javafx.stage.Stage;
 @SuppressWarnings({ "restriction", "unused" })
 public class Gui extends Application {
 	
-	//private Inventory_old inventory;
-	
 	private Inventory inventory;
 	
 	@Override
