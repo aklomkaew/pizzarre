@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -13,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
-@SuppressWarnings({ "restriction", "unused" })
+@SuppressWarnings({ "unused" })
 public class LoginUI extends Application{
 	
 	
