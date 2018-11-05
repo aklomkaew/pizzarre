@@ -2,7 +2,8 @@ package com.amazonaws;
 
 
 import javafx.application.Application;
-
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -17,63 +18,37 @@ import javafx.stage.Stage;
 @SuppressWarnings({ "unused" })
 public class MainMenuUI extends Application{
 	
-	GUInterface controller = new GUInterface();
 	
+    @FXML
+    private Button newOrd;
+    @FXML
+    private Button myOrds;
+    @FXML
+    private Button mUtil;
+    @FXML
+    private Button logOut;
 	
-	public  BorderPane makeMenu(BorderPane bp, VBox vb){
-		bp.setPrefSize(controller.getHeight(), controller.getWidth());
-		vb = new VBox(25);
-		vb.setPrefSize(150, 345);
-		vb.setMinSize(150, 345);
-		vb.setMaxSize(150, 345);
-		
-		
-		//Buttons//
-		Button newOrd = new Button("New Order");
-		newOrd.setMinSize(150, 100);
-		newOrd.setMaxSize(150, 100);
-		
-		newOrd.setOnAction(e->{
-			
-		});
-		
-		Button myOrds = new Button("My Orders");
-		myOrds.setMinSize(80, 80);
-		myOrds.setMaxSize(80, 80);
-		myOrds.setOnAction(e->{
-			
-		});
-		
-		Button mUtil = new Button("Manager Utilities");
-		mUtil.setMinSize(80, 80);
-		mUtil.setMaxSize(80, 80);
-		mUtil.setWrapText(true);
-		mUtil.setOnAction(e->{
-			
-		});
-		
-		Button logOut = new Button("Logout");
-		logOut.setMinSize(60, 30);
-		logOut.setMaxSize(60, 30);
-		
-		logOut.setOnAction(e->{
-			
-		});
-		
-		vb.getChildren().addAll(newOrd,myOrds,mUtil);
-		
-		
-		
 
-		bp = new BorderPane(null);
-		bp.getChildren().addAll(vb,logOut);
-		//vb.setAlignment(Pos.CENTER);
-		bp.setAlignment(logOut,Pos.TOP_RIGHT);
-		return bp;
+public void newOrder(ActionEvent e) {
+		
+		
 	}
 
+public void myOrders(ActionEvent e) {
 	
 	
+}
+	
+public void mUtil(ActionEvent e) {
+	
+	
+}
+
+public void logout(ActionEvent e) {
+	
+	
+}
+
 	@Override
 	public void start(Stage arg0) throws Exception {
 		

@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="720.0" minWidth="720.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane prefHeight="720.0" prefWidth="656.0" style="-fx-background-color: gray;">
+      <BorderPane prefHeight="720.0" prefWidth="720.0" style="-fx-background-color: coral;">
          <effect>
             <ColorAdjust />
          </effect>
@@ -72,7 +72,7 @@
             </VBox>
          </right>
          <top>
-            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" BorderPane.alignment="CENTER" />
+            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" text="#UserName" BorderPane.alignment="CENTER" />
          </top></BorderPane>
    </children>
 </AnchorPane>

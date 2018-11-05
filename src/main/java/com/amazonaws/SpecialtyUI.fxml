@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="720.0" maxWidth="656.0" minHeight="720.0" minWidth="720.0" prefHeight="720.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="720.0" maxWidth="720.0" minHeight="720.0" minWidth="720.0" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane maxHeight="656.0" maxWidth="720.0" prefHeight="720.0" prefWidth="656.0" style="-fx-background-color: coral;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -82,7 +82,6 @@
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -92,7 +91,7 @@
                         <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: Orange;" text="Pepperoni" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="House Special" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -100,7 +99,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button layoutX="38.0" layoutY="40.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Sausage" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Meat-za" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -108,7 +107,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Ground Beef" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button layoutX="10.0" layoutY="340.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Hawaiian" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -116,7 +115,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button layoutX="10.0" layoutY="340.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Ham" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
+                        <Button layoutX="106.0" layoutY="340.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="BBQ" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -124,7 +123,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button layoutX="203.0" layoutY="340.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Chicken" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button layoutX="10.0" layoutY="100.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Vegetarian" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -132,79 +131,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button layoutX="106.0" layoutY="340.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Steak" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button layoutX="10.0" layoutY="100.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: cyan;" text="Anchovy" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button layoutX="106.0" layoutY="100.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: cyan;" text="Shrimp" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button layoutX="10.0" layoutY="180.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: lawngreen;" text="Mushroom" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button layoutX="106.0" layoutY="180.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: lawngreen;" text="Onion" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button layoutX="203.0" layoutY="180.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: lawngreen;" text="Green Pepper" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button layoutX="10.0" layoutY="260.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: lawngreen;" text="Tomato" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button layoutX="106.0" layoutY="260.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: lawngreen;" text="Olive" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button layoutX="203.0" layoutY="260.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: lawngreen;" text="Pineapple" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button layoutX="106.0" layoutY="180.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: cyan;" text="Tofu" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <Button layoutX="203.0" layoutY="100.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Margherita" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
