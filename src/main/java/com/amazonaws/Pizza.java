@@ -4,16 +4,19 @@ import java.util.*;
 
 public class Pizza {
 	private String name;
-	private ArrayList<String> toppings;
+	private HashMap<String, Integer> toppings;
+	private int size;	// S = 1, M = 2, L = 3
 	
 	public Pizza() {
 		name = "";
-		toppings = new ArrayList<String>();
+		size = 0;
+		toppings = new HashMap<String, Integer>();
 	}
 	
-	public Pizza(String n, ArrayList<String> list) {
+	public Pizza(String n, int s, HashMap<String, Integer> map) {
 		name = n;
-		toppings.addAll(list);
+		size = s;
+		toppings = map;
 	}
 	
 	public void setName(String n) {
@@ -24,19 +27,48 @@ public class Pizza {
 		return name;
 	}
 	
-	public void addTopping(String item) {
-		toppings.add(item);
+	public void setSize(int s) {
+		size = s;
 	}
 	
-	public void addAllToppings(ArrayList<String> list) {
-		toppings.addAll(list);
+	public int getSize() {
+		return size;
+	}
+	
+	public void addTopping(String item, int quantity) {
+		if(!toppings.containsKey(item)) {
+			toppings.put(item,  quantity * size);
+		}
+		else {
+			toppings.put(item, toppings.get(item) + (quantity * size));
+		}
 	}
 	
 	public void clearToppings() {
 		toppings.clear();
 	}
 	
-	public ArrayList<String> getToppings(){
+	public HashMap<String, Integer> getToppings(){
 		return toppings;
+	}
+	
+	public void deleteTopping(String item, int quantityToDelete) {
+		if(toppings.containsKey(item)) {
+			if(toppings.get(item) < quantityToDelete) {
+				System.out.println("Error: Quantity to delete is greater than quantity in stock");
+				// should we just make it 0?
+			}
+			else{
+				toppings.put(item, toppings.get(item) - quantityToDelete);
+			}
+		}
+	}
+	
+	public String toString() {
+		String ret = name + ":";
+		for(String k : toppings.keySet()) {
+			ret += " " + toppings.get(k) + " " + k;
+		}
+		return ret;
 	}
 }

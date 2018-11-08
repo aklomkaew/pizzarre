@@ -2,20 +2,24 @@ package com.amazonaws;
 
 import java.util.*;
 
-public class Cart {
+public class Order {
 	private ArrayList<Pizza> pizzas;
+	//private ArrayList<Drink> drinks;
 
 	private int orderNumber;
 	private boolean active;
+	private double totalAmount;
+	private String user;
 
-	public Cart() {
+	public Order() {
 		pizzas = new ArrayList<Pizza>();
 		orderNumber = -1;
 		active = true;
 	}
 
-	public Cart(int num, ArrayList<Pizza> list) {
+	public Order(int num, ArrayList<Pizza> list) {
 		orderNumber = num;
+		pizzas = new ArrayList<Pizza>();
 		pizzas.addAll(list);
 		active = true;
 	}
@@ -46,5 +50,25 @@ public class Cart {
 
 	public int getOrderNumber() {
 		return orderNumber;
+	}
+	
+	public void setUser(String u) {
+		user = u;
+	}
+	
+	public String getUser() {
+		return user;
+	}
+	
+	public String toString() {
+		String ret = "Order #" + orderNumber + ": " + pizzas.size() + " pizza. Order is " 
+				+ ((active) ? "active" : "not active") + ".";
+		
+		for(int i = 0; i < pizzas.size(); i++) {
+			ret += "\n-->Pizza #" + (i+1) + " | "
+				+ pizzas.get(i).toString();
+		}
+		
+		return ret;
 	}
 }
