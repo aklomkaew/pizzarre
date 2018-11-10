@@ -17,28 +17,22 @@ import java.util.*;
 @SuppressWarnings({ "restriction", "unused" })
 public class Gui extends Application {
 
-	private InventoryDb inventoryDb;
-	private RecipeDb recipeDb;
-	private UserDb userDb;
 	private static int orderNum = 1;
-	private Order order;
-	private HashMap<Integer, Order> orders; // key = orderNumber
+	private Cart order;
+	private HashMap<Integer, Cart> orders; // key = orderNumber
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		inventoryDb = new InventoryDb();
-		recipeDb = new RecipeDb();
-		userDb = new UserDb();
+		InventoryDb inventoryDb = new InventoryDb();
+		RecipeDb recipeDb = new RecipeDb();
+		UserDb userDb = new UserDb();
+		CartDb cartDb = new CartDb();
 
+		addMockData();
+		
 		User u = new User();
 		u.setUserId(12);
 		u.setName("Patrick");
-		
-		
-//		System.out.println("\nBefore: ");
-//		inventoryDb.printTable(inventoryDb.getTableName());
-//		System.out.println();
-//		userDb.printTable(userDb.getTableName());
 
 		Label nameLbl = new Label("Mark your selection: ");
 		ArrayList<CheckBox> cbList = setCheckBoxes();
@@ -47,7 +41,7 @@ public class Gui extends Application {
 
 		//ArrayList<Order> activeOrders = new ArrayList<Order>();
 		String pizzaName = "basePizza";
-		orders = new HashMap<Integer, Order>();
+		orders = new HashMap<Integer, Cart>();
 		// size: S = 1, M = 2, L = 3
 		int size = 1;
 
@@ -60,7 +54,7 @@ public class Gui extends Application {
 //			inventoryDb.printTable("my-inventory-table");
 //			System.out.println();
 
-			order = new Order(orderNum, pizzaList);
+			order = new Cart(orderNum, pizzaList);
 			// order.addPizza(p);
 			orders.put(orderNum, order);
 
@@ -71,7 +65,7 @@ public class Gui extends Application {
 				// orders.get(k).printOrder();
 			}
 
-			ArrayList<Order> activeOrders = updateActiveOrders(orders);
+			ArrayList<Cart> activeOrders = updateActiveOrders(orders);
 			// display the activeOrders somewhere
 			// should we store activeOrders in db?
 		});
@@ -136,8 +130,8 @@ public class Gui extends Application {
 		return cbList;
 	}
 
-	private ArrayList<Order> updateActiveOrders(HashMap<Integer, Order> orders) {
-		ArrayList<Order> ret = new ArrayList<Order>();
+	private ArrayList<Cart> updateActiveOrders(HashMap<Integer, Cart> orders) {
+		ArrayList<Cart> ret = new ArrayList<Cart>();
 		for (int k : orders.keySet()) {
 			if (orders.get(k).getState()) {
 				ret.add(orders.get(k));
@@ -155,7 +149,7 @@ public class Gui extends Application {
 
 		for (CheckBox cb : cbList) {
 			if (cb.isSelected()) {
-				inventoryDb.decreaseQuantity(cb.getId(), quantity);
+				InventoryDb.decreaseQuantity(cb.getId(), quantity);
 				pizza.addTopping(cb.getId(), quantity);
 			}
 		}
@@ -173,6 +167,13 @@ public class Gui extends Application {
 		Pizza pizza = new Pizza();
 
 		return pizza;
+	}
+	
+	private void addMockData() {
+		InventoryDb.initTable();
+		RecipeDb.initTable();
+		CartDb.initTable();
+		UserDb.initTable();
 	}
 
 	public static void main(String[] args) {
