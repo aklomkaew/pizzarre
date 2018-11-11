@@ -16,35 +16,22 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class MainMenuUI extends Application {
+public class InventoryUI extends Application {
 	
-	private boolean manager;
 	
+
     @FXML
-    private Button newOrd;
-    @FXML
-    private Button myOrds;
-    @FXML
-    private Button mUtil;
+    private Button goBack;
     @FXML
     private Button logOut;
 	
  
 
-public void newOrder(ActionEvent e) {
-	
-}
 
-public void myOrders(ActionEvent e) {
 	
-}
-public void mgrUtilities(ActionEvent e) {
+public void goBack(ActionEvent e) {
 	
-	if(manager) {
-		//go to utilities page
-	}else {
-		Alert.Display("ERROR", "You do not have required credentials.");
-	}
+	
 }
 
 public void logout(ActionEvent e) {

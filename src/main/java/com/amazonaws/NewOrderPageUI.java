@@ -16,39 +16,45 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class MainMenuUI extends Application {
+public class NewOrderPageUI extends Application {
 	
-	private boolean manager;
 	
     @FXML
-    private Button newOrd;
+    private Button custom;
     @FXML
-    private Button myOrds;
+    private Button special;
     @FXML
-    private Button mUtil;
+    private Button drink;
+    @FXML
+    private Button discount;
+    @FXML
+    private Button confirm;
+    @FXML
+    private Button cancel;
     @FXML
     private Button logOut;
 	
  
 
-public void newOrder(ActionEvent e) {
+public void makeCustom(ActionEvent e) {
 	
 }
-
-public void myOrders(ActionEvent e) {
+public void makeSpecial(ActionEvent e) {
 	
 }
-public void mgrUtilities(ActionEvent e) {
+public void getDrink(ActionEvent e) {
 	
-	if(manager) {
-		//go to utilities page
-	}else {
-		Alert.Display("ERROR", "You do not have required credentials.");
-	}
 }
-
+public void addDiscount(ActionEvent e) {
+	
+}
+public void confirmOrder(ActionEvent e) {
+	
+}
+public void discardOrder(ActionEvent e) {
+	
+}
 public void logout(ActionEvent e) {
-	
 	
 }
 

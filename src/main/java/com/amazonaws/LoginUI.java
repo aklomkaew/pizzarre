@@ -147,19 +147,22 @@ public class LoginUI extends Application{
 	@Override
 	public void start(Stage stage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml"));
-			
-			Scene scene = new Scene(root,720,720);
+			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml")); 
+			Scene scene = new Scene(root,600,600);
 			stage.setScene(scene);
 			stage.setTitle("PIZZARRE");
 			stage.setResizable(false);
 			stage.show();
+			
+			//Stage whatever = (Stage)moveButton.getScene().getWindow();
+			//whatever.close();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
+	
 	
 	public static void main(String[] args) {
 		launch(args);
