@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="720.0" minWidth="720.0" prefHeight="720.0" prefWidth="720.0" style="-fx-min-width: 720;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amazonaws.LoginUI">
+<AnchorPane minHeight="720.0" minWidth="720.0" prefHeight="720.0" prefWidth="720.0" style="-fx-min-width: 720;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amazonaws.LoginUI">
    <children>
       <BorderPane minHeight="720.0" minWidth="720.0" prefHeight="720.0" prefWidth="720.0" style="-fx-background-color: coral;">
          <effect>
@@ -60,6 +60,9 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </PasswordField>
-         </top></BorderPane>
+         </top>
+         <bottom>
+            <Button fx:id="shutdownBtn" alignment="CENTER" mnemonicParsing="false" onAction="#shutdown" text="Quit" textAlignment="CENTER" translateY="-30.0" BorderPane.alignment="CENTER" />
+         </bottom></BorderPane>
    </children>
 </AnchorPane>

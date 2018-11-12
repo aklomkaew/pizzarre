@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,41 +16,29 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane minWidth="720.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minWidth="720.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amazonaws.DrinksUI">
    <children>
       <BorderPane prefHeight="720.0" prefWidth="720.0" style="-fx-background-color: coral;">
-         <bottom>
-            <Button alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: Yellow;" text="Logout" BorderPane.alignment="CENTER">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <BorderPane.margin>
-                  <Insets bottom="25.0" />
-               </BorderPane.margin>
-               <effect>
-                  <InnerShadow height="10.0" radius="4.5" width="10.0" />
-               </effect>
-            </Button>
-         </bottom>
          <top>
             <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" text="#UserName" BorderPane.alignment="CENTER" />
          </top>
          <right>
-            <VBox alignment="CENTER_RIGHT" maxWidth="420.0" minWidth="150.0" prefHeight="440.0" prefWidth="290.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER_RIGHT" maxWidth="420.0" minWidth="150.0" prefHeight="600.0" prefWidth="290.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane alignment="CENTER" prefHeight="419.0" prefWidth="312.0">
+                  <GridPane alignment="CENTER" prefHeight="631.0" prefWidth="104.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="Coca- Cola" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button fx:id="cancelBtn" layoutX="197.0" layoutY="40.0" mnemonicParsing="false" onAction="#cancelDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: red;" text="Cancel" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -56,7 +46,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="7-Up" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button fx:id="confirmBtn" layoutX="197.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirmDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: green;" text="Confirm" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -64,54 +54,84 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button layoutX="38.0" layoutY="40.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="Grapico" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
+                        <ToggleButton fx:id="tea" mnemonicParsing="false" onAction="#selectDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: orange;" text="Tea" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
-                        </Button>
-                        <Button layoutX="197.0" layoutY="40.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: red;" text="Cancel" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="drinkToggle" />
+                           </toggleGroup>
+                        </ToggleButton>
+                        <ToggleButton fx:id="wine" mnemonicParsing="false" onAction="#selectDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: orange;" text="Wine" toggleGroup="$drinkToggle" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
-                        </Button>
-                        <Button layoutX="10.0" layoutY="40.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="Wine" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="grapico" mnemonicParsing="false" onAction="#selectDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: orange;" text="Grapico" toggleGroup="$drinkToggle" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
-                        </Button>
-                        <Button layoutX="197.0" layoutY="320.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: green;" text="Confirm" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="pepsi" mnemonicParsing="false" onAction="#selectDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: orange;" text="Pepsi" toggleGroup="$drinkToggle" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
-                        </Button>
-                        <Button layoutX="212.0" layoutY="180.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="Tea" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="sevenUp" mnemonicParsing="false" onAction="#selectDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: orange;" text="7Up" toggleGroup="$drinkToggle" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
-                        </Button>
-                        <Button layoutX="212.0" layoutY="180.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="Beer" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="beer" mnemonicParsing="false" onAction="#selectDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: orange;" text="Beer" toggleGroup="$drinkToggle" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
-                        </Button>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="mediumBtn" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="M" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="sizeToggle" />
+                           </toggleGroup>
+                        </ToggleButton>
+                        <ToggleButton fx:id="largeBtn" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="L" textAlignment="CENTER" toggleGroup="$sizeToggle" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="smallBtn" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="S" textAlignment="CENTER" toggleGroup="$sizeToggle" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </ToggleButton>
                      </children>
                      <effect>
                         <ColorAdjust saturation="1.0" />
@@ -119,7 +139,7 @@
                   </GridPane>
                </children>
                <BorderPane.margin>
-                  <Insets bottom="100.0" right="50.0" top="50.0" />
+                  <Insets right="50.0" top="150.0" />
                </BorderPane.margin>
             </VBox>
          </right>

@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 public class LoginUI extends Application{
 	
 	@FXML
+	private Button shutdownBtn;
+	@FXML
     private Button b1;
     @FXML
     private Button b2;
@@ -134,14 +136,39 @@ public class LoginUI extends Application{
 		} else {
 			idInput = idNum.toString();
 			getID(idInput);
+			
+			//@FXML
+		    //public void goToRecipeSelection (ActionEvent event){
+		    	
+			idNum.clear();
+			password.clear();
+			
+		    	try {
+		    	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		    	            Parent root = (Parent) fxmlLoader.load();
+		    	            Stage mainMenuStage = new Stage();
+		    	            mainMenuStage.setScene(new Scene(root));
+		    	            mainMenuStage.setTitle("Main Menu");
+		    	            mainMenuStage.show();
+		    	            Stage loginStage = (Stage) ok.getScene().getWindow();
+		    	            loginStage.close();
+		    	    } catch(Exception exception) {
+		    	       exception.printStackTrace();
+		    	      } 
+		    }
 			// Needs a check against DB
 		}
-		idNum.clear();
-		password.clear();
-		}
+		//idNum.clear();
+		//password.clear();
+		//}
 	public void clearInput(ActionEvent e) {
 		idNum.clear();
 		password.clear();
+	}
+	
+	public void shutdown (ActionEvent e) {
+        Stage loginStage = (Stage) shutdownBtn.getScene().getWindow();
+        loginStage.close();
 	}
 	
 	@Override
