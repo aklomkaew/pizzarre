@@ -54,7 +54,7 @@ public class Inventory extends DatabaseTable {
 			// deleteTable();
 		} else {
 			try {
-				table = dynamoDB.createTable(tableName, 
+				table = dynamoDB.createTable(tableName,
 						Arrays.asList(new KeySchemaElement("toppingName", KeyType.HASH)),
 						Arrays.asList(new AttributeDefinition("toppingName", ScalarAttributeType.S)),
 						new ProvisionedThroughput(10L, 10L));
@@ -74,68 +74,71 @@ public class Inventory extends DatabaseTable {
 
 				table.waitForActive();
 				// define limit and do auto scaling
-				
+
 			} catch (Exception e) {
 				System.err.println("Unable to create table: ");
 				System.err.println(e.getMessage());
 			}
 		}
-		
+
 		return table;
 	}
 
 	public void initTable(Table tableToAdd) {
 		System.out.println("\nInitializing table " + tableName);
 
-		if(tableToAdd == null) {
+		if (tableToAdd == null) {
 			System.out.println("Table is null");
 			return;
 		}
-		
-		Item item = putItem("crust", 10);
-		PutItemOutcome outcome = tableToAdd.putItem(item);
-		System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
 
-		item = putItem("cheese", 10);
-		outcome = table.putItem(item);
-		System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
-		
-		item = putItem("sauce", 10);
-		outcome = table.putItem(item);
-		System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
-		
-		item = putItem("pepperoni", 10);
-		outcome = table.putItem(item);
-		System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
-		
-		item = putItem("greenPepper", 10);
-		outcome = table.putItem(item);
-		System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
+		try {
+			Item item = putItem("crust", 10);
+			PutItemOutcome outcome = tableToAdd.putItem(item);
+			System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
+
+			item = putItem("cheese", 10);
+			outcome = table.putItem(item);
+			System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
+
+			item = putItem("sauce", 10);
+			outcome = table.putItem(item);
+			System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
+
+			item = putItem("pepperoni", 10);
+			outcome = table.putItem(item);
+			System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
+
+			item = putItem("greenPepper", 10);
+			outcome = table.putItem(item);
+			System.out.println("Put item: " + outcome + " " + item.getJSONPretty("toppingName"));
+		} catch (Exception e) {
+			System.err.println("Error putting item");
+			System.err.println(e.getMessage());
+		}
+
 	}
 
 	private Item putItem(String toppingName, int quantity) {
 		return new Item().withPrimaryKey("toppingName", toppingName).withNumber("quantity", quantity);
 	}
-	
+
 	public void decreaseQuantity(String toppingName, int quantity) {
 		System.out.println("\nDecreasing quantity");
-		
-		if(table == null) {
+
+		if (table == null) {
 			System.out.println("table is null");
 			return;
 		}
-		
+
 		Map<String, String> expressionAttributeNames = new HashMap<String, String>();
 		expressionAttributeNames.put("#q", "quantity");
-		
+
 		Map<String, Object> expressionAttributeValues = new HashMap<String, Object>();
 		expressionAttributeValues.put(":val", quantity);
-		
-		UpdateItemOutcome outcome = table.updateItem(
-				"toppingName", toppingName,
-				"set #q = #q - :val",
-				expressionAttributeNames,
-				expressionAttributeValues);
+
+		UpdateItemOutcome outcome = table.updateItem("toppingName", toppingName, "set #q = #q - :val",
+				expressionAttributeNames, expressionAttributeValues);
 	}
 
 	public void printTable() {

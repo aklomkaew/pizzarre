@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amazonaws.CustomPieUI">
+   <children>
+      <BorderPane maxHeight="600.0" maxWidth="600.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <Button fx:id="logOut" alignment="CENTER" mnemonicParsing="false" onAction="#logout" text="Logout" BorderPane.alignment="CENTER">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets bottom="25.0" />
+               </BorderPane.margin>
+               <effect>
+                  <InnerShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
+            </Button>
+         </bottom>
+         <top>
+            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" text="#UserName" BorderPane.alignment="CENTER">
+               <content>
+                  <Label text="CREATE PIZZA">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </content></TitledPane>
+         </top>
+         <right>
+            <VBox alignment="CENTER_RIGHT" maxHeight="598.0" maxWidth="420.0" minHeight="391.0" minWidth="150.0" prefHeight="402.0" prefWidth="290.0" translateY="25.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane alignment="CENTER" minHeight="80.0" minWidth="80.0" prefHeight="80.0" prefWidth="312.0" scaleX="0.75" scaleY="0.75" translateX="15.0" translateY="125.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="small" mnemonicParsing="false" onAction="#startPizza" prefHeight="80.0" prefWidth="80.0" text="S" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="medium" mnemonicParsing="false" onAction="#startPizza" prefHeight="80.0" prefWidth="80.0" text="M" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="large" layoutX="38.0" layoutY="40.0" mnemonicParsing="false" onAction="#startPizza" prefHeight="80.0" prefWidth="80.0" text="L" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </GridPane>
+                  <GridPane alignment="CENTER" prefHeight="470.0" prefWidth="270.0" scaleX="0.75" scaleY="0.75" translateX="15.0" translateY="75.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Button fx:id="pepperoni" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Pepperoni" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="sausage" layoutX="38.0" layoutY="40.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Sausage" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="beef" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Ground Beef" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="ham" layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Ham" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="bacon" layoutX="203.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Bacon" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="chicken" layoutX="106.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Chicken" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="anchovy" layoutX="10.0" layoutY="100.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Anchovy" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="shrimp" layoutX="106.0" layoutY="100.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Shrimp" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="mushroom" layoutX="10.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Mushroom" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="onion" layoutX="106.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Onion" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="greenPeppr" layoutX="203.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Green Pepper" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="tomato" layoutX="10.0" layoutY="260.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Tomato" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="olive" layoutX="106.0" layoutY="260.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Olive" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="pineapple" layoutX="203.0" layoutY="260.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Pineapple" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="tofu" layoutX="106.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Tofu" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                     </children>
+                  </GridPane>
+                  <GridPane alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="60.0" maxWidth="375.0" minHeight="80.0" prefHeight="80.0" prefWidth="312.0" scaleX="0.75" scaleY="0.75" translateX="15.0" translateY="-175.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Button fx:id="cancel" maxHeight="80.0" minHeight="80.0" mnemonicParsing="false" onAction="#discardOrder" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Cancel" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="confirm" layoutX="197.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: palegreen;" text="Confirm" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="200.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </GridPane>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" right="50.0" top="50.0" />
+               </BorderPane.margin>
+            </VBox>
+         </right>
+         <effect>
+            <ColorAdjust />
+         </effect>
+         <left>
+            <ListView prefHeight="470.0" prefWidth="240.0" style="-fx-background-color: lightsteelblue;" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="10.0" top="50.0" />
+               </BorderPane.margin>
+            </ListView>
+         </left></BorderPane>
+   </children>
+</AnchorPane>
