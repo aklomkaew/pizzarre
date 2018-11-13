@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 public class LoginUI extends Application{
 	
 	@FXML
+	private Button shutdownBtn;
+	@FXML
     private Button b1;
     @FXML
     private Button b2;
@@ -134,35 +136,57 @@ public class LoginUI extends Application{
 		} else {
 			idInput = idNum.toString();
 			getID(idInput);
+			
+			//@FXML
+		    //public void goToRecipeSelection (ActionEvent event){
+		    	
+			idNum.clear();
+			password.clear();
+			
+		    	try {
+		    	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		    	            Parent root = (Parent) fxmlLoader.load();
+		    	            Stage mainMenuStage = new Stage();
+		    	            mainMenuStage.setScene(new Scene(root));
+		    	            mainMenuStage.setTitle("Main Menu");
+		    	            mainMenuStage.show();
+		    	            Stage loginStage = (Stage) ok.getScene().getWindow();
+		    	            loginStage.close();
+		    	    } catch(Exception exception) {
+		    	       exception.printStackTrace();
+		    	      } 
+		    }
 			// Needs a check against DB
 		}
-		idNum.clear();
-		password.clear();
-		}
+		//idNum.clear();
+		//password.clear();
+		//}
 	public void clearInput(ActionEvent e) {
 		idNum.clear();
 		password.clear();
 	}
 	
+	public void shutdown (ActionEvent e) {
+        Stage loginStage = (Stage) shutdownBtn.getScene().getWindow();
+        loginStage.close();
+	}
+	
 	@Override
 	public void start(Stage stage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml")); 
-			Scene scene = new Scene(root,600,600);
+			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml"));
+			
+			Scene scene = new Scene(root,720,720);
 			stage.setScene(scene);
 			stage.setTitle("PIZZARRE");
 			stage.setResizable(false);
 			stage.show();
-			
-			//Stage whatever = (Stage)moveButton.getScene().getWindow();
-			//whatever.close();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
-	
 	
 	public static void main(String[] args) {
 		launch(args);

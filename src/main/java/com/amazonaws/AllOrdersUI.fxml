@@ -31,9 +31,9 @@
                </content></TitledPane>
          </top>
          <bottom>
-            <HBox prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="goBack" alignment="CENTER" maxHeight="25.0" maxWidth="54.0" minHeight="25.0" minWidth="54.0" mnemonicParsing="false" onAction="#goBack" text="Back">
+                  <Button fx:id="backBtn" alignment="CENTER" maxHeight="25.0" maxWidth="54.0" minHeight="25.0" minWidth="54.0" mnemonicParsing="false" onAction="#goToManagerUtilities" text="Back">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -42,17 +42,6 @@
                      </effect>
                      <HBox.margin>
                         <Insets />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="logOut" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="25.0" maxWidth="54.0" minHeight="25.0" minWidth="54.0" mnemonicParsing="false" onAction="#logout" text="Logout">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <effect>
-                        <InnerShadow height="10.0" radius="4.5" width="10.0" />
-                     </effect>
-                     <HBox.margin>
-                        <Insets left="219.0" />
                      </HBox.margin>
                   </Button>
                </children>
