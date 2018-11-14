@@ -3,8 +3,12 @@ package com.amazonaws;
 import java.util.*;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBConvertedBool;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMarshalling;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTyped;
 
 @DynamoDBTable(tableName = "my-carts-table")
 public class Cart {
@@ -17,62 +21,70 @@ public class Cart {
 	private String server;
 
 	public Cart() {
-		pizzas = new ArrayList<Pizza>();
-		orderNumber = -1;
-		active = true;
-		total = 0.0;
+		this.pizzas = new ArrayList<Pizza>();
+		this.orderNumber = -1;
+		this.active = true;
+		this.total = 0.0;
 	}
 
-	public Cart(int num, ArrayList<Pizza> list) {
-		orderNumber = num;
-		pizzas = new ArrayList<Pizza>();
-		pizzas.addAll(list);
-		active = true;
-		total = 0.0;
+	public Cart(int num, List<Pizza> list) {
+		this.orderNumber = num;
+		this.pizzas = new ArrayList<Pizza>();
+		this.pizzas.addAll(list);
+		this.active = true;
+		this.total = 0.0;
 	}
 
 	@DynamoDBHashKey(attributeName = "Order Number")
 	public int getOrderNumber() {
-		return orderNumber;
+		return this.orderNumber;
 	}
 
 	public void setOrderNumber(int num) {
-		orderNumber = num;
+		this.orderNumber = num;
 	}
 
-	@DynamoDBAttribute(attributeName = "Pizzas")
-	public ArrayList<Pizza> getPizzas() {
-		return pizzas;
-	}
-	public void addPizza(Pizza p) {
-		pizzas.add(p);
-	}
-
-	@DynamoDBAttribute(attributeName = "Status")
+	@DynamoDBTypeConverted(converter = MyBooleanConverter.class)
 	public boolean getState() {
-		return active;
+		return this.active;
 	}
 
+	public void setState(boolean s) {
+		this.active = s;
+	}
+	
 	public void setInactive() {
-		active = false;
+		this.active = false;
 	}
 
 	@DynamoDBAttribute(attributeName = "Server")
 	public String getServerName() {
-		return server;
+		return this.server;
 	}
 
 	public void setServerName(String u) {
-		server = u;
+		this.server = u;
 	}
 
 	@DynamoDBAttribute(attributeName = "Total")
 	public double getTotal() {
-		return total;
+		return this.total;
 	}
 
 	public void setTotal(double t) {
-		total = t;
+		this.total = t;
+	}
+
+	@DynamoDBTypeConverted(converter = MyPizzaConverter.class)
+	public ArrayList<Pizza> getPizzas() {
+		return this.pizzas;
+	}
+	public void setPizzas(ArrayList<Pizza> list) {
+		pizzas = list;
+	}
+
+	public void addPizza(Pizza p) {
+		this.pizzas.add(p);
 	}
 
 	public String toString() {

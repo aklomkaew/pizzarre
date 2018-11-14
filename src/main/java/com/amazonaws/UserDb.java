@@ -29,11 +29,18 @@ public class UserDb extends DatabaseTable {
 
 	public static void initTable() {
 		System.out.println("\nInitializing table " + tableName);
-
-		Manager m = new Manager();
-		m.setName("Main Boo");
-		m.setUserId(0);
-		mapper.save(m);
+		
+		User u = new User();
+		u.setName("My new user");
+		u.setUserId(1);
+		mapper.save(u);
+		System.out.println("Save user successfully");
+		
+//		Manager m = new Manager();
+//		m.setName("Main Boo");
+//		m.setUserId(0);
+//		mapper.save(m);
+//		System.out.println("Save manager successful");
 		
 //		User u = new User();
 //		u.setName("John Doe");
