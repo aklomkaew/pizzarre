@@ -47,7 +47,7 @@ public class InventoryDb extends DatabaseTable {
 		item.setQuantity(10);
 		mapper.save(item);
 		
-		item.setName("greenPepper");
+		item.setName("greenpepper");
 		item.setQuantity(10);
 		mapper.save(item);
 	}
@@ -83,6 +83,19 @@ public class InventoryDb extends DatabaseTable {
 	// set itemQuantity
 	// restock
 
+	public static int getQuantityOfItem(String toppingName) {
+		InventoryItem item = new InventoryItem();
+		item.setName(toppingName);
+		DynamoDBQueryExpression<InventoryItem> queryExpression = new DynamoDBQueryExpression<InventoryItem>()
+			    .withHashKeyValues(item);
+		
+		List<InventoryItem> itemList = mapper.query(InventoryItem.class, queryExpression);
+		
+		System.out.println("Item list size = " + itemList.size());
+		
+		return itemList.get(0).getQuantity();
+	}
+	
 	public void retrieveAllItem() {
 		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, new DynamoDBScanExpression());
 
