@@ -8,31 +8,31 @@ public class Pizza {
 	private int size;	// S = 1, M = 2, L = 3
 	
 	public Pizza() {
-		name = "";
-		size = 0;
-		toppings = new HashMap<String, Integer>();
+		this.name = "";
+		this.size = 0;
+		this.toppings = new HashMap<String, Integer>();
 	}
 	
 	public Pizza(String n, int s, HashMap<String, Integer> map) {
-		name = n;
-		size = s;
-		toppings = map;
+		this.name = n;
+		this.size = s;
+		this.toppings = map;
 	}
 	
 	public void setName(String n) {
-		name = n;
+		this.name = n;
 	}
 	
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	
 	public void setSize(int s) {
-		size = s;
+		this.size = s;
 	}
 	
 	public int getSize() {
-		return size;
+		return this.size;
 	}
 	
 	public void addTopping(String item, int quantity) {
@@ -45,11 +45,11 @@ public class Pizza {
 	}
 	
 	public void clearToppings() {
-		toppings.clear();
+		this.toppings.clear();
 	}
 	
 	public HashMap<String, Integer> getToppings(){
-		return toppings;
+		return this.toppings;
 	}
 	
 	public void deleteTopping(String item, int quantityToDelete) {
