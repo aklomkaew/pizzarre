@@ -2,10 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,18 +14,37 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="720.0" maxWidth="656.0" minHeight="720.0" minWidth="720.0" prefHeight="720.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amazonaws.CustomPizzaUI">
+<AnchorPane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amazonaws.CustomPizzaUI">
    <children>
-      <BorderPane maxHeight="656.0" maxWidth="720.0" prefHeight="720.0" prefWidth="656.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane maxHeight="600.0" maxWidth="600.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <Button fx:id="cancelBtn" alignment="CENTER" mnemonicParsing="false" onAction="#cancelPizza" text="Back" BorderPane.alignment="CENTER">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets bottom="25.0" />
+               </BorderPane.margin>
+               <effect>
+                  <InnerShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
+            </Button>
+         </bottom>
          <top>
-            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" text="#UserName" BorderPane.alignment="CENTER" />
+            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" text="#UserName" BorderPane.alignment="CENTER">
+               <content>
+                  <Label text="CREATE PIZZA">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </content></TitledPane>
          </top>
          <right>
-            <VBox alignment="CENTER_RIGHT" maxHeight="598.0" maxWidth="420.0" minHeight="598.0" minWidth="150.0" prefHeight="598.0" prefWidth="290.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER_RIGHT" maxHeight="598.0" maxWidth="420.0" minHeight="391.0" minWidth="150.0" prefHeight="402.0" prefWidth="290.0" translateY="25.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane alignment="CENTER" minHeight="80.0" minWidth="80.0" prefHeight="80.0" prefWidth="312.0" translateY="95.0">
+                  <GridPane alignment="CENTER" minHeight="80.0" minWidth="80.0" prefHeight="80.0" prefWidth="312.0" scaleX="0.75" scaleY="0.75" translateX="15.0" translateY="125.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -36,39 +54,36 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ToggleButton fx:id="smallBtn" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" text="S" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button fx:id="small" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" text="S" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="36.0" />
                            </font>
                            <effect>
                               <InnerShadow />
                            </effect>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="selectSize" />
-                           </toggleGroup>
-                        </ToggleButton>
-                        <ToggleButton fx:id="largeBtn" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" text="L" textAlignment="CENTER" toggleGroup="$selectSize" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        </Button>
+                        <Button fx:id="medium" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" text="M" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="36.0" />
                            </font>
                            <effect>
                               <InnerShadow />
                            </effect>
-                        </ToggleButton>
-                        <ToggleButton fx:id="mediumBtn" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" text="M" textAlignment="CENTER" toggleGroup="$selectSize" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        </Button>
+                        <Button fx:id="large" layoutX="38.0" layoutY="40.0" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" text="L" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="36.0" />
                            </font>
                            <effect>
                               <InnerShadow />
                            </effect>
-                        </ToggleButton>
+                        </Button>
                      </children>
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="500.0" prefWidth="290.0" translateY="110.0">
+                  <GridPane alignment="CENTER" prefHeight="470.0" prefWidth="270.0" scaleX="0.75" scaleY="0.75" translateX="15.0" translateY="75.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -82,132 +97,129 @@
                         <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Pepperoni" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <effect>
-                              <InnerShadow />
-                           </effect>
+                        <Button fx:id="pepperoni" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Pepperoni" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Gound Beef" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="sausage" layoutX="38.0" layoutY="40.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Sausage" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Sausage" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="beef" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Ground Beef" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Ham" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="ham" layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Ham" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Chicken" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="bacon" layoutX="203.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Bacon" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Steak" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="chicken" layoutX="106.0" layoutY="340.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Chicken" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Tofu" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="anchovy" layoutX="10.0" layoutY="100.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Anchovy" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Shrimp" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="shrimp" layoutX="106.0" layoutY="100.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Shrimp" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Anchovy" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="mushroom" layoutX="10.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Mushroom" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Pineapple" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="onion" layoutX="106.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Onion" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Olive" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="greenPeppr" layoutX="203.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Green Pepper" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Tomato" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="tomato" layoutX="10.0" layoutY="260.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Tomato" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Green Pepper" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="olive" layoutX="106.0" layoutY="260.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Olive" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Onion" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="pineapple" layoutX="203.0" layoutY="260.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Pineapple" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
-                        <CheckBox alignment="CENTER" mnemonicParsing="false" onAction="#addToppings" prefHeight="60.0" prefWidth="93.0" style="-fx-border-color: black;" text="Mushroom" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
+                        </Button>
+                        <Button fx:id="tofu" layoutX="106.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Tofu" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </CheckBox>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
                      </children>
-                     <effect>
-                        <ColorAdjust />
-                     </effect>
                   </GridPane>
-                  <GridPane alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="80.0" prefHeight="80.0" prefWidth="312.0" translateY="-75.0">
+                  <GridPane alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="60.0" maxWidth="375.0" minHeight="80.0" prefHeight="80.0" prefWidth="312.0" scaleX="0.75" scaleY="0.75" translateX="15.0" translateY="-175.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -217,7 +229,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="cancelBtn" maxHeight="80.0" minHeight="80.0" mnemonicParsing="false" onAction="#cancelPizza" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Cancel" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                        <Button fx:id="clearBtn" maxHeight="80.0" minHeight="80.0" mnemonicParsing="false" onAction="#clearPizza" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Clear" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -254,11 +266,11 @@
             <ColorAdjust />
          </effect>
          <left>
-            <TextFlow maxHeight="600.0" maxWidth="280.0" minHeight="600.0" minWidth="280.0" prefHeight="600.0" prefWidth="280.0" style="-fx-background-color: teal;" BorderPane.alignment="CENTER">
+            <ListView fx:id="toppingListView" prefHeight="470.0" prefWidth="240.0" style="-fx-background-color: lightsteelblue; -fx-border-color: gray;" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="10.0" top="50.0" />
                </BorderPane.margin>
-            </TextFlow>
+            </ListView>
          </left></BorderPane>
    </children>
 </AnchorPane>

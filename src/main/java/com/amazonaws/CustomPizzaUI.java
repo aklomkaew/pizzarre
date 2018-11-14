@@ -3,6 +3,8 @@ package com.amazonaws;
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
@@ -29,103 +32,109 @@ public class CustomPizzaUI {
 	@FXML
 	private Button confirmBtn;
 	@FXML
+	private Button clearBtn;
+	@FXML
 	private Button cancelBtn;
 	@FXML
 	private String pizzaSize = null;
 	@FXML
-	private ToggleButton smallBtn;
+	private Button small;
 	@FXML
-	private ToggleButton mediumBtn;
+	private Button medium;
 	@FXML
-	private ToggleButton largeBtn;
+	private Button large;
 	@FXML
-	private CheckBox pepperoni;
+	private Button pepperoni;
 	@FXML
-	private CheckBox sausage;
+	private Button sausage;
 	@FXML
-	private CheckBox groundBeef;
+	private Button groundBeef;
 	@FXML
-	private CheckBox ham;
+	private Button ham;
 	@FXML
-	private CheckBox chicken;
+	private Button chicken;
 	@FXML
-	private CheckBox steak;
+	private Button steak;
 	@FXML
-	private CheckBox anchovy;
+	private Button anchovy;
 	@FXML
-	private CheckBox shrimp;
+	private Button shrimp;
 	@FXML
-	private CheckBox tofu;
+	private Button tofu;
 	@FXML
-	private CheckBox mushroom;
+	private Button mushroom;
 	@FXML
-	private CheckBox onion;
+	private Button onion;
 	@FXML
-	private CheckBox greenPepper;
+	private Button greenPepper;
 	@FXML
-	private CheckBox tomato;
+	private Button tomato;
 	@FXML
-	private CheckBox olive;
+	private Button olive;
 	@FXML
-	private CheckBox pineapple;
+	private Button pineapple;
 	@FXML
-	private ArrayList<String> toppings = new ArrayList<String>();
+	private String toppingName;
 	@FXML
-	private String toppingName = null;
+	private ListView<String> toppingListView = new ListView<String>();
+	
+	private ObservableList<String> toppingObservableList = FXCollections.observableArrayList();
+	
+	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
+	
     
     
 	
 	public void selectSize (ActionEvent e) {
-		pizzaSize = ((ToggleButton)e.getSource()).getText();
+		pizzaSize = ((Button)e.getSource()).getId();
 	}
 	
-	public void addToppings (ActionEvent e) {
-		if (((CheckBox)e.getSource()).isSelected())
-		{
-			toppingName =((CheckBox)e.getSource()).getText();
-			toppings.add(toppingName);
-		} else {
-			toppingName =((CheckBox)e.getSource()).getText();
-			toppings.remove(toppingName);
+	public void addTopping (ActionEvent e) {
+		
+		String id = ((Button)e.getSource()).getId();
+		String toppingName = ((Button)e.getSource()).getText();
+		
+		if(toppingIdArrayList.contains(id) == false) { //if statements adds topping to the list
+			
+			System.out.println(id + " added");
+			toppingIdArrayList.add(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
+			toppingObservableList.add(toppingName); //list used to display topping names
+		
+		} else { // else statement removes topping from the list
+			
+			System.out.println(id + " removed");
+			toppingIdArrayList.remove(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
+			toppingObservableList.remove(toppingName); //list used to display topping names
+		
 		}
+		
+		toppingListView.setItems(toppingObservableList); //displays toppings in the list
 	}
 	
 	public void confirmPizza (ActionEvent e) {
 		//add pizza to order here
 		if(pizzaSize == null) {
 			Alert.Display("ERROR", "Select a size.");
-		} else {
-		System.out.println("You chose " + pizzaSize + " size pizza with the following toppings: " + toppings);
+		} else {		
 		
-		try {
-		    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-		            Parent root = (Parent) fxmlLoader.load();
-		            Stage newOrderStage = new Stage();
-		            newOrderStage.setScene(new Scene(root));
-		            newOrderStage.setTitle("Order Screen");
-		            newOrderStage.show();
-		            Stage pizzaStage = (Stage) confirmBtn.getScene().getWindow();
-		            pizzaStage.close();
-		    } catch(Exception exception) {
-		       exception.printStackTrace();
-		      }
+			System.out.println("You chose a " + pizzaSize + " pizza with the following toppings: " + toppingObservableList);
+			
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirmBtn);
 		}
+	}
+	
+	public void clearPizza(ActionEvent e) {
+		toppingObservableList.clear();
+		toppingIdArrayList.clear();
+		toppingListView.getItems().clear();
 	}
 	
 public void cancelPizza (ActionEvent e) {
 	
-	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-	            Parent root = (Parent) fxmlLoader.load();
-	            Stage newOrderStage = new Stage();
-	            newOrderStage.setScene(new Scene(root));
-	            newOrderStage.setTitle("Order Screen");
-	            newOrderStage.show();
-	            Stage pizzaStage = (Stage) cancelBtn.getScene().getWindow();
-	            pizzaStage.close();
-	    } catch(Exception exception) {
-	       exception.printStackTrace();
-	      }
+	
+	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+	NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 
 public void start(Stage arg0) throws Exception {

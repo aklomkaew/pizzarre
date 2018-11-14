@@ -75,22 +75,24 @@ public class CreateRecipeUI extends Application {
 	
  
 
-public void addRemoveTopping(ActionEvent e) {
+	public void addRemoveTopping(ActionEvent e) {
 	
-	String id = ((Button)e.getSource()).getId();
-	String toppingName = ((Button)e.getSource()).getText();
-	if(toppingIdArrayList.contains(id) == false) { //if statements adds topping to the list
-		System.out.println(id + " added");
-		// Now, add 'id' item to the recipe.
-		toppingIdArrayList.add(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
-		toppingObservableList.add(toppingName); //list used to display topping names
-	} else { // else statement removes topping from the list
+		String id = ((Button)e.getSource()).getId();
+		String toppingName = ((Button)e.getSource()).getText();
+	
+		if(toppingIdArrayList.contains(id) == false) { //if statements adds topping to the list
 		
-		System.out.println(id + " removed");
-		// Now, add 'id' item to the recipe.
-		toppingIdArrayList.remove(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
-		toppingObservableList.remove(toppingName); //list used to display topping names
-	}
+			System.out.println(id + " added");
+			toppingIdArrayList.add(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
+			toppingObservableList.add(toppingName); //list used to display topping names
+	
+		} else { // else statement removes topping from the list
+		
+			System.out.println(id + " removed");
+			toppingIdArrayList.remove(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
+			toppingObservableList.remove(toppingName); //list used to display topping names
+	
+		}
 	
 	toppingListView.setItems(toppingObservableList); //displays toppings in the list
 }

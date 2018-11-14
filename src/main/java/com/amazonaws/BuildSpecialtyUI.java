@@ -25,7 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class DrinksUI {
+public class BuildSpecialtyUI {
 	
 	@FXML
 	private Button confirm;
@@ -34,13 +34,11 @@ public class DrinksUI {
 	@FXML
 	private Button clear;
 	@FXML
-	private Button add;
-	@FXML
-	private String drinkName = null; //string used to display drink on order tab
+	private String specialtyName = null; //names used for display purposes
 	
-	private String id = null; //string used to get drink from database
+	private String id = null; //names used for database access
 	@FXML
-	private String drinkSize = null;
+	private String specialtySize = null;
 	@FXML
 	private Button small;
 	@FXML
@@ -48,60 +46,65 @@ public class DrinksUI {
 	@FXML
 	private Button large;
 	@FXML
-    private Button soda;
+    private Button dailySpecial;
     @FXML
-    private Button icedTea;
+    private Button meatzza;
     @FXML
-    private Button juice;
+    private Button hawaiian;
     @FXML
-    private Button hotTea;
+    private Button classic;
     @FXML
-    private Button beer;
+    private Button veggie;
     @FXML
-    private Button wine;
+    private Button sicilian;
     @FXML
-    private ListView<String> drinkListView = new ListView<String>();
+    private ListView<String> specialtyListView = new ListView<String>();
 	
-	private ObservableList<String> drinkObservableList = FXCollections.observableArrayList();
+	private ObservableList<String> specialtyObservableList = FXCollections.observableArrayList();
 	
-	private ArrayList<String> drinkIdArrayList = new ArrayList<String>();
+	private ArrayList<String> specialIdArrayList = new ArrayList<String>();
     
 
 	
-	public void selectDrink (ActionEvent e) {
-		drinkName = ((Button)e.getSource()).getText(); // sets drink name equal to text on a button
+	public void selectSpecialty (ActionEvent e) {
+		specialtyName = ((Button)e.getSource()).getText(); // sets specialty name equal to text on a button
 		id = ((Button)e.getSource()).getId(); //sets id name equal to button's fx:id
 	}
 	
 	public void selectSize (ActionEvent e) {
-		drinkSize = ((Button)e.getSource()).getId();
+		specialtySize = ((Button)e.getSource()).getId();
 	}
 	
-	public void addDrink (ActionEvent e) {
+	public void addSpecialty (ActionEvent e) {
 		
-		if(drinkName == null || id == null || drinkSize == null) {
+		if(specialtyName == null || id == null || specialtySize == null) {
 			
-			Alert.Display("ERROR", "Select a drink and size.");
-			
+			Alert.Display("ERROR", "Select a special and size.");
+		
 			id = null;
-			drinkName = null;
-			drinkSize = null;
+			specialtyName = null;
+			specialtySize = null;
 		} else {
 			
-			String drinkListViewString = drinkName + ": " + drinkSize;
+			String specialtyListViewString = specialtyName + ": " + specialtySize;
 			
-			drinkIdArrayList.add(id);
-			drinkObservableList.add(drinkListViewString);
-			drinkListView.setItems(drinkObservableList);;
+			specialIdArrayList.add(id);
+			specialtyObservableList.add(specialtyListViewString);
+			specialtyListView.setItems(specialtyObservableList);;
 			
 			id = null;
-			drinkName = null;
-			drinkSize = null;
+			specialtyName = null;
+			specialtySize = null;
+			}
 		}
+	
+	public void clearSpecialty(ActionEvent e) {
+		specialtyObservableList.clear();
+		specialtyListView.getItems().clear();
 	}
 	
-	public void confirmDrink (ActionEvent e) {
-		Alert.displayIntegration("DrinksUI.confirmDrink(ActionEvent e)");
+	public void confirmSpecialty (ActionEvent e) {
+		Alert.displayIntegration("BuildSpecialtyUI.confirmSpecialty(ActionEvent e)");
 		/*
 		drinkIdArrayList <- contains the inventory id's of the selected drinks
 		erase Order's drink ArrayList if new drinks confirmed
@@ -117,23 +120,18 @@ public class DrinksUI {
 	}
 	
 	
-	
-	public void cancelDrink (ActionEvent e) {
+	public void cancelSpecialty (ActionEvent e) {
 		goToOrderScreen(e);
 	}
-	
-	public void clearDrinks (ActionEvent e) {
-		drinkIdArrayList.clear();
-		drinkObservableList.clear();
-		drinkListView.getItems().clear();
-	}
+
 
 	public void goToOrderScreen (ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancel);
 	}
-	
-public void start(Stage arg0) throws Exception {
-		}
+
+	public void start(Stage arg0) throws Exception {
+		
+	}
 	
 }

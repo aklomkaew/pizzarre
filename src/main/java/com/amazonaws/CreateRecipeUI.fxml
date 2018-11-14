@@ -46,7 +46,7 @@
             <ColorAdjust />
          </effect>
          <left>
-            <ListView fx:id="toppingListView" prefHeight="461.0" prefWidth="240.0" style="-fx-border-color: grey;" BorderPane.alignment="CENTER">
+            <ListView fx:id="toppingListView" prefHeight="461.0" prefWidth="240.0" style="-fx-background-color: lightsteelblue; -fx-border-color: gray;" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="10.0" top="50.0" />
                </BorderPane.margin>

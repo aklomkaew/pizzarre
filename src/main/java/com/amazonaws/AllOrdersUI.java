@@ -37,18 +37,9 @@ public class AllOrdersUI extends Application implements Initializable {
 
 	
     public void goToManagerUtilities(ActionEvent e) {
-    	try {
-    	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
-    	            Parent root = (Parent) fxmlLoader.load();
-    	            Stage managerUtiliesStage = new Stage();
-    	            managerUtiliesStage.setScene(new Scene(root));
-    	            managerUtiliesStage.setTitle("Main Menu");
-    	            managerUtiliesStage.show();
-    	            Stage recipeListStage = (Stage) backBtn.getScene().getWindow();
-    	            recipeListStage.close();
-    	    } catch(Exception exception) {
-    	       exception.printStackTrace();
-    	    }
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
+    	NextStage.goTo(fxmlLoader, backBtn);
     }
 
 	@Override

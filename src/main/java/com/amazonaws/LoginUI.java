@@ -143,21 +143,11 @@ public class LoginUI extends Application{
 			idNum.clear();
 			password.clear();
 			
-		    	try {
-		    	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-		    	            Parent root = (Parent) fxmlLoader.load();
-		    	            Stage mainMenuStage = new Stage();
-		    	            mainMenuStage.setScene(new Scene(root));
-		    	            mainMenuStage.setTitle("Main Menu");
-		    	            mainMenuStage.show();
-		    	            Stage loginStage = (Stage) ok.getScene().getWindow();
-		    	            loginStage.close();
-		    	    } catch(Exception exception) {
-		    	       exception.printStackTrace();
-		    	      } 
-		    }
 			// Needs a check against DB
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+			NextStage.goTo(fxmlLoader, ok);
 		}
+	}
 		//idNum.clear();
 		//password.clear();
 		//}
@@ -176,7 +166,7 @@ public class LoginUI extends Application{
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml"));
 			
-			Scene scene = new Scene(root,720,720);
+			Scene scene = new Scene(root,600,600);
 			stage.setScene(scene);
 			stage.setTitle("PIZZARRE");
 			stage.setResizable(false);

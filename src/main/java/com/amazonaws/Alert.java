@@ -13,7 +13,7 @@ public class Alert {
 		
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
-		window.setMinWidth(250);
+		window.setMinWidth(400);
 		
 		Label label = new Label();
 		label.setText(message);
@@ -28,5 +28,15 @@ public class Alert {
 		Scene scene = new Scene(layout);
 		window.setScene(scene);
 		window.showAndWait(); //This means the window has to be closed to continue.
+	}
+	
+	public static void displayMethodNotSet(String methodName)
+	{
+		Alert.Display(methodName, "Method not set.");
+	}
+	
+	public static void displayIntegration(String methodName)
+	{
+		Alert.Display("Integration required", methodName + " requires integration.");
 	}
 }

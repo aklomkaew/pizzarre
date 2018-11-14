@@ -22,84 +22,50 @@ public class NewOrderUI {
 	
 	
     @FXML
-    private Button mainMenuBtn;
+    private Button mainMenu;
     @FXML
-    private Button drinkBtn;
+    private Button drink;
     @FXML
-    private Button specialtyBtn;
+    private Button special;
     @FXML
-    private Button customBtn;
+    private Button custom;
     @FXML
-    private Button discountBtn;
+    private Button discount;
 	
-    public void goToMainMenu (ActionEvent e) {
-	
-	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-	            Parent root = (Parent) fxmlLoader.load();
-	            Stage mainMenuStage = new Stage();
-	            mainMenuStage.setScene(new Scene(root));
-	            mainMenuStage.setTitle("Menu");
-	            mainMenuStage.show();
-	            Stage newOrderStage = (Stage) mainMenuBtn.getScene().getWindow();
-	            newOrderStage.close();
-	    } catch(Exception exception) {
-	       exception.printStackTrace();
-	      }
+public void goToMainMenu (ActionEvent e) {
+    	
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+    NextStage.goTo(fxmlLoader, mainMenu);
 }
 
 public void goToDrinks(ActionEvent e) {
 	
-	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
-	            Parent root = (Parent) fxmlLoader.load();
-	            Stage drinkStage = new Stage();
-	            drinkStage.setScene(new Scene(root));
-	            drinkStage.setTitle("Drinks");
-	            drinkStage.show();
-	            Stage newOrderStage = (Stage) drinkBtn.getScene().getWindow();
-	            newOrderStage.close();
-	    } catch(Exception exception) {
-	       exception.printStackTrace();
-	      }
-	
+	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
+	NextStage.goTo(fxmlLoader, drink);
 }
 
 public void goToSpecialty(ActionEvent e) {
 	
-	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
-	            Parent root = (Parent) fxmlLoader.load();
-	            Stage drinkStage = new Stage();
-	            drinkStage.setScene(new Scene(root));
-	            drinkStage.setTitle("Specials");
-	            drinkStage.show();
-	            Stage newOrderStage = (Stage) specialtyBtn.getScene().getWindow();
-	            newOrderStage.close();
-	    } catch(Exception exception) {
-	       exception.printStackTrace();
-	      }
-	
+	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BuildSpecialtyUI.fxml"));
+	NextStage.goTo(fxmlLoader, special);
 }
 
 public void goToCustom(ActionEvent e) {
 	
-	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
-	            Parent root = (Parent) fxmlLoader.load();
-	            Stage customStage = new Stage();
-	            customStage.setScene(new Scene(root));
-	            customStage.setTitle("Custom");
-	            customStage.show();
-	            Stage newOrderStage = (Stage) customBtn.getScene().getWindow();
-	            newOrderStage.close();
-	    } catch(Exception exception) {
-	       exception.printStackTrace();
-	      }
+	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
+	NextStage.goTo(fxmlLoader, custom);
 }
 
 public void setDiscount(ActionEvent e) {
-	Alert.Display("Method Not Implemented", "setDiscount method not implemented!");
+	Alert.displayMethodNotSet("setDiscount");
+}
+
+public void confirmOrder (ActionEvent e) {
+	Alert.displayMethodNotSet("confirmOrder");
+}
+
+public void discardOrder (ActionEvent e) {
+	Alert.displayMethodNotSet("discardOrder");
 }
 
 public void start(Stage arg0) throws Exception {

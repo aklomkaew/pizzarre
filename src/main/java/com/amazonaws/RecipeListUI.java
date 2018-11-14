@@ -40,17 +40,9 @@ public class RecipeListUI extends Application {
 
 
 public void addRecipe(ActionEvent e) {
-	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateRecipeUI.fxml"));
-	            Parent root = (Parent) fxmlLoader.load();
-	            Stage createRecipeStage = new Stage();
-	            createRecipeStage.setScene(new Scene(root));
-	            createRecipeStage.show();
-	            Stage recipeListStage = (Stage) addRecipeBtn.getScene().getWindow();
-	            recipeListStage.close();
-	    } catch(Exception exception) {
-	       exception.printStackTrace();
-	    }
+	
+	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateRecipeUI.fxml"));
+	NextStage.goTo(fxmlLoader, addRecipeBtn);
 }
 
 public void deleteRecipe(ActionEvent e) {
@@ -61,21 +53,12 @@ public void deleteRecipe(ActionEvent e) {
 }
 public void viewRecipe(ActionEvent e) {
 	
-	
+	Alert.displayMethodNotSet("viewRecipe");
 }
 public void goToManagerUtilities(ActionEvent e) {
-	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
-	            Parent root = (Parent) fxmlLoader.load();
-	            Stage managerUtiliesStage = new Stage();
-	            managerUtiliesStage.setScene(new Scene(root));
-	            managerUtiliesStage.setTitle("Main Menu");
-	            managerUtiliesStage.show();
-	            Stage recipeListStage = (Stage) backBtn.getScene().getWindow();
-	            recipeListStage.close();
-	    } catch(Exception exception) {
-	       exception.printStackTrace();
-	    }
+	
+	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
+	NextStage.goTo(fxmlLoader, backBtn);
 }
 
 	@Override
