@@ -1,34 +1,36 @@
 package com.amazonaws;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
 @DynamoDBTable(tableName = "my-users-table")
 public class User {
 	protected int userId;
 	protected String name;
-	protected HashMap<Integer, Cart> orderList;
+	protected ArrayList<Cart> carts;	// arraylist of cart order numbers instead
 	protected int passcode;
 
 	public User() {
 		userId = -1;
 		name = "";
-		orderList = new HashMap<Integer, Cart>();
+		carts = new ArrayList<Cart>();
 	}
 
 	public User(int id, String n) {
 		userId = id;
 		name = n;
-		orderList = new HashMap<Integer, Cart>();
+		carts = new ArrayList<Cart>();
 	}
 	
-	public User(int id, String n, HashMap<Integer, Cart> list) {
+	public User(int id, String n, ArrayList<Cart> list) {
 		userId = id;
 		name = n;
-		orderList = list;
+		carts = list;
 	}
 
 	@DynamoDBHashKey(attributeName = "Id")
@@ -49,21 +51,26 @@ public class User {
 		name = n;
 	}
 
-	@DynamoDBAttribute(attributeName = "Order List")
-	public HashMap<Integer, Cart> getOrderList() {
-		return orderList;
-	}
-
-	public void addOrder(int n, Cart c) {
-		orderList.put(n, c);
-	}
+//	@DynamoDBTypeConverted(converter = MyCartConverter.class)
+//	public List<Cart> getOrderList() {
+//		return carts;
+//	}
+//
+//	public void addOrder(Cart c) {
+//		carts.add(c);
+//	}
+//	
+//	@DynamoDBTypeConverted(converter = MyPizzaConverter.class)
+//	public List<Pizza> getPizzas() {
+//		return this.pizzas;
+//	}
+//	public void setPizzas(List<Pizza> list) {
+//		pizzas = list;
+//	}
 	
 	public boolean removeOrder(int num) {
 		boolean flag = false;
-		if(orderList.containsKey(num)) {
-			orderList.remove(num);
-			flag = true;
-		}
+		// do something
 		return flag;
 	}
 }

@@ -27,6 +27,7 @@ public abstract class DatabaseTable {
 		initDb();
 		dynamoDb = new DynamoDB(client);
 		mapper = new DynamoDBMapper(client);
+		//mapper = new DynamoDBMapper(client, new DynamoDBMapperConfig(ConversionSchemas.V2));
 	}
 
 	public void initDb() throws Exception {
