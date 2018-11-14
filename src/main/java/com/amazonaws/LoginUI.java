@@ -144,11 +144,12 @@ public class LoginUI extends Application{
 			password.clear();
 			
 		    	try {
-		    	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		    	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MM_UI.fxml"));
 		    	            Parent root = (Parent) fxmlLoader.load();
 		    	            Stage mainMenuStage = new Stage();
 		    	            mainMenuStage.setScene(new Scene(root));
 		    	            mainMenuStage.setTitle("Main Menu");
+		    	            mainMenuStage.setResizable(false);
 		    	            mainMenuStage.show();
 		    	            Stage loginStage = (Stage) ok.getScene().getWindow();
 		    	            loginStage.close();
@@ -176,7 +177,7 @@ public class LoginUI extends Application{
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml"));
 			
-			Scene scene = new Scene(root,720,720);
+			Scene scene = new Scene(root,600,600);
 			stage.setScene(scene);
 			stage.setTitle("PIZZARRE");
 			stage.setResizable(false);

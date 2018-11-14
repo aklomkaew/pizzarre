@@ -68,7 +68,7 @@ public void goToDrinks(ActionEvent e) {
 public void goToSpecialty(ActionEvent e) {
 	
 	try {
-	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
+	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BuildSpecialtyUI.fxml"));
 	            Parent root = (Parent) fxmlLoader.load();
 	            Stage drinkStage = new Stage();
 	            drinkStage.setScene(new Scene(root));
