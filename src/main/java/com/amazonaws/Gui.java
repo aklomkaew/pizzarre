@@ -54,7 +54,7 @@ public class Gui extends Application {
 //			inventoryDb.printTable("my-inventory-table");
 //			System.out.println();
 
-			order = new Cart(orderNum, pizzaList);
+			//order = new Cart(orderNum, pizzaList);
 			// order.addPizza(p);
 			orders.put(orderNum, order);
 
@@ -132,11 +132,11 @@ public class Gui extends Application {
 
 	private ArrayList<Cart> updateActiveOrders(HashMap<Integer, Cart> orders) {
 		ArrayList<Cart> ret = new ArrayList<Cart>();
-		for (int k : orders.keySet()) {
-			if (orders.get(k).getState()) {
-				ret.add(orders.get(k));
-			}
-		}
+//		for (int k : orders.keySet()) {
+//			if (orders.get(k).getState()) {
+//				ret.add(orders.get(k));
+//			}
+//		}
 		return ret;
 	}
 

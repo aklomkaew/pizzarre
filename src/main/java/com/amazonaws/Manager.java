@@ -1,6 +1,6 @@
 package com.amazonaws;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
@@ -15,7 +15,7 @@ public class Manager extends User {
 	public Manager(int id, String n) {
 		super(id, n);
 	}
-	public Manager(int id, String n, HashMap<Integer, Cart> list) {
+	public Manager(int id, String n, ArrayList<Cart> list) {
 		super(id, n, list);
 	}
 	
