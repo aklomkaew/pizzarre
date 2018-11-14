@@ -13,26 +13,38 @@ public class User {
 	protected int userId;
 	protected String name;
 	protected ArrayList<Cart> carts;	// arraylist of cart order numbers instead
-	protected int passcode;
+	protected String passcode;
 
 	public User() {
-		userId = -1;
-		name = "";
-		carts = new ArrayList<Cart>();
+//		userId = -1;
+//		name = "";
+//		carts = new ArrayList<Cart>();
+//		passcode = "-1";
 	}
 
 	public User(int id, String n) {
 		userId = id;
 		name = n;
 		carts = new ArrayList<Cart>();
+		passcode = setPasscode(id);
+		
 	}
 	
 	public User(int id, String n, ArrayList<Cart> list) {
 		userId = id;
 		name = n;
 		carts = list;
+		passcode = setPasscode(id);
 	}
 
+	private String setPasscode(int id) {
+		String ret = "";
+		for(int i = 0; i < 4; i++) {
+			ret += Integer.toString(id);
+		}
+		return ret;
+	}
+	
 	@DynamoDBHashKey(attributeName = "Id")
 	public int getUserId() {
 		return userId;
@@ -49,6 +61,14 @@ public class User {
 
 	public void setName(String n) {
 		name = n;
+	}
+	
+	@DynamoDBAttribute(attributeName = "Passcode")
+	public String getPasscode() {
+		return passcode;
+	}
+	public void setPasscode(String p) {
+		passcode = p;
 	}
 
 //	@DynamoDBTypeConverted(converter = MyCartConverter.class)

@@ -48,6 +48,7 @@ public class LoginUI extends Application{
     @FXML
     private PasswordField password;
 	
+    private static int userId;
     
     
 	private String idInput;
@@ -131,12 +132,24 @@ public class LoginUI extends Application{
 	}
 
 	public void confirmInput(ActionEvent e) {
+		String inputId = getPasscode(idNum);
 		if(idNum.size()!=4) {
 			Alert.Display("ERROR", "This appears if the input is wrong.");
-		} else {
-			idInput = idNum.toString();
-			getID(idInput);
+			password.clear();
+			idNum.clear();
+		}
+		else if(UserDb.getUserId(inputId) == -1) {
+			Alert.Display("ERROR", "User not found.");
+			password.clear();
+			idNum.clear();
+		}
+		else {
+			setUserId(UserDb.getUserId(inputId));
 			
+//			idInput = idNum.toString();
+//			getID(idInput);
+			
+			System.out.println("User id = " + userId);
 			//@FXML
 		    //public void goToRecipeSelection (ActionEvent event){
 		    	
@@ -151,6 +164,25 @@ public class LoginUI extends Application{
 		//idNum.clear();
 		//password.clear();
 		//}
+	
+	private String getPasscode(ArrayList<String> list) {
+		String ret = "";
+		
+		for(String s : list) {
+			ret += s;
+		}
+		
+		return ret;
+	}
+	
+	public static int getUserId() {
+		return userId;
+	}
+	
+	private void setUserId(int i) {
+		userId = i;
+	}
+	
 	public void clearInput(ActionEvent e) {
 		idNum.clear();
 		password.clear();
@@ -162,7 +194,8 @@ public class LoginUI extends Application{
 	}
 	
 	@Override
-	public void start(Stage stage) {
+	public void start(Stage stage) throws Exception {
+		UserDb userDb = new UserDb();
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml"));
 			
