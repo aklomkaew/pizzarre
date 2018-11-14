@@ -30,6 +30,9 @@ public class Gui extends Application {
 
 		addMockData();
 		
+		System.out.println("User id = " + UserDb.getUserId("1111"));
+		System.out.println("User id = " + UserDb.getUserId("0000"));
+		
 		User u = new User();
 		u.setUserId(12);
 		u.setName("Patrick");

@@ -10,8 +10,6 @@ public class InventoryItem {
 	private int quantity;
 
 	public InventoryItem() {
-		name = "";
-		quantity = -1;
 	}
 
 	public InventoryItem(String n, int q) {
