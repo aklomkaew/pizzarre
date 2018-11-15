@@ -69,18 +69,14 @@ public class RecipeDb extends DatabaseTable {
 	// set itemQuantity
 	// restock
 	
-	public void retrieveAllItem() {
+	public static List<RecipeItem> retrieveAllItem() {
 		List<RecipeItem> itemList = mapper.scan(RecipeItem.class, new DynamoDBScanExpression());
 
-		System.out.println("\nRetrieving all recipe item");
+		System.out.println("\nRetrieving all recipe items");
 		for (RecipeItem item : itemList) {
-			System.out.print("Name = " + item.getName());
-			System.out.println(" has " + item.getIngredients().size() + " ingredients: ");
-			System.out.print("--> ");
-			for(String i : item.getIngredients()) {
-				System.out.print(i + " ");
-			}
-			System.out.println();
+			System.out.println("Id = " + item.getName());
 		}
+		
+		return itemList;
 	}
 }

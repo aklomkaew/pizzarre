@@ -103,7 +103,25 @@ public void confirmRecipe(ActionEvent e) {
 	/*		This will also need to add a button for the new recipe on the
 	 * 		specialty page's gridpane.
 	*/
+	
 	String recipeName = recipeNameTF.getText();
+	if(recipeName == null || recipeName.length() == 0) {
+		Alert.Display("Error", "Enter a recipe name");
+		return;
+	}
+	
+	if(toppingObservableList.size() == 0) {
+		Alert.Display("Error", "Select at least one ingredient for the recipe");
+		return;
+	}
+	
+	ArrayList<String> list = new ArrayList<String>();
+	list.addAll(toppingObservableList);
+	RecipeItem item = new RecipeItem(recipeName, list);
+	RecipeDb.addRecipe(item);
+	
+	Alert.Display("Success", "Recipe " + recipeName + " has been successfully added to the database.");
+	
 	System.out.println("The recipe name is " + recipeName + " and the toppings are: " + toppingObservableList);
 	recipeNameTF.clear();
 	toppingIdArrayList.clear();
