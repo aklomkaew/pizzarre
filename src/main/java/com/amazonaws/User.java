@@ -14,12 +14,14 @@ public class User {
 	protected String name;
 	protected ArrayList<Cart> carts;	// arraylist of cart order numbers instead
 	protected String passcode;
+	protected boolean manager;
 
 	public User() {
-//		userId = -1;
-//		name = "";
-//		carts = new ArrayList<Cart>();
-//		passcode = "-1";
+		userId = -1;
+		name = "";
+		carts = new ArrayList<Cart>();
+		passcode = "-1";
+		manager = false;
 	}
 
 	public User(int id, String n) {
@@ -27,7 +29,7 @@ public class User {
 		name = n;
 		carts = new ArrayList<Cart>();
 		passcode = setPasscode(id);
-		
+		manager = false;
 	}
 	
 	public User(int id, String n, ArrayList<Cart> list) {
@@ -35,6 +37,7 @@ public class User {
 		name = n;
 		carts = list;
 		passcode = setPasscode(id);
+		manager = false;
 	}
 
 	private String setPasscode(int id) {
@@ -69,6 +72,15 @@ public class User {
 	}
 	public void setPasscode(String p) {
 		passcode = p;
+	}
+	
+	@DynamoDBTypeConverted(converter = MyBooleanConverter.class)
+	public boolean isManager() {
+		return manager;
+	}
+
+	public void setManager(boolean m) {
+		manager = m;
 	}
 
 //	@DynamoDBTypeConverted(converter = MyCartConverter.class)
