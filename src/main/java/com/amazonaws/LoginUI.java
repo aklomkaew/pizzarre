@@ -47,9 +47,9 @@ public class LoginUI extends Application {
 	@FXML
 	private PasswordField password;
 
-	private static int userId;
-	private static String userName;
-	private static boolean manager;
+	private static boolean isManager;
+	private static User user;
+	private static Manager manager;
 
 	private String idInput;
 	// private GridPane pad;
@@ -137,32 +137,25 @@ public class LoginUI extends Application {
 
 	public void confirmInput(ActionEvent e) {
 		String inputId = getPasscode(idNum);
+		User u = UserDb.getUser(inputId);
 		if (idNum.size() != 4) {
 			Alert.Display("ERROR", "This appears if the input is wrong.");
 			password.clear();
 			idNum.clear();
-		} else if (UserDb.getUser(inputId).getUserId() == -1) {
+		} else if (u.getUserId() == -1) {
 			Alert.Display("ERROR", "User not found.");
 			password.clear();
 			idNum.clear();
 		} else {
-			User u = null;
-			Manager man = null;
-			if (UserDb.getUser(inputId).isManager()) {
-				man = UserDb.getUser(inputId);
-				setUserId(man.getUserId());
-				setUserName(man.getName());
-				setIsManager(man.isManager());
-			} else {
-				u = UserDb.getUser(inputId);
-				setUserId(u.getUserId());
-				setUserName(u.getName());
-				setIsManager(u.isManager());
+			if(u.isManager()) {
+				manager = UserDb.getUser(inputId);
+				isManager = true;
 			}
-
-			System.out.println("User id = " + userId);
-			System.out.println("User name = " + userName);
-			System.out.println("IsManager = " + manager);
+			else {
+				user = u;
+				isManager = false;
+			}
+			
 			// @FXML
 			// public void goToRecipeSelection (ActionEvent event){
 
@@ -187,31 +180,13 @@ public class LoginUI extends Application {
 
 		return ret;
 	}
-
-	private void setUserId(int i) {
-		userId = i;
+	
+	public static <T extends User> T getUser(){
+		if(isManager) {
+			return (T) manager;
+		}
+		return (T) user;
 	}
-
-	public static int getUserId() {
-		return userId;
-	}
-
-	private void setUserName(String str) {
-		userName = str;
-	}
-
-	public static String getUserName() {
-		return userName;
-	}
-
-	private void setIsManager(boolean m) {
-		manager = m;
-	}
-
-	public static boolean isManager() {
-		return manager;
-	}
-
 	public void clearInput(ActionEvent e) {
 		idNum.clear();
 		password.clear();

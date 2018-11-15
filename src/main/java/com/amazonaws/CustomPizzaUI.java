@@ -119,7 +119,7 @@ public class CustomPizzaUI {
 			Alert.Display("ERROR", "Select a size.");
 		} else {	
 			System.out.println("You chose a " + pizzaSize + " pizza with the following toppings: " + toppingObservableList);
-			System.out.println("User id = " + LoginUI.getUserId());
+			System.out.println("User id = " + LoginUI.getUser().getUserId());
 			
 			for(int i = 0; i < toppingObservableList.size(); i++) {
 				String str = toppingObservableList.get(i).toLowerCase();
