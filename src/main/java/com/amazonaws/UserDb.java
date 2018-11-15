@@ -35,7 +35,11 @@ public class UserDb extends DatabaseTable {
 	public static void initTable() {
 		System.out.println("\nInitializing table " + tableName);
 		
-		User u = new User(1, "My new user");
+		Manager m = new Manager(0, "Manager Smith");
+		mapper.save(m);
+		System.out.println("Save manager successfully");
+		
+		User u = new User(1, "User");
 		mapper.save(u);
 		System.out.println("Save user successfully");
 		
@@ -87,30 +91,45 @@ public class UserDb extends DatabaseTable {
 		}
 	}
 
-	public static int getUserId(String password) {
-//		User item = new User();
-//		item.setPasscode(password);
-	    
+	public static <T extends User> T getUser(String password) {
+		boolean manager = false;
 		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
 		attributeValues.put(":val1", new AttributeValue().withS(password));
 		
 		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
 				.withFilterExpression("Passcode = :val1").withExpressionAttributeValues(attributeValues);
 		
-		//List<User> itemList = mapper.scan(User.class, scanExpression);
-		List<User> itemList;
+		List<User> userList = null;
+		List<Manager> managerList = null;
 		try {
-			itemList = mapper.scan(User.class, scanExpression);
+			managerList = mapper.scan(Manager.class, scanExpression);
+			manager = true;
 		}
 		catch(Exception e) {
-			System.err.println(e.getMessage());
-			return -1;
+			System.err.println("Not manager");
+			try {
+				userList = mapper.scan(User.class, scanExpression);
+			}
+			catch(Exception ex) {
+				System.err.println("Not user");
+			}
 		}
 		
-		if(itemList == null || itemList.size() < 1) {
-			return -1;
+		if(manager) {
+			Manager man = new Manager();
+			if(managerList == null || managerList.size() < 1) {
+				return (T) man;
+			}
+			man = managerList.get(0);
+			return (T) man;
 		}
 		
-		return itemList.get(0).getUserId();
+		User u = new User();
+		if(userList == null || userList.size() < 1) {
+			return (T) u;
+		}
+		
+		u = userList.get(0);
+		return (T) u;
 	}
 }
