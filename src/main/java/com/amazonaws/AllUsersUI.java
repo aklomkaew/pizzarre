@@ -53,7 +53,9 @@ public class AllUsersUI extends Application implements Initializable {
     	User userToDelete = userTableView.getSelectionModel().getSelectedItem();
     	userObservableList.remove(userToDelete);
     	userTableView.setItems(userObservableList);
-    	//UserDB.deleteUser(userToDelete);
+    	
+    	UserDb.deleteUser(userToDelete.getUserId());
+    	// after delete, do retrieve all users again
     }
 	
 
