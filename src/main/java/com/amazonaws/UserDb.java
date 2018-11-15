@@ -109,13 +109,15 @@ public class UserDb extends DatabaseTable {
 		return status;
 	}
 
-	public static void retrieveAllItem() {
+	public static List<User> retrieveAllItem() {
 		List<User> itemList = mapper.scan(User.class, new DynamoDBScanExpression());
 
 		System.out.println("\nRetrieving all users");
 		for (User item : itemList) {
 			System.out.println("Id = " + item.getUserId() + " name = " + item.getName());
 		}
+		
+		return itemList;
 	}
 
 	public static <T extends User> T getUser(String password) {

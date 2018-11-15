@@ -1,7 +1,8 @@
 package com.amazonaws;
 
-
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -28,47 +29,67 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
 public class AllUsersUI extends Application implements Initializable {
-	
-	@FXML
-    private Button backBtn;
-    @FXML
-    private Button addUserBtn;
-    @FXML
-    private Button deleteUserBtn;
-    @FXML
-    private TableView<User> userTableView;
-    @FXML
-    private TableColumn<User, String> nameColumn;
-    @FXML
-    private TableColumn<User, Integer> idColumn;
-    
-    private ObservableList<User> userObservableList;
-	
-    
-    public void addUser(ActionEvent e) {
-    	Alert.displayMethodNotSet("addUser");
-    }
-    
-    public void deleteUser(ActionEvent e) {
-    	User userToDelete = userTableView.getSelectionModel().getSelectedItem();
-    	userObservableList.remove(userToDelete);
-    	userTableView.setItems(userObservableList);
-    	
-    	UserDb.deleteUser(userToDelete.getUserId());
-    	// after delete, do retrieve all users again
-    }
-	
 
-public void goToManagerUtilities(ActionEvent e) {
-	
-	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
-	NextStage.goTo(fxmlLoader, backBtn);
-}
+	@FXML
+	private Button backBtn;
+	@FXML
+	private Button addUserBtn;
+	@FXML
+	private Button deleteUserBtn;
+	@FXML
+	private TableView<User> userTableView;
+	@FXML
+	private TableColumn<User, String> nameColumn;
+	@FXML
+	private TableColumn<User, Integer> idColumn;
+
+	private ObservableList<User> userObservableList;
+
+	public void addUser(ActionEvent e) {
+		Alert.displayMethodNotSet("addUser");
+		// take to a page to enter user information
+		// in that page, have submit button and make sure they enter everything before submission
+	}
+
+	public void deleteUser(ActionEvent e) {
+		User userToDelete = userTableView.getSelectionModel().getSelectedItem();
+		if(userToDelete == null) {
+			Alert.Display("Error", "Select a user to delete.");
+		}
+		
+		userObservableList.remove(userToDelete);
+		userTableView.setItems(userObservableList);
+
+		UserDb.deleteUser(userToDelete.getUserId());
+		// after delete, do retrieve all users again
+		displayAllUser();
+	}
+
+	public void goToManagerUtilities(ActionEvent e) {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
+		NextStage.goTo(fxmlLoader, backBtn);
+	}
 
 	@Override
 	public void start(Stage arg0) throws Exception {
-		
-		
+
+	}
+	
+	// call this to display all users
+	public void displayAllUser() {
+		List<User> list = UserDb.retrieveAllItem();
+		// show these items
+		System.out.println("\nIn manager utilities, all users: ");
+		for (User item : list) {
+			System.out.println("Id = " + item.getUserId() + " name = " + item.getName());
+		}
+		userObservableList.clear();
+		userObservableList.addAll(list);
+		System.out.println("\nPrint from observableList");
+		for (User item : userObservableList) {
+			System.out.println("Id = " + item.getUserId() + " name = " + item.getName());
+		}
 	}
 
 	@Override
@@ -76,10 +97,10 @@ public void goToManagerUtilities(ActionEvent e) {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
 		idColumn.setCellValueFactory(new PropertyValueFactory<User, Integer>("userId"));
 		userObservableList = FXCollections.observableArrayList();
-		//userObservableList = FXCollections.observableArrayList(userDB.getAllUsers())
-		//userObservableList.add(new User(12, "Mikey"));
+		// userObservableList = FXCollections.observableArrayList(userDB.getAllUsers())
+		// userObservableList.add(new User(12, "Mikey"));
 		userTableView.setItems(userObservableList);
-		
+		displayAllUser();
 	}
-	
+
 }
