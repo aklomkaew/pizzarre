@@ -79,11 +79,11 @@ public class AllUsersUI extends Application implements Initializable {
 	// call this to display all users
 	public void displayAllUser() {
 		List<User> list = UserDb.retrieveAllItem();
-		// show these items
-		System.out.println("\nIn manager utilities, all users: ");
-		for (User item : list) {
-			System.out.println("Id = " + item.getUserId() + " name = " + item.getName());
+		
+		if(list == null || list.size() < 1) {
+			return;
 		}
+		
 		userObservableList.clear();
 		userObservableList.addAll(list);
 		System.out.println("\nPrint from observableList");
@@ -97,8 +97,6 @@ public class AllUsersUI extends Application implements Initializable {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
 		idColumn.setCellValueFactory(new PropertyValueFactory<User, Integer>("userId"));
 		userObservableList = FXCollections.observableArrayList();
-		// userObservableList = FXCollections.observableArrayList(userDB.getAllUsers())
-		// userObservableList.add(new User(12, "Mikey"));
 		userTableView.setItems(userObservableList);
 		displayAllUser();
 	}

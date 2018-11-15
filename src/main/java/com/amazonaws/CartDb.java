@@ -50,13 +50,15 @@ public class CartDb extends DatabaseTable {
 		mapper.save(c);
 	}
 	
-	public void retrieveAllItem() {
+	public static List<Cart> retrieveAllItem() {
 		List<Cart> itemList = mapper.scan(Cart.class, new DynamoDBScanExpression());
 
-		System.out.println("\nRetrieving all users");
+		System.out.println("\nRetrieving all carts");
 		for (Cart item : itemList) {
-			System.out.println("Id = " + item.getOrderNumber() + " name = " + item.getServerName()
-			+ " pizza name = " + item.getPizzas().get(0).getName());
+			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName()
+			+ " total = " + item.getTotal());
 		}
+		
+		return itemList;
 	}
 }
