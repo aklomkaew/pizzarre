@@ -96,13 +96,15 @@ public class InventoryDb extends DatabaseTable {
 		return itemList.get(0).getQuantity();
 	}
 	
-	public void retrieveAllItem() {
+	public static List<InventoryItem> retrieveAllItem() {
 		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, new DynamoDBScanExpression());
 
-		System.out.println("\nRetrieving all inventory item");
+		System.out.println("\nRetrieving all inventory items");
 		for (InventoryItem item : itemList) {
-			System.out.println("Topping Name = " + item.getName() + " quantity = " + item.getQuantity());
+			System.out.println("Id = " + item.getName());
 		}
+		
+		return itemList;
 	}
 
 	public static void restock() {
@@ -111,6 +113,7 @@ public class InventoryDb extends DatabaseTable {
 
 		for (InventoryItem item : itemList) {
 			item.setQuantity(10);
+			mapper.save(item);
 		}
 	}
 }

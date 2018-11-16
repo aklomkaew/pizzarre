@@ -43,7 +43,6 @@ public class RecipeListUI extends Application implements Initializable {
 	@FXML
 	private TableColumn<RecipeItem, String> nameColumn;
 	@FXML
-	//private TableColumn<RecipeItem, String> ingredientsColumn;
 	private TableColumn<RecipeItem, ArrayList<String>> ingredientsColumn;
 
 	private ObservableList<RecipeItem> recipeObservableList;
