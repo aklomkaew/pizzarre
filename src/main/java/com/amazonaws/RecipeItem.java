@@ -26,7 +26,7 @@ public class RecipeItem {
 		ingredients = list;
 	}
 
-	@DynamoDBHashKey(attributeName = "Name")
+	@DynamoDBHashKey(attributeName = "RecipeName")
 	public String getName() {
 		return name;
 	}

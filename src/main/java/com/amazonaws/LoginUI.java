@@ -200,6 +200,7 @@ public class LoginUI extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		UserDb userDb = new UserDb();
+		RecipeDb recipeDb = new RecipeDb();
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml"));
 

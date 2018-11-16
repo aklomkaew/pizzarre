@@ -76,7 +76,6 @@ public class AllUsersUI extends Application implements Initializable {
 
 	}
 	
-	// call this to display all users
 	public void displayAllUser() {
 		List<User> list = UserDb.retrieveAllItem();
 		
