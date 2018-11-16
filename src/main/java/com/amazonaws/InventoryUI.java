@@ -90,12 +90,12 @@ public class InventoryUI extends Application implements Initializable {
     public void addIngredient(ActionEvent e, int quantity, String ingredientName) { //integration goes here, not checkIngredient
     	if(InventoryDb.addItem(ingredientName, quantity)) {
     		Alert.Display("Success", "Ingredient has been added!");
-    		ingredientNameTF.clear();
-        	quantityTF.clear();
     	}
     	else {
     		Alert.Display("Error", "Ingredient with that name already exists");
     	}
+    	ingredientNameTF.clear();
+    	quantityTF.clear();
     	updateTable();
     }
     
