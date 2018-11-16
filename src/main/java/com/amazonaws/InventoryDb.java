@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 
@@ -34,15 +35,15 @@ public class InventoryDb extends DatabaseTable {
 		item.setName("cheese");
 		item.setQuantity(10);
 		mapper.save(item);
-		
+
 		item.setName("crust");
 		item.setQuantity(10);
 		mapper.save(item);
-		
+
 		item.setName("sauce");
 		item.setQuantity(10);
 		mapper.save(item);
-		
+
 		item.setName("pepperoni");
 		item.setQuantity(10);
 		mapper.save(item);
@@ -59,7 +60,7 @@ public class InventoryDb extends DatabaseTable {
 		item.setQuantity(10);
 		mapper.save(item);
 
-		item.setName("bacon");
+		item.setName("beacon");
 		item.setQuantity(10);
 		mapper.save(item);
 
@@ -87,7 +88,7 @@ public class InventoryDb extends DatabaseTable {
 		item.setQuantity(10);
 		mapper.save(item);
 
-		item.setName("greenPepper");
+		item.setName("greenpepper");
 		item.setQuantity(10);
 		mapper.save(item);
 
@@ -136,13 +137,29 @@ public class InventoryDb extends DatabaseTable {
 	// set itemQuantity
 	// restock
 
-	public void retrieveAllItem() {
+	public static int getQuantityOfItem(String toppingName) {
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withS(toppingName));
+
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("IngredientName = :val1").withExpressionAttributeValues(attributeValues);
+
+		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, scanExpression);
+
+		System.out.println("Item list size = " + itemList.size());
+
+		return itemList.get(0).getQuantity();
+	}
+
+	public static List<InventoryItem> retrieveAllItem() {
 		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, new DynamoDBScanExpression());
 
-		System.out.println("\nRetrieving all inventory item");
+		System.out.println("\nRetrieving all inventory items");
 		for (InventoryItem item : itemList) {
-			System.out.println("Topping Name = " + item.getName() + " quantity = " + item.getQuantity());
+			System.out.println("Id = " + item.getName());
 		}
+
+		return itemList;
 	}
 
 	public static void restock() {
@@ -151,6 +168,7 @@ public class InventoryDb extends DatabaseTable {
 
 		for (InventoryItem item : itemList) {
 			item.setQuantity(10);
+			mapper.save(item);
 		}
 	}
 }

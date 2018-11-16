@@ -49,9 +49,13 @@ public void goToMyOrders(ActionEvent e) {
 }
 	
 public void goToManagerUtilities(ActionEvent e) {
-	
-	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
-	NextStage.goTo(fxmlLoader, mUtil);
+	if(LoginUI.getUser().isManager()) {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
+		NextStage.goTo(fxmlLoader, mUtil);
+	}
+	else{
+		Alert.Display("Error", "Manager credentials required.");
+	}
 }
 
 public void logout (ActionEvent event){

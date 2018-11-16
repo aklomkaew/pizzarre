@@ -1,5 +1,9 @@
 package com.amazonaws;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,8 +36,6 @@ import javafx.util.converter.IntegerStringConverter;
 
 @SuppressWarnings({ "unused" })
 public class InventoryUI extends Application implements Initializable {
-	
-	
 
     @FXML
     private Button backBtn;
@@ -49,7 +52,7 @@ public class InventoryUI extends Application implements Initializable {
     @FXML
     private TableView<InventoryItem> inventoryTableView;
     @FXML
-    private TableColumn<InventoryItem, String> idColumn;
+    private TableColumn<InventoryItem, String> nameColumn;
     @FXML
     private TableColumn<InventoryItem, Integer> quantityColumn;
 	
@@ -84,24 +87,44 @@ public class InventoryUI extends Application implements Initializable {
     public void deleteIngredient(ActionEvent e) {
     	
     }
-    
-    public void goToManagerUtilities(ActionEvent e) {
- 
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
-    	NextStage.goTo(fxmlLoader, backBtn);
-    }
+	public void goToManagerUtilities(ActionEvent e) {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
+			Parent root = (Parent) fxmlLoader.load();
+			Stage managerUtiliesStage = new Stage();
+			managerUtiliesStage.setScene(new Scene(root));
+			managerUtiliesStage.setTitle("Main Menu");
+			managerUtiliesStage.show();
+			Stage inventoryStage = (Stage) backBtn.getScene().getWindow();
+			inventoryStage.close();
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+	
+	public void displayAllInventory() {
+		List<InventoryItem> list = InventoryDb.retrieveAllItem();
+
+		if (list == null || list.size() < 1) {
+			return;
+		}
+
+		inventoryObservableList.clear();
+		inventoryObservableList.addAll(list);
+		System.out.println("\nPrint from observableList");
+		for (InventoryItem item : inventoryObservableList) {
+			System.out.println("Inventory name = " + item.getName() + " quantity = " + item.getQuantity());
+		}
+	}
 
 	@Override
 	public void start(Stage arg0) throws Exception {
-		
-		
-	}
 
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		idColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("name"));
 		quantityColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("quantity"));
 		inventoryObservableList = FXCollections.observableArrayList();
 		//inventoryObservableList = FXCollections.observableArrayList(InventoryDB.getAllItems())
@@ -109,6 +132,7 @@ public class InventoryUI extends Application implements Initializable {
 		//inventoryObservableList.add(new InventoryItem("greenPepper", 150));
 		inventoryTableView.setItems(inventoryObservableList);
 		inventoryTableView.setEditable(true);
+    displayAllInventory();
 	}
 	
 }
