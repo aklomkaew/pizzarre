@@ -110,7 +110,7 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void confirmOrder(ActionEvent e) {
-		int num = order.getItemNum();
+		int num = order.getOrderNumber();
 		while (!OrderDb.addOrder(order)) {
 			num++;
 			order.setOrderNumber(num);
