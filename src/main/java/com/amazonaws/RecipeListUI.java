@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -53,6 +57,24 @@ public class RecipeListUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, addRecipeBtn);
 	}
 
+public void viewRecipe(ActionEvent e) { //index in Observable List will match index in RecipeDb
+	int index = -1;
+	index = recipeListView.getSelectionModel().getSelectedIndex();
+	
+	System.out.println(index);
+	
+	//RecipeItem recipeItem = RecipeDb.get(index)
+	//Alert.displayToppings(recipeItem.getName(), recipeItem.getToppings();
+	
+	Alert.displayIntegration("viewRecipe");
+}
+
+public void goToManagerUtilities(ActionEvent e) {
+	
+	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
+	NextStage.goTo(fxmlLoader, backBtn);
+}
+  
 	public void deleteRecipe(ActionEvent e) {
 		RecipeItem itemToDelete = recipeTableView.getSelectionModel().getSelectedItem();
 		if(itemToDelete == null) {
@@ -64,11 +86,19 @@ public class RecipeListUI extends Application implements Initializable {
 
 		RecipeDb.deleteItem(itemToDelete.getName());
 		displayAllRecipe();
-	}
-
-	public void viewRecipe(ActionEvent e) {
-
-		Alert.displayMethodNotSet("viewRecipe");
+//   Alert.displayIntegration("deleteRecipe");
+	
+// 	String recipeName = recipeListView.getSelectionModel().getSelectedItem();
+// 	int index = -1;
+// 	index = recipeListView.getSelectionModel().getSelectedIndex();
+	
+// 	//RecipeItem recipeToDelete = RecipeDB.get(index)
+// 	//RecipeDB.delete(index);
+	
+// 	System.out.println(index);
+	
+// 	recipeObservableList.remove(recipeName);
+// 	recipeListView.setItems(recipeObservableList);
 	}
 
 	public void displayAllRecipe() {
@@ -86,12 +116,6 @@ public class RecipeListUI extends Application implements Initializable {
 		}
 	}
 
-	public void goToManagerUtilities(ActionEvent e) {
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
-		NextStage.goTo(fxmlLoader, backBtn);
-	}
-
 	@Override
 	public void start(Stage arg0) throws Exception {
 
@@ -106,5 +130,4 @@ public class RecipeListUI extends Application implements Initializable {
 		recipeTableView.setItems(recipeObservableList);
 		displayAllRecipe();
 	}
-
 }

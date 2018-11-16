@@ -29,13 +29,15 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
 public class AllUsersUI extends Application implements Initializable {
-
-	@FXML
+  
+  @FXML
 	private Button backBtn;
 	@FXML
 	private Button addUserBtn;
 	@FXML
 	private Button deleteUserBtn;
+  @FXML
+  private Button deleteEveryUserBtn;
 	@FXML
 	private TableView<User> userTableView;
 	@FXML
@@ -47,6 +49,8 @@ public class AllUsersUI extends Application implements Initializable {
 
 	public void addUser(ActionEvent e) {
 		Alert.displayMethodNotSet("addUser");
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddUserUI.fxml"));
+    NextStage.goTo(fxmlLoader, addUserBtn);
 		// take to a page to enter user information
 		// in that page, have submit button and make sure they enter everything before submission
 	}
@@ -69,6 +73,10 @@ public class AllUsersUI extends Application implements Initializable {
 		// after delete, do retrieve all users again
 		displayAllUser();
 	}
+    
+  public void deleteEveryUser(ActionEvent e) {
+
+  }
 
 	public void goToManagerUtilities(ActionEvent e) {
 

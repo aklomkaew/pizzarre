@@ -104,6 +104,14 @@
                               <InnerShadow />
                            </effect>
                         </Button>
+                        <Button fx:id="modifyCustom" mnemonicParsing="false" onAction="#modifyPizza" prefHeight="80.0" prefWidth="80.0" text="Modify Custom Pizza" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
                      </children>
                   </GridPane>
                </children>
@@ -116,7 +124,7 @@
             <ColorAdjust />
          </effect>
          <left>
-            <ListView prefHeight="470.0" prefWidth="240.0" style="-fx-background-color: lightsteelblue; -fx-border-color: gray;" BorderPane.alignment="CENTER">
+            <ListView fx:id="orderListView" prefHeight="470.0" prefWidth="240.0" style="-fx-background-color: lightsteelblue; -fx-border-color: gray;" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="10.0" top="50.0" />
                </BorderPane.margin>

@@ -29,13 +29,16 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
 public class AllOrdersUI extends Application implements Initializable {
-
 	@FXML
 	private Button backBtn;
-	@FXML
-	private Button addUserBtn;
-	@FXML
-	private Button deleteUserBtn;
+  @FXML
+  private Button showOrderBtn;
+  @FXML
+  private Button editOrderBtn;
+  @FXML
+  private Button deleteOrderBtn;
+  @FXML
+  private Button deleteAllOrdersBtn;
 	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
@@ -53,6 +56,22 @@ public class AllOrdersUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
+  public void showOrders(ActionEvent e) {
+    	
+  }
+  
+  public void editOrders(ActionEvent e) {
+    	
+  }
+
+  public void deleteOrders(ActionEvent e) {
+
+  }
+
+  public void deleteAllOrders(ActionEvent e) {
+
+  }
+  
 	public void displayAllOrder() {
 		List<Order> list = OrderDb.retrieveAllItem();
 
