@@ -103,4 +103,20 @@ public class RecipeDb extends DatabaseTable {
 		
 		return itemList;
 	}
+	
+	public static ArrayList<String> getIngredients(String name) {
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withS(name));
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("RecipeName = :val1").withExpressionAttributeValues(attributeValues);
+		
+		List<RecipeItem> recipeItem = mapper.scan(RecipeItem.class, scanExpression);
+		
+		// should be only one recipe
+		ArrayList<String> ret = new ArrayList<String>();
+		ret.addAll(recipeItem.get(0).getIngredients());
+		
+		return ret;
+	}
 }

@@ -19,16 +19,16 @@ import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 
-public class CartDb extends DatabaseTable {
+public class OrderDb extends DatabaseTable {
 
 	private static String tableName;
 
-	public CartDb() throws Exception {
+	public OrderDb() throws Exception {
 		super();
-		tableName = "my-carts-table";
+		tableName = "my-orders-table";
 
 		createNewTable(tableName);
-		initTable();
+		//initTable();
 		retrieveAllItem();
 	}
 
@@ -43,36 +43,57 @@ public class CartDb extends DatabaseTable {
 		p.setName("testPizza");
 		List<Pizza> list = new ArrayList<Pizza>(Arrays.asList(p));
 		
-		Cart c = new Cart(1, list);
+		Order c = new Order(1, list);
 		c.setServerName("server1");
 		c.setTotal(100);
 		mapper.save(c);
 	}
 
-	public static void addCart(Cart c) {
-		mapper.save(c);
+	public static boolean addOrder(Order c) {
+		boolean status = false;
+		// if order presents, then don't add it
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withN(Integer.toString(c.getOrderNumber())));
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("OrderNumber = :val1").withExpressionAttributeValues(attributeValues);
+		
+		List<Order> itemList = mapper.scan(Order.class, scanExpression);
+		if(itemList == null || itemList.size() == 0) {
+			mapper.save(c);
+			status = true;
+		}
+		
+		return status;
 	}
 	
-	public static List<Cart> retrieveAllItem() {
-		List<Cart> itemList = mapper.scan(Cart.class, new DynamoDBScanExpression());
+	public static void updateOrder(Order obj) {
+		mapper.save(obj);
+	}
+	
+	public static ArrayList<Order> retrieveAllItem() {
+		List<Order> itemList = mapper.scan(Order.class, new DynamoDBScanExpression());
 
-		System.out.println("\nRetrieving all carts");
-		for (Cart item : itemList) {
+		System.out.println("\nRetrieving all orders");
+		for (Order item : itemList) {
 			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName()
 			+ " total = " + item.getTotal());
 		}
 		
-		return itemList;
+		ArrayList<Order> ret = new ArrayList<Order>();
+		ret.addAll(itemList);
+		
+		return ret;
 	}
 	
-	public static List<Cart> retrieveFilteredItem(int id) {
+	public static List<Order> retrieveFilteredItem(int id) {
 		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
 		attributeValues.put(":val1", new AttributeValue().withN(Integer.toString(id)));
 		
 		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
 				.withFilterExpression("ServerId = :val1").withExpressionAttributeValues(attributeValues);
 		
-		List<Cart> itemList = mapper.scan(Cart.class, scanExpression);
+		List<Order> itemList = mapper.scan(Order.class, scanExpression);
 		
 		return itemList;
 	}

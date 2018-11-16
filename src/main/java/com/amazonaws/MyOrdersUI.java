@@ -32,13 +32,13 @@ public class MyOrdersUI extends Application implements Initializable{
 	@FXML
 	private Button backBtn;
 	@FXML
-	private TableView<Cart> orderTableView;
+	private TableView<Order> orderTableView;
 	@FXML
-	private TableColumn<Cart, Integer> orderNumberColumn;
+	private TableColumn<Order, Integer> orderNumberColumn;
 	@FXML
-	private TableColumn<Cart, Double> totalColumn;
+	private TableColumn<Order, Double> totalColumn;
 
-	private ObservableList<Cart> orderObservableList;
+	private ObservableList<Order> orderObservableList;
 
 	public void goToMainMenu(ActionEvent e) {
 		try {
@@ -56,7 +56,7 @@ public class MyOrdersUI extends Application implements Initializable{
 	}
 	
 	public void displayAllOrder() {
-		List<Cart> list = CartDb.retrieveFilteredItem(LoginUI.getUser().getUserId());
+		List<Order> list = OrderDb.retrieveFilteredItem(LoginUI.getUser().getUserId());
 
 		if(list == null || list.size() < 1) {
 			return;
@@ -65,7 +65,7 @@ public class MyOrdersUI extends Application implements Initializable{
 		orderObservableList.clear();
 		orderObservableList.addAll(list);
 		System.out.println("\nPrint from observableList");
-		for (Cart item : orderObservableList) {
+		for (Order item : orderObservableList) {
 			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName()
 			+ " total = " + item.getTotal());
 		}
@@ -78,8 +78,8 @@ public class MyOrdersUI extends Application implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		orderNumberColumn.setCellValueFactory(new PropertyValueFactory<Cart, Integer>("orderNumber"));
-		totalColumn.setCellValueFactory(new PropertyValueFactory<Cart, Double>("total"));
+		orderNumberColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("orderNumber"));
+		totalColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("total"));
 		orderObservableList = FXCollections.observableArrayList();
 		orderTableView.setItems(orderObservableList);
 		displayAllOrder();

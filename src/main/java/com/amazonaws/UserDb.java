@@ -86,6 +86,10 @@ public class UserDb extends DatabaseTable {
 		return status;
 	}
 	
+	public static void updateUser(User u) {
+		mapper.save(u);
+	}
+	
 	public static boolean deleteUser(int id) {
 		boolean status = false;
 		

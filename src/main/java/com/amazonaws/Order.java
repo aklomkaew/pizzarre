@@ -10,30 +10,33 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTyped;
 
-@DynamoDBTable(tableName = "my-carts-table")
-public class Cart {
+@DynamoDBTable(tableName = "my-orders-table")
+public class Order {
 	private ArrayList<Pizza> pizzas;
 	// private ArrayList<Drink> drinks;
 
 	private int orderNumber;
 	private boolean active;
+	private static int itemNum;
 	private double total;
 	private String server;
 	private int serverId;
 
-	public Cart() {
+	public Order() {
 		this.pizzas = new ArrayList<Pizza>();
 		this.orderNumber = -1;
 		this.active = true;
 		this.total = 0.0;
+		this.itemNum = 0;
 	}
 
-	public Cart(int num, List<Pizza> list) {
+	public Order(int num, List<Pizza> list) {
 		this.orderNumber = num;
 		this.pizzas = new ArrayList<Pizza>();
 		this.pizzas.addAll(list);
 		this.active = true;
 		this.total = 0.0;
+		this.itemNum = pizzas.size();
 	}
 
 	@DynamoDBHashKey(attributeName = "OrderNumber")
@@ -58,6 +61,15 @@ public class Cart {
 		this.active = false;
 	}
 
+	@DynamoDBAttribute(attributeName = "ItemNum")
+	public int getItemNum() {
+		return this.itemNum;
+	}
+
+	public void setItemNum(int n) {
+		this.itemNum = n;
+	}
+	
 	@DynamoDBAttribute(attributeName = "Server")
 	public String getServerName() {
 		return this.server;
@@ -95,6 +107,10 @@ public class Cart {
 
 	public void addPizza(Pizza p) {
 		this.pizzas.add(p);
+	}
+	
+	public static void incrementItemCount() {
+		itemNum++;
 	}
 
 	public String toString() {

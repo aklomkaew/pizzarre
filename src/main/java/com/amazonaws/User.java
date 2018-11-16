@@ -12,14 +12,14 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 public class User {
 	protected int userId;
 	protected String name;
-	protected ArrayList<Cart> carts;	// arraylist of cart order numbers instead
+	protected ArrayList<Order> orders;
 	protected String passcode;
 	protected boolean manager;
 
 	public User() {
 		userId = -1;
 		name = "";
-		carts = new ArrayList<Cart>();
+		orders = new ArrayList<Order>();
 		passcode = "-1";
 		manager = false;
 	}
@@ -27,15 +27,15 @@ public class User {
 	public User(int id, String n) {
 		userId = id;
 		name = n;
-		carts = new ArrayList<Cart>();
+		orders = new ArrayList<Order>();
 		passcode = setPasscode(id);
 		manager = false;
 	}
 	
-	public User(int id, String n, ArrayList<Cart> list) {
+	public User(int id, String n, ArrayList<Order> list) {
 		userId = id;
 		name = n;
-		carts = list;
+		orders.addAll(list);
 		passcode = setPasscode(id);
 		manager = false;
 	}
@@ -83,22 +83,14 @@ public class User {
 		manager = m;
 	}
 
-//	@DynamoDBTypeConverted(converter = MyCartConverter.class)
-//	public List<Cart> getOrderList() {
-//		return carts;
-//	}
-//
-//	public void addOrder(Cart c) {
-//		carts.add(c);
-//	}
-//	
-//	@DynamoDBTypeConverted(converter = MyPizzaConverter.class)
-//	public List<Pizza> getPizzas() {
-//		return this.pizzas;
-//	}
-//	public void setPizzas(List<Pizza> list) {
-//		pizzas = list;
-//	}
+	@DynamoDBTypeConverted(converter = MyOrderConverter.class)
+	public ArrayList<Order> getOrderList() {
+		return orders;
+	}
+	
+	public void setOrderList(ArrayList<Order> list) {
+		orders.addAll(list);
+	}
 	
 	public boolean removeOrder(int num) {
 		boolean flag = false;

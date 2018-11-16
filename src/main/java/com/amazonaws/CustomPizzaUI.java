@@ -1,6 +1,7 @@
 package com.amazonaws;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -28,7 +29,7 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
 public class CustomPizzaUI {
-	
+
 	@FXML
 	private Button confirmBtn;
 	@FXML
@@ -77,94 +78,106 @@ public class CustomPizzaUI {
 	private String toppingName;
 	@FXML
 	private ListView<String> toppingListView = new ListView<String>();
-	
+
 	private ObservableList<String> toppingObservableList = FXCollections.observableArrayList();
-	
+
 	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
-	
-    private static final int SMALL = 1;
-    private static final int MEDIUM = 2;
-    private static final int LARGE = 3;
-    
-	
-	public void selectSize (ActionEvent e) {
-		pizzaSize = ((Button)e.getSource()).getId();
+
+	private static final int SMALL = 1;
+	private static final int MEDIUM = 2;
+	private static final int LARGE = 3;
+
+	public void selectSize(ActionEvent e) {
+		pizzaSize = ((Button) e.getSource()).getId();
 	}
-	
-	public void addTopping (ActionEvent e) {
-		
-		String id = ((Button)e.getSource()).getId();
-		String toppingName = ((Button)e.getSource()).getText();
-		
-		if(toppingIdArrayList.contains(id) == false) { //if statements adds topping to the list
-			
+
+	public void addTopping(ActionEvent e) {
+
+		String id = ((Button) e.getSource()).getId();
+		String toppingName = ((Button) e.getSource()).getText();
+
+		if (toppingIdArrayList.contains(id) == false) { // if statements adds topping to the list
+
 			System.out.println(id + " added");
 			toppingIdArrayList.add(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
-			toppingObservableList.add(toppingName); //list used to display topping names
-		
+			toppingObservableList.add(toppingName); // list used to display topping names
+
 		} else { // else statement removes topping from the list
-			
+
 			System.out.println(id + " removed");
 			toppingIdArrayList.remove(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
-			toppingObservableList.remove(toppingName); //list used to display topping names
-		
+			toppingObservableList.remove(toppingName); // list used to display topping names
+
 		}
-		
-		toppingListView.setItems(toppingObservableList); //displays toppings in the list
+
+		toppingListView.setItems(toppingObservableList); // displays toppings in the list
 	}
-	
-	public void confirmPizza (ActionEvent e) {
-		//add pizza to order here
-		if(pizzaSize == null) {
+
+	public void confirmPizza(ActionEvent e) {
+		// add pizza to order here
+		if (pizzaSize == null) {
 			Alert.Display("ERROR", "Select a size.");
-		} else {	
-			System.out.println("You chose a " + pizzaSize + " pizza with the following toppings: " + toppingObservableList);
+		} else if (toppingObservableList == null || toppingObservableList.size() == 0) {
+			Alert.Display("ERROR", "Select at least one topping.");
+		} else {
+			System.out.println(
+					"You chose a " + pizzaSize + " pizza with the following toppings: " + toppingObservableList);
 			System.out.println("User id = " + LoginUI.getUser().getUserId());
+			int pSize = getpSize(pizzaSize);
+
+			ArrayList<String> list = new ArrayList<String>();
+			for (String item : toppingObservableList) {
+				list.add(item.toLowerCase());
+			}
+			String pizzaName = "basePizza";
+			list.addAll(RecipeDb.getIngredients(pizzaName));
 			
-			for(int i = 0; i < toppingObservableList.size(); i++) {
-				String str = toppingObservableList.get(i).toLowerCase();
-				int pSize = getpSize(pizzaSize);
-				if(InventoryDb.getQuantityOfItem(str) < pSize) {
-					// print out error, cannot get pizza
-				}
-				else {
-					// can get pizza, add it to list
+			for (int i = 0; i < list.size(); i++) {
+				if (InventoryDb.getQuantityOfItem(list.get(i)) < pSize) {
+					Alert.Display("Error", "Not enough " + list.get(i)
+							+ " in the inventory. Ask your manager to restock the inventory");
+					return;
 				}
 			}
 			
+			Pizza p = new Pizza(pizzaName, pSize, list);
+
+			Order order = NewOrderUI.getOrder();
+			order.addPizza(p);
+			order.incrementItemCount();
+			Order o = NewOrderUI.getOrder();
+
+			Alert.Display("Success", "Custom Pizza is added to your order!");
 			
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-		NextStage.goTo(fxmlLoader, confirmBtn);
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+			NextStage.goTo(fxmlLoader, confirmBtn);
 		}
 	}
-	
+
 	private int getpSize(String str) {
-		if(str == "small") {
+		if (str == "small") {
 			return SMALL;
-		}
-		else if(str == "medium") {
+		} else if (str == "medium") {
 			return MEDIUM;
-		}
-		else if(str == "large") {
+		} else if (str == "large") {
 			return LARGE;
 		}
-		return -1;	// should never get here
+		return -1; // should never get here
 	}
-	
+
 	public void clearPizza(ActionEvent e) {
 		toppingObservableList.clear();
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
 	}
-	
-public void cancelPizza (ActionEvent e) {
-	
-	
-	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-	NextStage.goTo(fxmlLoader, cancelBtn);
+
+	public void cancelPizza(ActionEvent e) {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 
-public void start(Stage arg0) throws Exception {
-		}
-	
+	public void start(Stage arg0) throws Exception {
+	}
+
 }

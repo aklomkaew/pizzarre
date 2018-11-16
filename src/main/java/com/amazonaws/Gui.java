@@ -18,15 +18,15 @@ import java.util.*;
 public class Gui extends Application {
 
 	private static int orderNum = 1;
-	private Cart order;
-	private HashMap<Integer, Cart> orders; // key = orderNumber
+	private Order order;
+	private HashMap<Integer, Order> orders; // key = orderNumber
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		InventoryDb inventoryDb = new InventoryDb();
 		RecipeDb recipeDb = new RecipeDb();
 		UserDb userDb = new UserDb();
-		CartDb cartDb = new CartDb();
+		OrderDb cartDb = new OrderDb();
 
 		addMockData();
 		
@@ -53,7 +53,7 @@ public class Gui extends Application {
 
 		//ArrayList<Order> activeOrders = new ArrayList<Order>();
 		String pizzaName = "basePizza";
-		orders = new HashMap<Integer, Cart>();
+		orders = new HashMap<Integer, Order>();
 		// size: S = 1, M = 2, L = 3
 		int size = 1;
 
@@ -77,7 +77,7 @@ public class Gui extends Application {
 				// orders.get(k).printOrder();
 			}
 
-			ArrayList<Cart> activeOrders = updateActiveOrders(orders);
+			ArrayList<Order> activeOrders = updateActiveOrders(orders);
 			// display the activeOrders somewhere
 			// should we store activeOrders in db?
 		});
@@ -142,8 +142,8 @@ public class Gui extends Application {
 		return cbList;
 	}
 
-	private ArrayList<Cart> updateActiveOrders(HashMap<Integer, Cart> orders) {
-		ArrayList<Cart> ret = new ArrayList<Cart>();
+	private ArrayList<Order> updateActiveOrders(HashMap<Integer, Order> orders) {
+		ArrayList<Order> ret = new ArrayList<Order>();
 //		for (int k : orders.keySet()) {
 //			if (orders.get(k).getState()) {
 //				ret.add(orders.get(k));
@@ -162,7 +162,7 @@ public class Gui extends Application {
 		for (CheckBox cb : cbList) {
 			if (cb.isSelected()) {
 				InventoryDb.decreaseQuantity(cb.getId(), quantity);
-				pizza.addTopping(cb.getId(), quantity);
+				//pizza.addTopping(cb.getId(), quantity);
 			}
 		}
 
@@ -184,7 +184,7 @@ public class Gui extends Application {
 	private void addMockData() {
 		InventoryDb.initTable();
 		RecipeDb.initTable();
-		CartDb.initTable();
+		OrderDb.initTable();
 		UserDb.initTable();
 	}
 

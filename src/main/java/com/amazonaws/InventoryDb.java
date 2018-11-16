@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 
@@ -34,20 +35,72 @@ public class InventoryDb extends DatabaseTable {
 		item.setName("cheese");
 		item.setQuantity(10);
 		mapper.save(item);
-		
+
 		item.setName("crust");
 		item.setQuantity(10);
 		mapper.save(item);
-		
+
 		item.setName("sauce");
 		item.setQuantity(10);
 		mapper.save(item);
-		
+
 		item.setName("pepperoni");
 		item.setQuantity(10);
 		mapper.save(item);
-		
+
+		item.setName("sausage");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("groundbeef");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("ham");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("beacon");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("chicken");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("anchovy");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("shrimp");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("tofu");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("mushroom");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("onion");
+		item.setQuantity(10);
+		mapper.save(item);
+
 		item.setName("greenpepper");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("tomato");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("olive");
+		item.setQuantity(10);
+		mapper.save(item);
+
+		item.setName("pineapple");
 		item.setQuantity(10);
 		mapper.save(item);
 	}
@@ -84,18 +137,19 @@ public class InventoryDb extends DatabaseTable {
 	// restock
 
 	public static int getQuantityOfItem(String toppingName) {
-		InventoryItem item = new InventoryItem();
-		item.setName(toppingName);
-		DynamoDBQueryExpression<InventoryItem> queryExpression = new DynamoDBQueryExpression<InventoryItem>()
-			    .withHashKeyValues(item);
-		
-		List<InventoryItem> itemList = mapper.query(InventoryItem.class, queryExpression);
-		
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withS(toppingName));
+
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("IngredientName = :val1").withExpressionAttributeValues(attributeValues);
+
+		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, scanExpression);
+
 		System.out.println("Item list size = " + itemList.size());
-		
+
 		return itemList.get(0).getQuantity();
 	}
-	
+
 	public static List<InventoryItem> retrieveAllItem() {
 		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, new DynamoDBScanExpression());
 
@@ -103,7 +157,7 @@ public class InventoryDb extends DatabaseTable {
 		for (InventoryItem item : itemList) {
 			System.out.println("Id = " + item.getName());
 		}
-		
+
 		return itemList;
 	}
 

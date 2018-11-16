@@ -37,15 +37,15 @@ public class AllOrdersUI extends Application implements Initializable {
 	@FXML
 	private Button deleteUserBtn;
 	@FXML
-	private TableView<Cart> orderTableView;
+	private TableView<Order> orderTableView;
 	@FXML
-	private TableColumn<Cart, String> serverColumn;
+	private TableColumn<Order, String> serverColumn;
 	@FXML
-	private TableColumn<Cart, Integer> orderNumberColumn;
+	private TableColumn<Order, Integer> orderNumberColumn;
 	@FXML
-	private TableColumn<Cart, Double> totalColumn;
+	private TableColumn<Order, Double> totalColumn;
 
-	private ObservableList<Cart> orderObservableList;
+	private ObservableList<Order> orderObservableList;
 
 	public void goToManagerUtilities(ActionEvent e) {
 
@@ -54,7 +54,7 @@ public class AllOrdersUI extends Application implements Initializable {
 	}
 
 	public void displayAllOrder() {
-		List<Cart> list = CartDb.retrieveAllItem();
+		List<Order> list = OrderDb.retrieveAllItem();
 
 		if(list == null || list.size() < 1) {
 			return;
@@ -63,7 +63,7 @@ public class AllOrdersUI extends Application implements Initializable {
 		orderObservableList.clear();
 		orderObservableList.addAll(list);
 		System.out.println("\nPrint from observableList");
-		for (Cart item : orderObservableList) {
+		for (Order item : orderObservableList) {
 			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName()
 			+ " total = " + item.getTotal());
 		}
@@ -76,9 +76,9 @@ public class AllOrdersUI extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		serverColumn.setCellValueFactory(new PropertyValueFactory<Cart, String>("server"));
-		orderNumberColumn.setCellValueFactory(new PropertyValueFactory<Cart, Integer>("orderNumber"));
-		totalColumn.setCellValueFactory(new PropertyValueFactory<Cart, Double>("total"));
+		serverColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("server"));
+		orderNumberColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("orderNumber"));
+		totalColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("total"));
 		orderObservableList = FXCollections.observableArrayList();
 		orderTableView.setItems(orderObservableList);
 		displayAllOrder();
