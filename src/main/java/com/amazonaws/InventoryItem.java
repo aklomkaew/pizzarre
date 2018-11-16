@@ -23,7 +23,7 @@ public class InventoryItem {
 		name = n;
 	}
 	
-	@DynamoDBHashKey(attributeName = "Name")
+	@DynamoDBHashKey(attributeName = "InventoryName")
 	public String getName() {
 		return name;
 	}

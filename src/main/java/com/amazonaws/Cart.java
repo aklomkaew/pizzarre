@@ -19,6 +19,7 @@ public class Cart {
 	private boolean active;
 	private double total;
 	private String server;
+	private int serverId;
 
 	public Cart() {
 		this.pizzas = new ArrayList<Pizza>();
@@ -35,7 +36,7 @@ public class Cart {
 		this.total = 0.0;
 	}
 
-	@DynamoDBHashKey(attributeName = "Order Number")
+	@DynamoDBHashKey(attributeName = "OrderNumber")
 	public int getOrderNumber() {
 		return this.orderNumber;
 	}
@@ -64,6 +65,15 @@ public class Cart {
 
 	public void setServerName(String u) {
 		this.server = u;
+	}
+	
+	@DynamoDBAttribute(attributeName = "ServerId")
+	public int getServerId() {
+		return this.serverId;
+	}
+
+	public void setServerId(int id) {
+		this.serverId = id;
 	}
 
 	@DynamoDBAttribute(attributeName = "Total")

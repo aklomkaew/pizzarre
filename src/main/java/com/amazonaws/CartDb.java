@@ -2,7 +2,9 @@ package com.amazonaws;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
@@ -11,6 +13,7 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
@@ -61,4 +64,17 @@ public class CartDb extends DatabaseTable {
 		
 		return itemList;
 	}
+	
+	public static List<Cart> retrieveFilteredItem(int id) {
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withN(Integer.toString(id)));
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("ServerId = :val1").withExpressionAttributeValues(attributeValues);
+		
+		List<Cart> itemList = mapper.scan(Cart.class, scanExpression);
+		
+		return itemList;
+	}
+	
 }
