@@ -57,16 +57,9 @@ public class RecipeListUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, addRecipeBtn);
 	}
 
-public void viewRecipe(ActionEvent e) { //index in Observable List will match index in RecipeDb
-	int index = -1;
-	index = recipeListView.getSelectionModel().getSelectedIndex();
+public void viewRecipe(ActionEvent e) { //dont need
 	
-	System.out.println(index);
 	
-	//RecipeItem recipeItem = RecipeDb.get(index)
-	//Alert.displayToppings(recipeItem.getName(), recipeItem.getToppings();
-	
-	Alert.displayIntegration("viewRecipe");
 }
 
 public void goToManagerUtilities(ActionEvent e) {

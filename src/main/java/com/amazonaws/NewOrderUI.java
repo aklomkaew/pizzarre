@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -83,14 +84,6 @@ public void modifyPizza(ActionEvent e) {
 	goToCustom(e);
 }
 
-public void setDiscount(ActionEvent e) {
-	Alert.displayMethodNotSet("setDiscount");
-}
-
-public void discardOrder (ActionEvent e) {
-	orderItems.clear();
-	orderListView.getItems().clear();
-}
 	public void goToDrinks(ActionEvent e) {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
