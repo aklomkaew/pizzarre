@@ -65,13 +65,15 @@ public class InventoryUI extends Application implements Initializable {
     }
     
     public void checkIngredient(ActionEvent e) { // don't add integration code to this method, do it to addIngredient
+    	String ingredientName = ingredientNameTF.getText().toLowerCase();
+    	if(ingredientName == null || ingredientName.length() == 0) {
+			Alert.Display("Error", "Please enter ingredient name.");
+			return;
+		}
     	try {
 			int quantity = Integer.parseInt(quantityTF.getText()); //checks if quantity is a number
-			String ingredientName = ingredientNameTF.getText().toLowerCase();
-			if(ingredientName == null || ingredientName.length() == 0) {
-				Alert.Display("Error", "Please enter ingredient name.");
-				return;
-			}
+			
+	
 			if (quantity <= 0)
 			{
 				Alert.Display("Error", "Quantity must be positive.");
