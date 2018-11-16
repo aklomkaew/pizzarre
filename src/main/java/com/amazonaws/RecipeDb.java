@@ -140,8 +140,22 @@ public class RecipeDb extends DatabaseTable {
 		mapper.save(i5);
 	}
 	
-	public static void addRecipe(RecipeItem item) {
-		mapper.save(item);
+	public static boolean addRecipe(RecipeItem item) {
+		boolean status = false;
+		// if order presents, then don't add it
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withS(item.getName()));
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("RecipeName = :val1").withExpressionAttributeValues(attributeValues);
+		
+		List<RecipeItem> itemList = mapper.scan(RecipeItem.class, scanExpression);
+		if(itemList == null || itemList.size() == 0) {
+			mapper.save(item);
+			status = true;
+		}
+		
+		return status;
 	}
 	
 	// add item to table

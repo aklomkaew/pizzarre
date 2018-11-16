@@ -79,26 +79,15 @@ public void goToManagerUtilities(ActionEvent e) {
 		RecipeItem itemToDelete = recipeTableView.getSelectionModel().getSelectedItem();
 		if(itemToDelete == null) {
 			Alert.Display("Error", "Select a recipe to delete.");
+			return;
 		}
 		
 		recipeObservableList.remove(itemToDelete);
 		recipeTableView.setItems(recipeObservableList);
 
+		Alert.Display("Success", "Recipe has been deleted.");
 		RecipeDb.deleteItem(itemToDelete.getName());
 		displayAllRecipe();
-//   Alert.displayIntegration("deleteRecipe");
-	
-// 	String recipeName = recipeListView.getSelectionModel().getSelectedItem();
-// 	int index = -1;
-// 	index = recipeListView.getSelectionModel().getSelectedIndex();
-	
-// 	//RecipeItem recipeToDelete = RecipeDB.get(index)
-// 	//RecipeDB.delete(index);
-	
-// 	System.out.println(index);
-	
-// 	recipeObservableList.remove(recipeName);
-// 	recipeListView.setItems(recipeObservableList);
 	}
 
 	public void displayAllRecipe() {

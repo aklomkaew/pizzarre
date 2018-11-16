@@ -116,15 +116,23 @@ public class CreateRecipeUI extends Application implements Initializable {
 		ArrayList<String> list = new ArrayList<String>();
 		list.addAll(toppingObservableList);
 		RecipeItem item = new RecipeItem(recipeName, list);
-		RecipeDb.addRecipe(item);
-
-		Alert.Display("Success", "Recipe " + recipeName + " has been successfully added to the database.");
+		if(RecipeDb.addRecipe(item)) {
+			Alert.Display("Success", "Recipe " + recipeName + " has been added");
+		}
+		else {
+			Alert.Display("Error", "Recipe " + recipeName + " already exists.");
+			return;
+		}
+		
 
 		System.out.println("The recipe name is " + recipeName + " and the toppings are: " + toppingObservableList);
 		recipeNameTF.clear();
 		toppingIdArrayList.clear();
 		toppingObservableList.clear();
 		toppingListView.setItems(toppingObservableList);
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirmBtn);
 	}
 
 	public void clearRecipe(ActionEvent e) {
