@@ -58,6 +58,56 @@ public class RecipeDb extends DatabaseTable {
 //		i5.getIngredients().add("mushroom");
 //		i5.getIngredients().add("spinach");
 //		mapper.save(i5);
+/*		
+		 RecipeItem dailySpecialPizza = new RecipeItem("dailySpecialPizza");
+		 dailySpecialPizza.getIngredients().addAll(baseList);
+		 dailySpecialPizza.getIngredients().add("pepperoni");
+		 dailySpecialPizza.getIngredients().add("sausage");
+		 dailySpecialPizza.getIngredients().add("groundBeef");
+		 dailySpecialPizza.getIngredients().add("onion");
+		 dailySpecialPizza.getIngredients().add("mushroom");
+		 dailySpecialPizza.getIngredients().add("olive");
+		 mapper.save(dailySpecialPizza);
+		 
+		 RecipeItem meatzzaPizza = new RecipeItem("meatzzaPizza");
+		 meatzzaPizza.getIngredients().addAll(baseList);
+		 meatzzaPizza.getIngredients().add("pepperoni");
+		 meatzzaPizza.getIngredients().add("sausage");
+		 meatzzaPizza.getIngredients().add("groundBeef");
+		 meatzzaPizza.getIngredients().add("ham");
+		 mapper.save(meatzzaPizza);
+		 
+		 RecipeItem hawaiianPizza = new RecipeItem("hawaiianPizza");
+		 hawaiianPizza.getIngredients().addAll(baseList);
+		 hawaiianPizza.getIngredients().add("bacon");
+		 hawaiianPizza.getIngredients().add("pineapple");
+		 hawaiianPizza.getIngredients().add("ham");
+		 mapper.save(hawaiianPizza);
+		 
+		 RecipeItem classicPizza = new RecipeItem("classicPizza");
+		 classicPizza.getIngredients().addAll(baseList);
+		 classicPizza.getIngredients().add("pepperoni");
+		 classicPizza.getIngredients().add("onion");
+		 classicPizza.getIngredients().add("greenPepper");
+		 classicPizza.getIngredients().add("mushroom");
+		 mapper.save(classicPizza);
+		 
+		 RecipeItem veggiePizza = new RecipeItem("veggiePizza");
+		 veggiePizza.getIngredients().addAll(baseList);
+		 veggiePizza.getIngredients().add("mushroom");
+		 veggiePizza.getIngredients().add("tomato");
+		 veggiePizza.getIngredients().add("onion");
+		 veggiePizza.getIngredients().add("greenPepper");
+		 veggiePizza.getIngredients().add("olive");
+		 mapper.save(veggiePizza);
+		 
+		 RecipeItem sicilianPizza = new RecipeItem("sicilianPizza");
+		 sicilianPizza.getIngredients().addAll(baseList);
+		 sicilianPizza.getIngredients().add("anchovy");
+		 sicilianPizza.getIngredients().add("onion");
+		 sicilianPizza.getIngredients().add("tomato");
+		 mapper.save(sicilianPizza);
+*/
 	}
 	
 	public static void addRecipe(RecipeItem item) {

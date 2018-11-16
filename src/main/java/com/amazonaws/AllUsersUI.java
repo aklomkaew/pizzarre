@@ -36,6 +36,8 @@ public class AllUsersUI extends Application implements Initializable {
     @FXML
     private Button deleteUserBtn;
     @FXML
+    private Button deleteEveryUserBtn;
+    @FXML
     private TableView<User> userTableView;
     @FXML
     private TableColumn<User, String> nameColumn;
@@ -46,14 +48,20 @@ public class AllUsersUI extends Application implements Initializable {
 	
     
     public void addUser(ActionEvent e) {
-    	Alert.displayMethodNotSet("addUser");
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddUserUI.fxml"));
+    	NextStage.goTo(fxmlLoader, addUserBtn);
     }
     
     public void deleteUser(ActionEvent e) {
-    	User userToDelete = userTableView.getSelectionModel().getSelectedItem();
+    	Alert.displayIntegration("deleteUser");
+    	User userToDelete = userTableView.getSelectionModel().getSelectedItem(); //<- the user to delete
     	userObservableList.remove(userToDelete);
     	userTableView.setItems(userObservableList);
     	//UserDB.deleteUser(userToDelete);
+    }
+    
+    public void deleteEveryUser(ActionEvent e) {
+    	
     }
 	
 

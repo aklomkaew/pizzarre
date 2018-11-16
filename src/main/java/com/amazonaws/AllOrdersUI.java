@@ -31,8 +31,30 @@ public class AllOrdersUI extends Application implements Initializable {
 
     @FXML
     private Button backBtn;
+    @FXML
+    private Button showOrderBtn;
+    @FXML
+    private Button editOrderBtn;
+    @FXML
+    private Button deleteOrderBtn;
+    @FXML
+    private Button deleteAllOrdersBtn;
 	
- 
+    public void showOrders(ActionEvent e) {
+    	
+    }
+
+    public void editOrders(ActionEvent e) {
+    	
+    }
+
+    public void deleteOrders(ActionEvent e) {
+	
+    }
+
+    public void deleteAllOrders(ActionEvent e) {
+	
+    }
 
 
 	

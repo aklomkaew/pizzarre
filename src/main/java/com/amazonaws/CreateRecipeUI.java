@@ -104,13 +104,17 @@ public void confirmRecipe(ActionEvent e) {
 	 * 		specialty page's gridpane.
 	*/
 	String recipeName = recipeNameTF.getText();
-	System.out.println("The recipe name is " + recipeName + " and the toppings are: " + toppingObservableList);
+	RecipeItem newRecipe = new RecipeItem(recipeName, toppingIdArrayList);
+	//System.out.println(newRecipe.getName());
+	//System.out.println(newRecipe.getIngredients());
+	//RecipeDb.addRecipe(newRecipe);
+	
 	recipeNameTF.clear();
 	toppingIdArrayList.clear();
 	toppingObservableList.clear();
 	toppingListView.setItems(toppingObservableList);
 	// make a recipeItem with recipeName and toppingIdArrayList
-	// RecipeDB.addRecipe(recipeItem);
+	 //RecipeDb.addItem(recipeItem);
 }
 
 public void clearRecipe(ActionEvent e) {
@@ -120,17 +124,9 @@ public void clearRecipe(ActionEvent e) {
 }
 
 public void goToRecipeList(ActionEvent e) {
-	try {
+	
 	    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
-	            Parent root = (Parent) fxmlLoader.load();
-	            Stage recipeListStage = new Stage();
-	            recipeListStage.setScene(new Scene(root));
-	            recipeListStage.show();
-	            Stage createRecipeStage = (Stage) backBtn.getScene().getWindow();
-	            createRecipeStage.close();
-	    } catch(Exception exception) {
-	       exception.printStackTrace();
-	    }
+	    NextStage.goTo(fxmlLoader, backBtn);
 }
 
 	@Override

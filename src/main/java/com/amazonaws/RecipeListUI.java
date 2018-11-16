@@ -1,12 +1,16 @@
 package com.amazonaws;
 
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -21,7 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class RecipeListUI extends Application {
+public class RecipeListUI extends Application implements Initializable{
 	
 	@FXML
     private Button addRecipeBtn;
@@ -45,16 +49,35 @@ public void addRecipe(ActionEvent e) {
 	NextStage.goTo(fxmlLoader, addRecipeBtn);
 }
 
-public void deleteRecipe(ActionEvent e) {
-	//String recipeName = recipeListView.getSelectionModel().getSelectedItem();
-	//recipeItem = RecipeDB.getRecipe(recipeName)
-	//RecipeDB.delete(recipeItem);
-	//recipeListView.setItems(recipeObservableList);
-}
-public void viewRecipe(ActionEvent e) {
+public void deleteRecipe(ActionEvent e) { //index in Observable List will match index in RecipeDb
 	
-	Alert.displayMethodNotSet("viewRecipe");
+	Alert.displayIntegration("deleteRecipe");
+	
+	String recipeName = recipeListView.getSelectionModel().getSelectedItem();
+	int index = -1;
+	index = recipeListView.getSelectionModel().getSelectedIndex();
+	
+	//RecipeItem recipeToDelete = RecipeDB.get(index)
+	//RecipeDB.delete(index);
+	
+	System.out.println(index);
+	
+	recipeObservableList.remove(recipeName);
+	recipeListView.setItems(recipeObservableList);
 }
+
+public void viewRecipe(ActionEvent e) { //index in Observable List will match index in RecipeDb
+	int index = -1;
+	index = recipeListView.getSelectionModel().getSelectedIndex();
+	
+	System.out.println(index);
+	
+	//RecipeItem recipeItem = RecipeDb.get(index)
+	//Alert.displayToppings(recipeItem.getName(), recipeItem.getToppings();
+	
+	Alert.displayIntegration("viewRecipe");
+}
+
 public void goToManagerUtilities(ActionEvent e) {
 	
 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
@@ -64,6 +87,18 @@ public void goToManagerUtilities(ActionEvent e) {
 	@Override
 	public void start(Stage arg0) throws Exception {
 		
+		
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+//		 for (int i = 0; i < RecipeDb.size(); i++)
+//		 {
+//			 recipeObservableList.add(RecipeDb.get(i).getRecipeName();
+//		 }
+
+		recipeListView.setItems(recipeObservableList);
 		
 	}
 	

@@ -1,6 +1,8 @@
 package com.amazonaws;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -8,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -27,7 +30,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class CustomPizzaUI {
+public class CustomPizzaUI implements Initializable{
 	
 	@FXML
 	private Button confirmBtn;
@@ -105,7 +108,6 @@ public class CustomPizzaUI {
 			System.out.println(id + " removed");
 			toppingIdArrayList.remove(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
 			toppingObservableList.remove(toppingName); //list used to display topping names
-		
 		}
 		
 		toppingListView.setItems(toppingObservableList); //displays toppings in the list
@@ -125,6 +127,7 @@ public class CustomPizzaUI {
 	}
 	
 	public void clearPizza(ActionEvent e) {
+		
 		toppingObservableList.clear();
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
@@ -132,12 +135,20 @@ public class CustomPizzaUI {
 	
 public void cancelPizza (ActionEvent e) {
 	
-	
+	toppingObservableList.clear();
+	toppingIdArrayList.clear();
+	toppingListView.getItems().clear();
 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 	NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 
 public void start(Stage arg0) throws Exception {
 		}
+
+@Override
+public void initialize(URL location, ResourceBundle resources) {
+	//Pizza modifiedPizza;
+	
+}
 	
 }
