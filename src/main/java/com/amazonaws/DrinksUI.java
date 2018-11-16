@@ -1,6 +1,8 @@
 package com.amazonaws;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -8,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -25,7 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class DrinksUI {
+public class DrinksUI implements Initializable {
 	
 	@FXML
 	private Button confirm;
@@ -62,11 +65,13 @@ public class DrinksUI {
     @FXML
     private ListView<String> drinkListView = new ListView<String>();
 	
-	private ObservableList<String> drinkObservableList = FXCollections.observableArrayList();
+	private static ObservableList<String> drinkObservableList = FXCollections.observableArrayList();
 	
 	private ArrayList<String> drinkIdArrayList = new ArrayList<String>();
     
-
+	public static ObservableList<String> getDrinkList() {
+		return drinkObservableList;
+	}
 	
 	public void selectDrink (ActionEvent e) {
 		drinkName = ((Button)e.getSource()).getText(); // sets drink name equal to text on a button
@@ -103,10 +108,14 @@ public class DrinksUI {
 	public void confirmDrink (ActionEvent e) {
 		Alert.displayIntegration("DrinksUI.confirmDrink(ActionEvent e)");
 		/*
+		
 		drinkIdArrayList <- contains the inventory id's of the selected drinks
+		
 		erase Order's drink ArrayList if new drinks confirmed
 		something like below?
+		
 		Order.drinks.clear(); // only remove this line if method added to populate listview from placed specialties from newOrderUI
+		
 		for(Integer drinkInList = 0; drinkInList < drinkIdArrayList.size(); drinkInList ++)
 		{
 			Order.drinks[drinkInList] = drinkIdArrayList[drinkInList];
@@ -119,6 +128,8 @@ public class DrinksUI {
 	
 	
 	public void cancelDrink (ActionEvent e) {
+		drinkObservableList.clear();
+		drinkListView.getItems().clear();
 		goToOrderScreen(e);
 	}
 	
@@ -135,5 +146,11 @@ public class DrinksUI {
 	
 public void start(Stage arg0) throws Exception {
 		}
+
+@Override
+public void initialize(URL location, ResourceBundle resources) {
+	drinkListView.setItems(drinkObservableList);
+	
+}
 	
 }

@@ -155,20 +155,12 @@ public class LoginUI extends Application {
 				isManager = false;
 			}
 
-			// @FXML
-			// public void goToRecipeSelection (ActionEvent event){
-
 			idNum.clear();
 			password.clear();
-
-			// Needs a check against DB
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 			NextStage.goTo(fxmlLoader, ok);
 		}
 	}
-	// idNum.clear();
-	// password.clear();
-	// }
 
 	private String getPasscode(ArrayList<String> list) {
 		String ret = "";
@@ -205,10 +197,8 @@ public class LoginUI extends Application {
 		OrderDb orderDb = new OrderDb();
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml"));
-
-			Scene scene = new Scene(root, 600, 600);
+			Scene scene = new Scene(root,600,600);
 			stage.setScene(scene);
-			stage.setTitle("PIZZARRE");
 			stage.setResizable(false);
 			stage.show();
 

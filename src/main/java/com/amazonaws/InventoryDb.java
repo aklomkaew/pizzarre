@@ -30,7 +30,7 @@ public class InventoryDb extends DatabaseTable {
 
 	public static void initTable() {
 		System.out.println("\nInitializing table " + tableName);
-
+/*
 		InventoryItem item = new InventoryItem();
 		item.setName("cheese");
 		item.setQuantity(10);
@@ -52,7 +52,7 @@ public class InventoryDb extends DatabaseTable {
 		item.setQuantity(10);
 		mapper.save(item);
 
-		item.setName("groundbeef");
+		item.setName("groundBeef");
 		item.setQuantity(10);
 		mapper.save(item);
 
@@ -103,6 +103,7 @@ public class InventoryDb extends DatabaseTable {
 		item.setName("pineapple");
 		item.setQuantity(10);
 		mapper.save(item);
+*/		
 	}
 
 	public static void decreaseQuantity(String toppingName, int quantity) {

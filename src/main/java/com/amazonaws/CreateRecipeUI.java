@@ -90,12 +90,28 @@ public class CreateRecipeUI extends Application {
 
 		}
 
-		toppingListView.setItems(toppingObservableList); // displays toppings in the list
-	}
+public void confirmRecipe(ActionEvent e) {
+	//This adds the recipe to the database
+	
+	/*		This will also need to add a button for the new recipe on the
+	 * 		specialty page's gridpane.
+	*/
+	String recipeName = recipeNameTF.getText();
+	RecipeItem newRecipe = new RecipeItem(recipeName, toppingIdArrayList);
+	//System.out.println(newRecipe.getName());
+	//System.out.println(newRecipe.getIngredients());
+	//RecipeDb.addRecipe(newRecipe);
+	
+	recipeNameTF.clear();
+	toppingIdArrayList.clear();
+	toppingObservableList.clear();
+	toppingListView.setItems(toppingObservableList);
+	// make a recipeItem with recipeName and toppingIdArrayList
+	 //RecipeDb.addItem(recipeItem);
+}
 
 	public void confirmRecipe(ActionEvent e) {
 		// This adds the recipe to the database
-
 		/*
 		 * This will also need to add a button for the new recipe on the specialty
 		 * page's gridpane.

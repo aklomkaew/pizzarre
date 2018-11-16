@@ -96,7 +96,7 @@
                         <RowConstraints minHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="daily" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Daily Special" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Button fx:id="dailySpecialPizza" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Daily Special" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -104,7 +104,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="meat" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Meat-za" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Button fx:id="meatzzaPizza" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Meat-za" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -112,7 +112,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="hawaiian" layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Hawaiian" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Button fx:id="hawaiianPizza" layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Hawaiian" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -120,7 +120,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="classic" layoutX="106.0" layoutY="340.0" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Classic" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Button fx:id="classicPizza" layoutX="106.0" layoutY="340.0" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Classic" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -128,7 +128,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="veggie" layoutX="10.0" layoutY="100.0" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Veggie" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                        <Button fx:id="veggiePizza" layoutX="10.0" layoutY="100.0" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Veggie" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -136,7 +136,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="sicilian" layoutX="106.0" layoutY="180.0" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Sicilian" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                        <Button fx:id="sicilianPizza" layoutX="106.0" layoutY="180.0" mnemonicParsing="false" onAction="#selectSpecialty" prefHeight="60.0" prefWidth="100.0" text="Sicilian" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>

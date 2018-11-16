@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 
 public class NextStage {
 	
-	
 	public static void goTo(FXMLLoader fxmlLoader, Button closeStageBtn) {
 		try {
 			
