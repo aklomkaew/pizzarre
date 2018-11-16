@@ -39,6 +39,8 @@ public class AllOrdersUI extends Application implements Initializable {
   private Button deleteOrderBtn;
   @FXML
   private Button deleteAllOrdersBtn;
+  @FXML
+  private Button allActiveOrdersBtn;
 	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
@@ -86,6 +88,11 @@ public class AllOrdersUI extends Application implements Initializable {
 			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName()
 			+ " total = " + item.getTotal());
 		}
+	}
+	
+	public void goToAllActiveOrders(ActionEvent e) {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllActiveOrdersUI.fxml"));
+		NextStage.goTo(fxmlLoader, allActiveOrdersBtn);
 	}
 
 	@Override

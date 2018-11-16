@@ -69,6 +69,7 @@ public class AllActiveOrdersUI extends Application implements Initializable {
   }
   
   public void payOrder(ActionEvent e) {
+	  //get order
 	  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
 		NextStage.goTo(fxmlLoader, payOrderBtn);
   }
