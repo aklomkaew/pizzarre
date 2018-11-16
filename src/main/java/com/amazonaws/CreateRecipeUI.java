@@ -1,10 +1,13 @@
 package com.amazonaws;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.fxml.Initializable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +18,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -24,7 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class CreateRecipeUI extends Application {
+public class CreateRecipeUI extends Application implements Initializable {
 
 	@FXML
 	private Button backBtn;
@@ -65,9 +70,9 @@ public class CreateRecipeUI extends Application {
 	@FXML
 	private TextField recipeNameTF;
 	@FXML
-	private ListView<String> toppingListView = new ListView<String>();
+	private ListView<String> toppingListView;
 
-	private ObservableList<String> toppingObservableList = FXCollections.observableArrayList();
+	private ObservableList<String> toppingObservableList;
 
 	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
 
@@ -87,28 +92,8 @@ public class CreateRecipeUI extends Application {
 			System.out.println(id + " removed");
 			toppingIdArrayList.remove(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
 			toppingObservableList.remove(toppingName); // list used to display topping names
-
 		}
-
-public void confirmRecipe(ActionEvent e) {
-	//This adds the recipe to the database
-	
-	/*		This will also need to add a button for the new recipe on the
-	 * 		specialty page's gridpane.
-	*/
-	String recipeName = recipeNameTF.getText();
-	RecipeItem newRecipe = new RecipeItem(recipeName, toppingIdArrayList);
-	//System.out.println(newRecipe.getName());
-	//System.out.println(newRecipe.getIngredients());
-	//RecipeDb.addRecipe(newRecipe);
-	
-	recipeNameTF.clear();
-	toppingIdArrayList.clear();
-	toppingObservableList.clear();
-	toppingListView.setItems(toppingObservableList);
-	// make a recipeItem with recipeName and toppingIdArrayList
-	 //RecipeDb.addItem(recipeItem);
-}
+	}
 
 	public void confirmRecipe(ActionEvent e) {
 		// This adds the recipe to the database
@@ -165,6 +150,12 @@ public void confirmRecipe(ActionEvent e) {
 	@Override
 	public void start(Stage stage) throws Exception {
 
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) { // initializes populates ist with current users
+		toppingObservableList = FXCollections.observableArrayList();
+		toppingListView.setItems(toppingObservableList);
 	}
 
 }

@@ -38,7 +38,7 @@ public class AllOrdersUI extends Application implements Initializable {
   @FXML
   private Button deleteOrderBtn;
   @FXML
-  private Button deleteAllOrdersBtn;
+  private Button deleteAllOrderBtn;
 	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
@@ -56,19 +56,19 @@ public class AllOrdersUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
-  public void showOrders(ActionEvent e) {
+  public void showOrder(ActionEvent e) {
     	
   }
   
-  public void editOrders(ActionEvent e) {
+  public void editOrder(ActionEvent e) {
     	
   }
 
-  public void deleteOrders(ActionEvent e) {
+  public void deleteOrder(ActionEvent e) {
 
   }
 
-  public void deleteAllOrders(ActionEvent e) {
+  public void deleteAllOrder(ActionEvent e) {
 
   }
   
