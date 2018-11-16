@@ -147,15 +147,14 @@ public class LoginUI extends Application {
 			password.clear();
 			idNum.clear();
 		} else {
-			if(u.isManager()) {
+			if (u.isManager()) {
 				manager = UserDb.getUser(inputId);
 				isManager = true;
-			}
-			else {
+			} else {
 				user = u;
 				isManager = false;
 			}
-			
+
 			// @FXML
 			// public void goToRecipeSelection (ActionEvent event){
 
@@ -180,13 +179,14 @@ public class LoginUI extends Application {
 
 		return ret;
 	}
-	
-	public static <T extends User> T getUser(){
-		if(isManager) {
+
+	public static <T extends User> T getUser() {
+		if (isManager) {
 			return (T) manager;
 		}
 		return (T) user;
 	}
+
 	public void clearInput(ActionEvent e) {
 		idNum.clear();
 		password.clear();
@@ -200,6 +200,9 @@ public class LoginUI extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		UserDb userDb = new UserDb();
+		RecipeDb recipeDb = new RecipeDb();
+		InventoryDb inventoryDb = new InventoryDb();
+		OrderDb orderDb = new OrderDb();
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("LoginUI.fxml"));
 

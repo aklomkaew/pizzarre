@@ -12,35 +12,35 @@ public class RecipeItem {
 	private ArrayList<String> ingredients;
 
 	public RecipeItem() {
-		name = "";
-		ingredients = new ArrayList<String>();
+		this.name = "";
+		this.ingredients = new ArrayList<String>();
 	}
 
 	public RecipeItem(String n) {
-		name = n;
-		ingredients = new ArrayList<String>();
+		this.name = n;
+		this.ingredients = new ArrayList<String>();
 	}
 	
 	public RecipeItem(String n, ArrayList<String> list) {
-		name = n;
-		ingredients = list;
+		this.name = n;
+		this.ingredients = list;
 	}
 
-	@DynamoDBHashKey(attributeName = "Name")
+	@DynamoDBHashKey(attributeName = "RecipeName")
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String n) {
-		name = n;
+		this.name = n;
 	}
 
 	@DynamoDBAttribute(attributeName="Ingredients")
 	public ArrayList<String> getIngredients() {
-		return ingredients;
+		return this.ingredients;
 	}
 
 	public void setIngredients(ArrayList<String> list) {
-		ingredients.addAll(list);
+		this.ingredients.addAll(list);
 	}
 }

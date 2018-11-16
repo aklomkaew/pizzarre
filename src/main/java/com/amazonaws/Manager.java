@@ -22,7 +22,7 @@ public class Manager extends User {
 		manager = true;
 	}
 
-	public Manager(int id, String n, ArrayList<Cart> list) {
+	public Manager(int id, String n, ArrayList<Order> list) {
 		super(id, n, list);
 		manager = true;
 	}

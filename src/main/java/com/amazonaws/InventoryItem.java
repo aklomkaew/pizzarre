@@ -10,6 +10,8 @@ public class InventoryItem {
 	private int quantity;
 
 	public InventoryItem() {
+		name = "";
+		quantity = -1;
 	}
 
 	public InventoryItem(String n, int q) {
@@ -21,7 +23,7 @@ public class InventoryItem {
 		name = n;
 	}
 	
-	@DynamoDBHashKey(attributeName = "Name")
+	@DynamoDBHashKey(attributeName = "IngredientName")
 	public String getName() {
 		return name;
 	}

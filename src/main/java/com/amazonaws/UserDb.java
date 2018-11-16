@@ -63,32 +63,65 @@ public class UserDb extends DatabaseTable {
 //		mapper.save(u);
 	}
 
-	public static boolean addUser(int i, User u) {
+	public static boolean addUser(int id, User u) {
 		boolean status = false;
 		
-		User tmp = new User();
-		tmp.setUserId(i);
-		DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>();
-		List<User> itemList = mapper.query(User.class, queryExpression);
-		// not gonna care about manager
-		// not going to add same id
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withN(Integer.toString(id)));
 		
-		if(itemList.size() == 0) {
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("Id = :val1").withExpressionAttributeValues(attributeValues);
+		
+		List<User> list = mapper.scan(User.class, scanExpression);
+		if(list == null || list.size() < 1) {
 			mapper.save(u);
 			status = true;
 		}
-		// if status == false, then that ID is taken
+		else {
+			// do alert that the id is taken
+			System.out.println("Id is taken");
+			status = false;
+		}
+		
+		return status;
+	}
+	
+	public static void updateUser(User u) {
+		mapper.save(u);
+	}
+	
+	public static boolean deleteUser(int id) {
+		boolean status = false;
+		
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withN(Integer.toString(id)));
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("Id = :val1").withExpressionAttributeValues(attributeValues);
+		
+		List<User> list = mapper.scan(User.class, scanExpression);
+		// should only have one item in the list
+		if(list == null || list.size() < 1) {
+			System.out.println("User with id " + id + "not found.");
+			status = false;
+		}
+		else {
+			mapper.delete(list.get(0));
+			status = true;
+		}
 		
 		return status;
 	}
 
-	public static void retrieveAllItem() {
+	public static List<User> retrieveAllItem() {
 		List<User> itemList = mapper.scan(User.class, new DynamoDBScanExpression());
 
 		System.out.println("\nRetrieving all users");
 		for (User item : itemList) {
 			System.out.println("Id = " + item.getUserId() + " name = " + item.getName());
 		}
+		
+		return itemList;
 	}
 
 	public static <T extends User> T getUser(String password) {
