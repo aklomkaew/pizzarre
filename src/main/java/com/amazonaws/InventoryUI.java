@@ -59,33 +59,68 @@ public class InventoryUI extends Application implements Initializable {
     private ObservableList<InventoryItem> inventoryObservableList;
 
     public void restock(ActionEvent e) {
-    	//InventoryDb.restock();
-    	inventoryTableView.setItems(inventoryObservableList);
+    	InventoryDb.restock();
+    	displayAllInventory();
+    	Alert.Display("Success", "Restock completed");
     }
     
     public void checkIngredient(ActionEvent e) { // don't add integration code to this method, do it to addIngredient
     	try {
-			Integer.parseInt(quantityTF.getText()); //checks if quantity is a number
-			if (Integer.parseInt(quantityTF.getText()) > 0)
+			int quantity = Integer.parseInt(quantityTF.getText()); //checks if quantity is a number
+			String ingredientName = ingredientNameTF.getText().toLowerCase();
+			if(ingredientName == null || ingredientName.length() == 0) {
+				Alert.Display("Error", "Please enter ingredient name.");
+				return;
+			}
+			if (quantity <= 0)
 			{
-				addIngredient(e);
-			} else {
 				Alert.Display("Error", "Quantity must be positive.");
+				return;
+			} 
+			else {
+				addIngredient(e, quantity, ingredientName);
 			}
 		} catch (NumberFormatException ex) {
 			Alert.Display("Error", "Quantity must be a number");
 		}
     }
     
-    public void addIngredient(ActionEvent e) { //integration goes here, not checkIngredient
-    	String ingredientName = ingredientNameTF.getText();
-    	int quantity = Integer.parseInt(quantityTF.getText());
-    	ingredientNameTF.clear();
-    	quantityTF.clear();
+    public void addIngredient(ActionEvent e, int quantity, String ingredientName) { //integration goes here, not checkIngredient
+    	if(InventoryDb.addItem(ingredientName, quantity)) {
+    		Alert.Display("Success", "Ingredient has been added!");
+    		ingredientNameTF.clear();
+        	quantityTF.clear();
+    	}
+    	else {
+    		Alert.Display("Error", "Ingredient with that name already exists");
+    	}
+    	updateTable();
     }
     
+    public void updateTable() {
+		List<InventoryItem> list = InventoryDb.retrieveAllItem();
+
+		if(list == null || list.size() < 1) {
+			return;
+		}
+		
+		inventoryObservableList.clear();
+		inventoryObservableList.addAll(list);
+	}
+    
     public void deleteIngredient(ActionEvent e) {
-    	
+    	InventoryItem itemToDelete = inventoryTableView.getSelectionModel().getSelectedItem();
+		if(itemToDelete == null) {
+			Alert.Display("Error", "Select an item to delete.");
+			return;
+		}
+		
+		inventoryObservableList.remove(itemToDelete);
+		inventoryTableView.setItems(inventoryObservableList);
+
+		Alert.Display("Success", "Ingredient " + itemToDelete.getName() + " deleted.");
+		InventoryDb.deleteItem(itemToDelete.getName());
+		updateTable();
     }
 	public void goToManagerUtilities(ActionEvent e) {
 		try {
