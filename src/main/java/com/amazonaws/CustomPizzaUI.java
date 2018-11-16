@@ -155,11 +155,11 @@ public class CustomPizzaUI {
 	}
 
 	private int getpSize(String str) {
-		if (str == "small") {
+		if (str.equals("small")) {
 			return SMALL;
-		} else if (str == "medium") {
+		} else if (str.equals("medium")) {
 			return MEDIUM;
-		} else if (str == "large") {
+		} else if (str.equals("large")) {
 			return LARGE;
 		}
 		return -1; // should never get here
@@ -172,9 +172,9 @@ public class CustomPizzaUI {
 	}
 
 	public void cancelPizza(ActionEvent e) {
-
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
+		NewOrderUI.getOrder().decrementItemCount();
 	}
 
 	public void start(Stage arg0) throws Exception {
