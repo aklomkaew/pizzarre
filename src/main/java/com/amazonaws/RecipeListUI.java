@@ -59,7 +59,7 @@ public class RecipeListUI extends Application implements Initializable {
 
 public void viewRecipe(ActionEvent e) { //index in Observable List will match index in RecipeDb
 	int index = -1;
-	index = recipeListView.getSelectionModel().getSelectedIndex();
+	//index = recipeListView.getSelectionModel().getSelectedIndex();
 	
 	System.out.println(index);
 	
