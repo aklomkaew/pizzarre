@@ -59,6 +59,11 @@ public class AllUsersUI extends Application implements Initializable {
 		User userToDelete = userTableView.getSelectionModel().getSelectedItem();
 		if(userToDelete == null) {
 			Alert.Display("Error", "Select a user to delete.");
+			return;
+		}
+		if(userToDelete.getUserId() == LoginUI.getUser().getUserId()) {
+			Alert.Display("Error", "You cannot delete yourself!");
+			return;
 		}
 		
 		userObservableList.remove(userToDelete);

@@ -132,16 +132,26 @@ public void discardOrder (ActionEvent e) {
 		alert.setTitle("Success");
 		alert.setHeaderText("Your order has been placed!");
 		alert.showAndWait();
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirm);
 	}
 
 	public void discardOrder(ActionEvent e) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error");
-		alert.setHeaderText("Method not set for discardOrder()");
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation");
+		alert.setHeaderText("Are you sure you want to cancel your order?");
 		alert.showAndWait();
+
+		Optional<ButtonType> option = alert.showAndWait();
+		if (option.get() == null) {
+			return;
+		} else if (option.get() == ButtonType.CANCEL) {
+			return;
+		} else if (option.get() == ButtonType.OK) {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+			NextStage.goTo(fxmlLoader, mainMenu);
+		}
 	}
 
 	public void start(Stage arg0) throws Exception {

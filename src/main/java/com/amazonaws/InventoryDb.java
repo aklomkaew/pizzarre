@@ -60,7 +60,7 @@ public class InventoryDb extends DatabaseTable {
 		item.setQuantity(10);
 		mapper.save(item);
 
-		item.setName("beacon");
+		item.setName("bacon");
 		item.setQuantity(10);
 		mapper.save(item);
 

@@ -112,6 +112,10 @@ public class Order {
 	public static void incrementItemCount() {
 		itemNum++;
 	}
+	
+	public static void decrementItemCount() {
+		itemNum--;
+	}
 
 	public String toString() {
 		String ret = "Order #" + orderNumber + ": " + pizzas.size() + " pizza. Order is "

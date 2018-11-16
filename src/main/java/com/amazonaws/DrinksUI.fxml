@@ -19,7 +19,7 @@
    <children>
       <BorderPane maxHeight="600.0" maxWidth="600.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <Button fx:id="cancel" alignment="CENTER" mnemonicParsing="false" onAction="#cancelDrink" text="Back" BorderPane.alignment="CENTER">
+            <Button fx:id="cancel" alignment="CENTER" mnemonicParsing="false" onAction="#cancelDrink" text="Cancel" BorderPane.alignment="CENTER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

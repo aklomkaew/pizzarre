@@ -156,11 +156,11 @@ public class CustomPizzaUI implements Initializable{
 	}
 
 	private int getpSize(String str) {
-		if (str == "small") {
+		if (str.equals("small")) {
 			return SMALL;
-		} else if (str == "medium") {
+		} else if (str.equals("medium")) {
 			return MEDIUM;
-		} else if (str == "large") {
+		} else if (str.equals("large")) {
 			return LARGE;
 		}
 		return -1; // should never get here
@@ -172,14 +172,14 @@ public class CustomPizzaUI implements Initializable{
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
 	}
-	
-public void cancelPizza (ActionEvent e) {
-	
-	toppingObservableList.clear();
-	toppingIdArrayList.clear();
-	toppingListView.getItems().clear();
-	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-	NextStage.goTo(fxmlLoader, cancelBtn);
+
+	public void cancelPizza(ActionEvent e) {
+    toppingObservableList.clear();
+    toppingIdArrayList.clear();
+    toppingListView.getItems().clear();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, cancelBtn);
+		NewOrderUI.getOrder().decrementItemCount();
 	}
 
 public void start(Stage arg0) throws Exception {
