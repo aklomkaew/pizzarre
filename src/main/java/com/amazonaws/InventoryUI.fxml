@@ -27,7 +27,7 @@
          <top>
             <TitledPane alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="600.0" text="#UserName" BorderPane.alignment="CENTER">
                <content>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="137.0" text="INVENTORY" textAlignment="CENTER">
+                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="250.0" text="INVENTORY" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -99,6 +99,9 @@
                   <TextField fx:id="ingredientNameTF" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <TextField fx:id="quantityTF" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                </children>
+               <BorderPane.margin>
+                  <Insets right="25.0" />
+               </BorderPane.margin>
             </GridPane>
          </right></BorderPane>
    </children>
