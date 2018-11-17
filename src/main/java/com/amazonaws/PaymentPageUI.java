@@ -37,7 +37,7 @@ public class PaymentPageUI extends Application implements Initializable {
 	public void displayChange (ActionEvent e) {
 		double total =  Double.parseDouble(totalCostTF.getText());
 		double payment = Double.parseDouble(paymentTF.getText());
-		double change = total - payment;
+		double change = (-1)*(total - payment);
 		
 		String changeString = Double.toString(change);
 		changeTF.setText("$" + changeString);

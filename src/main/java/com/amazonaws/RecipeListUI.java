@@ -39,8 +39,6 @@ public class RecipeListUI extends Application implements Initializable {
 	@FXML
 	private Button deleteRecipeBtn;
 	@FXML
-	private Button viewRecipeBtn;
-	@FXML
 	private Button backBtn;
 	@FXML
 	private TableView<RecipeItem> recipeTableView;
@@ -56,11 +54,6 @@ public class RecipeListUI extends Application implements Initializable {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateRecipeUI.fxml"));
 		NextStage.goTo(fxmlLoader, addRecipeBtn);
 	}
-
-public void viewRecipe(ActionEvent e) { //dont need
-	
-	
-}
 
 public void goToManagerUtilities(ActionEvent e) {
 	

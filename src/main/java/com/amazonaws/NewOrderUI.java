@@ -51,6 +51,8 @@ public class NewOrderUI implements Initializable{
     @FXML
     private Button modifyCustom;
     @FXML
+    private Button tempSpecial;
+    @FXML
     private ListView<String> orderListView = new ListView<String>();
     
     private static Order order;
@@ -92,7 +94,12 @@ public void modifyPizza(ActionEvent e) {
 
 	public void goToSpecialty(ActionEvent e) {
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BuildSpecialtyUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
+		NextStage.goTo(fxmlLoader, special);
+	}
+	
+	public void goTempSpecial(ActionEvent e) {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, special);
 	}
 
@@ -170,6 +177,40 @@ public void modifyPizza(ActionEvent e) {
 			order.setServerId(u.getUserId());
 			order.setServerName(u.getName());
 		}
+	}
+	
+	public void makeSpecialtyPizzaObject (String specialtyName, ArrayList<String> specialtyToppings, int specialtySize) { // called in BuildSpeciltyIntoCustomUI
+		String sizeString = "size";
+		switch(specialtySize) {
+		case 1:
+			sizeString = "Small";
+			break;
+		case 2:
+			sizeString = "Medium";
+			break;
+		case 3:
+			sizeString = "Large";
+			break;
+		}
+		String pizzaName = sizeString + " " + specialtyName; //the name used in the list
+		//Pizza pizza = new Pizza(pizzaName, specialtySize, specialtyToppings);
+	}
+	
+	public void makeCustomPizzaObject (ArrayList<String> toppings, int size) { // called in NOT FINISHED YET
+		String sizeString = "size";
+		switch(size) {
+		case 1:
+			sizeString = "Small";
+			break;
+		case 2:
+			sizeString = "Medium";
+			break;
+		case 3:
+			sizeString = "Large";
+			break;
+		}
+		String pizzaName = sizeString + "Custom"; //the name used in the list
+		Pizza pizza = new Pizza(pizzaName, size, toppings);
 	}
 
 	public static Order getOrder() {
