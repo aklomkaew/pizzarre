@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -31,19 +32,13 @@ import javafx.stage.Stage;
 public class DrinksUI implements Initializable {
 	
 	@FXML
-	private Button confirm;
-	@FXML
 	private Button cancel;
 	@FXML
 	private Button clear;
 	@FXML
 	private Button add;
 	@FXML
-	private String drinkName = null; //string used to display drink on order tab
-	
-	private String id = null; //string used to get drink from database
-	@FXML
-	private String drinkSize = null;
+	private String id;
 	@FXML
 	private Button small;
 	@FXML
@@ -53,90 +48,54 @@ public class DrinksUI implements Initializable {
 	@FXML
     private Button soda;
     @FXML
-    private Button icedTea;
+    private Button icedtea;
     @FXML
     private Button juice;
     @FXML
-    private Button hotTea;
+    private Button hottea;
     @FXML
     private Button beer;
     @FXML
     private Button wine;
     @FXML
-    private ListView<String> drinkListView = new ListView<String>();
-	
-	private static ObservableList<String> drinkObservableList = FXCollections.observableArrayList();
-	
-	private ArrayList<String> drinkIdArrayList = new ArrayList<String>();
-    
-	public static ObservableList<String> getDrinkList() {
-		return drinkObservableList;
-	}
+    private TextField drinkTF;
+    @FXML
 	
 	public void selectDrink (ActionEvent e) {
-		drinkName = ((Button)e.getSource()).getText(); // sets drink name equal to text on a button
-		id = ((Button)e.getSource()).getId(); //sets id name equal to button's fx:id
+		id = ((Button)e.getSource()).getId();
+		drinkTF.setText(id);
 	}
 	
-	public void selectSize (ActionEvent e) {
-		drinkSize = ((Button)e.getSource()).getId();
-	}
-	
-	public void addDrink (ActionEvent e) {
+public void confirmDrink (ActionEvent e) {
 		
-		if(drinkName == null || id == null || drinkSize == null) {
-			
-			Alert.Display("ERROR", "Select a drink and size.");
-			
-			id = null;
-			drinkName = null;
-			drinkSize = null;
+		if (id == null) {
+		Alert.Display("Error",  "Please selet a drink.");
 		} else {
-			
-			String drinkListViewString = drinkName + ": " + drinkSize;
-			
-			drinkIdArrayList.add(id);
-			drinkObservableList.add(drinkListViewString);
-			drinkListView.setItems(drinkObservableList);;
-			
-			id = null;
-			drinkName = null;
-			drinkSize = null;
+			addDrink(e);
 		}
 	}
-	
-	public void confirmDrink (ActionEvent e) {
-		Alert.displayIntegration("DrinksUI.confirmDrink(ActionEvent e)");
-		/*
-		
-		drinkIdArrayList <- contains the inventory id's of the selected drinks
-		
-		erase Order's drink ArrayList if new drinks confirmed
-		something like below?
-		
-		Order.drinks.clear(); // only remove this line if method added to populate listview from placed specialties from newOrderUI
-		
-		for(Integer drinkInList = 0; drinkInList < drinkIdArrayList.size(); drinkInList ++)
-		{
-			Order.drinks[drinkInList] = drinkIdArrayList[drinkInList];
-		}
-		*/
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-		NextStage.goTo(fxmlLoader, confirm);
+    
+	public void addDrink(ActionEvent e) { // do not NextStage.goTo
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+			Parent root = (Parent) fxmlLoader.load();
+			Stage nextStage = new Stage();
+			nextStage.setScene(new Scene(root, 600, 600));
+			nextStage.setResizable(false);
+			NewOrderUI display = fxmlLoader.getController();
+			display.addDrink(id);
+	        nextStage.show();
+	        Stage currentStage = (Stage) add.getScene().getWindow();
+	        currentStage.close();
+	        
+	    } catch(Exception exception) {
+	    	exception.printStackTrace();
+	      }
 	}
 	
-	
-	
-	public void cancelDrink (ActionEvent e) {
-		drinkObservableList.clear();
-		drinkListView.getItems().clear();
-		goToOrderScreen(e);
-	}
-	
-	public void clearDrinks (ActionEvent e) {
-		drinkIdArrayList.clear();
-		drinkObservableList.clear();
-		drinkListView.getItems().clear();
+	public void clearDrink(ActionEvent e) {
+		drinkTF.clear();
+		id = null;
 	}
 
 	public void goToOrderScreen (ActionEvent e) {
@@ -149,7 +108,6 @@ public void start(Stage arg0) throws Exception {
 
 @Override
 public void initialize(URL location, ResourceBundle resources) {
-	drinkListView.setItems(drinkObservableList);
 	
 }
 	
