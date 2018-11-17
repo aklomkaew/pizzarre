@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -19,7 +19,7 @@
    <children>
       <BorderPane maxHeight="600.0" maxWidth="600.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <Button fx:id="cancel" alignment="CENTER" mnemonicParsing="false" onAction="#cancelDrink" text="Cancel" BorderPane.alignment="CENTER">
+            <Button fx:id="cancel" alignment="CENTER" mnemonicParsing="false" onAction="#goToOrderScreen" text="Cancel" BorderPane.alignment="CENTER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -44,45 +44,6 @@
          <right>
             <VBox alignment="CENTER_RIGHT" maxHeight="598.0" maxWidth="420.0" minHeight="391.0" minWidth="150.0" prefHeight="402.0" prefWidth="290.0" translateY="25.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane alignment="CENTER" minHeight="80.0" minWidth="80.0" prefHeight="80.0" prefWidth="312.0" scaleX="0.75" scaleY="0.75" translateX="15.0" translateY="125.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Button fx:id="small" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" text="S" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button fx:id="medium" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" text="M" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button fx:id="large" layoutX="38.0" layoutY="40.0" mnemonicParsing="false" onAction="#selectSize" prefHeight="80.0" prefWidth="80.0" text="L" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </GridPane>
                   <GridPane alignment="CENTER" prefHeight="470.0" prefWidth="270.0" scaleX="0.75" scaleY="0.75" translateX="15.0" translateY="75.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -104,7 +65,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="icedTea" mnemonicParsing="false" onAction="#selectDrink" prefHeight="60.0" prefWidth="100.0" text="Iced Tea" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button fx:id="icedtea" mnemonicParsing="false" onAction="#selectDrink" prefHeight="60.0" prefWidth="100.0" text="Iced Tea" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -120,7 +81,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="hotTea" layoutX="106.0" layoutY="340.0" mnemonicParsing="false" onAction="#selectDrink" prefHeight="60.0" prefWidth="100.0" text="Hot Tea" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        <Button fx:id="hottea" layoutX="106.0" layoutY="340.0" mnemonicParsing="false" onAction="#selectDrink" prefHeight="60.0" prefWidth="100.0" text="Hot Tea" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -150,13 +111,12 @@
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="clear" maxHeight="80.0" minHeight="80.0" mnemonicParsing="false" onAction="#clearDrinks" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Clear All Drinks" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                        <Button fx:id="clear" maxHeight="80.0" minHeight="80.0" mnemonicParsing="false" onAction="#clearDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Clear Drink" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -167,15 +127,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="add" layoutX="197.0" layoutY="320.0" mnemonicParsing="false" onAction="#addDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: palegreen;" text="Add Drink" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <effect>
-                              <InnerShadow />
-                           </effect>
-                        </Button>
-                        <Button fx:id="confirm" mnemonicParsing="false" onAction="#confirmDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: lemonchiffon;" text="Confirm Drinks" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button fx:id="add" layoutX="197.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirmDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: palegreen;" text="Add Drink" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -200,12 +152,12 @@
          <effect>
             <ColorAdjust />
          </effect>
-         <left>
-            <ListView fx:id="drinkListView" prefHeight="470.0" prefWidth="240.0" style="-fx-background-color: lightsteelblue; -fx-border-color: gray;" BorderPane.alignment="CENTER">
+         <center>
+            <TextField fx:id="drinkTF" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets left="10.0" top="50.0" />
+                  <Insets left="20.0" />
                </BorderPane.margin>
-            </ListView>
-         </left></BorderPane>
+            </TextField>
+         </center></BorderPane>
    </children>
 </AnchorPane>

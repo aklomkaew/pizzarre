@@ -112,6 +112,14 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
+                        <Button fx:id="remove" mnemonicParsing="false" onAction="#removeItem" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: khaki;" text="Remove Selected Item" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
                      </children>
                   </GridPane>
                </children>

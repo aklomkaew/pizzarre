@@ -2,6 +2,8 @@ package com.amazonaws;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -47,21 +49,18 @@ public class NewOrderUI implements Initializable{
     @FXML
     private Button discount;
     @FXML
-	  private Button confirm;
+	private Button confirm;
     @FXML
     private Button modifyCustom;
-    @FXML
-    private Button tempSpecial;
     @FXML
     private ListView<String> orderListView = new ListView<String>();
     
     private static Order order;
     
-    private ObservableList<String> pizzas = FXCollections.observableArrayList();
-    private ObservableList<String> recipes = FXCollections.observableArrayList();
-    private ObservableList<String> drinks = FXCollections.observableArrayList();
-    private ObservableList<String> orderItems = FXCollections.observableArrayList();
-	  private ObservableList<String> orderObservableList = FXCollections.observableArrayList();
+    private static ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
+    private static ArrayList<String> pizzaNameArrayList = new ArrayList<String>(); // to display pizzas on listview
+    private static ArrayList<String> drinksArrayList = new ArrayList<String>(); // for drink INGREDIENTS
+	private static ObservableList<String> orderObservableList = FXCollections.observableArrayList(); //the listview display list
 
 	public void goToMainMenu(ActionEvent e) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -79,12 +78,49 @@ public class NewOrderUI implements Initializable{
 		}
  }
 
-public void modifyPizza(ActionEvent e) {
-	//Pizza pizza;
-	//CustomPizzaUI.initialize(null, null).modfiedPizza = pizza;
-	//String pizzaString  = orderListView.getSelectionModel().getSelectedItem();
-	goToCustom(e);
-}
+	public void modifyPizza(ActionEvent e) {
+		int index = orderListView.getSelectionModel().getSelectedIndex();
+		if (index > pizzaNameArrayList.size() - 1) { //-1 since .size() is 1 greater than index
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Drinks cannot be modified.");
+			alert.showAndWait();
+		} else {
+			try {
+				
+				ArrayList<String> currentToppings = pizzaArrayList.get(index).getToppings();
+				
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ModifiedPizzaUI.fxml"));
+				Parent root = (Parent) fxmlLoader.load();
+				Stage nextStage = new Stage();
+				nextStage.setScene(new Scene(root, 600, 600));
+				nextStage.setResizable(false);
+				ModifiedPizzaUI display = fxmlLoader.getController();
+				display.getPizzaInfo(currentToppings);
+		        nextStage.show();
+		        Stage currentStage = (Stage) modifyCustom.getScene().getWindow();
+		        currentStage.close();
+		        
+		    } catch(Exception exception) {
+		    	exception.printStackTrace();
+		      }
+		}
+	}
+	
+public void modifiedPizza () {
+		combineLists();
+	}
+
+	public void removeItem(ActionEvent e) {
+		int index = orderListView.getSelectionModel().getSelectedIndex();
+		orderObservableList.remove(index);
+		if (index <= pizzaNameArrayList.size() - 1) { //-1 since .size() is 1 greater than index
+			pizzaNameArrayList.remove(index);
+			pizzaArrayList.remove(index);
+		} else {
+			drinksArrayList.remove(index - pizzaNameArrayList.size());
+		}
+	}
 
 	public void goToDrinks(ActionEvent e) {
 
@@ -98,11 +134,6 @@ public void modifyPizza(ActionEvent e) {
 		NextStage.goTo(fxmlLoader, special);
 	}
 	
-	public void goTempSpecial(ActionEvent e) {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
-		NextStage.goTo(fxmlLoader, special);
-	}
-
 	public void goToCustom(ActionEvent e) {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
@@ -160,10 +191,7 @@ public void modifyPizza(ActionEvent e) {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-    orderItems = FXCollections.observableArrayList();
-    orderItems.addAll(BuildSpecialtyUI.getSpecialtyList());
-    orderItems.addAll(DrinksUI.getDrinkList());
-    orderListView.setItems(orderItems);
+    orderObservableList = FXCollections.observableArrayList();
     //ObservableList pizzas = FXCollections.obserableArrayList(RecipeDB.getRecipeNames())
 	  //orderListView.setItems(recipes);
     
@@ -177,6 +205,7 @@ public void modifyPizza(ActionEvent e) {
 			order.setServerId(u.getUserId());
 			order.setServerName(u.getName());
 		}
+		orderListView.setItems(orderObservableList);
 	}
 	
 	public void makeSpecialtyPizzaObject (String specialtyName, ArrayList<String> specialtyToppings, int specialtySize) { // called in BuildSpeciltyIntoCustomUI
@@ -193,7 +222,10 @@ public void modifyPizza(ActionEvent e) {
 			break;
 		}
 		String pizzaName = sizeString + " " + specialtyName; //the name used in the list
-		//Pizza pizza = new Pizza(pizzaName, specialtySize, specialtyToppings);
+		Pizza pizza = new Pizza(pizzaName, specialtySize, specialtyToppings);
+		pizzaArrayList.add(pizza);
+		pizzaNameArrayList.add(pizza.getName());
+		combineLists();
 	}
 	
 	public void makeCustomPizzaObject (ArrayList<String> toppings, int size) { // called in NOT FINISHED YET
@@ -209,10 +241,25 @@ public void modifyPizza(ActionEvent e) {
 			sizeString = "Large";
 			break;
 		}
-		String pizzaName = sizeString + "Custom"; //the name used in the list
+		String pizzaName = sizeString + " Custom"; //the name used in the list
 		Pizza pizza = new Pizza(pizzaName, size, toppings);
+		pizzaArrayList.add(pizza);
+		pizzaNameArrayList.add(pizza.getName());
+		combineLists();
+	}
+	
+	public void addDrink (String drinkName) {
+		//InventoryDb.getIngredient(drinkName);
+		drinksArrayList.add(drinkName);
+		combineLists();
 	}
 
+	public void combineLists() {
+		orderObservableList.addAll(pizzaNameArrayList);
+		orderObservableList.addAll(drinksArrayList);
+		orderListView.setItems(orderObservableList);
+	}
+	
 	public static Order getOrder() {
 		return order;
 	}
