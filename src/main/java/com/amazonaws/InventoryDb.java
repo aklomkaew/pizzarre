@@ -150,6 +150,48 @@ public class InventoryDb extends DatabaseTable {
 
 		return itemList.get(0).getQuantity();
 	}
+	
+	public static boolean addItem(String name, int quantity) {
+		boolean status = false;
+		// if order presents, then don't add it
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withS(name));
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("IngredientName = :val1").withExpressionAttributeValues(attributeValues);
+		
+		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, scanExpression);
+		if(itemList == null || itemList.size() == 0) {
+			InventoryItem item = new InventoryItem(name, quantity);
+			mapper.save(item);
+			status = true;
+		}
+		
+		return status;
+	}
+	
+	public static boolean deleteItem(String name) {
+		boolean status = false;
+		
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withS(name));
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("IngredientName = :val1").withExpressionAttributeValues(attributeValues);
+		
+		List<InventoryItem> list = mapper.scan(InventoryItem.class, scanExpression);
+		// should only have one item in the list
+		if(list == null || list.size() < 1) {
+			System.out.println("Item name " + name + " not found.");
+			status = false;
+		}
+		else {
+			mapper.delete(list.get(0));
+			status = true;
+		}
+		
+		return status;
+	}
 
 	public static List<InventoryItem> retrieveAllItem() {
 		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, new DynamoDBScanExpression());

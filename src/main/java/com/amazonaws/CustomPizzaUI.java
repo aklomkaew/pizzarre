@@ -144,7 +144,6 @@ public class CustomPizzaUI implements Initializable{
 
 			Order order = NewOrderUI.getOrder();
 			order.addPizza(p);
-			order.incrementItemCount();
 			Order o = NewOrderUI.getOrder();
 
 			Alert.Display("Success", "Custom Pizza is added to your order!");
@@ -202,7 +201,6 @@ public class CustomPizzaUI implements Initializable{
     toppingListView.getItems().clear();
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
-		NewOrderUI.getOrder().decrementItemCount();
 	}
 
 public void start(Stage arg0) throws Exception {

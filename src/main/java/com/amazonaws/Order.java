@@ -13,11 +13,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTyped;
 @DynamoDBTable(tableName = "my-orders-table")
 public class Order {
 	private ArrayList<Pizza> pizzas;
-	// private ArrayList<Drink> drinks;
+	//private ArrayList<Drink> drinks;
 
 	private int orderNumber;
 	private boolean active;
-	private static int itemNum;
 	private double total;
 	private String server;
 	private int serverId;
@@ -27,7 +26,6 @@ public class Order {
 		this.orderNumber = -1;
 		this.active = true;
 		this.total = 0.0;
-		this.itemNum = 0;
 	}
 
 	public Order(int num, List<Pizza> list) {
@@ -36,7 +34,6 @@ public class Order {
 		this.pizzas.addAll(list);
 		this.active = true;
 		this.total = 0.0;
-		this.itemNum = pizzas.size();
 	}
 
 	@DynamoDBHashKey(attributeName = "OrderNumber")
@@ -59,15 +56,6 @@ public class Order {
 	
 	public void setInactive() {
 		this.active = false;
-	}
-
-	@DynamoDBAttribute(attributeName = "ItemNum")
-	public int getItemNum() {
-		return this.itemNum;
-	}
-
-	public void setItemNum(int n) {
-		this.itemNum = n;
 	}
 	
 	@DynamoDBAttribute(attributeName = "Server")
@@ -108,23 +96,17 @@ public class Order {
 	public void addPizza(Pizza p) {
 		this.pizzas.add(p);
 	}
-	
-	public static void incrementItemCount() {
-		itemNum++;
-	}
-	
-	public static void decrementItemCount() {
-		itemNum--;
-	}
 
 	public String toString() {
-		String ret = "Order #" + orderNumber + ": " + pizzas.size() + " pizza. Order is "
-				+ ((active) ? "active" : "not active") + ".";
+		String ret = "";
 
-		for (int i = 0; i < pizzas.size(); i++) {
-			ret += "\n-->Pizza #" + (i + 1) + " | " + pizzas.get(i).toString();
+		if(pizzas.size() > 0) {
+			ret += pizzas.size() + ((pizzas.size() == 1) ? " pizza" : " pizzas");
+			for (int i = 0; i < pizzas.size(); i++) {
+				ret += "\n--> Pizza #" + (i + 1) + " has " + pizzas.get(i).toString();
+			}
 		}
-
+		
 		return ret;
 	}
 }

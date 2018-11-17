@@ -38,7 +38,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="confirmBtn" layoutX="10.0" layoutY="10.0" maxHeight="75.0" maxWidth="75.0" minHeight="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#checkUser" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: palegreen;" text="Confirm" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                        <Button fx:id="confirmBtn" layoutX="10.0" layoutY="10.0" maxHeight="75.0" maxWidth="75.0" minHeight="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#addUser" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: palegreen;" text="Confirm" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                         <Button fx:id="backBtn" layoutX="10.0" layoutY="10.0" maxHeight="75.0" maxWidth="75.0" minHeight="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#goToAllUsers" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: pink;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                         <TextField fx:id="userNameTF" promptText="New User Name" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <TextField fx:id="idTF" promptText="New User Id" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />

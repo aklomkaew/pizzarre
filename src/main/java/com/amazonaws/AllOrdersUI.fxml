@@ -91,10 +91,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="showOrderBtn" mnemonicParsing="false" onAction="#showOrders" prefHeight="80.0" prefWidth="80.0" text="Show Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="editOrderBtn" mnemonicParsing="false" onAction="#editOrders" prefHeight="80.0" prefWidth="80.0" text="Edit Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Button fx:id="deleteAllOrdersBtn" mnemonicParsing="false" onAction="#deleteAllOrders" prefHeight="80.0" prefWidth="80.0" text="Delete All Orders" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                  <Button fx:id="deleteOrderBtn" mnemonicParsing="false" onAction="#deleteOrders" prefHeight="80.0" prefWidth="80.0" text="Delete Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button fx:id="showOrderBtn" mnemonicParsing="false" onAction="#showOrder" prefHeight="80.0" prefWidth="80.0" text="Show Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="editOrderBtn" mnemonicParsing="false" onAction="#editOrder" prefHeight="80.0" prefWidth="80.0" text="Edit Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="deleteAllOrderBtn" mnemonicParsing="false" onAction="#deleteAllOrder" prefHeight="80.0" prefWidth="80.0" text="Delete All Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <Button fx:id="deleteOrderBtn" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="80.0" prefWidth="80.0" text="Delete Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <Button fx:id="allActiveOrdersBtn" mnemonicParsing="false" onAction="#goToAllActiveOrders" prefHeight="80.0" prefWidth="80.0" text="All Active Orders" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>

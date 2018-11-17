@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.scene.control.ListView;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
@@ -36,38 +37,42 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class NewOrderUI implements Initializable{
-	
-    @FXML
-    private Button mainMenu;
-    @FXML
-    private Button drink;
-    @FXML
-    private Button special;
-    @FXML
-    private Button custom;
-    @FXML
-    private Button discount;
-    @FXML
+public class NewOrderUI implements Initializable {
+
+	@FXML
+	private Button mainMenu;
+	@FXML
+	private Button drink;
+	@FXML
+	private Button special;
+	@FXML
+	private Button custom;
+	@FXML
+	private Button discount;
+	@FXML
 	private Button confirm;
-    @FXML
-    private Button modifyCustom;
-    @FXML
-    private ListView<String> orderListView = new ListView<String>();
-    
-    private static Order order;
-    
-    private static ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
+	@FXML
+	private Button modifyCustom;
+	@FXML
+	private ListView<String> orderListView;
+
+	private static Order order;
+
+private static ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
     private static ArrayList<String> pizzaNameArrayList = new ArrayList<String>(); // to display pizzas on listview
     private static ArrayList<String> drinksArrayList = new ArrayList<String>(); // for drink INGREDIENTS
-	private static ObservableList<String> orderObservableList = FXCollections.observableArrayList(); //the listview display list
+	private ObservableList<String> pizzas = FXCollections.observableArrayList();
+	private ObservableList<String> recipes = FXCollections.observableArrayList();
+	private ObservableList<String> drinks = FXCollections.observableArrayList();
+	private ObservableList<String> orderItems = FXCollections.observableArrayList();
+	private ObservableList<String> orderObservableList = FXCollections.observableArrayList();
 
 	public void goToMainMenu(ActionEvent e) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to return without saving order?");
-    
-    Optional<ButtonType> option = alert.showAndWait();
+
+		Optional<ButtonType> option = alert.showAndWait();
 		if (option.get() == null) {
 			return;
 		} else if (option.get() == ButtonType.CANCEL) {
@@ -148,7 +153,7 @@ public void modifiedPizza () {
 	}
 
 	public void confirmOrder(ActionEvent e) {
-		int num = order.getItemNum();
+		int num = order.getOrderNumber();
 		while (!OrderDb.addOrder(order)) {
 			num++;
 			order.setOrderNumber(num);
@@ -191,10 +196,13 @@ public void modifiedPizza () {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-    orderObservableList = FXCollections.observableArrayList();
-    //ObservableList pizzas = FXCollections.obserableArrayList(RecipeDB.getRecipeNames())
-	  //orderListView.setItems(recipes);
-    
+		orderObservableList = FXCollections.observableArrayList();
+		orderObservableList.addAll(BuildSpecialtyUI.getSpecialtyList());
+		orderObservableList.addAll(DrinksUI.getDrinkList());
+		orderListView.setItems(orderObservableList);
+		// ObservableList pizzas =
+		// FXCollections.obserableArrayList(RecipeDB.getRecipeNames())
+		// orderListView.setItems(recipes);
 		User u = LoginUI.getUser();
 		if (order == null) {
 			order = new Order();

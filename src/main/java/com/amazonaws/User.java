@@ -17,27 +17,27 @@ public class User {
 	protected boolean manager;
 
 	public User() {
-		userId = -1;
-		name = "";
-		orders = new ArrayList<Order>();
-		passcode = "-1";
-		manager = false;
+		this.userId = -1;
+		this.name = "";
+		this.orders = new ArrayList<Order>();
+		this.passcode = "-1";
+		this.manager = false;
 	}
 
 	public User(int id, String n) {
-		userId = id;
-		name = n;
-		orders = new ArrayList<Order>();
-		passcode = setPasscode(id);
-		manager = false;
+		this.userId = id;
+		this.name = n;
+		this.orders = new ArrayList<Order>();
+		this.passcode = setPasscode(id);
+		this.manager = false;
 	}
 	
 	public User(int id, String n, ArrayList<Order> list) {
-		userId = id;
-		name = n;
-		orders.addAll(list);
-		passcode = setPasscode(id);
-		manager = false;
+		this.userId = id;
+		this.name = n;
+		this.orders.addAll(list);
+		this.passcode = setPasscode(id);
+		this.manager = false;
 	}
 
 	private String setPasscode(int id) {
@@ -50,46 +50,47 @@ public class User {
 	
 	@DynamoDBHashKey(attributeName = "Id")
 	public int getUserId() {
-		return userId;
+		return this.userId;
 	}
 
 	public void setUserId(int id) {
-		userId = id;
+		this.userId = id;
+		this.setPasscode(id);
 	}
 
 	@DynamoDBAttribute(attributeName = "Name")
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String n) {
-		name = n;
+		this.name = n;
 	}
 	
 	@DynamoDBAttribute(attributeName = "Passcode")
 	public String getPasscode() {
-		return passcode;
+		return this.passcode;
 	}
 	public void setPasscode(String p) {
-		passcode = p;
+		this.passcode = p;
 	}
 	
 	@DynamoDBTypeConverted(converter = MyBooleanConverter.class)
 	public boolean isManager() {
-		return manager;
+		return this.manager;
 	}
 
 	public void setManager(boolean m) {
-		manager = m;
+		this.manager = m;
 	}
 
 	@DynamoDBTypeConverted(converter = MyOrderConverter.class)
 	public ArrayList<Order> getOrderList() {
-		return orders;
+		return this.orders;
 	}
 	
 	public void setOrderList(ArrayList<Order> list) {
-		orders.addAll(list);
+		this.orders.addAll(list);
 	}
 	
 	public boolean removeOrder(int num) {

@@ -20,8 +20,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -55,6 +57,22 @@ public class RecipeListUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, addRecipeBtn);
 	}
 
+public void viewRecipe(ActionEvent e) { //index in Observable List will match index in RecipeDb
+	RecipeItem item = recipeTableView.getSelectionModel().getSelectedItem();
+	if (item == null) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText("Select a user to view.");
+		alert.showAndWait();
+		return;
+	}
+	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle("View Recipe");
+	alert.setHeaderText("Recipe " + item.getName() + " contains:");
+	alert.setContentText(item.toString());
+	alert.showAndWait();
+}
+
 public void goToManagerUtilities(ActionEvent e) {
 	
 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
@@ -64,27 +82,22 @@ public void goToManagerUtilities(ActionEvent e) {
 	public void deleteRecipe(ActionEvent e) {
 		RecipeItem itemToDelete = recipeTableView.getSelectionModel().getSelectedItem();
 		if(itemToDelete == null) {
-			Alert.Display("Error", "Select a recipe to delete.");
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select a recipe to delete.");
+			alert.showAndWait();
+			return;
 		}
 		
 		recipeObservableList.remove(itemToDelete);
 		recipeTableView.setItems(recipeObservableList);
 
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Success");
+		alert.setHeaderText("Recipe " + itemToDelete.getName() + " has been deleted.");
+		alert.showAndWait();
 		RecipeDb.deleteItem(itemToDelete.getName());
 		displayAllRecipe();
-//   Alert.displayIntegration("deleteRecipe");
-	
-// 	String recipeName = recipeListView.getSelectionModel().getSelectedItem();
-// 	int index = -1;
-// 	index = recipeListView.getSelectionModel().getSelectedIndex();
-	
-// 	//RecipeItem recipeToDelete = RecipeDB.get(index)
-// 	//RecipeDB.delete(index);
-	
-// 	System.out.println(index);
-	
-// 	recipeObservableList.remove(recipeName);
-// 	recipeListView.setItems(recipeObservableList);
 	}
 
 	public void displayAllRecipe() {

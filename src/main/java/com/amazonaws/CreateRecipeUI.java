@@ -1,10 +1,13 @@
 package com.amazonaws;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.fxml.Initializable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +18,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -24,7 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class CreateRecipeUI extends Application {
+public class CreateRecipeUI extends Application implements Initializable {
 
 	@FXML
 	private Button backBtn;
@@ -65,9 +70,9 @@ public class CreateRecipeUI extends Application {
 	@FXML
 	private TextField recipeNameTF;
 	@FXML
-	private ListView<String> toppingListView = new ListView<String>();
+	private ListView<String> toppingListView;
 
-	private ObservableList<String> toppingObservableList = FXCollections.observableArrayList();
+	private ObservableList<String> toppingObservableList;
 
 	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
 
@@ -88,7 +93,7 @@ public class CreateRecipeUI extends Application {
 			toppingIdArrayList.remove(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
 			toppingObservableList.remove(toppingName); // list used to display topping names
 		}
-		}
+	}
 
 	public void confirmRecipe(ActionEvent e) {
 		// This adds the recipe to the database
@@ -111,15 +116,23 @@ public class CreateRecipeUI extends Application {
 		ArrayList<String> list = new ArrayList<String>();
 		list.addAll(toppingObservableList);
 		RecipeItem item = new RecipeItem(recipeName, list);
-		RecipeDb.addRecipe(item);
-
-		Alert.Display("Success", "Recipe " + recipeName + " has been successfully added to the database.");
+		if(RecipeDb.addRecipe(item)) {
+			Alert.Display("Success", "Recipe " + recipeName + " has been added");
+		}
+		else {
+			Alert.Display("Error", "Recipe " + recipeName + " already exists.");
+			return;
+		}
+		
 
 		System.out.println("The recipe name is " + recipeName + " and the toppings are: " + toppingObservableList);
 		recipeNameTF.clear();
 		toppingIdArrayList.clear();
 		toppingObservableList.clear();
 		toppingListView.setItems(toppingObservableList);
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirmBtn);
 	}
 
 	public void clearRecipe(ActionEvent e) {
@@ -145,6 +158,12 @@ public class CreateRecipeUI extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) { // initializes populates ist with current users
+		toppingObservableList = FXCollections.observableArrayList();
+		toppingListView.setItems(toppingObservableList);
 	}
 
 }
