@@ -13,7 +13,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTyped;
 @DynamoDBTable(tableName = "my-orders-table")
 public class Order {
 	private ArrayList<Pizza> pizzas;
-	// private ArrayList<Drink> drinks;
+	//private ArrayList<Drink> drinks;
 
 	private int orderNumber;
 	private boolean active;
@@ -98,13 +98,15 @@ public class Order {
 	}
 
 	public String toString() {
-		String ret = "Order #" + orderNumber + ": " + pizzas.size() + " pizza. Order is "
-				+ ((active) ? "active" : "not active") + ".";
+		String ret = "";
 
-		for (int i = 0; i < pizzas.size(); i++) {
-			ret += "\n-->Pizza #" + (i + 1) + " | " + pizzas.get(i).toString();
+		if(pizzas.size() > 0) {
+			ret += pizzas.size() + ((pizzas.size() == 1) ? " pizza" : " pizzas");
+			for (int i = 0; i < pizzas.size(); i++) {
+				ret += "\n--> Pizza #" + (i + 1) + " has " + pizzas.get(i).toString();
+			}
 		}
-
+		
 		return ret;
 	}
 }

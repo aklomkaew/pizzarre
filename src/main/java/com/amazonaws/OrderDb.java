@@ -67,6 +67,29 @@ public class OrderDb extends DatabaseTable {
 		return status;
 	}
 	
+	public static boolean deleteItem(int num) {
+		boolean status = false;
+		
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withN(Integer.toString(num)));
+		
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("OrderNumber = :val1").withExpressionAttributeValues(attributeValues);
+		
+		List<Order> list = mapper.scan(Order.class, scanExpression);
+		// should only have one item in the list
+		if(list == null || list.size() < 1) {
+			System.out.println("Order id " + num + " is not found.");
+			status = false;
+		}
+		else {
+			mapper.delete(list.get(0));
+			status = true;
+		}
+		
+		return status;
+	}
+	
 	public static void updateOrder(Order obj) {
 		mapper.save(obj);
 	}

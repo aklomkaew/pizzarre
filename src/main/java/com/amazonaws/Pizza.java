@@ -39,4 +39,14 @@ public class Pizza {
 	public ArrayList<String> getToppings(){
 		return this.toppings;
 	}
+	
+	public String toString() {
+		String ret = "";
+		
+		for(String str : this.toppings) {
+			ret += str + ", ";
+		}
+		ret = ret.substring(0, ret.length() - 2);
+		return ret;
+	}
 }

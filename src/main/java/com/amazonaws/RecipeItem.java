@@ -43,4 +43,13 @@ public class RecipeItem {
 	public void setIngredients(ArrayList<String> list) {
 		this.ingredients.addAll(list);
 	}
+	
+	public String toString() {
+		String ret = "";
+		for(String str : this.ingredients) {
+			ret += str + ", ";
+		}
+		ret = ret.substring(0, ret.length() - 2);
+		return ret;
+	}
 }
