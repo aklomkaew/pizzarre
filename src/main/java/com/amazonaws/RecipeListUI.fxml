@@ -24,7 +24,7 @@
          <top>
             <TitledPane alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="600.0" text="#UserName" BorderPane.alignment="CENTER">
                <content>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="137.0" text="Recipes" textAlignment="CENTER">
+                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="137.0" text="RECIPES" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -49,11 +49,11 @@
             </HBox>
          </bottom>
          <left>
-            <ScrollPane prefHeight="459.0" prefWidth="267.0" BorderPane.alignment="CENTER">
+            <ScrollPane prefHeight="459.0" prefWidth="347.0" BorderPane.alignment="CENTER">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="474.0" prefWidth="257.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="474.0" prefWidth="347.0">
                      <children>
-                        <TableView fx:id="recipeTableView" prefHeight="474.0" prefWidth="299.0">
+                        <TableView fx:id="recipeTableView" prefHeight="474.0" prefWidth="333.0">
                           <columns>
                             <TableColumn fx:id="nameColumn" prefWidth="94.0" text="Recipe Name" />
                             <TableColumn fx:id="ingredientsColumn" prefWidth="102.0" text="Ingredients" />
@@ -74,11 +74,11 @@
             </ScrollPane>
          </left>
          <right>
-            <VBox prefHeight="489.0" prefWidth="181.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="289.0" prefWidth="123.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="addRecipeBtn" alignment="CENTER" mnemonicParsing="false" onAction="#addRecipe" prefHeight="55.0" prefWidth="75.0" text="Add Recipe" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="addRecipeBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addRecipe" prefHeight="55.0" prefWidth="75.0" text="Add Recipe" textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
                   <Button fx:id="deleteRecipeBtn" alignment="CENTER" layoutX="20.0" layoutY="95.0" mnemonicParsing="false" onAction="#deleteRecipe" prefHeight="55.0" prefWidth="75.0" text="Delete Recipe" textAlignment="CENTER" wrapText="true">
@@ -88,7 +88,7 @@
                   </Button>
                </children>
                <BorderPane.margin>
-                  <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+                  <Insets bottom="100.0" right="100.0" top="100.0" />
                </BorderPane.margin>
             </VBox>
          </right></BorderPane>
