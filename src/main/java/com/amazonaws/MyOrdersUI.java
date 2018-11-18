@@ -32,6 +32,12 @@ public class MyOrdersUI extends Application implements Initializable{
 	@FXML
 	private Button backBtn;
 	@FXML
+	private Button payBtn;
+	@FXML
+	private Button editBtn;
+	@FXML
+	private Button deleteBtn;
+	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
 	private TableColumn<Order, Integer> orderNumberColumn;
@@ -41,18 +47,9 @@ public class MyOrdersUI extends Application implements Initializable{
 	private ObservableList<Order> orderObservableList;
 
 	public void goToMainMenu(ActionEvent e) {
-		try {
+
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage mainMenuStage = new Stage();
-			mainMenuStage.setScene(new Scene(root));
-			mainMenuStage.setTitle("Order Screen");
-			mainMenuStage.show();
-			Stage myOrdersStage = (Stage) backBtn.getScene().getWindow();
-			myOrdersStage.close();
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
+			NextStage.goTo(fxmlLoader, backBtn);
 	}
 	
 	public void displayAllOrder() {
@@ -69,6 +66,22 @@ public class MyOrdersUI extends Application implements Initializable{
 			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName()
 			+ " total = " + item.getTotal());
 		}
+	}
+	
+	public void payOrder(ActionEvent e) {
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
+		NextStage.goTo(fxmlLoader, payBtn);
+	}
+	
+	public void editOrder(ActionEvent e) {
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, editBtn);
+	}
+
+	public void deleteOrder(ActionEvent e) {
+	
 	}
 
 	@Override

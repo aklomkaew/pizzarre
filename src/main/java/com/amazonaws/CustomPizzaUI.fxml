@@ -177,7 +177,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="greenPeppr" layoutX="203.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Green Pepper" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <Button fx:id="greenPepper" layoutX="203.0" layoutY="180.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="60.0" prefWidth="100.0" text="Green Pepper" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
