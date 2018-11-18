@@ -1,6 +1,7 @@
 package com.amazonaws;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,14 +32,14 @@ import javafx.stage.Stage;
 public class AllActiveOrdersUI extends Application implements Initializable {
 	@FXML
 	private Button backBtn;
-  @FXML
-  private Button editOrderBtn;
-  @FXML
-  private Button deleteOrderBtn;
-  @FXML
-  private Button deleteAllOrderBtn;
-  @FXML
-  private Button payOrderBtn;
+	@FXML
+	private Button editOrderBtn;
+	@FXML
+	private Button deleteOrderBtn;
+	@FXML
+	private Button deleteAllOrderBtn;
+	@FXML
+	private Button payOrderBtn;
 	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
@@ -55,46 +56,44 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllOrdersUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
-  
-  public void editOrder(ActionEvent e) {
-    	
-  }
 
-  public void deleteOrder(ActionEvent e) {
+	public void editOrder(ActionEvent e) {
 
-  }
+	}
 
-  public void deleteAllOrder(ActionEvent e) {
+	public void deleteOrder(ActionEvent e) {
 
-  }
-  
-  public void payOrder(ActionEvent e) {
-	  //get order
-	  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
+	}
+
+	public void deleteAllOrder(ActionEvent e) {
+
+	}
+
+	public void payOrder(ActionEvent e) {
+		// get order
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
 		NextStage.goTo(fxmlLoader, payOrderBtn);
-  }
-  
+	}
+
 	public void displayAllActiveOrder() {
 		List<Order> list = OrderDb.retrieveAllItem();
 
-		if(list == null || list.size() < 1) {
+		if (list == null || list.size() < 1) {
 			return;
 		}
-		List<Order> activeList = list;
-		for(int i = 0; i < activeList.size(); i++)
-		{
-			if(activeList.get(i).getState() == false)
-			{
-				activeList.remove(i);
+		List<Order> activeList = new ArrayList<Order>();
+		for(Order item : list) {
+			if(item.getState()) {
+				activeList.add(item);
 			}
 		}
-		
+
 		orderObservableList.clear();
 		orderObservableList.addAll(activeList);
 		System.out.println("\nPrint from observableList");
 		for (Order item : orderObservableList) {
-			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName()
-			+ " total = " + item.getTotal());
+			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName() + " total = "
+					+ item.getTotal());
 		}
 	}
 
