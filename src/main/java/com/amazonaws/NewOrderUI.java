@@ -44,7 +44,9 @@ import javafx.stage.Stage;
 public class NewOrderUI implements Initializable {
 
 	@FXML
-	private Button mainMenu;
+	private Button backBtn;
+	@FXML
+	private Button cancelBtn;
 	@FXML
 	private Button drink;
 	@FXML
@@ -73,21 +75,21 @@ public class NewOrderUI implements Initializable {
 
 	private static HashMap<String, Integer> allIngredients;
 
-	public void goToMainMenu(ActionEvent e) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation");
-		alert.setHeaderText("Are you sure you want to return without saving order?");
-
-		Optional<ButtonType> option = alert.showAndWait();
-		if (option.get() == null) {
-			return;
-		} else if (option.get() == ButtonType.CANCEL) {
-			return;
-		} else if (option.get() == ButtonType.OK) {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-			NextStage.goTo(fxmlLoader, mainMenu);
-		}
-	}
+//	public void goToMainMenu(ActionEvent e) {
+//		Alert alert = new Alert(AlertType.CONFIRMATION);
+//		alert.setTitle("Confirmation");
+//		alert.setHeaderText("Are you sure you want to return without saving order?");
+//
+//		Optional<ButtonType> option = alert.showAndWait();
+//		if (option.get() == null) {
+//			return;
+//		} else if (option.get() == ButtonType.CANCEL) {
+//			return;
+//		} else if (option.get() == ButtonType.OK) {
+//			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+//			NextStage.goTo(fxmlLoader, backBtn);
+//		}
+//	}
 
 	public void modifyPizza(ActionEvent e) {
 		int index = orderListView.getSelectionModel().getSelectedIndex();
@@ -98,7 +100,6 @@ public class NewOrderUI implements Initializable {
 			alert.showAndWait();
 		} else {
 			try {
-
 				ArrayList<String> currentToppings = pizzaArrayList.get(index).getToppings();
 
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ModifiedPizzaUI.fxml"));
@@ -200,15 +201,39 @@ public class NewOrderUI implements Initializable {
 		} else if (option.get() == ButtonType.CANCEL) {
 			return;
 		} else if (option.get() == ButtonType.OK) {
-			Iterator itr = allIngredients.entrySet().iterator();
-			while (itr.hasNext()) {
-				Map.Entry pair = (Map.Entry) itr.next();
-				InventoryDb.changeQuantity((String)pair.getKey(), (Integer)pair.getValue(), "increase");
-				itr.remove();
-			}
-			
+			removeAllIngredients();
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-			NextStage.goTo(fxmlLoader, mainMenu);
+			NextStage.goTo(fxmlLoader, cancelBtn);
+		}
+	}
+	
+	public void goBack(ActionEvent e) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation");
+		alert.setHeaderText("Are you sure you want to return without saving order?");
+		alert.showAndWait();
+
+		Optional<ButtonType> option = alert.showAndWait();
+		if (option.get() == null) {
+			return;
+		} else if (option.get() == ButtonType.CANCEL) {
+			return;
+		} else if (option.get() == ButtonType.OK) {
+			removeAllIngredients();
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+			NextStage.goTo(fxmlLoader, backBtn);
+		}
+	}
+	
+	public void removeAllIngredients() {
+		if(allIngredients == null || allIngredients.isEmpty()) {
+			return;
+		}
+		Iterator itr = allIngredients.entrySet().iterator();
+		while (itr.hasNext()) {
+			Map.Entry pair = (Map.Entry) itr.next();
+			InventoryDb.changeQuantity((String)pair.getKey(), (Integer)pair.getValue(), "increase");
+			itr.remove();
 		}
 	}
 
