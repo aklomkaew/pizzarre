@@ -30,10 +30,10 @@ public class RecipeDb extends DatabaseTable {
 	public static void initTable() { 
 		System.out.println("\nInitializing table " + tableName);
 		
-//		ArrayList<String> baseList = new ArrayList<String>();
-//		baseList.add("crust");
-//		baseList.add("sauce");
-//		baseList.add("cheese");
+		ArrayList<String> baseList = new ArrayList<String>();
+		baseList.add("crust");
+		baseList.add("sauce");
+		baseList.add("cheese");
 //		
 //		RecipeItem item = new RecipeItem("basePizza", baseList);
 //		mapper.save(item);
@@ -59,7 +59,7 @@ public class RecipeDb extends DatabaseTable {
 //		i5.getIngredients().add("mushroom");
 //		i5.getIngredients().add("spinach");
 //		mapper.save(i5);
-/*		
+		
 		 RecipeItem dailySpecialPizza = new RecipeItem("dailySpecialPizza");
 		 dailySpecialPizza.getIngredients().addAll(baseList);
 		 dailySpecialPizza.getIngredients().add("pepperoni");
@@ -108,36 +108,36 @@ public class RecipeDb extends DatabaseTable {
 		 sicilianPizza.getIngredients().add("onion");
 		 sicilianPizza.getIngredients().add("tomato");
 		 mapper.save(sicilianPizza);
-*/
-		ArrayList<String> baseList = new ArrayList<String>();
-		baseList.add("crust");
-		baseList.add("sauce");
-		baseList.add("cheese");
-		
-		RecipeItem item = new RecipeItem("basePizza", baseList);
-		mapper.save(item);
-		
-		RecipeItem i2 = new RecipeItem("cheesePizza", baseList);
-		mapper.save(i2);
-		
-		RecipeItem i3 = new RecipeItem("pepperoniPizza");
-		i3.getIngredients().addAll(baseList);
-		i3.getIngredients().add("pepperoni");
-		mapper.save(i3);
-		
-		RecipeItem i4 = new RecipeItem("hawaiianPizza");
-		i4.getIngredients().addAll(baseList);
-		i4.getIngredients().add("pineapple");
-		mapper.save(i4);
-		
-		RecipeItem i5 = new RecipeItem("vegetarianPizza");
-		i5.getIngredients().addAll(baseList);
-		i5.getIngredients().add("pineapple");
-		i5.getIngredients().add("greenPepper");
-		i5.getIngredients().add("onion");
-		i5.getIngredients().add("mushroom");
-		i5.getIngredients().add("spinach");
-		mapper.save(i5);
+
+//		ArrayList<String> baseList = new ArrayList<String>();
+//		baseList.add("crust");
+//		baseList.add("sauce");
+//		baseList.add("cheese");
+//		
+//		RecipeItem item = new RecipeItem("basePizza", baseList);
+//		mapper.save(item);
+//		
+//		RecipeItem i2 = new RecipeItem("cheesePizza", baseList);
+//		mapper.save(i2);
+//		
+//		RecipeItem i3 = new RecipeItem("pepperoniPizza");
+//		i3.getIngredients().addAll(baseList);
+//		i3.getIngredients().add("pepperoni");
+//		mapper.save(i3);
+//		
+//		RecipeItem i4 = new RecipeItem("hawaiianPizza");
+//		i4.getIngredients().addAll(baseList);
+//		i4.getIngredients().add("pineapple");
+//		mapper.save(i4);
+//		
+//		RecipeItem i5 = new RecipeItem("vegetarianPizza");
+//		i5.getIngredients().addAll(baseList);
+//		i5.getIngredients().add("pineapple");
+//		i5.getIngredients().add("greenPepper");
+//		i5.getIngredients().add("onion");
+//		i5.getIngredients().add("mushroom");
+//		i5.getIngredients().add("spinach");
+//		mapper.save(i5);
 	}
 	
 	public static boolean addRecipe(RecipeItem item) {

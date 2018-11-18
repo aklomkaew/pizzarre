@@ -19,7 +19,7 @@
    <children>
       <BorderPane maxHeight="600.0" maxWidth="600.0" prefHeight="600.0" prefWidth="600.0">
          <bottom>
-            <Button fx:id="mainMenu" alignment="CENTER" mnemonicParsing="false" onAction="#goToMainMenu" text="Back" BorderPane.alignment="CENTER">
+            <Button fx:id="mainMenu" alignment="CENTER" mnemonicParsing="false" onAction="#discardOrder" text="Back" BorderPane.alignment="CENTER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -104,13 +104,21 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="modifyCustom" mnemonicParsing="false" onAction="#modifyPizza" prefHeight="80.0" prefWidth="80.0" text="Modify Custom Pizza" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Button fx:id="modifyCustom" mnemonicParsing="false" onAction="#modifyPizza" prefHeight="80.0" prefWidth="80.0" text="Modify Pizza" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>
                            <font>
                               <Font size="14.0" />
                            </font>
+                        </Button>
+                        <Button fx:id="remove" mnemonicParsing="false" onAction="#removeItem" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: khaki;" text="Remove Selected Item" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
                         </Button>
                      </children>
                   </GridPane>

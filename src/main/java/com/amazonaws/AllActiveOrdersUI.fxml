@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amazonaws.AllOrdersUI">
+<AnchorPane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.amazonaws.AllActiveOrdersUI">
    <children>
       <BorderPane maxHeight="600.0" maxWidth="600.0" minHeight="556.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0">
          <effect>
@@ -26,7 +26,7 @@
          <top>
             <TitledPane alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="600.0" text="#UserName" BorderPane.alignment="CENTER">
                <content>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="137.0" text="ALL ORDERS" textAlignment="CENTER">
+                  <Label alignment="CENTER" text="ALL ACTIVE ORDERS" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -91,11 +91,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="showOrderBtn" mnemonicParsing="false" onAction="#showOrder" prefHeight="80.0" prefWidth="80.0" text="Show Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <Button fx:id="editOrderBtn" mnemonicParsing="false" onAction="#editOrder" prefHeight="80.0" prefWidth="80.0" text="Edit Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                   <Button fx:id="deleteAllOrderBtn" mnemonicParsing="false" onAction="#deleteAllOrder" prefHeight="80.0" prefWidth="80.0" text="Delete All Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                   <Button fx:id="deleteOrderBtn" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="80.0" prefWidth="80.0" text="Delete Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <Button fx:id="allActiveOrdersBtn" mnemonicParsing="false" onAction="#goToAllActiveOrders" prefHeight="80.0" prefWidth="80.0" text="All Active Orders" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="payOrderBtn" mnemonicParsing="false" onAction="#payOrder" prefHeight="80.0" prefWidth="80.0" text="Pay For Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
          </center></BorderPane>

@@ -96,19 +96,18 @@ public class CustomPizzaUI implements Initializable {
 	public void addTopping(ActionEvent e) {
 
 		String id = ((Button) e.getSource()).getId();
-		String toppingName = ((Button) e.getSource()).getText();
 
 		if (toppingIdArrayList.contains(id) == false) { // if statements adds topping to the list
 
 			System.out.println(id + " added");
-			toppingIdArrayList.add(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
-			toppingObservableList.add(toppingName); // list used to display topping names
+			toppingIdArrayList.add(id);
+			toppingObservableList.add(id);
 
 		} else { // else statement removes topping from the list
 
 			System.out.println(id + " removed");
-			toppingIdArrayList.remove(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
-			toppingObservableList.remove(toppingName); // list used to display topping names
+			toppingIdArrayList.remove(id);
+			toppingObservableList.remove(id);
 		}
 
 		toppingListView.setItems(toppingObservableList); // displays toppings in the list
@@ -137,7 +136,7 @@ public class CustomPizzaUI implements Initializable {
 			boolean flag = false;
 			for (int i = 0; i < list.size(); i++) {
 				int num = InventoryDb.getQuantityOfItem(list.get(i));
-				if(num == -1) {
+				if (num == -1) {
 					Alert.Display("Error", "Item " + list.get(0) + " not in inventory.");
 					flag = true;
 					break;
@@ -149,13 +148,15 @@ public class CustomPizzaUI implements Initializable {
 					break;
 				} else {
 					InventoryDb.changeQuantity(list.get(i), pSize, "decrease");
+					NewOrderUI.addIngredient(list.get(i), pSize);
 					count++;
 				}
 			}
 
 			if (flag) {
-				for(int i = 0; i < count; i++) {
+				for (int i = 0; i < count; i++) {
 					InventoryDb.changeQuantity(list.get(i), pSize, "increase");
+					NewOrderUI.removeIngredient(list.get(i), pSize);
 				}
 				return;
 			}
@@ -168,8 +169,38 @@ public class CustomPizzaUI implements Initializable {
 
 			Alert.Display("Success", "Custom Pizza is added to your order!");
 
+			toppingObservableList.clear();
+			toppingIdArrayList.clear();
+			toppingListView.getItems().clear();
+			
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 			NextStage.goTo(fxmlLoader, confirmBtn);
+
+			// size = specialtySize; // learn 2 enumerate, again
+//			int size = 0;
+//			if (pizzaSize.equals("small")) {
+//				size = 1;
+//			} else if (pizzaSize.equals("medium")) {
+//				size = 2;
+//			} else if (pizzaSize.equals("large")) {
+//				size = 3;
+//			}
+//			
+//			try {
+//				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+//				Parent root = (Parent) fxmlLoader.load();
+//				Stage nextStage = new Stage();
+//				nextStage.setScene(new Scene(root, 600, 600));
+//				nextStage.setResizable(false);
+//				NewOrderUI display = fxmlLoader.getController();
+//				display.makeCustomPizzaObject(toppingIdArrayList, size);
+//		        nextStage.show();
+//		        Stage currentStage = (Stage) confirmBtn.getScene().getWindow();
+//		        currentStage.close();
+//		        
+//		    } catch(Exception exception) {
+//		    	exception.printStackTrace();
+//		      }
 		}
 	}
 
@@ -185,7 +216,6 @@ public class CustomPizzaUI implements Initializable {
 	}
 
 	public void clearPizza(ActionEvent e) {
-
 		toppingObservableList.clear();
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
@@ -195,14 +225,17 @@ public class CustomPizzaUI implements Initializable {
 		toppingObservableList.clear();
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
-		
+
 		removePizza();
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 
 	public static void removePizza() {
+		if (toppingObservableList.isEmpty()) {
+			return;
+		}
 		ArrayList<String> list = new ArrayList<String>();
 		for (String item : toppingObservableList) {
 			list.add(item.toLowerCase());
@@ -213,9 +246,10 @@ public class CustomPizzaUI implements Initializable {
 		int pSize = getpSize(pizzaSize);
 		for (int i = 0; i < list.size(); i++) {
 			InventoryDb.changeQuantity(list.get(i), pSize, "increase");
+			NewOrderUI.removeIngredient(list.get(i), pSize);
 		}
 	}
-	
+
 	public void start(Stage arg0) throws Exception {
 	}
 
