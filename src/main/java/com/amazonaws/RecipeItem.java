@@ -41,7 +41,9 @@ public class RecipeItem {
 	}
 
 	public void setIngredients(ArrayList<String> list) {
-		this.ingredients.addAll(list);
+		for(String str : list) {
+			this.ingredients.add(str.toLowerCase());
+		}
 	}
 	
 	public String toString() {

@@ -88,7 +88,7 @@ public class InventoryUI extends Application implements Initializable {
     }
     
     public void addIngredient(ActionEvent e, int quantity, String ingredientName) { //integration goes here, not checkIngredient
-    	if(InventoryDb.addItem(ingredientName, quantity)) {
+    	if(InventoryDb.addItem(ingredientName.toLowerCase(), quantity)) {
     		Alert.Display("Success", "Ingredient has been added!");
     	}
     	else {

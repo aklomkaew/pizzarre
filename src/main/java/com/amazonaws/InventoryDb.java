@@ -105,37 +105,28 @@ public class InventoryDb extends DatabaseTable {
 		mapper.save(item);
 */		
 	}
-
-	public static void decreaseQuantity(String toppingName, int quantity) {
+	
+	public static void changeQuantity(String toppingName, int quantity, String option) {
 		System.out.println("\nDecreasing quantity");
+		
+		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+		attributeValues.put(":val1", new AttributeValue().withS(toppingName));
 
-//		Map<String, String> expressionAttributeNames = new HashMap<String, String>();
-//		expressionAttributeNames.put("#q", "quantity");
-//		
-//		Map<String, Object> expressionAttributeValues = new HashMap<String, Object>();
-//		expressionAttributeValues.put(":val", quantity);
-//		
-//		UpdateItemOutcome outcome = table.updateItem(
-//				"toppingName", toppingName,
-//				"set #q = #q - :val",
-//				expressionAttributeNames,
-//				expressionAttributeValues);
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("IngredientName = :val1").withExpressionAttributeValues(attributeValues);
 
-		InventoryItem item = new InventoryItem(toppingName);
-		DynamoDBQueryExpression<InventoryItem> queryExpression = new DynamoDBQueryExpression<InventoryItem>()
-				.withHashKeyValues(item);
-		List<InventoryItem> list = mapper.query(InventoryItem.class, queryExpression);
-
-		for (InventoryItem i : list) {
-			i.setQuantity(i.getQuantity() - quantity);
-			mapper.save(i);
+		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, scanExpression);
+		
+		InventoryItem item = itemList.get(0);
+		
+		if(option.equals("increase")) {
+			item.setQuantity(item.getQuantity() + quantity);
 		}
+		else {
+			item.setQuantity(item.getQuantity() - quantity);
+		}
+		mapper.save(item);
 	}
-
-	// add item to table
-	// remove item
-	// set itemQuantity
-	// restock
 
 	public static int getQuantityOfItem(String toppingName) {
 		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
@@ -146,6 +137,11 @@ public class InventoryDb extends DatabaseTable {
 
 		List<InventoryItem> itemList = mapper.scan(InventoryItem.class, scanExpression);
 
+		if(itemList == null || itemList.isEmpty()) {
+			System.out.println("Not found");
+			return -1;
+		}
+		
 		System.out.println("Item list size = " + itemList.size());
 
 		return itemList.get(0).getQuantity();

@@ -29,13 +29,13 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
 public class SpecialtyIntoCustomUI implements Initializable {
-	
+
 	@FXML
 	private Button confirm;
 	@FXML
 	private Button back;
-	
-	private String id = null; //names used for database access
+
+	private String id = null; // names used for database access
 	@FXML
 	private Button pepperoni;
 	@FXML
@@ -76,11 +76,10 @@ public class SpecialtyIntoCustomUI implements Initializable {
 	private static final int SMALL = 1;
 	private static final int MEDIUM = 2;
 	private static final int LARGE = 3;
-    
+
 	String specialtyName;
 	String specialtySize;
 
-	
 	public void addRemoveTopping(ActionEvent e) {
 
 		String id = ((Button) e.getSource()).getId();
@@ -100,55 +99,109 @@ public class SpecialtyIntoCustomUI implements Initializable {
 
 		toppingListView.setItems(toppingObservableList); // displays toppings in the list
 	}
-	
-	public void confirmSpecialty (ActionEvent e) { // passes specialty data back to NewOrderUI.java, do not NextStage.goTo
-		int size = 0;
-		if (specialtySize.equals("small")) {
-			size = 1;
-		} else if (specialtySize.equals("medium")) {
-			size = 2;
-		} else if (specialtySize.equals("large")) {
-			size = 3;
+
+	private static int getpSize(String str) {
+		if (str.equals("small")) {
+			return SMALL;
+		} else if (str.equals("medium")) {
+			return MEDIUM;
+		} else if (str.equals("large")) {
+			return LARGE;
 		}
-		
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage nextStage = new Stage();
-			nextStage.setScene(new Scene(root, 600, 600));
-			nextStage.setResizable(false);
-			NewOrderUI display = fxmlLoader.getController();
-			display.makeSpecialtyPizzaObject(specialtyName, toppingIdArrayList, size);
-	        nextStage.show();
-	        Stage currentStage = (Stage) confirm.getScene().getWindow();
-	        currentStage.close();
-	        
-	    } catch(Exception exception) {
-	    	exception.printStackTrace();
-	      }
+		return -1; // should never get here
 	}
 
+	public void confirmSpecialty(ActionEvent e) { // passes specialty data back to NewOrderUI.java, do not
+													// NextStage.goTo
+		int pSize = getpSize(specialtySize);
 
-	public void goToSpecialty (ActionEvent e) {
+//		try {
+//			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+//			Parent root = (Parent) fxmlLoader.load();
+//			Stage nextStage = new Stage();
+//			nextStage.setScene(new Scene(root, 600, 600));
+//			nextStage.setResizable(false);
+//			NewOrderUI display = fxmlLoader.getController();
+//			display.makeSpecialtyPizzaObject(specialtyName, toppingIdArrayList, size);
+//			nextStage.show();
+//			Stage currentStage = (Stage) confirm.getScene().getWindow();
+//			currentStage.close();
+//
+//		} catch (Exception exception) {
+//			exception.printStackTrace();
+//		}
+
+		ArrayList<String> list = new ArrayList<String>();
+		for (String item : toppingObservableList) {
+			list.add(item.toLowerCase());
+		}
+
+		int count = 0;
+		boolean flag = false;
+		for (int i = 0; i < list.size(); i++) {
+			int num = InventoryDb.getQuantityOfItem(list.get(i));
+			if (num == -1) {
+				Alert.Display("Error", "Item " + list.get(0) + " not in inventory.");
+				flag = true;
+				break;
+			}
+			if (num < pSize) {
+				Alert.Display("Error",
+						"Not enough " + list.get(i) + " in the inventory. Ask your manager to restock the inventory");
+				flag = true;
+				break;
+			} else {
+				InventoryDb.changeQuantity(list.get(i), pSize, "decrease");
+				NewOrderUI.addIngredient(list.get(i), pSize);
+				count++;
+			}
+		}
+
+		if (flag) {
+			for (int i = 0; i < count; i++) {
+				InventoryDb.changeQuantity(list.get(i), pSize, "increase");
+				NewOrderUI.removeIngredient(list.get(i), pSize);
+			}
+			return;
+		}
+
+		Pizza p = new Pizza(specialtyName, pSize, list);
+
+		Order order = NewOrderUI.getOrder();
+		order.addPizza(p);
+		Order o = NewOrderUI.getOrder();
+
+		Alert.Display("Success", "Pizza " + specialtyName + " is added to your order!");
+
+		toppingObservableList.clear();
+		toppingIdArrayList.clear();
+		toppingListView.getItems().clear();
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirm);
+	}
+
+	public void goToSpecialty(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, back);
 	}
 
 	public void start(Stage arg0) throws Exception {
-		
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
-	
-	public void getSpecialtyInfo(String recipeName, String size) { // gets recipe name and size from previous controller (SpecialtyPizzaUI.java)
+
+	public void getSpecialtyInfo(String recipeName, String size) { // gets recipe name and size from previous controller
+																	// (SpecialtyPizzaUI.java)
 		this.specialtyName = recipeName;
 		this.specialtySize = size;
 		toppingIdArrayList = RecipeDb.getIngredients(specialtyName);
 		toppingObservableList = FXCollections.observableArrayList(toppingIdArrayList);
 		toppingListView.setItems(toppingObservableList);
 	}
-	
+
 }

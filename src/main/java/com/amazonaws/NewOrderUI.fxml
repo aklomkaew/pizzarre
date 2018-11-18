@@ -19,7 +19,7 @@
    <children>
       <BorderPane maxHeight="600.0" maxWidth="600.0" prefHeight="600.0" prefWidth="600.0">
          <bottom>
-            <Button fx:id="mainMenu" alignment="CENTER" mnemonicParsing="false" onAction="#goToMainMenu" text="Back" BorderPane.alignment="CENTER">
+            <Button fx:id="backBtn" alignment="CENTER" mnemonicParsing="false" onAction="#goBack" text="Back" BorderPane.alignment="CENTER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
