@@ -30,8 +30,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class CustomPizzaUI implements Initializable{
-	
+public class CustomPizzaUI implements Initializable {
+
 	@FXML
 	private Button confirmBtn;
 	@FXML
@@ -39,7 +39,7 @@ public class CustomPizzaUI implements Initializable{
 	@FXML
 	private Button cancelBtn;
 	@FXML
-	private String pizzaSize = null;
+	private static String pizzaSize = null;
 	@FXML
 	private Button small;
 	@FXML
@@ -81,7 +81,7 @@ public class CustomPizzaUI implements Initializable{
 	@FXML
 	private ListView<String> toppingListView = new ListView<String>();
 
-	private ObservableList<String> toppingObservableList = FXCollections.observableArrayList();
+	private static ObservableList<String> toppingObservableList = FXCollections.observableArrayList();
 
 	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
 
@@ -131,15 +131,36 @@ public class CustomPizzaUI implements Initializable{
 			}
 			String pizzaName = "basePizza";
 			list.addAll(RecipeDb.getIngredients(pizzaName));
-			
+
+			int count = 0;
+			boolean flag = false;
 			for (int i = 0; i < list.size(); i++) {
-				if (InventoryDb.getQuantityOfItem(list.get(i)) < pSize) {
+				int num = InventoryDb.getQuantityOfItem(list.get(i));
+				if (num == -1) {
+					Alert.Display("Error", "Item " + list.get(0) + " not in inventory.");
+					flag = true;
+					break;
+				}
+				if (num < pSize) {
 					Alert.Display("Error", "Not enough " + list.get(i)
 							+ " in the inventory. Ask your manager to restock the inventory");
-					return;
+					flag = true;
+					break;
+				} else {
+					InventoryDb.changeQuantity(list.get(i), pSize, "decrease");
+					NewOrderUI.addIngredient(list.get(i), pSize);
+					count++;
 				}
 			}
-			
+
+			if (flag) {
+				for (int i = 0; i < count; i++) {
+					InventoryDb.changeQuantity(list.get(i), pSize, "increase");
+					NewOrderUI.removeIngredient(list.get(i), pSize);
+				}
+				return;
+			}
+
 			Pizza p = new Pizza(pizzaName, pSize, list);
 
 			Order order = NewOrderUI.getOrder();
@@ -147,37 +168,43 @@ public class CustomPizzaUI implements Initializable{
 			Order o = NewOrderUI.getOrder();
 
 			Alert.Display("Success", "Custom Pizza is added to your order!");
+
+			toppingObservableList.clear();
+			toppingIdArrayList.clear();
+			toppingListView.getItems().clear();
 			
-			
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+			NextStage.goTo(fxmlLoader, confirmBtn);
+
 			// size = specialtySize; // learn 2 enumerate, again
-			int size = 0;
-			if (pizzaSize.equals("small")) {
-				size = 1;
-			} else if (pizzaSize.equals("medium")) {
-				size = 2;
-			} else if (pizzaSize.equals("large")) {
-				size = 3;
-			}
-			
-			try {
-				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-				Parent root = (Parent) fxmlLoader.load();
-				Stage nextStage = new Stage();
-				nextStage.setScene(new Scene(root, 600, 600));
-				nextStage.setResizable(false);
-				NewOrderUI display = fxmlLoader.getController();
-				display.makeCustomPizzaObject(toppingIdArrayList, size);
-		        nextStage.show();
-		        Stage currentStage = (Stage) confirmBtn.getScene().getWindow();
-		        currentStage.close();
-		        
-		    } catch(Exception exception) {
-		    	exception.printStackTrace();
-		      }
+//			int size = 0;
+//			if (pizzaSize.equals("small")) {
+//				size = 1;
+//			} else if (pizzaSize.equals("medium")) {
+//				size = 2;
+//			} else if (pizzaSize.equals("large")) {
+//				size = 3;
+//			}
+//			
+//			try {
+//				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+//				Parent root = (Parent) fxmlLoader.load();
+//				Stage nextStage = new Stage();
+//				nextStage.setScene(new Scene(root, 600, 600));
+//				nextStage.setResizable(false);
+//				NewOrderUI display = fxmlLoader.getController();
+//				display.makeCustomPizzaObject(toppingIdArrayList, size);
+//		        nextStage.show();
+//		        Stage currentStage = (Stage) confirmBtn.getScene().getWindow();
+//		        currentStage.close();
+//		        
+//		    } catch(Exception exception) {
+//		    	exception.printStackTrace();
+//		      }
 		}
 	}
 
-	private int getpSize(String str) {
+	private static int getpSize(String str) {
 		if (str.equals("small")) {
 			return SMALL;
 		} else if (str.equals("medium")) {
@@ -189,26 +216,46 @@ public class CustomPizzaUI implements Initializable{
 	}
 
 	public void clearPizza(ActionEvent e) {
-		
 		toppingObservableList.clear();
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
 	}
 
 	public void cancelPizza(ActionEvent e) {
-    toppingObservableList.clear();
-    toppingIdArrayList.clear();
-    toppingListView.getItems().clear();
+		toppingObservableList.clear();
+		toppingIdArrayList.clear();
+		toppingListView.getItems().clear();
+
+		removePizza();
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 
-public void start(Stage arg0) throws Exception {
+	public static void removePizza() {
+		if (toppingObservableList.isEmpty()) {
+			return;
 		}
+		ArrayList<String> list = new ArrayList<String>();
+		for (String item : toppingObservableList) {
+			list.add(item.toLowerCase());
+		}
+		String pizzaName = "basePizza";
+		list.addAll(RecipeDb.getIngredients(pizzaName));
 
-@Override
-public void initialize(URL location, ResourceBundle resources) {
-	//Pizza modifiedPizza;
-	
-}
+		int pSize = getpSize(pizzaSize);
+		for (int i = 0; i < list.size(); i++) {
+			InventoryDb.changeQuantity(list.get(i), pSize, "increase");
+			NewOrderUI.removeIngredient(list.get(i), pSize);
+		}
+	}
+
+	public void start(Stage arg0) throws Exception {
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// Pizza modifiedPizza;
+
+	}
 }
