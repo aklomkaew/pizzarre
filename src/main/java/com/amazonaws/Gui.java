@@ -161,7 +161,7 @@ public class Gui extends Application {
 
 		for (CheckBox cb : cbList) {
 			if (cb.isSelected()) {
-				InventoryDb.decreaseQuantity(cb.getId(), quantity);
+				//InventoryDb.decreaseQuantity(cb.getId(), quantity);
 				//pizza.addTopping(cb.getId(), quantity);
 			}
 		}
