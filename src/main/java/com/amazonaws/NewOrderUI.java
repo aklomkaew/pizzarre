@@ -263,9 +263,7 @@ public class NewOrderUI implements Initializable {
 		orderListView.setItems(orderObservableList);
 	}
 
-	public void makeSpecialtyPizzaObject(String specialtyName, ArrayList<String> specialtyToppings, int specialtySize) { // called
-																															// in
-																															// BuildSpeciltyIntoCustomUI
+	public void makeSpecialtyPizzaObject(String specialtyName, ArrayList<String> specialtyToppings, int specialtySize) { // called																										// BuildSpeciltyIntoCustomUI
 		String sizeString = "size";
 		switch (specialtySize) {
 		case 1:
