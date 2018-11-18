@@ -83,7 +83,7 @@ private static ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for 
 		}
  }
 
-	public void modifyPizza(ActionEvent e) {
+	public void modifyPizza(ActionEvent e) { //selects a pizza to change its toppings
 		int index = orderListView.getSelectionModel().getSelectedIndex();
 		if (index > pizzaNameArrayList.size() - 1) { //-1 since .size() is 1 greater than index
 			Alert alert = new Alert(AlertType.ERROR);
@@ -98,9 +98,9 @@ private static ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for 
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ModifiedPizzaUI.fxml"));
 				Parent root = (Parent) fxmlLoader.load();
 				Stage nextStage = new Stage();
-				nextStage.setScene(new Scene(root, 600, 600));
+				nextStage.setScene(new Scene(root, 600, 600));			
 				nextStage.setResizable(false);
-				ModifiedPizzaUI display = fxmlLoader.getController();
+				ModifiedPizzaUI display = fxmlLoader.getController();				
 				display.getPizzaInfo(currentToppings);
 		        nextStage.show();
 		        Stage currentStage = (Stage) modifyCustom.getScene().getWindow();
@@ -112,7 +112,7 @@ private static ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for 
 		}
 	}
 	
-public void modifiedPizza () {
+public void modifiedPizza () { //
 		combineLists();
 	}
 
@@ -196,13 +196,7 @@ public void modifiedPizza () {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		orderObservableList = FXCollections.observableArrayList();
-		orderObservableList.addAll(BuildSpecialtyUI.getSpecialtyList());
-		orderObservableList.addAll(DrinksUI.getDrinkList());
-		orderListView.setItems(orderObservableList);
-		// ObservableList pizzas =
-		// FXCollections.obserableArrayList(RecipeDB.getRecipeNames())
-		// orderListView.setItems(recipes);
+		
 		User u = LoginUI.getUser();
 		if (order == null) {
 			order = new Order();
@@ -213,7 +207,6 @@ public void modifiedPizza () {
 			order.setServerId(u.getUserId());
 			order.setServerName(u.getName());
 		}
-		orderListView.setItems(orderObservableList);
 	}
 	
 	public void makeSpecialtyPizzaObject (String specialtyName, ArrayList<String> specialtyToppings, int specialtySize) { // called in BuildSpeciltyIntoCustomUI
@@ -236,7 +229,7 @@ public void modifiedPizza () {
 		combineLists();
 	}
 	
-	public void makeCustomPizzaObject (ArrayList<String> toppings, int size) { // called in NOT FINISHED YET
+	public void makeCustomPizzaObject (ArrayList<String> toppings, int size) { // called by confirmPizza in CustomPizzaUI, adds the new pizza to the list of pizzas on order
 		String sizeString = "size";
 		switch(size) {
 		case 1:
@@ -256,13 +249,13 @@ public void modifiedPizza () {
 		combineLists();
 	}
 	
-	public void addDrink (String drinkName) {
+	public void addDrink (String drinkName) { // called by addDrink in DrinksUI, adds the drinkName to the list of drinks on order
 		//InventoryDb.getIngredient(drinkName);
 		drinksArrayList.add(drinkName);
 		combineLists();
 	}
 
-	public void combineLists() {
+	public void combineLists() { // combines the drink and pizza list to display them
 		orderObservableList.addAll(pizzaNameArrayList);
 		orderObservableList.addAll(drinksArrayList);
 		orderListView.setItems(orderObservableList);
