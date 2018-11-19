@@ -211,8 +211,13 @@ public class DrinksUI implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		drinkIdArrayList.clear();
 		drinkObservableList.clear();
+		drinkArrayList.clear();
 		
 		drinkIdArrayList.addAll(NewOrderUI.getDrinks());
+		
+		Order order = NewOrderUI.getOrder();
+		drinkArrayList.addAll(order.getDrink());
+		
 		drinkObservableList.addAll(drinkIdArrayList);
 		drinkListView.setItems(drinkObservableList);
 
