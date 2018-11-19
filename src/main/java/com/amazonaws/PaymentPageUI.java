@@ -67,9 +67,15 @@ public class PaymentPageUI extends Application implements Initializable {
 		double payment = Double.parseDouble(paymentTF.getText());
 		double change = (-1)*(total - payment);
 		
+		
+		if (payment >= total) {
 		String changeString = Double.toString(change);
 		changeTF.setText("$" + changeString);
-		//Order.setInactive()
+		paymentOrder.setInactive();
+		System.out.println(paymentOrder.getState());
+		} else {
+			Alert.Display("Error",  "Must be paid in full.");
+		}
 		
 	}
 	
