@@ -31,6 +31,10 @@ public class PaymentPageUI extends Application implements Initializable {
 	private TextField totalCostTF;
 	@FXML
 	private TextField changeTF;
+	
+	private double payment;
+	private static double total;
+
     @FXML
     private TableView<OrderContents> orderTableView;
     @FXML
@@ -55,10 +59,21 @@ public class PaymentPageUI extends Application implements Initializable {
 	
 	public void checkPayment(ActionEvent e) {
 		try {
-			Double.parseDouble(paymentTF.getText());
+			payment = Double.parseDouble(paymentTF.getText());
 			displayChange(e);
 		} catch (NumberFormatException nfe ) {
 			Alert.Display("Error", "Payment must be a number.");
+			return;
+		}
+		confirmPayment();
+	}
+	
+	private void confirmPayment() {
+		if(payment == total) {
+			// order becomes inactive
+		}
+		else if(payment < total) {
+			// update remainder
 		}
 	}
 	
@@ -77,7 +92,11 @@ public class PaymentPageUI extends Application implements Initializable {
 		}
 		
 	}
-	
+  
+  private static void setPayment(int t) {
+		total = t;
+	}
+  
 	public void goToMainMenu(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
