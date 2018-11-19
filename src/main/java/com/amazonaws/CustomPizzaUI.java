@@ -161,7 +161,13 @@ public class CustomPizzaUI implements Initializable {
 				return;
 			}
 
-			Pizza p = new Pizza(pizzaName, pSize, list);
+			pizzaName = "Custom";
+			ArrayList<String> pList = new ArrayList<String>();
+			Pizza p = new Pizza(pizzaName, pSize, pList);
+			for(int i = 0; i < list.size(); i++) { //loop that adds and increments pizza's price
+				String topping = list.get(i);
+				p.addTopping(topping);
+			}
 
 			Order order = NewOrderUI.getOrder();
 			order.addPizza(p);

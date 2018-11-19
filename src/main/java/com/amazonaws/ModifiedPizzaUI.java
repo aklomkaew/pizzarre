@@ -96,22 +96,40 @@ public class ModifiedPizzaUI implements Initializable {
 	
 	public void confirmPizza (ActionEvent e) { // passes specialty data back to NewOrderUI.java, do not NextStage.goTo
 		//enumeration statement for specialtySize
+		Order order = NewOrderUI.getOrder();
+		int index = NewOrderUI.getmodifiedIndex();
+		Pizza oldPizza = order.getPizzas().get(index);
+		ArrayList<String> emptyList = new ArrayList<String>(); // emptyList is necessary
 		
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage nextStage = new Stage();
-			nextStage.setScene(new Scene(root, 600, 600));
-			nextStage.setResizable(false);
-			NewOrderUI display = fxmlLoader.getController();
-			display.modifiedPizza();
-	        nextStage.show();
-	        Stage currentStage = (Stage) confirm.getScene().getWindow();
-	        currentStage.close();
-	        
-	    } catch(Exception exception) {
-	    	exception.printStackTrace();
-	      }
+		Pizza modifiedPizza = new Pizza(oldPizza.getName(), oldPizza.getSize() ,emptyList);
+		
+		for(int i = 0; i < toppingIdArrayList.size(); i++) { //loop that adds and increments pizza's price
+			String topping = toppingIdArrayList.get(i);
+			modifiedPizza.addTopping(topping);
+		}
+		
+		order.getPizzas().set(index, modifiedPizza);
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirm);
+		
+//		try {
+//			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+//			Parent root = (Parent) fxmlLoader.load();
+//			Stage nextStage = new Stage();
+//			nextStage.setScene(new Scene(root, 600, 600));
+//			nextStage.setResizable(false);
+//			
+//			NewOrderUI display = fxmlLoader.getController();
+//			display.modifiedPizza();
+//	        
+//			nextStage.show();
+//	        Stage currentStage = (Stage) confirm.getScene().getWindow();
+//	        currentStage.close();
+//	        
+//	    } catch(Exception exception) {
+//	    	exception.printStackTrace();
+//	      }
 	}
 
 
@@ -130,7 +148,8 @@ public class ModifiedPizzaUI implements Initializable {
 	
 	public void getPizzaInfo(ArrayList<String> toppings) { // gets recipe name and size from previous controller (SpecialtyPizzaUI.java)
 		toppingIdArrayList = toppings;
-		toppingObservableList = FXCollections.observableArrayList(toppings);
+		toppingObservableList.clear();
+		toppingObservableList.addAll(toppings);
 		toppingListView.setItems(toppingObservableList);
 	}
 	

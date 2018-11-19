@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -19,7 +19,7 @@
    <children>
       <BorderPane maxHeight="600.0" maxWidth="600.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <Button fx:id="cancel" alignment="CENTER" mnemonicParsing="false" onAction="#goToOrderScreen" text="Cancel" BorderPane.alignment="CENTER">
+            <Button fx:id="cancel" alignment="CENTER" mnemonicParsing="false" onAction="#cancelDrink" text="Cancel" BorderPane.alignment="CENTER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -116,7 +116,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="clear" maxHeight="80.0" minHeight="80.0" mnemonicParsing="false" onAction="#clearDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Clear Drink" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                        <Button fx:id="remove" maxHeight="80.0" minHeight="80.0" mnemonicParsing="false" onAction="#removeDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Remove Selected Drink" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -127,7 +127,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="add" layoutX="197.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirmDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: palegreen;" text="Add Drink" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button fx:id="confirm" layoutX="197.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirmDrinks" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: palegreen;" text="Confirm Drinks" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -152,12 +152,12 @@
          <effect>
             <ColorAdjust />
          </effect>
-         <center>
-            <TextField fx:id="drinkTF" BorderPane.alignment="CENTER">
+         <left>
+            <ListView fx:id="drinkListView" prefHeight="470.0" prefWidth="240.0" style="-fx-background-color: lightsteelblue; -fx-border-color: gray;" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="10.0" top="50.0" />
                </BorderPane.margin>
-            </TextField>
-         </center></BorderPane>
+            </ListView>
+         </left></BorderPane>
    </children>
 </AnchorPane>

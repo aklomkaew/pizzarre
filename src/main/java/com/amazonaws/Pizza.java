@@ -20,7 +20,7 @@ public class Pizza {
 		this.size = s;
 		this.toppings = new ArrayList<String>();
 		this.toppings.addAll(list);
-		this.price = list.size() + getPriceBySize(size);
+		this.price = list.size() + getPriceBySize(size) - 3; //cheese, crust, and sauce are technically toppings that increment price
 	}
 	
 	private double getPriceBySize(int s) {
