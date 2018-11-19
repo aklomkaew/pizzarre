@@ -43,6 +43,8 @@ public class RecipeListUI extends Application implements Initializable {
 	@FXML
 	private Button backBtn;
 	@FXML
+	private Button refreshBtn;
+	@FXML
 	private TableView<RecipeItem> recipeTableView;
 	@FXML
 	private TableColumn<RecipeItem, String> nameColumn;
@@ -51,6 +53,10 @@ public class RecipeListUI extends Application implements Initializable {
 
 	private ObservableList<RecipeItem> recipeObservableList;
 
+	public void displayAllRecipes(ActionEvent e) {
+		
+	}
+	
 	public void addRecipe(ActionEvent e) {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateRecipeUI.fxml"));

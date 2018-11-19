@@ -91,6 +91,11 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
+                  <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#displayAllUser" prefHeight="55.0" prefWidth="75.0" text="Refresh Employees" textAlignment="CENTER" wrapText="true">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
                <BorderPane.margin>
                   <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
