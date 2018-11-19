@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -40,6 +41,8 @@ public class CustomPizzaUI implements Initializable {
 	private Button cancelBtn;
 	@FXML
 	private static String pizzaSize = null;
+	@FXML
+	private TextField sizeTF;
 	@FXML
 	private Button small;
 	@FXML
@@ -91,6 +94,7 @@ public class CustomPizzaUI implements Initializable {
 
 	public void selectSize(ActionEvent e) {
 		pizzaSize = ((Button) e.getSource()).getId();
+		sizeTF.setText(pizzaSize);
 	}
 
 	public void addTopping(ActionEvent e) {

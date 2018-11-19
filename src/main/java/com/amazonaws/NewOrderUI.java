@@ -60,6 +60,8 @@ public class NewOrderUI implements Initializable {
 	@FXML
 	private Button modifyCustom;
 	@FXML
+	private Button viewToppingsBtn;
+	@FXML
 	private ListView<String> orderListView;
 
 	private static Order order;
@@ -89,12 +91,18 @@ public class NewOrderUI implements Initializable {
 //		}
 //	}
 
+	public void viewToppings (ActionEvent e) {
+		
+	}
+	
 	public static int getmodifiedIndex() {
 		return modifiedIndex;
 	}
 	
 	public void modifyPizza(ActionEvent e) {
+		
 		int modifiedIndex = orderListView.getSelectionModel().getSelectedIndex();
+		
 		if (modifiedIndex > pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -103,6 +111,7 @@ public class NewOrderUI implements Initializable {
 		} else {
 			try {
 				ArrayList<String> currentToppings = pizzaArrayList.get(modifiedIndex).getToppings();
+				int currentSize = pizzaArrayList.get(modifiedIndex).getSize();
 				
 
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ModifiedPizzaUI.fxml"));
@@ -112,7 +121,7 @@ public class NewOrderUI implements Initializable {
 				nextStage.setResizable(false);
 				
 				 ModifiedPizzaUI display = fxmlLoader.getController();
-				 display.getPizzaInfo(currentToppings);
+				 display.getPizzaInfo(currentToppings, currentSize);
 				
 				nextStage.show();
 				Stage currentStage = (Stage) modifyCustom.getScene().getWindow();

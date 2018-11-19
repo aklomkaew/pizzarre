@@ -120,6 +120,14 @@
                               <InnerShadow />
                            </effect>
                         </Button>
+                        <Button fx:id="viewToppingsBtn" mnemonicParsing="false" onAction="#viewToppings" prefHeight="80.0" prefWidth="80.0" text="View Toppings" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
                      </children>
                   </GridPane>
                </children>

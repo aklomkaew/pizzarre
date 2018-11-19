@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -39,7 +40,10 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-               </content></TitledPane>
+               </content>
+               <graphic>
+                  <TextField fx:id="sizeTF" translateX="-30.0" translateY="64.0" />
+               </graphic></TitledPane>
          </top>
          <right>
             <VBox alignment="CENTER_RIGHT" maxHeight="598.0" maxWidth="420.0" minHeight="391.0" minWidth="150.0" prefHeight="402.0" prefWidth="290.0" translateY="25.0" BorderPane.alignment="CENTER">
