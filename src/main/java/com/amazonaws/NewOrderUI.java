@@ -260,13 +260,14 @@ public class NewOrderUI implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		orderObservableList = FXCollections.observableArrayList();
-		orderObservableList.addAll(BuildSpecialtyUI.getSpecialtyList());
+		//orderObservableList = FXCollections.observableArrayList();
+		//orderObservableList.addAll(BuildSpecialtyUI.getSpecialtyList());
 		// orderObservableList.addAll(DrinksUI.getDrinkList());
 		//orderListView.setItems(orderObservableList);
 		// ObservableList pizzas =
 		// FXCollections.obserableArrayList(RecipeDB.getRecipeNames())
 		// orderListView.setItems(recipes);
+		
 		User u = LoginUI.getUser();
 		if (order == null) {
 			order = new Order();
