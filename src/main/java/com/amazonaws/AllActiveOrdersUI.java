@@ -54,6 +54,12 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 	private TableColumn<Order, Double> totalColumn;
 
 	private ObservableList<Order> orderObservableList;
+	
+	private Order selectedOrder;
+	
+	public Order getOrder() {
+		return selectedOrder;
+	}
 
 	public void goToManagerUtilities(ActionEvent e) {
 
@@ -116,9 +122,27 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 	}
 
 	public void payOrder(ActionEvent e) {
-		// get order
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
-		NextStage.goTo(fxmlLoader, payOrderBtn);
+		int index = orderTableView.getSelectionModel().getFocusedIndex();
+		selectedOrder = orderTableView.getItems().get(index);
+		
+		try { // im sorry
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
+			Parent root = (Parent) fxmlLoader.load();
+			Stage nextStage = new Stage();
+			nextStage.setScene(new Scene(root, 600, 600));
+			nextStage.setResizable(false);
+			
+			 PaymentPageUI display = fxmlLoader.getController();
+			 display.initializeAllActiveOrder(selectedOrder);
+			
+			nextStage.show();
+			Stage currentStage = (Stage) payOrderBtn.getScene().getWindow();
+			currentStage.close();
+
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
 	}
 	
 	private List<Order> getActiveOrders() {

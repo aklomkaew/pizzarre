@@ -22,6 +22,7 @@ public class Drink {
 		isNew = 1;
 	}
 	
+	
 	public void setName(String n) {
 		this.name = n;
 	}
@@ -38,8 +39,11 @@ public class Drink {
 		return this.isNew;
 	}
 	
-	public void setPrice(double p) {
+	/*public void setPrice(double p) {
 		this.price = p;
+	}*/
+	public void setPrice() {
+		this.price = 2;
 	}
 	
 	public double getPrice() {
