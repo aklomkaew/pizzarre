@@ -166,42 +166,46 @@ public class NewOrderUI implements Initializable {
 			priceTotal = priceTotal + currentDrink.getPrice();
 		}
 		order.setTotal(priceTotal);
-
 		int num = order.getOrderNumber();
-		while (!OrderDb.addOrder(order)) {
-			num++;
-			order.setOrderNumber(num);
-		}
 		
-		for (Drink d : order.getDrink()) {
-			d.setIsNew();
-		}
-		for (Pizza p : order.getPizzas()) {
-			p.setIsNew();
-		}
-
-		OrderDb.updateOrder(order);
-		User u = LoginUI.getUser();
-		try {
-			u.getOrderList().add(order);
-		} catch (Exception err) {
-			System.out.println("Error cannot add order to user");
-			System.err.println(err.getMessage());
-			return;
-		}
-		UserDb.updateUser(u);
-
-		
-
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Success");
-		alert.setHeaderText("Your order has been placed! Total is $" + order.getTotal());
+		
+		if(modOrder) {
+			// do something check new/old item
+			
+			alert.setHeaderText("Your order " + order.getOrderNumber() + " has been modified! Total is $" + order.getTotal());
+		}
+		else {
+			while (!OrderDb.addOrder(order)) {
+				num++;
+				order.setOrderNumber(num);
+			}
+			
+			for (Drink d : order.getDrink()) {
+				d.setIsNew();
+			}
+			for (Pizza p : order.getPizzas()) {
+				p.setIsNew();
+			}
+
+			OrderDb.updateOrder(order);
+			User u = LoginUI.getUser();
+			try {
+				u.getOrderList().add(order);
+			} catch (Exception err) {
+				System.out.println("Error cannot add order to user");
+				System.err.println(err.getMessage());
+				return;
+			}
+			UserDb.updateUser(u);
+			
+			alert.setHeaderText("Your order " + order.getOrderNumber() + " has been placed! Total is $" + order.getTotal());
+			
+		}
+		
 		alert.showAndWait();
-
-//		pizzaArrayList.clear(); // clear all list contents after order placed, for next order
-//		pizzaNameArrayList.clear();
-//		drinksArrayList.clear();
-
+		
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
 		drinkArrayList.clear();
@@ -311,27 +315,41 @@ public class NewOrderUI implements Initializable {
 
 	public void removeItem(ActionEvent e) {
 		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		
 		if (obj == null) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error");
 			alert.setHeaderText("Select an item to remove.");
 			alert.showAndWait();
 			return;
 		}
 
 		int index = orderListView.getSelectionModel().getSelectedIndex();
-		orderObservableList.remove(index);
+		
 		if (index <= pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
+			if(pizzaArrayList.get(index).getIsNew() == 0) {	// not new
+				alert.setHeaderText("This item cannot be removed.");
+				alert.setContentText("This item has already been processed");
+				alert.showAndWait();
+				return;
+			}
 			pizzaNameArrayList.remove(index);
 			for (String str : pizzaArrayList.get(index).getToppings()) {
 				InventoryDb.changeQuantity(str, 1, "increase");
 			}
 			pizzaArrayList.remove(index);
 		} else {
+			if(drinkArrayList.get(index - pizzaNameArrayList.size()).getIsNew() == 0) {	// not new
+				alert.setHeaderText("This item cannot be removed.");
+				alert.setContentText("This item has already been processed");
+				alert.showAndWait();
+				return;
+			}
 			InventoryDb.changeQuantity(drinkNameArrayList.get(index - pizzaNameArrayList.size()), 1, "increase");
 			drinkNameArrayList.remove(index - pizzaNameArrayList.size());
 			drinkArrayList.remove(index - pizzaNameArrayList.size());
 		}
+		orderObservableList.remove(index);
 	}
 
 	public void start(Stage arg0) throws Exception {
@@ -340,6 +358,7 @@ public class NewOrderUI implements Initializable {
 
 	public static void setOrder(Order c) {
 		order = c;
+		modOrder = true;
 	}
 
 	@Override
