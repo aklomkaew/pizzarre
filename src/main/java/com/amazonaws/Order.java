@@ -16,8 +16,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Order {
 	@JsonIgnore
 	private ArrayList<Pizza> pizzas;
-	private ArrayList<Drink> drinks;
-	private ArrayList<Integer> drinkQuantity;
+	//private ArrayList<Drink> drinks;
+	//private ArrayList<Integer> drinkQuantity;
 	//private HashMap<Drink, List<Drink>> drinkMap;
 
 	private int orderNumber;
@@ -28,8 +28,8 @@ public class Order {
 
 	public Order() {
 		this.pizzas = new ArrayList<Pizza>();
-		this.drinks = new ArrayList<Drink>();
-		this.drinkQuantity = new ArrayList<Integer>();
+		//this.drinks = new ArrayList<Drink>();
+		//this.drinkQuantity = new ArrayList<Integer>();
 		//this.drinkMap = new HashMap<Drink, List<Drink>>();
 		this.orderNumber = -1;
 		this.active = true;
@@ -39,8 +39,8 @@ public class Order {
 	public Order(int num, List<Pizza> list) {
 		this.orderNumber = num;
 		this.pizzas = new ArrayList<Pizza>();
-		this.drinks = new ArrayList<Drink>();
-		this.drinkQuantity = new ArrayList<Integer>();
+		//this.drinks = new ArrayList<Drink>();
+		//this.drinkQuantity = new ArrayList<Integer>();
 		//this.drinkMap = new HashMap<Drink, List<Drink>>();
 		this.pizzas.addAll(list);
 		this.active = true;
@@ -108,7 +108,7 @@ public class Order {
 		this.pizzas.add(p);
 	}
 	
-	@DynamoDBTypeConverted(converter = MyDrinkConverter.class)
+	/*@DynamoDBTypeConverted(converter = MyDrinkConverter.class)
 	public ArrayList<Drink> getDrink() {
 		if(drinks == null) {
 			System.out.println("drink is null");
@@ -127,7 +127,7 @@ public class Order {
 
 	public void setDrinkQuantity(ArrayList<Integer> list) {
 		this.drinkQuantity = list;
-	}
+	}*/
 	
 //	@JsonProperty("drinkList")
 //	@DynamoDBAttribute(attributeName = "DrinkMap")
@@ -157,13 +157,13 @@ public class Order {
 				ret += "\n--> Pizza #" + (i + 1) + " has " + pizzas.get(i).toString();
 			}
 		}
-		if(drinks.size() > 0) {
+		/*if(drinks.size() > 0) {
 			ret += drinks.size() + ((drinks.size() == 1) ? " drink" : " drinks");
 			for (int i = 0; i < drinks.size(); i++) {
 				ret += "\n--> Drink #" + (i + 1) + " has " //+ drinkQuantity.get(i) + " "
 						+ drinks.get(i).toString();
 			}
-		}
+		}*/
 		
 		return ret;
 	}

@@ -154,10 +154,10 @@ public class DrinksUI implements Initializable {
 		
 		//NewOrderUI.addDrinks(drinkIdArrayList);
 		Order order = NewOrderUI.getOrder();
-		for(String item : drinkObservableList) {
+		/*for(String item : drinkObservableList) {
 			Drink d = new Drink(item, 2);
 			order.getDrink().add(d);
-		}
+		}*/
 		
 		
 		Alert.Display("Success", "Your drink has been added to your order!");

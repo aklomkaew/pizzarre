@@ -301,10 +301,10 @@ public class NewOrderUI implements Initializable {
 			System.out.println(pizzaArrayList.get(i).getName());
 		}
 
-		drinkArrayList = order.getDrink();
+		/*drinkArrayList = order.getDrink();
 		for (Drink d : drinkArrayList) {
 			drinkNameArrayList.add(d.getName());
-		}
+		}*/
 
 		combineLists();
 	}

@@ -42,13 +42,16 @@
                      <children>
                         <Button fx:id="confirmBtn" layoutX="10.0" layoutY="10.0" maxHeight="75.0" maxWidth="75.0" minHeight="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#checkPayment" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: palegreen;" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                         <Button fx:id="backBtn" layoutX="10.0" layoutY="10.0" maxHeight="75.0" maxWidth="75.0" minHeight="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: pink;" text="Main Menu" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                        <TextField fx:id="totalCostTF" editable="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <TextField fx:id="totalCostTF" editable="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
                         <Label text="Total:" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
                         <Label text="Payment:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Label>
+                        <Label text="Change:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <TextField fx:id="paymentTF" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <TextField fx:id="changeTF" editable="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                      </children>
                      <VBox.margin>
                         <Insets />
