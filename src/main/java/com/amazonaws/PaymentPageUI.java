@@ -1,15 +1,22 @@
 package com.amazonaws;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class PaymentPageUI extends Application implements Initializable {
@@ -27,6 +34,28 @@ public class PaymentPageUI extends Application implements Initializable {
 	
 	private double payment;
 	private static double total;
+
+    @FXML
+    private TableView<OrderContents> orderTableView;
+    @FXML
+    private TableColumn<OrderContents, String> itemColumn  = new TableColumn<OrderContents, String>("itemName");
+    @FXML
+    private TableColumn<OrderContents, Double> priceColumn  = new TableColumn<OrderContents, Double>("itemPrice");
+    
+    private ObservableList<OrderContents> orderContentsObservableList = FXCollections.observableArrayList();
+    
+    private static Order paymentOrder;
+    
+    private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>();
+    
+    private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
+    
+    private static double total;
+    
+    private class OrderContents {
+		String itemName;
+    	double itemPrice;
+    }
 	
 	public void checkPayment(ActionEvent e) {
 		try {
@@ -53,15 +82,21 @@ public class PaymentPageUI extends Application implements Initializable {
 		double payment = Double.parseDouble(paymentTF.getText());
 		double change = (-1)*(total - payment);
 		
+		
+		if (payment >= total) {
 		String changeString = Double.toString(change);
 		changeTF.setText("$" + changeString);
-		//Order.setInactive()
+		paymentOrder.setInactive();
+		} else {
+			Alert.Display("Error",  "Must be paid in full.");
+		}
+		
 	}
-	
-	private static void setPayment(int t) {
+  
+  private static void setPayment(int t) {
 		total = t;
 	}
-	
+  
 	public void goToMainMenu(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
@@ -74,9 +109,76 @@ public class PaymentPageUI extends Application implements Initializable {
 		
 	}
 
+	public void displayOrderContents() {
+		double totalPrice = 0.0;
+		//if (pizzaArrayList == null || pizzaArrayList.size() < 1) {
+			//return;
+		//}
+		
+		for(int i = 0; i < pizzaArrayList.size(); i++) {
+			
+			//OrderContents orderContents = new OrderContents();
+			String name = pizzaArrayList.get(i).getName();
+			double price = pizzaArrayList.get(i).getPrice();
+			totalPrice = totalPrice + price;
+			//orderContentsObservableList.add(orderContents);
+			System.out.println(name + " " + price);
+		}
+		
+			for(int i = 0; i < drinkArrayList.size(); i++) {
+				
+				//OrderContents orderContents = new OrderContents();
+				String name = drinkArrayList.get(i).getName();
+				double price = drinkArrayList.get(i).getPrice();
+				totalPrice = totalPrice + price;
+				//orderContentsObservableList.add(orderContents);
+				System.out.println(name + " " + price);
+		}
+		
+		setTotal(totalPrice);
+		totalCostTF.setText(Double.toString(getTotal()));
+		orderTableView.setItems(orderContentsObservableList);
+	}
+	
+	public static void setTotal (double t) {
+		total = t;
+	}
+	
+	public double getTotal() {
+		return total;
+	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	 //retrieve order
-		//totalCostTF.setText("$" + Double.toString(orderItem.getTotal()));
+		
+	}
+	
+	public void initializeMyOrder (Order currentOrder) {
+		orderContentsObservableList.clear();
+		pizzaArrayList.clear();
+		drinkArrayList.clear();
+		orderTableView.getItems().clear();
+		paymentOrder = currentOrder;
+		pizzaArrayList = paymentOrder.getPizzas();
+		drinkArrayList = paymentOrder.getDrink();
+		//orderTableView.setEditable(true);
+		
+		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
+		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
+		displayOrderContents();
+	}
+	
+	public void initializeAllActiveOrder (Order currentOrder) {
+		orderContentsObservableList.clear();
+		pizzaArrayList.clear();
+		//drinkArrayList.clear();
+		orderTableView.getItems().clear();
+		paymentOrder = currentOrder;
+		pizzaArrayList = paymentOrder.getPizzas();
+		//drinkArrayList = paymentOrder.getDrinks();
+		//orderTableView.setEditable(true);
+		
+		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
+		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
+		displayOrderContents();
 	}
 }

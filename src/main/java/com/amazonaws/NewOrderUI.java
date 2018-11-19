@@ -93,6 +93,10 @@ public class NewOrderUI implements Initializable {
 		
 	}
 	
+	public static ArrayList<String> getDrinks() {
+		return drinkNameArrayList;
+	}
+	
 	public static int getmodifiedIndex() {
 		return modifiedIndex;
 	}
@@ -149,6 +153,10 @@ public class NewOrderUI implements Initializable {
 		for (int i = 0; i < order.getPizzas().size(); i++) {
 			Pizza currentPizza = order.getPizzas().get(i);
 			priceTotal = priceTotal + currentPizza.getPrice();
+		}
+		for (int i = 0; i < order.getDrink().size(); i++) {
+			Drink currentDrink = order.getDrink().get(i);
+			priceTotal = priceTotal + currentDrink.getPrice();
 		}
 		order.setTotal(priceTotal);
 
@@ -353,13 +361,16 @@ public class NewOrderUI implements Initializable {
 				System.out.println(pizzaArrayList.get(i).getName());
 			}
 		}
-
 		drinkArrayList = order.getDrink();
 		if(drinkArrayList != null) {
 			for (Drink d : drinkArrayList) {
 				drinkNameArrayList.add(d.getName());
 			}
 		}
+		/*drinkArrayList = order.getDrink();
+		for (Drink d : drinkArrayList) {
+			drinkNameArrayList.add(d.getName());
+		}*/
 
 		combineLists();
 	}

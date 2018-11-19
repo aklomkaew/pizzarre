@@ -108,6 +108,10 @@ public class Order {
 		this.pizzas.add(p);
 	}
 	
+	public void clearDrinks() {
+		this.drinks.clear();
+	}
+	
 	@DynamoDBTypeConverted(converter = MyDrinkConverter.class)
 	public ArrayList<Drink> getDrink() {
 		if(drinks == null) {
@@ -119,15 +123,6 @@ public class Order {
 	public void setDrink(ArrayList<Drink> list) {
 		this.drinks.addAll(list);
 	}
-	
-//	@DynamoDBAttribute(attributeName = "DrinkQuantity")
-//	public ArrayList<Integer> getDrinkQuantity() {
-//		return this.drinkQuantity;
-//	}
-//
-//	public void setDrinkQuantity(ArrayList<Integer> list) {
-//		this.drinkQuantity = list;
-//	}
 	
 //	@JsonProperty("drinkList")
 //	@DynamoDBAttribute(attributeName = "DrinkMap")
