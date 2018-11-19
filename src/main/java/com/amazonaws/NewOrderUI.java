@@ -353,13 +353,16 @@ public class NewOrderUI implements Initializable {
 				System.out.println(pizzaArrayList.get(i).getName());
 			}
 		}
-
 		drinkArrayList = order.getDrink();
 		if(drinkArrayList != null) {
 			for (Drink d : drinkArrayList) {
 				drinkNameArrayList.add(d.getName());
 			}
 		}
+		/*drinkArrayList = order.getDrink();
+		for (Drink d : drinkArrayList) {
+			drinkNameArrayList.add(d.getName());
+		}*/
 
 		combineLists();
 	}

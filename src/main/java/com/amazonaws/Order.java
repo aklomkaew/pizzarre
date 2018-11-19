@@ -120,15 +120,6 @@ public class Order {
 		this.drinks.addAll(list);
 	}
 	
-//	@DynamoDBAttribute(attributeName = "DrinkQuantity")
-//	public ArrayList<Integer> getDrinkQuantity() {
-//		return this.drinkQuantity;
-//	}
-//
-//	public void setDrinkQuantity(ArrayList<Integer> list) {
-//		this.drinkQuantity = list;
-//	}
-	
 //	@JsonProperty("drinkList")
 //	@DynamoDBAttribute(attributeName = "DrinkMap")
 //    private List<KeyValueContainer<Drink, List<Drink>>> getDrinkList() {
