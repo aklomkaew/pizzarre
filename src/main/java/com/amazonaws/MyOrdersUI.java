@@ -95,7 +95,6 @@ public class MyOrdersUI extends Application implements Initializable{
 	}
 	
 	public void payOrder(ActionEvent e) {
-		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
 		NextStage.goTo(fxmlLoader, payBtn);
 	}
