@@ -62,6 +62,8 @@ public class NewOrderUI implements Initializable {
 	@FXML
 	private Button modifyPizza;
 	@FXML
+	private Button viewToppingsBtn;
+	@FXML
 	private ListView<String> orderListView;
 	@FXML
 	private TableView<String> itemTableView;
@@ -85,6 +87,10 @@ public class NewOrderUI implements Initializable {
 
 	private static HashMap<String, Integer> allIngredients;
 
+	public void viewToppings (ActionEvent e) {
+		
+	}
+	
 	public static int getmodifiedIndex() {
 		return modifiedIndex;
 	}
@@ -109,29 +115,6 @@ public class NewOrderUI implements Initializable {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, modifyPizza);
-
-		// else {
-//			try {
-//				ArrayList<String> currentToppings = pizzaArrayList.get(modifiedIndex).getToppings();
-//				
-//
-//				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ModifiedPizzaUI.fxml"));
-//				Parent root = (Parent) fxmlLoader.load();
-//				Stage nextStage = new Stage();
-//				nextStage.setScene(new Scene(root, 600, 600));
-//				nextStage.setResizable(false);
-//				
-//				 ModifiedPizzaUI display = fxmlLoader.getController();
-//				 display.getPizzaInfo(currentToppings);
-//				
-//				nextStage.show();
-//				Stage currentStage = (Stage) modifyCustom.getScene().getWindow();
-//				currentStage.close();
-//
-//			} catch (Exception exception) {
-//				exception.printStackTrace();
-//			}
-//		}
 	}
 
 	public void modifiedPizza() {
@@ -296,7 +279,6 @@ public class NewOrderUI implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		orderObservableList = FXCollections.observableArrayList();
-
 		User u = LoginUI.getUser();
 		if (order == null) {
 			order = new Order();
@@ -312,12 +294,11 @@ public class NewOrderUI implements Initializable {
 		pizzaNameArrayList.clear();
 		drinkNameArrayList.clear();
 		orderObservableList.clear();
-
+    
 		pizzaArrayList = order.getPizzas();
 		for (int i = 0; i < pizzaArrayList.size(); i++) {
 			pizzaNameArrayList.add(pizzaArrayList.get(i).getName());
 			System.out.println(pizzaArrayList.get(i).getName());
-
 		}
 
 		drinkArrayList = order.getDrink();

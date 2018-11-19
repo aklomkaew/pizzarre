@@ -40,6 +40,8 @@ public class MyOrdersUI extends Application implements Initializable{
 	@FXML
 	private Button deleteBtn;
 	@FXML
+	private Button showBtn;
+	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
 	private TableColumn<Order, Integer> orderNumberColumn;
@@ -68,6 +70,10 @@ public class MyOrdersUI extends Application implements Initializable{
 			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName()
 			+ " total = " + item.getTotal());
 		}
+	}
+	
+	public void showOrder(ActionEvent e) {
+		
 	}
 	
 	public void payOrder(ActionEvent e) {

@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -36,6 +37,8 @@ public class ModifiedPizzaUI implements Initializable {
 	private Button back;
 
 	private String id = null; // names used for database access
+	@FXML
+	private TextField sizeTF;
 	@FXML
 	private Button pepperoni;
 	@FXML
@@ -143,13 +146,20 @@ public class ModifiedPizzaUI implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}
-
-	public void getPizzaInfo(ArrayList<String> toppings) { // gets recipe name and size from previous controller
-															// (SpecialtyPizzaUI.java)
+	
+	public void getPizzaInfo(ArrayList<String> toppings, int size) { // gets recipe name and size from previous controller (SpecialtyPizzaUI.java)
 		toppingIdArrayList = toppings;
 		toppingObservableList.clear();
 		toppingObservableList.addAll(toppings);
 		toppingListView.setItems(toppingObservableList);
+		
+		 	if (size == 1) {
+		 	sizeTF.setText("small");
+		 	} else if (size == 2) {
+		 	sizeTF.setText("medium");
+		 	} else {
+		 	sizeTF.setText("large");
+		 	}
 	}
 
 }
