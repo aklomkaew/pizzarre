@@ -30,13 +30,13 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
 public class ModifiedPizzaUI implements Initializable {
-	
+
 	@FXML
 	private Button confirm;
 	@FXML
 	private Button back;
-	
-	private String id = null; //names used for database access
+
+	private String id = null; // names used for database access
 	@FXML
 	private TextField sizeTF;
 	@FXML
@@ -76,7 +76,6 @@ public class ModifiedPizzaUI implements Initializable {
 
 	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
 
-	
 	public void addRemoveTopping(ActionEvent e) {
 
 		String id = ((Button) e.getSource()).getId();
@@ -96,26 +95,26 @@ public class ModifiedPizzaUI implements Initializable {
 
 		toppingListView.setItems(toppingObservableList); // displays toppings in the list
 	}
-	
-	public void confirmPizza (ActionEvent e) { // passes specialty data back to NewOrderUI.java, do not NextStage.goTo
-		//enumeration statement for specialtySize
+
+	public void confirmPizza(ActionEvent e) { // passes specialty data back to NewOrderUI.java, do not NextStage.goTo
+		// enumeration statement for specialtySize
 		Order order = NewOrderUI.getOrder();
 		int index = NewOrderUI.getmodifiedIndex();
 		Pizza oldPizza = order.getPizzas().get(index);
 		ArrayList<String> emptyList = new ArrayList<String>(); // emptyList is necessary
-		
-		Pizza modifiedPizza = new Pizza(oldPizza.getName(), oldPizza.getSize() ,emptyList);
-		
-		for(int i = 0; i < toppingIdArrayList.size(); i++) { //loop that adds and increments pizza's price
+
+		Pizza modifiedPizza = new Pizza(oldPizza.getName(), oldPizza.getSize(), emptyList);
+
+		for (int i = 0; i < toppingIdArrayList.size(); i++) { // loop that adds and increments pizza's price
 			String topping = toppingIdArrayList.get(i);
 			modifiedPizza.addTopping(topping);
 		}
-		
+
 		order.getPizzas().set(index, modifiedPizza);
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirm);
-		
+
 //		try {
 //			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 //			Parent root = (Parent) fxmlLoader.load();
@@ -135,16 +134,15 @@ public class ModifiedPizzaUI implements Initializable {
 //	      }
 	}
 
-
 	public void start(Stage arg0) throws Exception {
-		
+
 	}
 
 	public void goToOrderScreen(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, back);
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}
@@ -163,5 +161,5 @@ public class ModifiedPizzaUI implements Initializable {
 		 	sizeTF.setText("large");
 		 	}
 	}
-	
+
 }
