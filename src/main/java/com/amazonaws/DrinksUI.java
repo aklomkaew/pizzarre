@@ -138,9 +138,10 @@ public class DrinksUI implements Initializable {
 		
 		Alert.Display("Success", "Your drink has been added to your order!");
 
-		drinkObservableList.clear();
-		drinkIdArrayList.clear();
-		drinkListView.getItems().clear();
+		NewOrderUI.addDrinks(drinkIdArrayList);
+//		drinkObservableList.clear();
+//		drinkIdArrayList.clear();
+//		drinkListView.getItems().clear();
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirm);
@@ -191,7 +192,7 @@ public void start(Stage arg0) throws Exception {
 public void initialize(URL location, ResourceBundle resources) {
 	drinkIdArrayList.clear();
 	drinkObservableList.clear();
-	drinkIdArrayList.addAll(NewOrderUI.getDrinks());
+	//drinkIdArrayList.addAll(NewOrderUI.getDrinks());
 	drinkObservableList.addAll(drinkIdArrayList);
 	drinkListView.setItems(drinkObservableList);
 	

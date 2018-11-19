@@ -110,6 +110,10 @@ public class Order {
 	
 	@DynamoDBTypeConverted(converter = MyDrinkConverter.class)
 	public ArrayList<Drink> getDrink() {
+		if(drinks == null) {
+			System.out.println("drink is null");
+			drinks = new ArrayList<Drink>();
+		}
 		return this.drinks;
 	}
 	public void setDrink(ArrayList<Drink> list) {
