@@ -73,7 +73,25 @@ public class MyOrdersUI extends Application implements Initializable{
 	}
 	
 	public void showOrder(ActionEvent e) {
-		
+		Order item = orderTableView.getSelectionModel().getSelectedItem();
+		if (item == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select an order to view.");
+			alert.showAndWait();
+			return;
+		}
+		String status = "";
+		if (item.getState()) {
+			status += "active";
+		} else {
+			status += "not active";
+		}
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("View Order");
+		alert.setHeaderText("Order " + item.getOrderNumber() + " is " + status + ". It contains:");
+		alert.setContentText(item.toString());
+		alert.showAndWait();
 	}
 	
 	public void payOrder(ActionEvent e) {
