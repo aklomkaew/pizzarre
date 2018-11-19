@@ -62,9 +62,26 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 	}
 
 	public void editOrder(ActionEvent e) {
-
+		Order item = orderTableView.getSelectionModel().getSelectedItem();
+		if (item == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select an order to modify.");
+			alert.showAndWait();
+			return;
+		}
+		NewOrderUI.setOrder(item);
+		deleteOrder(item);
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, editOrderBtn);
 	}
 
+	private void deleteOrder(Order o) {
+		orderObservableList.remove(o);
+		orderTableView.setItems(orderObservableList);
+		OrderDb.deleteItem(o.getOrderNumber());
+	}
 	public void deleteOrder(ActionEvent e) {
 		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
@@ -75,10 +92,7 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 			return;
 		}
 
-		orderObservableList.remove(itemToDelete);
-		orderTableView.setItems(orderObservableList);
-
-		OrderDb.deleteItem(itemToDelete.getOrderNumber());
+		deleteOrder(itemToDelete);
 		displayAllActiveOrder();
 	}
 

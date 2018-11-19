@@ -17,7 +17,7 @@ public class Order {
 	@JsonIgnore
 	private ArrayList<Pizza> pizzas;
 	private ArrayList<Drink> drinks;
-	private ArrayList<Integer> drinkQuantity;
+	//private ArrayList<Integer> drinkQuantity;
 	//private HashMap<Drink, List<Drink>> drinkMap;
 
 	private int orderNumber;
@@ -29,7 +29,7 @@ public class Order {
 	public Order() {
 		this.pizzas = new ArrayList<Pizza>();
 		this.drinks = new ArrayList<Drink>();
-		this.drinkQuantity = new ArrayList<Integer>();
+		//this.drinkQuantity = new ArrayList<Integer>();
 		//this.drinkMap = new HashMap<Drink, List<Drink>>();
 		this.orderNumber = -1;
 		this.active = true;
@@ -40,7 +40,7 @@ public class Order {
 		this.orderNumber = num;
 		this.pizzas = new ArrayList<Pizza>();
 		this.drinks = new ArrayList<Drink>();
-		this.drinkQuantity = new ArrayList<Integer>();
+		//this.drinkQuantity = new ArrayList<Integer>();
 		//this.drinkMap = new HashMap<Drink, List<Drink>>();
 		this.pizzas.addAll(list);
 		this.active = true;
@@ -101,7 +101,7 @@ public class Order {
 		return this.pizzas;
 	}
 	public void setPizzas(ArrayList<Pizza> list) {
-		pizzas = list;
+		this.pizzas.addAll(list);
 	}
 
 	public void addPizza(Pizza p) {
@@ -117,17 +117,17 @@ public class Order {
 		return this.drinks;
 	}
 	public void setDrink(ArrayList<Drink> list) {
-		drinks.addAll(list);
+		this.drinks.addAll(list);
 	}
 	
-	@DynamoDBAttribute(attributeName = "DrinkQuantity")
-	public ArrayList<Integer> getDrinkQuantity() {
-		return this.drinkQuantity;
-	}
-
-	public void setDrinkQuantity(ArrayList<Integer> list) {
-		this.drinkQuantity = list;
-	}
+//	@DynamoDBAttribute(attributeName = "DrinkQuantity")
+//	public ArrayList<Integer> getDrinkQuantity() {
+//		return this.drinkQuantity;
+//	}
+//
+//	public void setDrinkQuantity(ArrayList<Integer> list) {
+//		this.drinkQuantity = list;
+//	}
 	
 //	@JsonProperty("drinkList")
 //	@DynamoDBAttribute(attributeName = "DrinkMap")
@@ -151,13 +151,13 @@ public class Order {
 	public String toString() {
 		String ret = "";
 
-		if(pizzas.size() > 0) {
+		if(pizzas != null && pizzas.size() > 0) {
 			ret += pizzas.size() + ((pizzas.size() == 1) ? " pizza" : " pizzas");
 			for (int i = 0; i < pizzas.size(); i++) {
 				ret += "\n--> Pizza #" + (i + 1) + " has " + pizzas.get(i).toString();
 			}
 		}
-		if(drinks.size() > 0) {
+		if(drinks != null && drinks.size() > 0) {
 			ret += drinks.size() + ((drinks.size() == 1) ? " drink" : " drinks");
 			for (int i = 0; i < drinks.size(); i++) {
 				ret += "\n--> Drink #" + (i + 1) + " has " //+ drinkQuantity.get(i) + " "

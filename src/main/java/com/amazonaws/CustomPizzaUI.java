@@ -42,7 +42,7 @@ public class CustomPizzaUI implements Initializable {
 	@FXML
 	private static String pizzaSize = null;
 	@FXML
-	private TextField sizeTF;
+	private static TextField sizeTF;
 	@FXML
 	private Button small;
 	@FXML
@@ -89,6 +89,7 @@ public class CustomPizzaUI implements Initializable {
 	private static ArrayList<String> toppingIdArrayList = new ArrayList<String>();
 
 	private static Pizza modPizza = new Pizza();
+	private static ArrayList<String> oldTopping = new ArrayList<String>();
 	
 	private boolean modified = false;
 
@@ -217,7 +218,8 @@ public class CustomPizzaUI implements Initializable {
 		}
 		else {
 			Order order = NewOrderUI.getOrder();
-			order.addPizza(modPizza);
+			Pizza tmp = new Pizza(modPizza.getName(), modPizza.getSize(), oldTopping);
+			order.addPizza(tmp);
 			modPizza = null;
 			modified = false;
 		}
@@ -254,8 +256,26 @@ public class CustomPizzaUI implements Initializable {
 	public static void setPizza(Pizza p) {
 		modPizza = p;
 		toppingIdArrayList = p.getToppings();
+		oldTopping.clear();
+		oldTopping.addAll(p.getToppings());
+		//sizeTF.setText(getSize(modPizza.getSize()));
 	}
 
+	private static String getSize(int num) {
+		String ret = "";
+		switch(num) {
+		case 1: 
+			ret = "small";
+			break;
+		case 2:
+			ret = "medium";
+			break;
+		case 3:
+			ret = "large";
+			break;
+		}
+		return ret;
+	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		if (!toppingIdArrayList.isEmpty()) {
