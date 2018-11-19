@@ -2,17 +2,21 @@ package com.amazonaws;
 
 import java.util.*;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
+
 public class Pizza {
 	private String name;
 	private ArrayList<String> toppings;
 	private int size;	// S = 1, M = 2, L = 3
 	private double price;
+	private int isNew;		// 0 is false, 1 is true
 	
 	public Pizza() {
 		this.name = "";
 		this.size = 0;
 		this.toppings = new ArrayList<String>();
 		this.price = 0.0;
+		isNew = 1;
 	}
 	
 	public Pizza(String n, int s, ArrayList<String> list) {
@@ -20,6 +24,7 @@ public class Pizza {
 		this.size = s;
 		this.toppings = new ArrayList<String>();
 		this.toppings.addAll(list);
+		isNew = 1;
 		this.price = list.size() + getPriceBySize(size) - 3; //cheese, crust, and sauce are technically toppings that increment price
 	}
 	
@@ -53,6 +58,14 @@ public class Pizza {
 	
 	public int getSize() {
 		return this.size;
+	}
+	
+	public void setIsNew() {
+		this.isNew = 0;
+	}
+	
+	public int getIsNew() {
+		return this.isNew;
 	}
 	
 	public ArrayList<String> getToppings(){

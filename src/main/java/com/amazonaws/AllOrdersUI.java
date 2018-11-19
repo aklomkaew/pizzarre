@@ -35,16 +35,16 @@ import javafx.stage.Stage;
 public class AllOrdersUI extends Application implements Initializable {
 	@FXML
 	private Button backBtn;
-  @FXML
-  private Button showOrderBtn;
-  @FXML
-  private Button editOrderBtn;
-  @FXML
-  private Button deleteOrderBtn;
-  @FXML
-  private Button allActiveOrdersBtn;
-  @FXML
-  private Button deleteAllOrderBtn;
+	@FXML
+	private Button showOrderBtn;
+	@FXML
+	private Button editOrderBtn;
+	@FXML
+	private Button deleteOrderBtn;
+	@FXML
+	private Button allActiveOrdersBtn;
+	@FXML
+	private Button deleteAllOrderBtn;
 	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
@@ -62,8 +62,8 @@ public class AllOrdersUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
-  public void showOrder(ActionEvent e) {
-	  Order item = orderTableView.getSelectionModel().getSelectedItem();
+	public void showOrder(ActionEvent e) {
+		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -72,34 +72,50 @@ public class AllOrdersUI extends Application implements Initializable {
 			return;
 		}
 		String status = "";
-		if(item.getState()) {
+		if (item.getState()) {
 			status += "active";
-		}
-		else {
+		} else {
 			status += "not active";
 		}
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("View Order");
-		alert.setHeaderText("Order " + item.getOrderNumber() 
-				+ " is " + status + ". It contains:");
+		alert.setHeaderText("Order " + item.getOrderNumber() + " is " + status + ". It contains:");
 		alert.setContentText(item.toString());
 		alert.showAndWait();
-  }
-  
-  public void editOrder(ActionEvent e) {
-    	
-  }
+	}
 
-  public void deleteOrder(ActionEvent e) {
-	  Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
-		if(itemToDelete == null) {
+	public void editOrder(ActionEvent e) {
+		Order item = orderTableView.getSelectionModel().getSelectedItem();
+		if (item == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select an order to modify.");
+			alert.showAndWait();
+			return;
+		}
+		if(!item.getState()) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("An order you selected is inactive. Cannot modify.");
+			alert.showAndWait();
+			return;
+		}
+		NewOrderUI.setOrder(item);
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, editOrderBtn);
+	}
+
+	public void deleteOrder(ActionEvent e) {
+		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
+		if (itemToDelete == null) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Select an order to delete.");
 			alert.showAndWait();
 			return;
 		}
-		
+
 		orderObservableList.remove(itemToDelete);
 		orderTableView.setItems(orderObservableList);
 
@@ -109,10 +125,10 @@ public class AllOrdersUI extends Application implements Initializable {
 		alert.showAndWait();
 		OrderDb.deleteItem(itemToDelete.getOrderNumber());
 		displayAllOrder();
-  }
+	}
 
-  public void deleteAllOrder(ActionEvent e) {
-	  Alert alert = new Alert(AlertType.CONFIRMATION);
+	public void deleteAllOrder(ActionEvent e) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to delete all order?");
 
@@ -128,21 +144,21 @@ public class AllOrdersUI extends Application implements Initializable {
 			}
 		}
 		displayAllOrder();
-  }
-  
+	}
+
 	public void displayAllOrder() {
 		List<Order> list = OrderDb.retrieveAllItem();
 
-		if(list == null || list.size() < 1) {
+		if (list == null || list.size() < 1) {
 			orderObservableList.clear();
 			orderObservableList.addAll(list);
 			return;
 		}
-		
+
 		orderObservableList.clear();
 		orderObservableList.addAll(list);
 	}
-	
+
 	public void goToAllActiveOrders(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllActiveOrdersUI.fxml"));
 		NextStage.goTo(fxmlLoader, allActiveOrdersBtn);
