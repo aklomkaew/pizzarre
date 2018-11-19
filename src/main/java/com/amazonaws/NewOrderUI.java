@@ -281,10 +281,11 @@ public class NewOrderUI implements Initializable {
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
 		orderObservableList.clear();
+		
 		Order order = getOrder();
+		
 		pizzaArrayList = order.getPizzas();
 		for (int i = 0; i < pizzaArrayList.size(); i++) {
-			//pizzaNameArrayList.add(i) = pizzaArrayList.get(i).getName();
 			pizzaNameArrayList.add(pizzaArrayList.get(i).getName());
 			System.out.println(pizzaArrayList.get(i).getName());
 			
@@ -292,6 +293,12 @@ public class NewOrderUI implements Initializable {
 		//orderObservableList.addAll(pizzaNameArrayList);
 		//orderListView.setItems(orderObservableList);
 		combineLists();
+	}
+	
+	public void combineLists() {
+		orderObservableList.addAll(pizzaNameArrayList);
+		orderObservableList.addAll(drinksArrayList);
+		orderListView.setItems(orderObservableList);
 	}
 
 	public void makeSpecialtyPizzaObject(String specialtyName, ArrayList<String> specialtyToppings, int specialtySize) { // called																										// BuildSpeciltyIntoCustomUI
@@ -343,12 +350,6 @@ public class NewOrderUI implements Initializable {
 	
 	public static ArrayList<String> getDrinks() {
 		return drinksArrayList;
-	}
-
-	public void combineLists() {
-		orderObservableList.addAll(pizzaNameArrayList);
-		orderObservableList.addAll(drinksArrayList);
-		orderListView.setItems(orderObservableList);
 	}
 
 	public static Order getOrder() {
