@@ -104,7 +104,7 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Button fx:id="modifyCustom" mnemonicParsing="false" onAction="#modifyPizza" prefHeight="80.0" prefWidth="80.0" text="Modify Pizza" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Button fx:id="modifyPizza" mnemonicParsing="false" onAction="#modifyPizza" prefHeight="80.0" prefWidth="80.0" text="Modify Pizza" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <effect>
                               <InnerShadow />
                            </effect>

@@ -86,11 +86,14 @@ public class User {
 
 	@DynamoDBTypeConverted(converter = MyOrderConverter.class)
 	public ArrayList<Order> getOrderList() {
+		if(this.orders == null) {
+			orders = new ArrayList<Order>();
+		}
 		return this.orders;
 	}
 	
 	public void setOrderList(ArrayList<Order> list) {
-		this.orders.addAll(list);
+		this.orders = list;
 	}
 	
 	public boolean removeOrder(int num) {

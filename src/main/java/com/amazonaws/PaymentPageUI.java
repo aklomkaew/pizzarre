@@ -24,6 +24,7 @@ public class PaymentPageUI extends Application implements Initializable {
 	private TextField totalCostTF;
 	@FXML
 	private TextField changeTF;
+	private static int total;
 	
 	public void checkPayment(ActionEvent e) {
 		try {
@@ -43,6 +44,10 @@ public class PaymentPageUI extends Application implements Initializable {
 		changeTF.setText("$" + changeString);
 		//Order.setInactive()
 		
+	}
+	
+	public static void setPayment(int t) {
+		total = t;
 	}
 	
 	public void goToMainMenu(ActionEvent e) {
