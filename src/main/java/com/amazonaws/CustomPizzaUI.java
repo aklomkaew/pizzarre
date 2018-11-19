@@ -141,7 +141,10 @@ public class CustomPizzaUI implements Initializable {
 				list.add(item.toLowerCase());
 			}
 			String pizzaName = "basePizza";
-			list.addAll(RecipeDb.getIngredients(pizzaName));
+			
+			if(!modified) {
+				list.addAll(RecipeDb.getIngredients(pizzaName));
+			}
 
 			int count = 0;
 			boolean flag = false;

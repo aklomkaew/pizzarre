@@ -33,7 +33,6 @@ public class PaymentPageUI extends Application implements Initializable {
 	private TextField changeTF;
 	
 	private double payment;
-	private static double total;
 
     @FXML
     private TableView<OrderContents> orderTableView;
