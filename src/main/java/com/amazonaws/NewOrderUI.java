@@ -104,8 +104,6 @@ public class NewOrderUI implements Initializable {
 		Pizza p = pizzaArrayList.get(modifiedIndex);
 		CustomPizzaUI.setPizza(p);
 
-		
-
 		pizzaArrayList.remove(modifiedIndex);
 		pizzaNameArrayList.remove(modifiedIndex);
 
