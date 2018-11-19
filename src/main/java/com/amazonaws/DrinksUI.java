@@ -2,6 +2,9 @@ package com.amazonaws;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -57,6 +60,8 @@ public class DrinksUI implements Initializable {
 	
 	private static ArrayList<String> drinkIdArrayList = new ArrayList<String>();
     
+	private HashMap<String, Integer> drinkMap = new HashMap<String, Integer>();
+	
 	public static ArrayList<String> getDrinkList() {
 		return drinkIdArrayList;
 	}
@@ -71,24 +76,92 @@ public class DrinksUI implements Initializable {
 	}
 	
 	public void confirmDrinks (ActionEvent e) {
-
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage nextStage = new Stage();
-			nextStage.setScene(new Scene(root, 600, 600));
-			nextStage.setResizable(false);
-			
-			NewOrderUI display = fxmlLoader.getController();
-			display.addDrinks(drinkIdArrayList); 
-																	
-			nextStage.show();
-			Stage currentStage = (Stage) confirm.getScene().getWindow();
-			currentStage.close();
-
-		} catch (Exception exception) {
-			exception.printStackTrace();
+		boolean flag = false;
+		if(drinkObservableList.isEmpty()) {
+			Alert.Display("Information", "No drink was added");
+			return;
 		}
+		for(String item : drinkObservableList) {
+			if(!drinkMap.containsKey(item)) {
+				drinkMap.put(item, 1);
+			}
+			else {
+				drinkMap.put(item, drinkMap.get(item) + 1);
+			}
+		}
+		
+		Iterator itr = drinkMap.entrySet().iterator();
+		ArrayList<String> count = new ArrayList<String>();
+		while(itr.hasNext()) {
+			Map.Entry pair = (Map.Entry)itr.next();
+			String item = (String) pair.getKey();
+			int quantity = (int) pair.getValue();
+			int num = InventoryDb.getQuantityOfItem(item);
+			
+			if(num == -1) {
+				Alert.Display("Error", "Item " + item + " not in the inventory.");
+				flag = true;
+				break;
+			}
+			if(num < 1) {
+				Alert.Display("Error", "Not enough " + item
+						+ " in the inventory. Ask your manager to restock the inventory");
+				flag = true;
+				break;
+			}
+			else {
+				InventoryDb.changeQuantity(item, quantity, "decrease");
+				NewOrderUI.addIngredient(item, quantity);
+				count.add(item);
+			}
+		}
+		
+		if (flag) {
+			for (String str : count) {
+				InventoryDb.changeQuantity(str, drinkMap.get(str), "increase");
+				NewOrderUI.removeIngredient(str, drinkMap.get(str));
+			}
+			drinkMap.clear();
+			return;
+		}
+		
+		Iterator it = drinkMap.entrySet().iterator();
+		Order order = NewOrderUI.getOrder();
+		while(it.hasNext()) {
+			Map.Entry pair = (Map.Entry)it.next();
+			String item = (String) pair.getKey();
+			int quantity = (int) pair.getValue();
+			Drink d = new Drink(item, 2);
+			order.getDrink().add(d);
+			//order.getDrinkQuantity().add(quantity);
+		}
+		
+		Alert.Display("Success", "Your drink has been added to your order!");
+
+		drinkObservableList.clear();
+		drinkIdArrayList.clear();
+		drinkListView.getItems().clear();
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirm);
+		
+//		try {
+//			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+//			Parent root = (Parent) fxmlLoader.load();
+//			Stage nextStage = new Stage();
+//			nextStage.setScene(new Scene(root, 600, 600));
+//			nextStage.setResizable(false);
+//			
+//			NewOrderUI display = fxmlLoader.getController();
+//			display.addDrinks(drinkIdArrayList); 
+//																	
+//			nextStage.show();
+//			Stage currentStage = (Stage) confirm.getScene().getWindow();
+//			currentStage.close();
+//
+//		} catch (Exception exception) {
+//			exception.printStackTrace();
+//		}
 	}
 	
 	

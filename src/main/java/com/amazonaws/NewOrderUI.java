@@ -189,7 +189,13 @@ public class NewOrderUI implements Initializable {
 
 		OrderDb.updateOrder(order);
 		User u = LoginUI.getUser();
-		u.getOrderList().add(order);
+		try {
+			u.getOrderList().add(order);
+		}
+		catch(Exception err) {
+			System.out.println("Error cannot add order to user");
+			System.err.println(err.getMessage());
+		}
 		UserDb.updateUser(u);
 
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -252,10 +258,17 @@ public class NewOrderUI implements Initializable {
 			InventoryDb.changeQuantity((String)pair.getKey(), (Integer)pair.getValue(), "increase");
 			itr.remove();
 		}
+		pizzaArrayList.clear();
+		pizzaNameArrayList.clear();
+		orderObservableList.clear();
 	}
 
 	public void start(Stage arg0) throws Exception {
 		System.out.println("In start");
+	}
+	
+	public static void setOrder(Order c) {
+		order = c;
 	}
 
 	@Override
@@ -280,10 +293,9 @@ public class NewOrderUI implements Initializable {
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
 		orderObservableList.clear();
-		Order order = getOrder();
+		
 		pizzaArrayList = order.getPizzas();
 		for (int i = 0; i < pizzaArrayList.size(); i++) {
-			//pizzaNameArrayList.add(i) = pizzaArrayList.get(i).getName();
 			pizzaNameArrayList.add(pizzaArrayList.get(i).getName());
 			System.out.println(pizzaArrayList.get(i).getName());
 			

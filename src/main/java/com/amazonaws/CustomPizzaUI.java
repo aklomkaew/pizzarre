@@ -117,8 +117,10 @@ public class CustomPizzaUI implements Initializable {
 		// add pizza to order here
 		if (pizzaSize == null) {
 			Alert.Display("ERROR", "Select a size.");
+			return;
 		} else if (toppingObservableList == null || toppingObservableList.size() == 0) {
 			Alert.Display("ERROR", "Select at least one topping.");
+			return;
 		} else {
 			System.out.println(
 					"You chose a " + pizzaSize + " pizza with the following toppings: " + toppingObservableList);
@@ -171,7 +173,6 @@ public class CustomPizzaUI implements Initializable {
 
 			Order order = NewOrderUI.getOrder();
 			order.addPizza(p);
-			Order o = NewOrderUI.getOrder();
 
 			Alert.Display("Success", "Custom Pizza is added to your order!");
 
@@ -181,32 +182,6 @@ public class CustomPizzaUI implements Initializable {
 			
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 			NextStage.goTo(fxmlLoader, confirmBtn);
-
-			// size = specialtySize; // learn 2 enumerate, again
-//			int size = 0;
-//			if (pizzaSize.equals("small")) {
-//				size = 1;
-//			} else if (pizzaSize.equals("medium")) {
-//				size = 2;
-//			} else if (pizzaSize.equals("large")) {
-//				size = 3;
-//			}
-//			
-//			try {
-//				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-//				Parent root = (Parent) fxmlLoader.load();
-//				Stage nextStage = new Stage();
-//				nextStage.setScene(new Scene(root, 600, 600));
-//				nextStage.setResizable(false);
-//				NewOrderUI display = fxmlLoader.getController();
-//				display.makeCustomPizzaObject(toppingIdArrayList, size);
-//		        nextStage.show();
-//		        Stage currentStage = (Stage) confirmBtn.getScene().getWindow();
-//		        currentStage.close();
-//		        
-//		    } catch(Exception exception) {
-//		    	exception.printStackTrace();
-//		      }
 		}
 	}
 
