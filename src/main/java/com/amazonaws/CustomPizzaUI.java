@@ -83,7 +83,11 @@ public class CustomPizzaUI implements Initializable {
 
 	private static ObservableList<String> toppingObservableList = FXCollections.observableArrayList();
 
-	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
+	private static ArrayList<String> toppingIdArrayList = new ArrayList<String>();
+
+	private static Pizza modPizza = new Pizza();
+	
+	private boolean modified = false;
 
 	private static final int SMALL = 1;
 	private static final int MEDIUM = 2;
@@ -166,7 +170,7 @@ public class CustomPizzaUI implements Initializable {
 			pizzaName = "Custom";
 			ArrayList<String> pList = new ArrayList<String>();
 			Pizza p = new Pizza(pizzaName, pSize, pList);
-			for(int i = 0; i < list.size(); i++) { //loop that adds and increments pizza's price
+			for (int i = 0; i < list.size(); i++) { // loop that adds and increments pizza's price
 				String topping = list.get(i);
 				p.addTopping(topping);
 			}
@@ -179,7 +183,7 @@ public class CustomPizzaUI implements Initializable {
 			toppingObservableList.clear();
 			toppingIdArrayList.clear();
 			toppingListView.getItems().clear();
-			
+
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 			NextStage.goTo(fxmlLoader, confirmBtn);
 		}
@@ -203,12 +207,20 @@ public class CustomPizzaUI implements Initializable {
 	}
 
 	public void cancelPizza(ActionEvent e) {
+		if (!modified) {
+			removePizza();
+		}
+		else {
+			Order order = NewOrderUI.getOrder();
+			order.addPizza(modPizza);
+			modPizza = null;
+			modified = false;
+		}
+
 		toppingObservableList.clear();
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
-
-		removePizza();
-
+		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
@@ -234,9 +246,18 @@ public class CustomPizzaUI implements Initializable {
 	public void start(Stage arg0) throws Exception {
 	}
 
+	public static void setPizza(Pizza p) {
+		modPizza = p;
+		toppingIdArrayList = p.getToppings();
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// Pizza modifiedPizza;
-
+		if (!toppingIdArrayList.isEmpty()) {
+			// modified pizza
+			toppingObservableList.addAll(toppingIdArrayList);
+			toppingListView.setItems(toppingObservableList);
+			modified = true;
+		}
 	}
 }
