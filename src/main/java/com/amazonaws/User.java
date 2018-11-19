@@ -93,7 +93,7 @@ public class User {
 	}
 	
 	public void setOrderList(ArrayList<Order> list) {
-		this.orders = list;
+		this.orders.addAll(list);
 	}
 	
 	public boolean removeOrder(int num) {

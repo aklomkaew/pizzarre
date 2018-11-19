@@ -74,6 +74,8 @@ public class NewOrderUI implements Initializable {
 
 	private static Order order;
 
+	private static boolean modOrder;
+
 	private ObservableList<String> orderObservableList = FXCollections.observableArrayList();
 
 	private static int modifiedIndex; // used to keep track of index of piza being modified
@@ -117,11 +119,6 @@ public class NewOrderUI implements Initializable {
 		NextStage.goTo(fxmlLoader, modifyPizza);
 	}
 
-	public void modifiedPizza() {
-
-		combineLists();
-	}
-
 	public void goToDrinks(ActionEvent e) {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
@@ -160,6 +157,13 @@ public class NewOrderUI implements Initializable {
 			num++;
 			order.setOrderNumber(num);
 		}
+		
+		for (Drink d : order.getDrink()) {
+			d.setIsNew();
+		}
+		for (Pizza p : order.getPizzas()) {
+			p.setIsNew();
+		}
 
 		OrderDb.updateOrder(order);
 		User u = LoginUI.getUser();
@@ -168,8 +172,11 @@ public class NewOrderUI implements Initializable {
 		} catch (Exception err) {
 			System.out.println("Error cannot add order to user");
 			System.err.println(err.getMessage());
+			return;
 		}
 		UserDb.updateUser(u);
+
+		
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Success");
@@ -179,7 +186,7 @@ public class NewOrderUI implements Initializable {
 //		pizzaArrayList.clear(); // clear all list contents after order placed, for next order
 //		pizzaNameArrayList.clear();
 //		drinksArrayList.clear();
-		
+
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
 		drinkArrayList.clear();
@@ -202,7 +209,50 @@ public class NewOrderUI implements Initializable {
 		} else if (option.get() == ButtonType.CANCEL) {
 			return;
 		} else if (option.get() == ButtonType.OK) {
-			removeAllIngredients();
+			if (!modOrder) {
+				removeAllIngredients();
+			} else {
+				for (int i = 0; i < order.getPizzas().size(); i++) {
+					if (order.getPizzas().get(i).getIsNew() == 1) {
+						order.getPizzas().remove(i);
+					}
+				}
+				for (int i = 0; i < order.getDrink().size(); i++) {
+					if (order.getDrink().get(i).getIsNew() == 1) {
+						order.getDrink().remove(i);
+					}
+				}
+				OrderDb.updateOrder(order);
+//				User u = LoginUI.getUser();
+//				try {
+//					u.getOrderList().add(order);
+//				} catch (Exception err) {
+//					System.out.println("Error cannot add order to user");
+//					System.err.println(err.getMessage());
+//				}
+//				UserDb.updateUser(u);
+
+				order = null;
+				modOrder = false;
+			}
+
+			if(pizzaArrayList != null) {
+				pizzaArrayList.clear();
+			}
+			if(pizzaNameArrayList != null) {
+				pizzaNameArrayList.clear();
+			}
+			if(drinkArrayList != null) {
+				drinkArrayList.clear();
+			}
+			if(drinkNameArrayList != null) {
+				drinkNameArrayList.clear();
+			}
+			if(orderObservableList != null) {
+				orderObservableList.clear();
+			}
+			orderListView.getItems().clear();
+
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 			NextStage.goTo(fxmlLoader, cancelBtn);
 		}
@@ -241,6 +291,7 @@ public class NewOrderUI implements Initializable {
 		drinkArrayList.clear();
 		drinkNameArrayList.clear();
 		orderObservableList.clear();
+		order = null;
 	}
 
 	public void removeItem(ActionEvent e) {
@@ -257,7 +308,7 @@ public class NewOrderUI implements Initializable {
 		orderObservableList.remove(index);
 		if (index <= pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
 			pizzaNameArrayList.remove(index);
-			for(String str : pizzaArrayList.get(index).getToppings()) {
+			for (String str : pizzaArrayList.get(index).getToppings()) {
 				InventoryDb.changeQuantity(str, 1, "increase");
 			}
 			pizzaArrayList.remove(index);
@@ -296,11 +347,18 @@ public class NewOrderUI implements Initializable {
 		orderObservableList.clear();
     
 		pizzaArrayList = order.getPizzas();
-		for (int i = 0; i < pizzaArrayList.size(); i++) {
-			pizzaNameArrayList.add(pizzaArrayList.get(i).getName());
-			System.out.println(pizzaArrayList.get(i).getName());
+		if (pizzaArrayList != null) {
+			for (int i = 0; i < pizzaArrayList.size(); i++) {
+				pizzaNameArrayList.add(pizzaArrayList.get(i).getName());
+				System.out.println(pizzaArrayList.get(i).getName());
+			}
 		}
-
+		drinkArrayList = order.getDrink();
+		if(drinkArrayList != null) {
+			for (Drink d : drinkArrayList) {
+				drinkNameArrayList.add(d.getName());
+			}
+		}
 		/*drinkArrayList = order.getDrink();
 		for (Drink d : drinkArrayList) {
 			drinkNameArrayList.add(d.getName());
