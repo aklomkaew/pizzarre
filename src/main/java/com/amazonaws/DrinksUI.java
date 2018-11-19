@@ -23,6 +23,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -187,6 +188,12 @@ public class DrinksUI implements Initializable {
 
 	public void removeDrink(ActionEvent e) {
 		int index = drinkListView.getSelectionModel().getSelectedIndex();
+		if(drinkArrayList.size() <= index) {
+			if(drinkArrayList.get(index).getIsNew() == 0) {
+				Alert.Display("Error", "This item cannot be removed.");
+				return;
+			}
+		}
 		drinkIdArrayList.remove(index);
 		drinkObservableList.remove(index);
 		drinkListView.setItems(drinkObservableList);
@@ -213,7 +220,6 @@ public class DrinksUI implements Initializable {
 				InventoryDb.changeQuantity(str, 1, "increase");
 			}
 		}
-		NewOrderUI.getOrder().getDrink().clear();
 	}
 
 }

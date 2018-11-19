@@ -105,7 +105,8 @@ public class NewOrderUI implements Initializable {
 		if(modOrder) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
-			alert.setHeaderText("Order already been placed. Cannot modify pizza.");
+			alert.setHeaderText("Cannot modify.");
+			alert.setContentText("This item has already been processed.");
 			alert.showAndWait();
 			return;
 		}
@@ -296,15 +297,27 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void removeAllIngredients() {
-		if (allIngredients == null || allIngredients.isEmpty()) {
-			return;
+		for(Pizza p : order.getPizzas()) {
+			if(p.getIsNew() == 1) {
+				for(String str : p.getToppings()) {
+					InventoryDb.changeQuantity(str, 1, "increase");
+				}
+			}
 		}
-		Iterator itr = allIngredients.entrySet().iterator();
-		while (itr.hasNext()) {
-			Map.Entry pair = (Map.Entry) itr.next();
-			InventoryDb.changeQuantity((String) pair.getKey(), (Integer) pair.getValue(), "increase");
-			itr.remove();
+		for(Drink d : order.getDrink()) {
+			if(d.getIsNew() == 1) {
+				InventoryDb.changeQuantity(d.getName(), 1, "increase");
+			}
 		}
+//		if (allIngredients == null || allIngredients.isEmpty()) {
+//			return;
+//		}
+//		Iterator itr = allIngredients.entrySet().iterator();
+//		while (itr.hasNext()) {
+//			Map.Entry pair = (Map.Entry) itr.next();
+//			InventoryDb.changeQuantity((String) pair.getKey(), (Integer) pair.getValue(), "increase");
+//			itr.remove();
+//		}
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
 		drinkArrayList.clear();
