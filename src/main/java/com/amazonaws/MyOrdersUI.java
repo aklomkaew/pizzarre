@@ -15,9 +15,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -81,6 +83,16 @@ public class MyOrdersUI extends Application implements Initializable{
 	}
 	
 	public void editOrder(ActionEvent e) {
+		Order orderToEdit = orderTableView.getSelectionModel().getSelectedItem();
+		if (orderToEdit == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select an order to edit.");
+			alert.showAndWait();
+			return;
+		}
+		
+		NewOrderUI.setOrder(orderToEdit);
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, editBtn);

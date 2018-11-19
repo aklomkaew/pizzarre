@@ -17,6 +17,8 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
@@ -58,38 +60,32 @@ public class NewOrderUI implements Initializable {
 	@FXML
 	private Button confirm;
 	@FXML
-	private Button modifyCustom;
+	private Button modifyPizza;
 	@FXML
 	private Button viewToppingsBtn;
 	@FXML
 	private ListView<String> orderListView;
+	@FXML
+	private TableView<String> itemTableView;
+	@FXML
+	private TableColumn<String, String> nameColumn;
+	@FXML
+	private TableColumn<String, Integer> priceColumn;
 
 	private static Order order;
-	
-	private static int modifiedIndex; //used to keep track of index of piza being modified
 
-	private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
-	private static ArrayList<String> pizzaNameArrayList = new ArrayList<String>(); // to display pizzas on listview
-	private static ArrayList<String> drinksArrayList = new ArrayList<String>(); // for drink INGREDIENTS
 	private ObservableList<String> orderObservableList = FXCollections.observableArrayList();
 
-	private static HashMap<String, Integer> allIngredients;
+	private static int modifiedIndex; // used to keep track of index of piza being modified
 
-//	public void goToMainMenu(ActionEvent e) {
-//		Alert alert = new Alert(AlertType.CONFIRMATION);
-//		alert.setTitle("Confirmation");
-//		alert.setHeaderText("Are you sure you want to return without saving order?");
-//
-//		Optional<ButtonType> option = alert.showAndWait();
-//		if (option.get() == null) {
-//			return;
-//		} else if (option.get() == ButtonType.CANCEL) {
-//			return;
-//		} else if (option.get() == ButtonType.OK) {
-//			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-//			NextStage.goTo(fxmlLoader, backBtn);
-//		}
-//	}
+	private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
+	private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
+	private static ArrayList<String> pizzaNameArrayList = new ArrayList<String>(); // to display pizzas on listview
+	private static ArrayList<String> drinkNameArrayList = new ArrayList<String>(); // for drink INGREDIENTS
+	// private static ObservableList<String> orderObservableList =
+	// FXCollections.observableArrayList();
+
+	private static HashMap<String, Integer> allIngredients;
 
 	public void viewToppings (ActionEvent e) {
 		
@@ -98,63 +94,32 @@ public class NewOrderUI implements Initializable {
 	public static int getmodifiedIndex() {
 		return modifiedIndex;
 	}
-	
+
 	public void modifyPizza(ActionEvent e) {
-		
-		int modifiedIndex = orderListView.getSelectionModel().getSelectedIndex();
-		
-		if (modifiedIndex > pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
+		String item = orderListView.getSelectionModel().getSelectedItem();
+
+		if (!item.equals("Custom") && !item.contains("Pizza")) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Drinks cannot be modified.");
 			alert.showAndWait();
-		} else {
-			try {
-				ArrayList<String> currentToppings = pizzaArrayList.get(modifiedIndex).getToppings();
-				int currentSize = pizzaArrayList.get(modifiedIndex).getSize();
-				
-
-				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ModifiedPizzaUI.fxml"));
-				Parent root = (Parent) fxmlLoader.load();
-				Stage nextStage = new Stage();
-				nextStage.setScene(new Scene(root, 600, 600));
-				nextStage.setResizable(false);
-				
-				 ModifiedPizzaUI display = fxmlLoader.getController();
-				 display.getPizzaInfo(currentToppings, currentSize);
-				
-				nextStage.show();
-				Stage currentStage = (Stage) modifyCustom.getScene().getWindow();
-				currentStage.close();
-
-			} catch (Exception exception) {
-				exception.printStackTrace();
-			}
-		}
-	}
-
-	public void modifiedPizza() {
-		combineLists();
-	}
-
-	public void removeItem(ActionEvent e) {
-		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
-		if (obj == null) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error");
-			alert.setHeaderText("Select an item to remove.");
-			alert.showAndWait();
 			return;
 		}
 
-		int index = orderListView.getSelectionModel().getSelectedIndex();
-		orderObservableList.remove(index);
-		if (index <= pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
-			pizzaNameArrayList.remove(index);
-			pizzaArrayList.remove(index);
-		} else {
-			drinksArrayList.remove(index - pizzaNameArrayList.size());
-		}
+		int modifiedIndex = orderListView.getSelectionModel().getSelectedIndex();
+		Pizza p = pizzaArrayList.get(modifiedIndex);
+		CustomPizzaUI.setPizza(p);
+
+		pizzaArrayList.remove(modifiedIndex);
+		pizzaNameArrayList.remove(modifiedIndex);
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
+		NextStage.goTo(fxmlLoader, modifyPizza);
+	}
+
+	public void modifiedPizza() {
+
+		combineLists();
 	}
 
 	public void goToDrinks(ActionEvent e) {
@@ -184,12 +149,12 @@ public class NewOrderUI implements Initializable {
 
 	public void confirmOrder(ActionEvent e) {
 		double priceTotal = 0.00;
-		for (int i = 0; i < order.getPizzas().size(); i++ ) {
+		for (int i = 0; i < order.getPizzas().size(); i++) {
 			Pizza currentPizza = order.getPizzas().get(i);
 			priceTotal = priceTotal + currentPizza.getPrice();
 		}
 		order.setTotal(priceTotal);
-		
+
 		int num = order.getOrderNumber();
 		while (!OrderDb.addOrder(order)) {
 			num++;
@@ -198,7 +163,12 @@ public class NewOrderUI implements Initializable {
 
 		OrderDb.updateOrder(order);
 		User u = LoginUI.getUser();
-		u.getOrderList().add(order);
+		try {
+			u.getOrderList().add(order);
+		} catch (Exception err) {
+			System.out.println("Error cannot add order to user");
+			System.err.println(err.getMessage());
+		}
 		UserDb.updateUser(u);
 
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -206,9 +176,14 @@ public class NewOrderUI implements Initializable {
 		alert.setHeaderText("Your order has been placed! Total is $" + order.getTotal());
 		alert.showAndWait();
 
-		pizzaArrayList.clear(); // clear all list contents after order placed, for next order
+//		pizzaArrayList.clear(); // clear all list contents after order placed, for next order
+//		pizzaNameArrayList.clear();
+//		drinksArrayList.clear();
+		
+		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
-		drinksArrayList.clear();
+		drinkArrayList.clear();
+		drinkNameArrayList.clear();
 		orderObservableList.clear();
 		orderListView.getItems().clear();
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
@@ -232,7 +207,7 @@ public class NewOrderUI implements Initializable {
 			NextStage.goTo(fxmlLoader, cancelBtn);
 		}
 	}
-	
+
 	public void goBack(ActionEvent e) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
@@ -250,16 +225,46 @@ public class NewOrderUI implements Initializable {
 			NextStage.goTo(fxmlLoader, backBtn);
 		}
 	}
-	
+
 	public void removeAllIngredients() {
-		if(allIngredients == null || allIngredients.isEmpty()) {
+		if (allIngredients == null || allIngredients.isEmpty()) {
 			return;
 		}
 		Iterator itr = allIngredients.entrySet().iterator();
 		while (itr.hasNext()) {
 			Map.Entry pair = (Map.Entry) itr.next();
-			InventoryDb.changeQuantity((String)pair.getKey(), (Integer)pair.getValue(), "increase");
+			InventoryDb.changeQuantity((String) pair.getKey(), (Integer) pair.getValue(), "increase");
 			itr.remove();
+		}
+		pizzaArrayList.clear();
+		pizzaNameArrayList.clear();
+		drinkArrayList.clear();
+		drinkNameArrayList.clear();
+		orderObservableList.clear();
+	}
+
+	public void removeItem(ActionEvent e) {
+		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
+		if (obj == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select an item to remove.");
+			alert.showAndWait();
+			return;
+		}
+
+		int index = orderListView.getSelectionModel().getSelectedIndex();
+		orderObservableList.remove(index);
+		if (index <= pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
+			pizzaNameArrayList.remove(index);
+			for(String str : pizzaArrayList.get(index).getToppings()) {
+				InventoryDb.changeQuantity(str, 1, "increase");
+			}
+			pizzaArrayList.remove(index);
+		} else {
+			InventoryDb.changeQuantity(drinkNameArrayList.get(index - pizzaNameArrayList.size()), 1, "increase");
+			drinkNameArrayList.remove(index - pizzaNameArrayList.size());
+			drinkArrayList.remove(index - pizzaNameArrayList.size());
 		}
 	}
 
@@ -267,16 +272,13 @@ public class NewOrderUI implements Initializable {
 		System.out.println("In start");
 	}
 
+	public static void setOrder(Order c) {
+		order = c;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//orderObservableList = FXCollections.observableArrayList();
-		//orderObservableList.addAll(BuildSpecialtyUI.getSpecialtyList());
-		// orderObservableList.addAll(DrinksUI.getDrinkList());
-		//orderListView.setItems(orderObservableList);
-		// ObservableList pizzas =
-		// FXCollections.obserableArrayList(RecipeDB.getRecipeNames())
-		// orderListView.setItems(recipes);
-		
+		orderObservableList = FXCollections.observableArrayList();
 		User u = LoginUI.getUser();
 		if (order == null) {
 			order = new Order();
@@ -288,77 +290,29 @@ public class NewOrderUI implements Initializable {
 			order.setServerName(u.getName());
 		}
 		pizzaArrayList.clear();
+		drinkArrayList.clear();
 		pizzaNameArrayList.clear();
+		drinkNameArrayList.clear();
 		orderObservableList.clear();
-		
-		Order order = getOrder();
-		
+    
 		pizzaArrayList = order.getPizzas();
 		for (int i = 0; i < pizzaArrayList.size(); i++) {
 			pizzaNameArrayList.add(pizzaArrayList.get(i).getName());
 			System.out.println(pizzaArrayList.get(i).getName());
-			
 		}
-		//orderObservableList.addAll(pizzaNameArrayList);
-		//orderListView.setItems(orderObservableList);
+
+		drinkArrayList = order.getDrink();
+		for (Drink d : drinkArrayList) {
+			drinkNameArrayList.add(d.getName());
+		}
+
 		combineLists();
 	}
-	
+
 	public void combineLists() {
 		orderObservableList.addAll(pizzaNameArrayList);
-		orderObservableList.addAll(drinksArrayList);
+		orderObservableList.addAll(drinkNameArrayList);
 		orderListView.setItems(orderObservableList);
-	}
-
-	public void makeSpecialtyPizzaObject(String specialtyName, ArrayList<String> specialtyToppings, int specialtySize) { // called																										// BuildSpeciltyIntoCustomUI
-		String sizeString = "size";
-		switch (specialtySize) {
-		case 1:
-			sizeString = "Small";
-			break;
-		case 2:
-			sizeString = "Medium";
-			break;
-		case 3:
-			sizeString = "Large";
-			break;
-		}
-		String pizzaName = sizeString + " " + specialtyName; // the name used in the list
-		Pizza pizza = new Pizza(pizzaName, specialtySize, specialtyToppings);
-		pizzaArrayList.add(pizza);
-		pizzaNameArrayList.add(pizza.getName());
-		combineLists();
-	}
-
-	public void makeCustomPizzaObject(ArrayList<String> toppings, int size) { // called in NOT FINISHED YET
-		String sizeString = "size";
-		switch (size) {
-		case 1:
-			sizeString = "Small";
-			break;
-		case 2:
-			sizeString = "Medium";
-			break;
-		case 3:
-			sizeString = "Large";
-			break;
-		}
-		String pizzaName = sizeString + " Custom"; // the name used in the list
-		Pizza pizza = new Pizza(pizzaName, size, toppings);
-		pizzaArrayList.add(pizza);
-		pizzaNameArrayList.add(pizza.getName());
-		combineLists();
-	}
-
-	public void addDrinks(ArrayList<String> allDrinks) {
-		// InventoryDb.getIngredient(drinkName);
-		drinksArrayList.clear();
-		drinksArrayList.addAll(allDrinks);
-		combineLists();
-	}
-	
-	public static ArrayList<String> getDrinks() {
-		return drinksArrayList;
 	}
 
 	public static Order getOrder() {

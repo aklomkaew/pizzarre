@@ -104,7 +104,6 @@ public class AllUsersUI extends Application implements Initializable {
 			}
 			displayAllUser();
 		}
-
 	}
 
 	public void goToManagerUtilities(ActionEvent e) {
