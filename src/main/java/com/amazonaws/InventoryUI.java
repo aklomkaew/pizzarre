@@ -125,18 +125,9 @@ public class InventoryUI extends Application implements Initializable {
 		updateTable();
     }
 	public void goToManagerUtilities(ActionEvent e) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage managerUtiliesStage = new Stage();
-			managerUtiliesStage.setScene(new Scene(root));
-			managerUtiliesStage.setTitle("Main Menu");
-			managerUtiliesStage.show();
-			Stage inventoryStage = (Stage) backBtn.getScene().getWindow();
-			inventoryStage.close();
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
+		NextStage.goTo(fxmlLoader, backBtn);
 	}
 	
 	public void displayAllInventory() {

@@ -1,6 +1,7 @@
 package com.amazonaws;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -47,11 +48,17 @@ public class MyOrdersUI extends Application implements Initializable{
 	private TableColumn<Order, Double> totalColumn;
 
 	private ObservableList<Order> orderObservableList;
+	
+	private Order selectedOrder;
 
 	public void goToMainMenu(ActionEvent e) {
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 			NextStage.goTo(fxmlLoader, backBtn);
+	}
+	
+	public Order getOrder() {
+		return selectedOrder;
 	}
 	
 	public void displayAllOrder() {
@@ -75,9 +82,27 @@ public class MyOrdersUI extends Application implements Initializable{
 	}
 	
 	public void payOrder(ActionEvent e) {
+		int index = orderTableView.getSelectionModel().getFocusedIndex();
+		selectedOrder = orderTableView.getItems().get(index);
 		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
-		NextStage.goTo(fxmlLoader, payBtn);
+		try { // im sorry
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
+			Parent root = (Parent) fxmlLoader.load();
+			Stage nextStage = new Stage();
+			nextStage.setScene(new Scene(root, 600, 600));
+			nextStage.setResizable(false);
+			
+			 PaymentPageUI display = fxmlLoader.getController();
+			 display.initializeMyOrder(selectedOrder);
+			
+			nextStage.show();
+			Stage currentStage = (Stage) payBtn.getScene().getWindow();
+			currentStage.close();
+
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
 	}
 	
 	public void editOrder(ActionEvent e) {
