@@ -62,7 +62,7 @@ public class NewOrderUI implements Initializable {
 	@FXML
 	private Button modifyCustom;
 	@FXML
-	private static ListView<String> orderListView;
+	private ListView<String> orderListView;
 	@FXML
 	private TableView<String> itemTableView;
 	@FXML
@@ -72,14 +72,14 @@ public class NewOrderUI implements Initializable {
 
 	private static Order order;
 	
-	private static ObservableList<String> orderObservableList;
+	private ObservableList<String> orderObservableList = FXCollections.observableArrayList();
 	
 	private static int modifiedIndex; //used to keep track of index of piza being modified
 
-//	private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
-//	private static ArrayList<String> pizzaNameArrayList = new ArrayList<String>(); // to display pizzas on listview
+	private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
+	private static ArrayList<String> pizzaNameArrayList = new ArrayList<String>(); // to display pizzas on listview
 	private static ArrayList<String> drinksArrayList = new ArrayList<String>(); // for drink INGREDIENTS
-//	private static ObservableList<String> orderObservableList = FXCollections.observableArrayList();
+	//private static ObservableList<String> orderObservableList = FXCollections.observableArrayList();
 
 	private static HashMap<String, Integer> allIngredients;
 
@@ -299,42 +299,44 @@ public class NewOrderUI implements Initializable {
 			order.setServerId(u.getUserId());
 			order.setServerName(u.getName());
 		}
-////		pizzaArrayList.clear();
-////		pizzaNameArrayList.clear();
-////		orderObservableList.clear();
-//		
-//		pizzaArrayList = order.getPizzas();
-//		for (int i = 0; i < pizzaArrayList.size(); i++) {
-//			pizzaNameArrayList.add(pizzaArrayList.get(i).getName());
-//			System.out.println(pizzaArrayList.get(i).getName());
-//			
-//		}
-//		//orderObservableList.addAll(pizzaNameArrayList);
-//		//orderListView.setItems(orderObservableList);
-//		combineLists();
-//		System.out.println("orderObservableList has: ");
-//		for(int i = 0; i < orderObservableList.size(); i++) {
-//			System.out.println(orderObservableList.get(0));
-//		}
+		pizzaArrayList.clear();
+		pizzaNameArrayList.clear();
+		orderObservableList.clear();
+		
+		pizzaArrayList = getOrder().getPizzas();
+		for (int i = 0; i < pizzaArrayList.size(); i++) {
+			pizzaNameArrayList.add(pizzaArrayList.get(i).getName());
+			System.out.println(pizzaArrayList.get(i).getName());
+			
+		}
+		//orderObservableList.addAll(pizzaNameArrayList);
+		//orderListView.setItems(orderObservableList);
+		//combineLists();
+		//System.out.println("orderObservableList has: ");
+		//for(int i = 0; i < orderObservableList.size(); i++) {
+		//	System.out.println(orderObservableList.get(0));
+		//}
 		combineLists();
 	}
 
 	public static void addDrinks(ArrayList<String> itemList) {
 //		drinksArrayList.clear();
 //		drinksArrayList.addAll(itemList);
-		combineLists();
+		//combineLists();
 	}
 	
 	public static ArrayList<String> getDrinks() {
 		return drinksArrayList;
 	}
 
-	public static void combineLists() {
+	public void combineLists() {
 //		orderObservableList.addAll(pizzaNameArrayList);
-		orderObservableList.addAll(drinksArrayList);
-		if(orderListView == null) {
-			orderListView = new ListView<String>();
-		}
+		//orderObservableList.addAll(drinksArrayList);
+		//if(orderListView == null) {
+		//	orderListView = new ListView<String>();
+		//}
+		//orderListView.setItems(orderObservableList);
+		orderObservableList.addAll(pizzaNameArrayList);
 		orderListView.setItems(orderObservableList);
 	}
 
