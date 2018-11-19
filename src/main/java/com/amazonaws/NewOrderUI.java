@@ -196,6 +196,11 @@ public class NewOrderUI implements Initializable {
 //		pizzaArrayList.clear(); // clear all list contents after order placed, for next order
 //		pizzaNameArrayList.clear();
 //		drinksArrayList.clear();
+		
+		pizzaArrayList.clear();
+		pizzaNameArrayList.clear();
+		drinkArrayList.clear();
+		drinkNameArrayList.clear();
 		orderObservableList.clear();
 		orderListView.getItems().clear();
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
