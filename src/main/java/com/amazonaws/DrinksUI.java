@@ -129,7 +129,8 @@ public class DrinksUI implements Initializable {
 				break;
 			} else {
 				InventoryDb.changeQuantity(item, 1, "decrease");
-				NewOrderUI.addIngredient(item, 1);
+				//NewOrderUI.addIngredient(item, 1);
+				
 				count++;
 			}
 		}
@@ -161,12 +162,11 @@ public class DrinksUI implements Initializable {
 		 */
 		String newName = "";
 		for (int i = 0; i < drinkIdArrayList.size(); i++) { // loop that adds and increments pizza's price
-			Drink newDrink = new Drink("", 0);
 			newName = drinkIdArrayList.get(i);
-			newDrink.setName(newName);
-			newDrink.setPrice();
+			Drink newDrink = new Drink(newName, 2);
 			drinkArrayList.add(newDrink);
 		}
+		order.getDrink().clear();
 		order.setDrink(drinkArrayList);
 
 		Alert.Display("Success", "Your drink has been added to your order!");
@@ -211,6 +211,7 @@ public class DrinksUI implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		drinkIdArrayList.clear();
 		drinkObservableList.clear();
+		
 		drinkIdArrayList.addAll(NewOrderUI.getDrinks());
 		drinkObservableList.addAll(drinkIdArrayList);
 		drinkListView.setItems(drinkObservableList);

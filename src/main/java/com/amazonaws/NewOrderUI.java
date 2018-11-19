@@ -424,16 +424,16 @@ public class NewOrderUI implements Initializable {
 		return order;
 	}
 
-	public static void addIngredient(String str, int quantity) {
-		if (allIngredients == null) {
-			allIngredients = new HashMap<String, Integer>();
-		}
-		if (!allIngredients.containsKey(str)) {
-			allIngredients.put(str, quantity);
-		} else {
-			allIngredients.put(str, allIngredients.get(str) + quantity);
-		}
-	}
+//	public static void addIngredient(String str, int quantity) {
+//		if (allIngredients == null) {
+//			allIngredients = new HashMap<String, Integer>();
+//		}
+//		if (!allIngredients.containsKey(str)) {
+//			allIngredients.put(str, quantity);
+//		} else {
+//			allIngredients.put(str, allIngredients.get(str) + quantity);
+//		}
+//	}
 
 	public static boolean removeIngredient(String str, int quantity) {
 		boolean status = false;
