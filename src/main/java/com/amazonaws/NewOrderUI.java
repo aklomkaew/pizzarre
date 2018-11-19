@@ -102,6 +102,13 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void modifyPizza(ActionEvent e) {
+		if(modOrder) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Order already been placed. Cannot modify pizza.");
+			alert.showAndWait();
+			return;
+		}
 		String item = orderListView.getSelectionModel().getSelectedItem();
 
 		if (!item.equals("Custom") && !item.contains("Pizza")) {

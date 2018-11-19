@@ -102,9 +102,6 @@ public class MyOrdersUI extends Application implements Initializable{
 	}
 	
 	public void payOrder(ActionEvent e) {
-
-		
-
 		int index = orderTableView.getSelectionModel().getFocusedIndex();
 		selectedOrder = orderTableView.getItems().get(index);
 		
