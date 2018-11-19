@@ -76,9 +76,10 @@ public class NewOrderUI implements Initializable {
 	
 	private static int modifiedIndex; //used to keep track of index of piza being modified
 
+	private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
 	private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
 	private static ArrayList<String> pizzaNameArrayList = new ArrayList<String>(); // to display pizzas on listview
-	private static ArrayList<String> drinksArrayList = new ArrayList<String>(); // for drink INGREDIENTS
+	private static ArrayList<String> drinkNameArrayList = new ArrayList<String>(); // for drink INGREDIENTS
 	//private static ObservableList<String> orderObservableList = FXCollections.observableArrayList();
 
 	private static HashMap<String, Integer> allIngredients;
@@ -252,8 +253,8 @@ public class NewOrderUI implements Initializable {
 			InventoryDb.changeQuantity((String)pair.getKey(), (Integer)pair.getValue(), "increase");
 			itr.remove();
 		}
-//		pizzaArrayList.clear();
-//		pizzaNameArrayList.clear();
+		pizzaArrayList.clear();
+		pizzaNameArrayList.clear();
 		orderObservableList.clear();
 	}
 
@@ -300,15 +301,23 @@ public class NewOrderUI implements Initializable {
 			order.setServerName(u.getName());
 		}
 		pizzaArrayList.clear();
+		drinkArrayList.clear();
 		pizzaNameArrayList.clear();
 		orderObservableList.clear();
 		
-		pizzaArrayList = getOrder().getPizzas();
+		
+		pizzaArrayList = order.getPizzas();
 		for (int i = 0; i < pizzaArrayList.size(); i++) {
 			pizzaNameArrayList.add(pizzaArrayList.get(i).getName());
 			System.out.println(pizzaArrayList.get(i).getName());
 			
 		}
+		
+		drinkArrayList = order.getDrink();
+		for (Drink d : drinkArrayList) {
+			drinkNameArrayList.add(d.getName());	
+		}
+		
 		//orderObservableList.addAll(pizzaNameArrayList);
 		//orderListView.setItems(orderObservableList);
 		//combineLists();
@@ -326,7 +335,7 @@ public class NewOrderUI implements Initializable {
 	}
 	
 	public static ArrayList<String> getDrinks() {
-		return drinksArrayList;
+		return drinkNameArrayList;
 	}
 
 	public void combineLists() {
@@ -337,6 +346,7 @@ public class NewOrderUI implements Initializable {
 		//}
 		//orderListView.setItems(orderObservableList);
 		orderObservableList.addAll(pizzaNameArrayList);
+		orderObservableList.addAll(drinkNameArrayList);
 		orderListView.setItems(orderObservableList);
 	}
 
