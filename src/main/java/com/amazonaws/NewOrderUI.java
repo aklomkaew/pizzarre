@@ -255,6 +255,8 @@ public class NewOrderUI implements Initializable {
 		}
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
+		drinkArrayList.clear();
+		drinkNameArrayList.clear();
 		orderObservableList.clear();
 	}
 
@@ -265,31 +267,11 @@ public class NewOrderUI implements Initializable {
 	public static void setOrder(Order c) {
 		order = c;
 	}
-
-	public void displayItem() {
-		orderObservableList.clear();
-		orderObservableList.addAll(DrinksUI.getDrinkList());
-		if(orderListView == null) {
-			orderListView = new ListView();
-		}
-		orderListView.setItems(orderObservableList);
-	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		orderObservableList = FXCollections.observableArrayList();
-//		if(orderListView == null) {
-//			orderListView = new ListView();
-//		}
-//		orderListView.setItems(orderObservableList);
-		//displayItem();
-		
-//		orderObservableList.addAll(BuildSpecialtyUI.getSpecialtyList());
-//		orderObservableList.addAll(DrinksUI.getDrinkList());
-//		System.out.println("orderObservableList has: ");
-//		for(int i = 0; i < orderObservableList.size(); i++) {
-//			System.out.println(orderObservableList.get(0));
-//		}
+
 		User u = LoginUI.getUser();
 		if (order == null) {
 			order = new Order();
@@ -303,8 +285,8 @@ public class NewOrderUI implements Initializable {
 		pizzaArrayList.clear();
 		drinkArrayList.clear();
 		pizzaNameArrayList.clear();
+		drinkNameArrayList.clear();
 		orderObservableList.clear();
-		
 		
 		pizzaArrayList = order.getPizzas();
 		for (int i = 0; i < pizzaArrayList.size(); i++) {
@@ -318,33 +300,10 @@ public class NewOrderUI implements Initializable {
 			drinkNameArrayList.add(d.getName());	
 		}
 		
-		//orderObservableList.addAll(pizzaNameArrayList);
-		//orderListView.setItems(orderObservableList);
-		//combineLists();
-		//System.out.println("orderObservableList has: ");
-		//for(int i = 0; i < orderObservableList.size(); i++) {
-		//	System.out.println(orderObservableList.get(0));
-		//}
 		combineLists();
 	}
 
-	public static void addDrinks(ArrayList<String> itemList) {
-//		drinksArrayList.clear();
-//		drinksArrayList.addAll(itemList);
-		//combineLists();
-	}
-	
-	public static ArrayList<String> getDrinks() {
-		return drinkNameArrayList;
-	}
-
 	public void combineLists() {
-//		orderObservableList.addAll(pizzaNameArrayList);
-		//orderObservableList.addAll(drinksArrayList);
-		//if(orderListView == null) {
-		//	orderListView = new ListView<String>();
-		//}
-		//orderListView.setItems(orderObservableList);
 		orderObservableList.addAll(pizzaNameArrayList);
 		orderObservableList.addAll(drinkNameArrayList);
 		orderListView.setItems(orderObservableList);
