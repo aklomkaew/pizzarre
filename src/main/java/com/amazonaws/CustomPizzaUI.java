@@ -42,7 +42,7 @@ public class CustomPizzaUI implements Initializable {
 	@FXML
 	private static String pizzaSize = null;
 	@FXML
-	private static TextField sizeTF;
+	private TextField sizeTF;
 	@FXML
 	private Button small;
 	@FXML
