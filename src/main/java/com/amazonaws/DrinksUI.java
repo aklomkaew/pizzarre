@@ -58,6 +58,8 @@ public class DrinksUI implements Initializable {
 	
 	private ObservableList<String> drinkObservableList = FXCollections.observableArrayList();
 	
+	private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
+	
 	private static ArrayList<String> drinkIdArrayList = new ArrayList<String>();
     
 	private HashMap<String, Integer> drinkMap = new HashMap<String, Integer>();
@@ -158,7 +160,15 @@ public class DrinksUI implements Initializable {
 			Drink d = new Drink(item, 2);
 			order.getDrink().add(d);
 		}*/
-		
+		String newName = "";
+		for (int i = 0; i < drinkIdArrayList.size(); i++) { // loop that adds and increments pizza's price
+			Drink newDrink = new Drink("", 0);
+			newName = drinkIdArrayList.get(i);
+			newDrink.setName(newName);
+			newDrink.setPrice();
+			drinkArrayList.add(newDrink);
+		}
+		order.setDrink(drinkArrayList);
 		
 		Alert.Display("Success", "Your drink has been added to your order!");
 
@@ -169,23 +179,6 @@ public class DrinksUI implements Initializable {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirm);
 		
-//		try {
-//			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-//			Parent root = (Parent) fxmlLoader.load();
-//			Stage nextStage = new Stage();
-//			nextStage.setScene(new Scene(root, 600, 600));
-//			nextStage.setResizable(false);
-//			
-//			NewOrderUI display = fxmlLoader.getController();
-//			display.addDrinks(drinkIdArrayList); 
-//																	
-//			nextStage.show();
-//			Stage currentStage = (Stage) confirm.getScene().getWindow();
-//			currentStage.close();
-//
-//		} catch (Exception exception) {
-//			exception.printStackTrace();
-//		}
 	}
 	
 	
@@ -215,9 +208,11 @@ public void start(Stage arg0) throws Exception {
 public void initialize(URL location, ResourceBundle resources) {
 	drinkIdArrayList.clear();
 	drinkObservableList.clear();
-	//drinkIdArrayList.addAll(NewOrderUI.getDrinks());
+	drinkIdArrayList.addAll(NewOrderUI.getDrinks());
 	drinkObservableList.addAll(drinkIdArrayList);
 	drinkListView.setItems(drinkObservableList);
+	//re add drinks to inventory
+	NewOrderUI.getOrder().clearDrinks();
 	
 }
 	

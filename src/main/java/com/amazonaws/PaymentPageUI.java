@@ -34,9 +34,9 @@ public class PaymentPageUI extends Application implements Initializable {
     @FXML
     private TableView<OrderContents> orderTableView;
     @FXML
-    private TableColumn<OrderContents, String> itemColumn;
+    private TableColumn<OrderContents, String> itemColumn  = new TableColumn<OrderContents, String>("itemName");
     @FXML
-    private TableColumn<OrderContents, Double> priceColumn;
+    private TableColumn<OrderContents, Double> priceColumn  = new TableColumn<OrderContents, Double>("itemPrice");
     
     private ObservableList<OrderContents> orderContentsObservableList = FXCollections.observableArrayList();
     
@@ -44,12 +44,12 @@ public class PaymentPageUI extends Application implements Initializable {
     
     private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>();
     
-    //private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
+    private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
     
     private static double total;
     
     private class OrderContents {
-    	String itemName;
+		String itemName;
     	double itemPrice;
     }
 	
@@ -72,7 +72,6 @@ public class PaymentPageUI extends Application implements Initializable {
 		String changeString = Double.toString(change);
 		changeTF.setText("$" + changeString);
 		paymentOrder.setInactive();
-		System.out.println(paymentOrder.getState());
 		} else {
 			Alert.Display("Error",  "Must be paid in full.");
 		}
@@ -93,29 +92,29 @@ public class PaymentPageUI extends Application implements Initializable {
 
 	public void displayOrderContents() {
 		double totalPrice = 0.0;
-		orderContentsObservableList.clear();
 		//if (pizzaArrayList == null || pizzaArrayList.size() < 1) {
 			//return;
 		//}
 		
 		for(int i = 0; i < pizzaArrayList.size(); i++) {
-			OrderContents orderContents = new OrderContents();
-			orderContents.itemName = pizzaArrayList.get(i).getName();
-			orderContents.itemPrice = pizzaArrayList.get(i).getPrice();
-			totalPrice = totalPrice + orderContents.itemPrice;
-			orderContentsObservableList.add(orderContents);
-			System.out.println(orderContents.itemName + " " + orderContents.itemPrice);
+			
+			//OrderContents orderContents = new OrderContents();
+			String name = pizzaArrayList.get(i).getName();
+			double price = pizzaArrayList.get(i).getPrice();
+			totalPrice = totalPrice + price;
+			//orderContentsObservableList.add(orderContents);
+			System.out.println(name + " " + price);
 		}
-		/*
-			for(int i = 0; i <= drinkArrayList.size()-1; i++) {
-				OrderContents orderContents = new OrderContents();
-				orderContents.itemName = pizzaArrayList.get(i).getName();
-				orderContents.itemPrice = pizzaArrayList.get(i).getPrice();
-				totalPrice = totalPrice + orderContents.itemPrice;
-				orderContentsObservableList.add(orderContents);
-				System.out.println(orderContents.itemName + " " + orderContents.itemPrice);
+		
+			for(int i = 0; i < drinkArrayList.size(); i++) {
+				
+				//OrderContents orderContents = new OrderContents();
+				String name = drinkArrayList.get(i).getName();
+				double price = drinkArrayList.get(i).getPrice();
+				totalPrice = totalPrice + price;
+				//orderContentsObservableList.add(orderContents);
+				System.out.println(name + " " + price);
 		}
-		 */
 		
 		setTotal(totalPrice);
 		totalCostTF.setText(Double.toString(getTotal()));
@@ -135,6 +134,25 @@ public class PaymentPageUI extends Application implements Initializable {
 	}
 	
 	public void initializeMyOrder (Order currentOrder) {
+		orderContentsObservableList.clear();
+		pizzaArrayList.clear();
+		drinkArrayList.clear();
+		orderTableView.getItems().clear();
+		paymentOrder = currentOrder;
+		pizzaArrayList = paymentOrder.getPizzas();
+		drinkArrayList = paymentOrder.getDrink();
+		//orderTableView.setEditable(true);
+		
+		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
+		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
+		displayOrderContents();
+	}
+	
+	public void initializeAllActiveOrder (Order currentOrder) {
+		orderContentsObservableList.clear();
+		pizzaArrayList.clear();
+		//drinkArrayList.clear();
+		orderTableView.getItems().clear();
 		paymentOrder = currentOrder;
 		pizzaArrayList = paymentOrder.getPizzas();
 		//drinkArrayList = paymentOrder.getDrinks();
@@ -142,7 +160,6 @@ public class PaymentPageUI extends Application implements Initializable {
 		
 		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
-		orderTableView.getColumns().addAll(itemColumn, priceColumn);
 		displayOrderContents();
 	}
 }

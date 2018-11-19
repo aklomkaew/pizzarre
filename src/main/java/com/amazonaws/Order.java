@@ -108,6 +108,10 @@ public class Order {
 		this.pizzas.add(p);
 	}
 	
+	public void clearDrinks() {
+		this.drinks.clear();
+	}
+	
 	@DynamoDBTypeConverted(converter = MyDrinkConverter.class)
 	public ArrayList<Drink> getDrink() {
 		if(drinks == null) {
