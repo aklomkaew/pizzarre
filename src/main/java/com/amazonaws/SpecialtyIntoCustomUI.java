@@ -165,6 +165,14 @@ public class SpecialtyIntoCustomUI implements Initializable {
 			return;
 		}
 
+		if (pSize == 1) {
+			specialtyName = "small, " + specialtyName;
+		} else if (pSize == 2) {
+			specialtyName = "medium, " + specialtyName;
+		} else {
+			specialtyName = "large, " + specialtyName;
+		}
+		
 		ArrayList<String> pList = new ArrayList<String>();
 		Pizza p = new Pizza(specialtyName, pSize, pList);
 		for(int i = 0; i < list.size(); i++) { //loop that adds and increments pizza's price

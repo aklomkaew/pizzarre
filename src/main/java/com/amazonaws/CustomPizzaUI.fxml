@@ -42,7 +42,7 @@
                   </Label>
                </content>
                <graphic>
-                  <TextField fx:id="sizeTF" onAction="#selectSize" promptText="Select A Size" translateX="-30.0" translateY="64.0" />
+                  <TextField fx:id="sizeTF" promptText="Select A Size" translateX="-30.0" translateY="64.0" />
                </graphic></TitledPane>
          </top>
          <right>

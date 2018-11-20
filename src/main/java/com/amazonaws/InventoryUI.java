@@ -46,6 +46,8 @@ public class InventoryUI extends Application implements Initializable {
     @FXML
     private Button deleteIngredientBtn;
     @FXML
+    private Button refreshBtn;
+    @FXML
     private TextField ingredientNameTF;
     @FXML
     private TextField quantityTF;
@@ -58,6 +60,10 @@ public class InventoryUI extends Application implements Initializable {
 	
     private ObservableList<InventoryItem> inventoryObservableList;
 
+    public void displayAllInventory(ActionEvent e) {
+    	
+    }
+    
     public void restock(ActionEvent e) {
     	InventoryDb.restock();
     	displayAllInventory();

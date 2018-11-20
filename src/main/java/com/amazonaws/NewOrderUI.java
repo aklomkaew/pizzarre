@@ -97,20 +97,20 @@ public class NewOrderUI implements Initializable {
 		return drinkNameArrayList;
 	}
 	
-	public static int getmodifiedIndex() {
+	public static int getModifiedIndex() {
 		return modifiedIndex;
 	}
 
 	public void modifyPizza(ActionEvent e) {
 		String item = orderListView.getSelectionModel().getSelectedItem();
 
-		if (!item.equals("Custom") && !item.contains("Pizza")) {
+		/*if (!item.equals("Custom") && !item.contains("Pizza")) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Drinks cannot be modified.");
 			alert.showAndWait();
 			return;
-		}
+		}*/
 
 		int modifiedIndex = orderListView.getSelectionModel().getSelectedIndex();
 		Pizza p = pizzaArrayList.get(modifiedIndex);

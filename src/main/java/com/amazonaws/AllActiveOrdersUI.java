@@ -55,9 +55,9 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 
 	private ObservableList<Order> orderObservableList;
 	
-	private Order selectedOrder;
+	private static Order selectedOrder;
 	
-	public Order getOrder() {
+	public static Order getOrder() {
 		return selectedOrder;
 	}
 
