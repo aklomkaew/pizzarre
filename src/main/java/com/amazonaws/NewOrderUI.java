@@ -89,27 +89,19 @@ public class NewOrderUI implements Initializable {
 
 	private static HashMap<String, Integer> allIngredients;
 
-	public void viewToppings (ActionEvent e) {
-		
+	public void viewToppings(ActionEvent e) {
+
 	}
-	
+
 	public static ArrayList<String> getDrinks() {
 		return drinkNameArrayList;
 	}
-	
+
 	public static int getmodifiedIndex() {
 		return modifiedIndex;
 	}
 
 	public void modifyPizza(ActionEvent e) {
-		if(modOrder) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error");
-			alert.setHeaderText("Cannot modify.");
-			alert.setContentText("This item has already been processed.");
-			alert.showAndWait();
-			return;
-		}
 		String item = orderListView.getSelectionModel().getSelectedItem();
 
 		if (!item.equals("Custom") && !item.contains("Pizza")) {
@@ -122,6 +114,16 @@ public class NewOrderUI implements Initializable {
 
 		int modifiedIndex = orderListView.getSelectionModel().getSelectedIndex();
 		Pizza p = pizzaArrayList.get(modifiedIndex);
+
+		if (p.getIsNew() == 0) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Cannot modify.");
+			alert.setContentText("This item has already been processed.");
+			alert.showAndWait();
+			return;
+		}
+
 		CustomPizzaUI.setPizza(p);
 
 		pizzaArrayList.remove(modifiedIndex);
@@ -168,45 +170,38 @@ public class NewOrderUI implements Initializable {
 		}
 		order.setTotal(priceTotal);
 		int num = order.getOrderNumber();
-		
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Success");
-		
-		if(modOrder) {
-			// do something check new/old item
-			
-			alert.setHeaderText("Your order " + order.getOrderNumber() + " has been modified! Total is $" + order.getTotal());
-		}
-		else {
+
+		if (!modOrder) {
 			while (!OrderDb.addOrder(order)) {
 				num++;
 				order.setOrderNumber(num);
 			}
-			
-			for (Drink d : order.getDrink()) {
-				d.setIsNew();
-			}
-			for (Pizza p : order.getPizzas()) {
-				p.setIsNew();
-			}
-
-			OrderDb.updateOrder(order);
-			User u = LoginUI.getUser();
-			try {
-				u.getOrderList().add(order);
-			} catch (Exception err) {
-				System.out.println("Error cannot add order to user");
-				System.err.println(err.getMessage());
-				return;
-			}
-			UserDb.updateUser(u);
-			
-			alert.setHeaderText("Your order " + order.getOrderNumber() + " has been placed! Total is $" + order.getTotal());
-			
 		}
-		
+		for (Drink d : order.getDrink()) {
+			d.setIsNew();
+		}
+		for (Pizza p : order.getPizzas()) {
+			p.setIsNew();
+		}
+
+		OrderDb.updateOrder(order);
+		User u = LoginUI.getUser();
+		try {
+			u.getOrderList().add(order);
+		} catch (Exception err) {
+			System.out.println("Error cannot add order to user");
+			System.err.println(err.getMessage());
+			return;
+		}
+		UserDb.updateUser(u);
+
+		alert.setHeaderText("Your order " + order.getOrderNumber() + " has been placed! Total is $" + order.getTotal());
+
 		alert.showAndWait();
-		
+
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
 		drinkArrayList.clear();
@@ -256,19 +251,19 @@ public class NewOrderUI implements Initializable {
 				modOrder = false;
 			}
 
-			if(pizzaArrayList != null) {
+			if (pizzaArrayList != null) {
 				pizzaArrayList.clear();
 			}
-			if(pizzaNameArrayList != null) {
+			if (pizzaNameArrayList != null) {
 				pizzaNameArrayList.clear();
 			}
-			if(drinkArrayList != null) {
+			if (drinkArrayList != null) {
 				drinkArrayList.clear();
 			}
-			if(drinkNameArrayList != null) {
+			if (drinkNameArrayList != null) {
 				drinkNameArrayList.clear();
 			}
-			if(orderObservableList != null) {
+			if (orderObservableList != null) {
 				orderObservableList.clear();
 			}
 			orderListView.getItems().clear();
@@ -297,15 +292,15 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void removeAllIngredients() {
-		for(Pizza p : order.getPizzas()) {
-			if(p.getIsNew() == 1) {
-				for(String str : p.getToppings()) {
+		for (Pizza p : order.getPizzas()) {
+			if (p.getIsNew() == 1) {
+				for (String str : p.getToppings()) {
 					InventoryDb.changeQuantity(str, 1, "increase");
 				}
 			}
 		}
-		for(Drink d : order.getDrink()) {
-			if(d.getIsNew() == 1) {
+		for (Drink d : order.getDrink()) {
+			if (d.getIsNew() == 1) {
 				InventoryDb.changeQuantity(d.getName(), 1, "increase");
 			}
 		}
@@ -330,7 +325,7 @@ public class NewOrderUI implements Initializable {
 		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
-		
+
 		if (obj == null) {
 			alert.setHeaderText("Select an item to remove.");
 			alert.showAndWait();
@@ -338,9 +333,9 @@ public class NewOrderUI implements Initializable {
 		}
 
 		int index = orderListView.getSelectionModel().getSelectedIndex();
-		
+
 		if (index <= pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
-			if(pizzaArrayList.get(index).getIsNew() == 0) {	// not new
+			if (pizzaArrayList.get(index).getIsNew() == 0) { // not new
 				alert.setHeaderText("This item cannot be removed.");
 				alert.setContentText("This item has already been processed");
 				alert.showAndWait();
@@ -352,7 +347,7 @@ public class NewOrderUI implements Initializable {
 			}
 			pizzaArrayList.remove(index);
 		} else {
-			if(drinkArrayList.get(index - pizzaNameArrayList.size()).getIsNew() == 0) {	// not new
+			if (drinkArrayList.get(index - pizzaNameArrayList.size()).getIsNew() == 0) { // not new
 				alert.setHeaderText("This item cannot be removed.");
 				alert.setContentText("This item has already been processed");
 				alert.showAndWait();
@@ -392,7 +387,7 @@ public class NewOrderUI implements Initializable {
 		pizzaNameArrayList.clear();
 		drinkNameArrayList.clear();
 		orderObservableList.clear();
-    
+
 		pizzaArrayList = order.getPizzas();
 		if (pizzaArrayList != null) {
 			for (int i = 0; i < pizzaArrayList.size(); i++) {
@@ -401,15 +396,15 @@ public class NewOrderUI implements Initializable {
 			}
 		}
 		drinkArrayList = order.getDrink();
-		if(drinkArrayList != null) {
+		if (drinkArrayList != null) {
 			for (Drink d : drinkArrayList) {
 				drinkNameArrayList.add(d.getName());
 			}
 		}
-		/*drinkArrayList = order.getDrink();
-		for (Drink d : drinkArrayList) {
-			drinkNameArrayList.add(d.getName());
-		}*/
+		/*
+		 * drinkArrayList = order.getDrink(); for (Drink d : drinkArrayList) {
+		 * drinkNameArrayList.add(d.getName()); }
+		 */
 
 		combineLists();
 	}
