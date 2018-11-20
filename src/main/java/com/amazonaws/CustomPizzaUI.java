@@ -271,10 +271,13 @@ public class CustomPizzaUI implements Initializable {
 		toppingIdArrayList = p.getToppings();
 		oldTopping.clear();
 		oldTopping.addAll(p.getToppings());
-		//String size = getSize(modPizza.getSize());
+		String size = getSize(modPizza.getSize());
 		//CustomPizzaUI UI = new CustomPizzaUI();
-		//String newSize = new String(size);
-		//UI.setSizeText(newSize);
+		//new String(size);
+		//String newSize = new String();
+		//newSize = "small";
+		//UI.sizeTF.setText(newSize);
+		//UI.setSizeText(new String(size));
 	}
 
 	public void setSizeText(String size) {

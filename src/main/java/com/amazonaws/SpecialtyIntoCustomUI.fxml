@@ -198,6 +198,14 @@
                               <InnerShadow />
                            </effect>
                         </Button>
+                        <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelSpecialty" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Cancel" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
                      </children>
                      <VBox.margin>
                         <Insets bottom="20.0" top="200.0" />
