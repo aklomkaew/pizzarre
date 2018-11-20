@@ -49,9 +49,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Change:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                         <TextField fx:id="paymentTF" style="-fx-border-color: gray;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <TextField fx:id="changeTF" editable="false" style="-fx-border-color: gray;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                      </children>
                      <VBox.margin>
                         <Insets />
