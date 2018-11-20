@@ -91,7 +91,7 @@ public class CustomPizzaUI implements Initializable {
 	private static Pizza modPizza = new Pizza();
 	private static ArrayList<String> oldTopping = new ArrayList<String>();
 	
-	private boolean modified = false;
+	private static boolean modified = false;
 
 	private static final int SMALL = 1;
 	private static final int MEDIUM = 2;
@@ -162,7 +162,6 @@ public class CustomPizzaUI implements Initializable {
 					break;
 				} else {
 					InventoryDb.changeQuantity(list.get(i), pSize, "decrease");
-					//NewOrderUI.addIngredient(list.get(i), pSize);
 					count++;
 				}
 			}
@@ -193,6 +192,7 @@ public class CustomPizzaUI implements Initializable {
 				String topping = list.get(i);
 				p.addTopping(topping);
 			}
+			p.setPrice(pSize * p.getToppings().size());
 
 			Order order = NewOrderUI.getOrder();
 			order.addPizza(p);
@@ -230,6 +230,7 @@ public class CustomPizzaUI implements Initializable {
 			removePizza();
 		}
 		else {
+			//removePizza();
 			Order order = NewOrderUI.getOrder();
 			Pizza tmp = new Pizza(modPizza.getName(), modPizza.getSize(), oldTopping);
 			order.addPizza(tmp);
@@ -272,7 +273,7 @@ public class CustomPizzaUI implements Initializable {
 		oldTopping.clear();
 		oldTopping.addAll(p.getToppings());
 		String size = getSize(modPizza.getSize());
-		//sizeTF.setText(size);
+		modified = true;
 	}
 
 	private static String getSize(int num) {
