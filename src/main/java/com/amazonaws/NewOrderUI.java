@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.amazonaws.PaymentPageUI.OrderContents;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -69,12 +71,6 @@ public class NewOrderUI implements Initializable {
 	@FXML
 	private ListView<String> orderListView;
 	@FXML
-	private TableView<String> itemTableView;
-	@FXML
-	private TableColumn<String, String> nameColumn;
-	@FXML
-	private TableColumn<String, Integer> priceColumn;
-	@FXML
 	private Label costLbl;
 
 	private static Order order;
@@ -92,6 +88,36 @@ public class NewOrderUI implements Initializable {
 	// private static ObservableList<String> orderObservableList =
 	// FXCollections.observableArrayList();
 
+	@FXML
+	private TableView<OrderContents> orderTableView;
+	@FXML
+	private TableColumn<OrderContents, String> itemColumn;
+	@FXML
+	private TableColumn<OrderContents, Double> priceColumn;
+	private ObservableList<OrderContents> orderContentsObservableList;
+	public class OrderContents { //used for tableview
+		String itemName;
+    	double itemPrice;
+    	
+    	public OrderContents(){
+    		String itemName = "";
+    		double itemPrice = 0.0;
+    	}
+
+    	public OrderContents(String name, double price){
+    		this.itemName = name;
+    		this.itemPrice = price;
+    	}
+    	
+    	public String getItemName() {
+    		return itemName;
+    	}
+    	
+    	public double getItemPrice() {
+    		return itemPrice;
+    	}
+    }
+	
 	private static HashMap<String, Integer> allIngredients;
 
 	public void setCostLabel() {
@@ -100,7 +126,7 @@ public class NewOrderUI implements Initializable {
 	}
 	
 	public void viewToppings(ActionEvent e) {
-		int index = orderListView.getSelectionModel().getSelectedIndex();
+		int index = orderTableView.getSelectionModel().getSelectedIndex();
 		//MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
@@ -127,7 +153,7 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void modifyPizza(ActionEvent e) {
-		int index = orderListView.getSelectionModel().getSelectedIndex();
+		int index = orderTableView.getSelectionModel().getSelectedIndex();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		
@@ -475,14 +501,32 @@ public class NewOrderUI implements Initializable {
 		 * drinkNameArrayList.add(d.getName()); }
 		 */
 
-		combineLists();
+		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
+		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
+		orderContentsObservableList = FXCollections.observableArrayList();
+		for(int i = 0; i < pizzaArrayList.size(); i++) {
+			
+			String itemName = pizzaArrayList.get(i).getName();
+			double itemPrice = pizzaArrayList.get(i).getPrice();
+			orderContentsObservableList.add(new OrderContents(itemName, itemPrice));
+		}
+		
+		for(int i = 0; i < drinkArrayList.size(); i++) {
+				
+			String itemName = drinkArrayList.get(i).getName();
+			double itemPrice = drinkArrayList.get(i).getPrice();
+			orderContentsObservableList.add(new OrderContents(itemName, itemPrice));
+		}
+		orderTableView.setItems(orderContentsObservableList);
+		//combineLists();
 		updateCost();
 	}
 
 	public void combineLists() {
-		orderObservableList.addAll(pizzaNameArrayList);
-		orderObservableList.addAll(drinkNameArrayList);
-		orderListView.setItems(orderObservableList);
+		//orderObservableList.addAll(pizzaNameArrayList);
+		//orderObservableList.addAll(drinkNameArrayList);
+		//orderListView.setItems(orderObservableList);
+		
 	}
 
 	public static Order getOrder() {
