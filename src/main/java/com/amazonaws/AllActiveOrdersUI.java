@@ -2,6 +2,7 @@ package com.amazonaws;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -148,7 +149,7 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 		List<Order> list = OrderDb.retrieveAllItem();
 
 		if (list == null || list.size() < 1) {
-			return null;
+			return Collections.emptyList();
 		}
 		List<Order> activeList = new ArrayList<Order>();
 		for(Order item : list) {
