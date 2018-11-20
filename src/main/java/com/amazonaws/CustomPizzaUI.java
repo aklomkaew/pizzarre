@@ -175,6 +175,16 @@ public class CustomPizzaUI implements Initializable {
 			pizzaName = (modified ? modPizza.getName() : "Custom");
 			ArrayList<String> pList = new ArrayList<String>();
 			
+			if (modified == false) { //stops for example: small, pizza -> small, small, pizza
+			if (pSize == 1) {
+				pizzaName = "small, " + pizzaName;
+			} else if (pSize == 2) {
+				pizzaName = "medium, " + pizzaName;
+			} else {
+				pizzaName = "large, " + pizzaName;
+			}
+			}
+			
 			Pizza p = new Pizza(pizzaName, pSize, pList);
 			for (int i = 0; i < list.size(); i++) { // loop that adds and increments pizza's price
 				String topping = list.get(i);
@@ -258,7 +268,8 @@ public class CustomPizzaUI implements Initializable {
 		toppingIdArrayList = p.getToppings();
 		oldTopping.clear();
 		oldTopping.addAll(p.getToppings());
-		//sizeTF.setText(getSize(modPizza.getSize()));
+		String size = getSize(modPizza.getSize());
+		//sizeTF.setText(size);
 	}
 
 	private static String getSize(int num) {
@@ -284,5 +295,6 @@ public class CustomPizzaUI implements Initializable {
 			toppingListView.setItems(toppingObservableList);
 			modified = true;
 		}
+		
 	}
 }

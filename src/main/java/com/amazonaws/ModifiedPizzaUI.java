@@ -99,7 +99,7 @@ public class ModifiedPizzaUI implements Initializable {
 	public void confirmPizza(ActionEvent e) { // passes specialty data back to NewOrderUI.java, do not NextStage.goTo
 		// enumeration statement for specialtySize
 		Order order = NewOrderUI.getOrder();
-		int index = NewOrderUI.getmodifiedIndex();
+		int index = NewOrderUI.getModifiedIndex();
 		Pizza oldPizza = order.getPizzas().get(index);
 		ArrayList<String> emptyList = new ArrayList<String>(); // emptyList is necessary
 
