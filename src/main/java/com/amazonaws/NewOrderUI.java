@@ -473,6 +473,7 @@ public class NewOrderUI implements Initializable {
 			priceTotal = priceTotal + currentDrink.getPrice();
 		}
 		setCostLabel(priceTotal);
+		order.setTotal(priceTotal);
 	}
 
 	public void combineLists() {
