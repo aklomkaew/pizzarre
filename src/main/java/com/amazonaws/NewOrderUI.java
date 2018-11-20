@@ -94,9 +94,9 @@ public class NewOrderUI implements Initializable {
 
 	private static HashMap<String, Integer> allIngredients;
 
-	public void setCostLabel(double orderPrice) {
-		String price = String.format("%.2f", orderPrice);
-		costLbl.setText("Total Price: $"+ price);
+	public void setCostLabel() {
+		String price = String.format("%.2f", order.getTotal());
+		costLbl.setText("Total Price: $" + price);
 	}
 	
 	public void viewToppings(ActionEvent e) {
@@ -211,6 +211,8 @@ public class NewOrderUI implements Initializable {
 		}
 		
 		order.setDiscount(discount);
+		order.applyDiscount();
+		setCostLabel();
 		OrderDb.updateOrder(order);
 		
 		Alert alertInfo = new Alert(AlertType.INFORMATION);
@@ -413,6 +415,20 @@ public class NewOrderUI implements Initializable {
 			drinkArrayList.remove(index - pizzaNameArrayList.size());
 		}
 		orderObservableList.remove(index);
+		updateCost();
+	}
+	
+	private void updateCost() {
+		order.setTotal(0);
+		for (int i = 0; i < order.getPizzas().size(); i++) {
+			Pizza currentPizza = order.getPizzas().get(i);
+			order.setTotal(order.getTotal() + currentPizza.getPrice());
+		}
+		for (int i = 0; i < order.getDrink().size(); i++) {
+			Drink currentDrink = order.getDrink().get(i);
+			order.setTotal(order.getTotal() + currentDrink.getPrice());
+		}
+		setCostLabel();
 	}
 
 	public void start(Stage arg0) throws Exception {
@@ -462,17 +478,7 @@ public class NewOrderUI implements Initializable {
 		 */
 
 		combineLists();
-		
-		double priceTotal = 0.00;
-		for (int i = 0; i < order.getPizzas().size(); i++) {
-			Pizza currentPizza = order.getPizzas().get(i);
-			priceTotal = priceTotal + currentPizza.getPrice();
-		}
-		for (int i = 0; i < order.getDrink().size(); i++) {
-			Drink currentDrink = order.getDrink().get(i);
-			priceTotal = priceTotal + currentDrink.getPrice();
-		}
-		setCostLabel(priceTotal);
+		updateCost();
 	}
 
 	public void combineLists() {
