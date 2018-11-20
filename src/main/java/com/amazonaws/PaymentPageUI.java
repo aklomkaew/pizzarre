@@ -85,11 +85,11 @@ public class PaymentPageUI extends Application implements Initializable {
 	}
 
 	private void confirmPayment() {
-		if (payment < total) {
+		if (payment < paymentOrder.getTotal()) {
 			Alert.Display("Error", "Payment must be paid in full.");
 			return;
 		} else {
-			if (payment > total) {
+			if (payment > paymentOrder.getTotal()) {
 				Alert.Display("Information", "Payment processed. Change = $" + (payment - total));
 			} else {
 				Alert.Display("Information", "Payment processed.");
