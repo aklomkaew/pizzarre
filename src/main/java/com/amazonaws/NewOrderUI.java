@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.collections.ObservableList;
@@ -69,15 +68,11 @@ public class NewOrderUI implements Initializable {
 	@FXML
 	private Button viewToppingsBtn;
 	@FXML
-	private ListView<String> orderListView;
-	@FXML
 	private Label costLbl;
 
 	private static Order order;
 
 	private static boolean modOrder;
-
-	private ObservableList<String> orderObservableList = FXCollections.observableArrayList();
 
 	private static int modifiedIndex; // used to keep track of index of piza being modified
 
@@ -127,7 +122,6 @@ public class NewOrderUI implements Initializable {
 	
 	public void viewToppings(ActionEvent e) {
 		int index = orderTableView.getSelectionModel().getSelectedIndex();
-		//MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		Alert alertInfo = new Alert(AlertType.INFORMATION);
@@ -285,8 +279,9 @@ public class NewOrderUI implements Initializable {
 		pizzaNameArrayList.clear();
 		drinkArrayList.clear();
 		drinkNameArrayList.clear();
-		orderObservableList.clear();
-		orderListView.getItems().clear();
+		orderContentsObservableList.clear();
+		orderTableView.getItems().clear();
+		//orderListView.getItems().clear();
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirm);
 	}
@@ -342,10 +337,10 @@ public class NewOrderUI implements Initializable {
 			if (drinkNameArrayList != null) {
 				drinkNameArrayList.clear();
 			}
-			if (orderObservableList != null) {
-				orderObservableList.clear();
+			if (orderContentsObservableList != null) {
+				orderContentsObservableList.clear();
 			}
-			orderListView.getItems().clear();
+			orderTableView.getItems().clear();
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 			NextStage.goTo(fxmlLoader, cancelBtn);
@@ -396,24 +391,16 @@ public class NewOrderUI implements Initializable {
 		pizzaNameArrayList.clear();
 		drinkArrayList.clear();
 		drinkNameArrayList.clear();
-		orderObservableList.clear();
+		orderContentsObservableList.clear();
 		order = null;
 	}
 
 	public void removeItem(ActionEvent e) {
-		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
+		int index = orderTableView.getSelectionModel().getSelectedIndex();
 
-		if (obj == null) {
-			alert.setHeaderText("Select an item to remove.");
-			alert.showAndWait();
-			return;
-		}
-
-		int index = orderListView.getSelectionModel().getSelectedIndex();
-
-		if (index <= pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
+		if (index == -1 || index <= pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
 			if (pizzaArrayList.get(index).getIsNew() == 0) { // not new
 				alert.setHeaderText("This item cannot be removed.");
 				alert.setContentText("This item has already been processed");
@@ -436,7 +423,7 @@ public class NewOrderUI implements Initializable {
 			drinkNameArrayList.remove(index - pizzaNameArrayList.size());
 			drinkArrayList.remove(index - pizzaNameArrayList.size());
 		}
-		orderObservableList.remove(index);
+		orderContentsObservableList.remove(index);
 		updateCost();
 	}
 	
@@ -466,7 +453,7 @@ public class NewOrderUI implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		orderObservableList = FXCollections.observableArrayList();
+		orderContentsObservableList = FXCollections.observableArrayList();
 		User u = LoginUI.getUser();
 		if (order == null) {
 			order = new Order();
@@ -481,7 +468,7 @@ public class NewOrderUI implements Initializable {
 		drinkArrayList.clear();
 		pizzaNameArrayList.clear();
 		drinkNameArrayList.clear();
-		orderObservableList.clear();
+		orderContentsObservableList.clear();
 
 		pizzaArrayList = order.getPizzas();
 		if (pizzaArrayList != null) {
@@ -496,10 +483,6 @@ public class NewOrderUI implements Initializable {
 				drinkNameArrayList.add(d.getName());
 			}
 		}
-		/*
-		 * drinkArrayList = order.getDrink(); for (Drink d : drinkArrayList) {
-		 * drinkNameArrayList.add(d.getName()); }
-		 */
 
 		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
@@ -518,31 +501,12 @@ public class NewOrderUI implements Initializable {
 			orderContentsObservableList.add(new OrderContents(itemName, itemPrice));
 		}
 		orderTableView.setItems(orderContentsObservableList);
-		//combineLists();
 		updateCost();
-	}
-
-	public void combineLists() {
-		//orderObservableList.addAll(pizzaNameArrayList);
-		//orderObservableList.addAll(drinkNameArrayList);
-		//orderListView.setItems(orderObservableList);
-		
 	}
 
 	public static Order getOrder() {
 		return order;
 	}
-
-//	public static void addIngredient(String str, int quantity) {
-//		if (allIngredients == null) {
-//			allIngredients = new HashMap<String, Integer>();
-//		}
-//		if (!allIngredients.containsKey(str)) {
-//			allIngredients.put(str, quantity);
-//		} else {
-//			allIngredients.put(str, allIngredients.get(str) + quantity);
-//		}
-//	}
 
 	public static boolean removeIngredient(String str, int quantity) {
 		boolean status = false;

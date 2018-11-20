@@ -58,7 +58,7 @@
                         <TableView fx:id="orderTableView" prefHeight="474.0" prefWidth="299.0">
                           <columns>
                             <TableColumn fx:id="orderNumberColumn" prefWidth="94.0" text="Order Number" />
-                            <TableColumn fx:id="serverColumn" prefWidth="102.0" text="Employee" />
+                            <TableColumn fx:id="serverColumn" prefWidth="102.0" text="Employee Number" />
                               <TableColumn fx:id="totalColumn" prefWidth="88.0" text="Total" />
                           </columns>
                            <columnResizePolicy>

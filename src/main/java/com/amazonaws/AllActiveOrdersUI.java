@@ -47,7 +47,7 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
-	private TableColumn<Order, String> serverColumn;
+	private TableColumn<Order, Integer> serverColumn;
 	@FXML
 	private TableColumn<Order, Integer> orderNumberColumn;
 	@FXML
@@ -178,7 +178,7 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		serverColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("server"));
+		serverColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("serverId"));
 		orderNumberColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("orderNumber"));
 		totalColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("total"));
 		orderObservableList = FXCollections.observableArrayList();
