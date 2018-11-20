@@ -1,5 +1,7 @@
 package com.amazonaws;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
@@ -17,8 +19,8 @@ public class Order {
 	@JsonIgnore
 	private ArrayList<Pizza> pizzas;
 	private ArrayList<Drink> drinks;
-	//private ArrayList<Integer> drinkQuantity;
-	//private HashMap<Drink, List<Drink>> drinkMap;
+	// private ArrayList<Integer> drinkQuantity;
+	// private HashMap<Drink, List<Drink>> drinkMap;
 
 	private int orderNumber;
 	private boolean active;
@@ -30,8 +32,8 @@ public class Order {
 	public Order() {
 		this.pizzas = new ArrayList<Pizza>();
 		this.drinks = new ArrayList<Drink>();
-		//this.drinkQuantity = new ArrayList<Integer>();
-		//this.drinkMap = new HashMap<Drink, List<Drink>>();
+		// this.drinkQuantity = new ArrayList<Integer>();
+		// this.drinkMap = new HashMap<Drink, List<Drink>>();
 		this.orderNumber = -1;
 		this.active = true;
 		this.total = 0.0;
@@ -42,8 +44,8 @@ public class Order {
 		this.orderNumber = num;
 		this.pizzas = new ArrayList<Pizza>();
 		this.drinks = new ArrayList<Drink>();
-		//this.drinkQuantity = new ArrayList<Integer>();
-		//this.drinkMap = new HashMap<Drink, List<Drink>>();
+		// this.drinkQuantity = new ArrayList<Integer>();
+		// this.drinkMap = new HashMap<Drink, List<Drink>>();
 		this.pizzas.addAll(list);
 		this.active = true;
 		this.total = 0.0;
@@ -67,11 +69,11 @@ public class Order {
 	public void setState(boolean s) {
 		this.active = s;
 	}
-	
+
 	public void setInactive() {
 		this.active = false;
 	}
-	
+
 	@DynamoDBAttribute(attributeName = "Server")
 	public String getServerName() {
 		return this.server;
@@ -80,7 +82,7 @@ public class Order {
 	public void setServerName(String u) {
 		this.server = u;
 	}
-	
+
 	@DynamoDBAttribute(attributeName = "ServerId")
 	public int getServerId() {
 		return this.serverId;
@@ -92,13 +94,23 @@ public class Order {
 
 	@DynamoDBAttribute(attributeName = "Total")
 	public double getTotal() {
+		this.total = round(total, 2);
 		return this.total;
 	}
 
 	public void setTotal(double t) {
 		this.total = t;
 	}
-	
+
+	public double round(double value, int places) {
+		if (places < 0)
+			throw new IllegalArgumentException();
+
+		BigDecimal bd = new BigDecimal(value);
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		return bd.doubleValue();
+	}
+
 	@DynamoDBAttribute(attributeName = "Discount")
 	public int getDiscount() {
 		return this.discount;
@@ -112,6 +124,7 @@ public class Order {
 	public ArrayList<Pizza> getPizzas() {
 		return this.pizzas;
 	}
+
 	public void setPizzas(ArrayList<Pizza> list) {
 		this.pizzas.addAll(list);
 	}
@@ -119,19 +132,20 @@ public class Order {
 	public void addPizza(Pizza p) {
 		this.pizzas.add(p);
 	}
-	
+
 	@DynamoDBTypeConverted(converter = MyDrinkConverter.class)
 	public ArrayList<Drink> getDrink() {
-		if(drinks == null) {
+		if (drinks == null) {
 			System.out.println("drink is null");
 			drinks = new ArrayList<Drink>();
 		}
 		return this.drinks;
 	}
+
 	public void setDrink(ArrayList<Drink> list) {
 		this.drinks.addAll(list);
 	}
-	
+
 //	@JsonProperty("drinkList")
 //	@DynamoDBAttribute(attributeName = "DrinkMap")
 //    private List<KeyValueContainer<Drink, List<Drink>>> getDrinkList() {
@@ -152,27 +166,27 @@ public class Order {
 //	}
 
 	public void applyDiscount() {
-		this.total = this.total * ((100.0 - this.discount)/100.0);
+		this.total = this.total * ((100.0 - this.discount) / 100.0);
 	}
-	
+
 	public String toString() {
 		String ret = "";
 
-		if(pizzas != null && pizzas.size() > 0) {
+		if (pizzas != null && pizzas.size() > 0) {
 			ret += pizzas.size() + ((pizzas.size() == 1) ? " pizza" : " pizzas");
 			for (int i = 0; i < pizzas.size(); i++) {
 				ret += "\n--> Pizza #" + (i + 1) + " has " + pizzas.get(i).toString();
 			}
 		}
 		ret += "\n";
-		if(drinks != null && drinks.size() > 0) {
+		if (drinks != null && drinks.size() > 0) {
 			ret += drinks.size() + ((drinks.size() == 1) ? " drink" : " drinks");
 			for (int i = 0; i < drinks.size(); i++) {
-				ret += "\n--> Drink #" + (i + 1) + " has " //+ drinkQuantity.get(i) + " "
+				ret += "\n--> Drink #" + (i + 1) + " has " // + drinkQuantity.get(i) + " "
 						+ drinks.get(i).toString();
 			}
 		}
-		
+
 		return ret;
 	}
 }

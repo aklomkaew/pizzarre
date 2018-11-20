@@ -37,42 +37,38 @@ import javafx.util.converter.IntegerStringConverter;
 @SuppressWarnings({ "unused" })
 public class InventoryUI extends Application implements Initializable {
 
-    @FXML
-    private Button backBtn;
-    @FXML
-    private Button restockBtn;
-    @FXML
-    private Button addIngredientBtn;
-    @FXML
-    private Button deleteIngredientBtn;
-    @FXML
-    private Button refreshBtn;
-    @FXML
-    private TextField ingredientNameTF;
-    @FXML
-    private TextField quantityTF;
-    @FXML
-    private TableView<InventoryItem> inventoryTableView;
-    @FXML
-    private TableColumn<InventoryItem, String> nameColumn;
-    @FXML
-    private TableColumn<InventoryItem, Integer> quantityColumn;
-	
-    private ObservableList<InventoryItem> inventoryObservableList;
+	@FXML
+	private Button backBtn;
+	@FXML
+	private Button restockBtn;
+	@FXML
+	private Button addIngredientBtn;
+	@FXML
+	private Button deleteIngredientBtn;
+	@FXML
+	private Button refreshBtn;
+	@FXML
+	private TextField ingredientNameTF;
+	@FXML
+	private TextField quantityTF;
+	@FXML
+	private TableView<InventoryItem> inventoryTableView;
+	@FXML
+	private TableColumn<InventoryItem, String> nameColumn;
+	@FXML
+	private TableColumn<InventoryItem, Integer> quantityColumn;
 
-    public void displayAllInventory(ActionEvent e) {
-    	
-    }
-    
-    public void restock(ActionEvent e) {
-    	InventoryDb.restock();
-    	displayAllInventory();
-    	Alert.Display("Success", "Restock completed");
-    }
-    
-    public void checkIngredient(ActionEvent e) { // don't add integration code to this method, do it to addIngredient
-    	String ingredientName = ingredientNameTF.getText().toLowerCase();
-    	if(ingredientName == null || ingredientName.length() == 0) {
+	private ObservableList<InventoryItem> inventoryObservableList;
+
+	public void restock(ActionEvent e) {
+		InventoryDb.restock();
+		displayAllInventory();
+		Alert.Display("Success", "Restock completed");
+	}
+
+	public void checkIngredient(ActionEvent e) { // don't add integration code to this method, do it to addIngredient
+		String ingredientName = ingredientNameTF.getText().toLowerCase();
+		if (ingredientName == null || ingredientName.length() == 0) {
 			Alert.Display("Error", "Please enter ingredient name.");
 			return;
 		}
@@ -132,6 +128,10 @@ public class InventoryUI extends Application implements Initializable {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
+	}
+
+	public void displayAllInventory(ActionEvent e) {
+		displayAllInventory();
 	}
 
 	public void displayAllInventory() {

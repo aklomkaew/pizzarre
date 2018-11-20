@@ -94,27 +94,20 @@ public class NewOrderUI implements Initializable {
 
 	private static HashMap<String, Integer> allIngredients;
 
-	public void setCostLabel(double orderPrice) {
-		String price = String.format("%.2f", orderPrice);
-		costLbl.setText("Total Price: $"+ price);
+	public void setCostLabel() {
+		String price = String.format("%.2f", order.getTotal());
+		costLbl.setText("Total Price: $" + price);
 	}
 	
 	public void viewToppings(ActionEvent e) {
-		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
+		int index = orderListView.getSelectionModel().getSelectedIndex();
+		//MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		Alert alertInfo = new Alert(AlertType.INFORMATION);
 		alertInfo.setTitle("Information");
 
-		if (obj == null) {
-			alert.setHeaderText("Select a pizza to view topping.");
-			alert.showAndWait();
-			return;
-		}
-
-		int index = orderListView.getSelectionModel().getSelectedIndex();
-
-		if (index > pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
+		if (index == -1 || index > pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
 			alert.setHeaderText("Select a pizza to view topping.");
 			alert.showAndWait();
 			return;
@@ -134,22 +127,19 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void modifyPizza(ActionEvent e) {
-		String item = orderListView.getSelectionModel().getSelectedItem();
-
-		/*if (!item.equals("Custom") && !item.contains("Pizza")) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error");
-			alert.setHeaderText("Drinks cannot be modified.");
+		int index = orderListView.getSelectionModel().getSelectedIndex();
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		
+		if (index == -1 || index > pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
+			alert.setHeaderText("Select a pizza to view topping.");
 			alert.showAndWait();
 			return;
-		}*/
-
-		int modifiedIndex = orderListView.getSelectionModel().getSelectedIndex();
-		Pizza p = pizzaArrayList.get(modifiedIndex);
+		}
+		
+		Pizza p = pizzaArrayList.get(index);
 
 		if (p.getIsNew() == 0) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error");
 			alert.setHeaderText("Cannot modify.");
 			alert.setContentText("This item has already been processed.");
 			alert.showAndWait();
@@ -157,6 +147,10 @@ public class NewOrderUI implements Initializable {
 		}
 
 		CustomPizzaUI.setPizza(p);
+		
+		for(String str : p.getToppings()) {
+			InventoryDb.changeQuantity(str, p.getSize(), "increase");
+		}
 
 		pizzaArrayList.remove(modifiedIndex);
 		pizzaNameArrayList.remove(modifiedIndex);
@@ -193,10 +187,11 @@ public class NewOrderUI implements Initializable {
 		alert.setTitle("Error");
 		
 		// Traditional way to get the response value.
-		String result = dialog.showAndWait().get();
-		if (result == null){
-			alert.setHeaderText("No input.");
-			alert.showAndWait();
+		String result = "";
+		try {
+			result = dialog.showAndWait().get();
+		}
+		catch(Exception ex) {
 			return;
 		}
 		
@@ -211,25 +206,28 @@ public class NewOrderUI implements Initializable {
 		}
 		
 		order.setDiscount(discount);
+		order.applyDiscount();
+		updateCost();
 		OrderDb.updateOrder(order);
 		
 		Alert alertInfo = new Alert(AlertType.INFORMATION);
 		alertInfo.setTitle("Success");
-		alertInfo.setHeaderText(order.getDiscount() + "% discount applied to $" + order.getTotal() + " total.");
+		String price = String.format("%.2f", order.getTotal());
+		alertInfo.setHeaderText(order.getDiscount() + "% discount applied to $" + price + " total.");
 		alertInfo.showAndWait();
 	}
 
 	public void confirmOrder(ActionEvent e) {
-		double priceTotal = 0.00;
+		order.setTotal(0);
+		double price = 0.0;
 		for (int i = 0; i < order.getPizzas().size(); i++) {
 			Pizza currentPizza = order.getPizzas().get(i);
-			priceTotal = priceTotal + currentPizza.getPrice();
+			order.setTotal(order.getTotal() + currentPizza.getPrice());
 		}
 		for (int i = 0; i < order.getDrink().size(); i++) {
 			Drink currentDrink = order.getDrink().get(i);
-			priceTotal = priceTotal + currentDrink.getPrice();
+			order.setTotal(order.getTotal() + currentDrink.getPrice());
 		}
-		order.setTotal(priceTotal);
 		if(order.getDiscount() > 0) {
 			order.applyDiscount();
 		}
@@ -413,6 +411,22 @@ public class NewOrderUI implements Initializable {
 			drinkArrayList.remove(index - pizzaNameArrayList.size());
 		}
 		orderObservableList.remove(index);
+		updateCost();
+	}
+	
+	private void updateCost() {
+		order.setTotal(0);
+		for (int i = 0; i < order.getPizzas().size(); i++) {
+			Pizza currentPizza = order.getPizzas().get(i);
+			order.setTotal(order.getTotal() + currentPizza.getPrice());
+		}
+		for (int i = 0; i < order.getDrink().size(); i++) {
+			Drink currentDrink = order.getDrink().get(i);
+			order.setTotal(order.getTotal() + currentDrink.getPrice());
+		}
+		order.applyDiscount();
+		
+		setCostLabel();
 	}
 
 	public void start(Stage arg0) throws Exception {
@@ -462,18 +476,7 @@ public class NewOrderUI implements Initializable {
 		 */
 
 		combineLists();
-		
-		double priceTotal = 0.00;
-		for (int i = 0; i < order.getPizzas().size(); i++) {
-			Pizza currentPizza = order.getPizzas().get(i);
-			priceTotal = priceTotal + currentPizza.getPrice();
-		}
-		for (int i = 0; i < order.getDrink().size(); i++) {
-			Drink currentDrink = order.getDrink().get(i);
-			priceTotal = priceTotal + currentDrink.getPrice();
-		}
-		setCostLabel(priceTotal);
-		order.setTotal(priceTotal);
+		updateCost();
 	}
 
 	public void combineLists() {
