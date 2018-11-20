@@ -148,6 +148,7 @@ public class Order {
 				ret += "\n--> Pizza #" + (i + 1) + " has " + pizzas.get(i).toString();
 			}
 		}
+		ret += "\n";
 		if(drinks != null && drinks.size() > 0) {
 			ret += drinks.size() + ((drinks.size() == 1) ? " drink" : " drinks");
 			for (int i = 0; i < drinks.size(); i++) {

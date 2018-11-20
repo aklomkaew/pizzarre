@@ -30,7 +30,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class MyOrdersUI extends Application implements Initializable{
+public class MyOrdersUI extends Application implements Initializable {
 
 	@FXML
 	private Button backBtn;
@@ -50,35 +50,37 @@ public class MyOrdersUI extends Application implements Initializable{
 	private TableColumn<Order, Double> totalColumn;
 
 	private ObservableList<Order> orderObservableList;
-	
+
 	private Order selectedOrder;
 
 	public void goToMainMenu(ActionEvent e) {
 
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-			NextStage.goTo(fxmlLoader, backBtn);
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		NextStage.goTo(fxmlLoader, backBtn);
 	}
-	
+
 	public Order getOrder() {
 		return selectedOrder;
 	}
-	
+
 	public void displayAllOrder() {
 		List<Order> list = OrderDb.retrieveFilteredItem(LoginUI.getUser().getUserId());
 
-		if(list == null || list.size() < 1) {
+		if (list == null || list.size() < 1) {
 			return;
 		}
 		
-		orderObservableList.clear();
-		orderObservableList.addAll(list);
-		System.out.println("\nPrint from observableList");
-		for (Order item : orderObservableList) {
-			System.out.println("Id = " + item.getOrderNumber() + " server name = " + item.getServerName()
-			+ " total = " + item.getTotal());
+		ArrayList<Order> activeOrder = new ArrayList<Order>();
+		for(Order o : list) {
+			if(o.getState()) {
+				activeOrder.add(o);
+			}
 		}
+
+		orderObservableList.clear();
+		orderObservableList.addAll(activeOrder);
 	}
-	
+
 	public void showOrder(ActionEvent e) {
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
@@ -100,33 +102,30 @@ public class MyOrdersUI extends Application implements Initializable{
 		alert.setContentText(item.toString());
 		alert.showAndWait();
 	}
-	
-	public void payOrder(ActionEvent e) {
-		int index = orderTableView.getSelectionModel().getFocusedIndex();
-		selectedOrder = orderTableView.getItems().get(index);
-		
-		try { // im sorry
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage nextStage = new Stage();
-			nextStage.setScene(new Scene(root, 600, 600));
-			nextStage.setResizable(false);
-			
-			 PaymentPageUI display = fxmlLoader.getController();
-			 display.initializeMyOrder(selectedOrder);
-			
-			nextStage.show();
-			Stage currentStage = (Stage) payBtn.getScene().getWindow();
-			currentStage.close();
 
-		} catch (Exception exception) {
-			exception.printStackTrace();
+	public void payOrder(ActionEvent e) {
+		Order item = orderTableView.getSelectionModel().getSelectedItem();
+		if (item == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select an order to view.");
+			alert.showAndWait();
+			return;
+		}
+		if (!item.getState()) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Order is inactive.");
+			alert.showAndWait();
+			return;
 		}
 
-//     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
-// 		NextStage.goTo(fxmlLoader, payBtn);
+		PaymentPageUI.setOrder(item);
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
+		NextStage.goTo(fxmlLoader, payBtn);
 	}
-	
+
 	public void editOrder(ActionEvent e) {
 		Order orderToEdit = orderTableView.getSelectionModel().getSelectedItem();
 		if (orderToEdit == null) {
@@ -136,22 +135,22 @@ public class MyOrdersUI extends Application implements Initializable{
 			alert.showAndWait();
 			return;
 		}
-		if(!orderToEdit.getState()) {
+		if (!orderToEdit.getState()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("An order you selected is inactive. Cannot modify.");
 			alert.showAndWait();
 			return;
 		}
-		
+
 		NewOrderUI.setOrder(orderToEdit);
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, editBtn);
 	}
 
 	public void deleteOrder(ActionEvent e) {
-		if(!LoginUI.getUser().isManager()) {
+		if (!LoginUI.getUser().isManager()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Not authorized.");

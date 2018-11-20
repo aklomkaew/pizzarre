@@ -188,15 +188,6 @@ public class NewOrderUI implements Initializable {
 		}
 
 		OrderDb.updateOrder(order);
-		User u = LoginUI.getUser();
-		try {
-			u.getOrderList().add(order);
-		} catch (Exception err) {
-			System.out.println("Error cannot add order to user");
-			System.err.println(err.getMessage());
-			return;
-		}
-		UserDb.updateUser(u);
 
 		alert.setHeaderText("Your order " + order.getOrderNumber() + " has been placed! Total is $" + order.getTotal());
 

@@ -122,27 +122,26 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 	}
 
 	public void payOrder(ActionEvent e) {
-		int index = orderTableView.getSelectionModel().getFocusedIndex();
-		selectedOrder = orderTableView.getItems().get(index);
-		
-		try { // im sorry
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage nextStage = new Stage();
-			nextStage.setScene(new Scene(root, 600, 600));
-			nextStage.setResizable(false);
-			
-			 PaymentPageUI display = fxmlLoader.getController();
-			 display.initializeAllActiveOrder(selectedOrder);
-			
-			nextStage.show();
-			Stage currentStage = (Stage) payOrderBtn.getScene().getWindow();
-			currentStage.close();
-
-		} catch (Exception exception) {
-			exception.printStackTrace();
+		Order item = orderTableView.getSelectionModel().getSelectedItem();
+		if (item == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select an order to view.");
+			alert.showAndWait();
+			return;
+		}
+		if (!item.getState()) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Order is inactive.");
+			alert.showAndWait();
+			return;
 		}
 
+		PaymentPageUI.setOrder(item);
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
+		NextStage.goTo(fxmlLoader, payOrderBtn);
 	}
 	
 	private List<Order> getActiveOrders() {
