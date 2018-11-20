@@ -37,11 +37,11 @@ public class PaymentPageUI extends Application implements Initializable {
 	@FXML
 	private TableView<OrderContents> orderTableView;
 	@FXML
-	private TableColumn<OrderContents, String> itemColumn = new TableColumn<OrderContents, String>("itemName");
+	private TableColumn<OrderContents, String> itemColumn;
 	@FXML
-	private TableColumn<OrderContents, Double> priceColumn = new TableColumn<OrderContents, Double>("itemPrice");
+	private TableColumn<OrderContents, Double> priceColumn;
 
-	private ObservableList<OrderContents> orderContentsObservableList = FXCollections.observableArrayList();
+	private ObservableList<OrderContents> orderContentsObservableList;
 
 	private static Order paymentOrder;
 
@@ -51,7 +51,7 @@ public class PaymentPageUI extends Application implements Initializable {
 
 	private static double total;
     
-    private class OrderContents {
+    public class OrderContents {
 		String itemName;
     	double itemPrice;
     	
@@ -65,11 +65,11 @@ public class PaymentPageUI extends Application implements Initializable {
     		this.itemPrice = price;
     	}
     	
-    	public String getName() {
+    	public String getItemName() {
     		return itemName;
     	}
     	
-    	public double getPrice() {
+    	public double getItemPrice() {
     		return itemPrice;
     	}
     }
@@ -103,6 +103,9 @@ public class PaymentPageUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, confirmPaymentBtn);
 	}
 	
+	public static void setOrder(Order o) {
+		paymentOrder = o;
+}
 
 	public void displayChange (ActionEvent e) {
 		double total =  Double.parseDouble(totalCostTF.getText());
@@ -132,28 +135,27 @@ public class PaymentPageUI extends Application implements Initializable {
 
 	public void displayOrderContents() {
 		double totalPrice = 0.0;
+		
+		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
+		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
+		orderContentsObservableList = FXCollections.observableArrayList();
 		//if (pizzaArrayList == null || pizzaArrayList.size() < 1) {
 			//return;
 		//}
-		
 		for(int i = 0; i < pizzaArrayList.size(); i++) {
 			
-			//OrderContents orderContents = new OrderContents();
-			String name = pizzaArrayList.get(i).getName();
-			double price = pizzaArrayList.get(i).getPrice();
-			totalPrice = totalPrice + price;
-			//orderContentsObservableList.add(orderContents);
-			System.out.println(name + " " + price);
+			String itemName = pizzaArrayList.get(i).getName();
+			double itemPrice = pizzaArrayList.get(i).getPrice();
+			totalPrice = totalPrice + itemPrice;
+			orderContentsObservableList.add(new OrderContents(itemName, itemPrice));
 		}
 		
-			for(int i = 0; i < drinkArrayList.size(); i++) {
+		for(int i = 0; i < drinkArrayList.size(); i++) {
 				
-				//OrderContents orderContents = new OrderContents();
-				String name = drinkArrayList.get(i).getName();
-				double price = drinkArrayList.get(i).getPrice();
-				totalPrice = totalPrice + price;
-				//orderContentsObservableList.add(orderContents);
-				System.out.println(name + " " + price);
+			String itemName = drinkArrayList.get(i).getName();
+			double itemPrice = drinkArrayList.get(i).getPrice();
+			totalPrice = totalPrice + itemPrice;
+			orderContentsObservableList.add(new OrderContents(itemName, itemPrice));
 		}
 		
 		setTotal(totalPrice);
@@ -172,42 +174,13 @@ public class PaymentPageUI extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-	}
-
-	public void initializeMyOrder(Order currentOrder) {
-		orderContentsObservableList.clear();
 		pizzaArrayList.clear();
 		drinkArrayList.clear();
 		orderTableView.getItems().clear();
-		paymentOrder = currentOrder;
 		pizzaArrayList = paymentOrder.getPizzas();
 		drinkArrayList = paymentOrder.getDrink();
 
-		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
-		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
 		displayOrderContents();
 	}
 
-	public void initializeAllActiveOrder(Order currentOrder) {
-		orderContentsObservableList.clear();
-		pizzaArrayList.clear();
-		//drinkArrayList.clear();
-		orderTableView.getItems().clear();
-		paymentOrder = currentOrder;
-		pizzaArrayList = paymentOrder.getPizzas();
-		//drinkArrayList = paymentOrder.getDrinks();
-		//orderTableView.setEditable(true);
-		//itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
-		//priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
-		// drinkArrayList.clear();
-		orderTableView.getItems().clear();
-		paymentOrder = currentOrder;
-		pizzaArrayList = paymentOrder.getPizzas();
-		// drinkArrayList = paymentOrder.getDrinks();
-		// orderTableView.setEditable(true);
-
-		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
-		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
-		displayOrderContents();
-	}
 }
