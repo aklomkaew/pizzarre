@@ -166,6 +166,7 @@ public class NewOrderUI implements Initializable {
 			return;
 		}
 
+		CustomPizzaUI.setOldPizza(order.getPizzas());
 		CustomPizzaUI.setPizza(p);
 		
 		for(String str : p.getToppings()) {

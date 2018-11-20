@@ -89,6 +89,8 @@ public class CustomPizzaUI implements Initializable {
 	private static ArrayList<String> toppingIdArrayList = new ArrayList<String>();
 
 	private static Pizza modPizza = new Pizza();
+	private static ArrayList<Pizza> oldPizzas = new ArrayList<Pizza>();
+	
 	private static ArrayList<String> oldTopping = new ArrayList<String>();
 
 	private static boolean modified = false;
@@ -195,6 +197,21 @@ public class CustomPizzaUI implements Initializable {
 			p.setPrice(pSize * p.getToppings().size());
 
 			Order order = NewOrderUI.getOrder();
+			
+//			for (int i = 0; i < oldPizzas.size(); i++) { // loop that adds and increments pizza's price
+//				newName = drinkIdArrayList.get(i);
+//				Drink newDrink = new Drink(newName, 2);
+//				Pizza tmp = containsPizza(newName);
+//				if(tmp != null) {
+//					newDrink = tmp;
+//					removeDrink(newName);
+//				}
+//				
+//				drinkArrayList.add(newDrink);
+//			}
+//			order.getDrink().clear();
+//			order.setDrink(drinkArrayList);
+			
 			order.addPizza(p);
 
 			Alert.Display("Success", "Custom Pizza is added to your order!");
@@ -266,6 +283,11 @@ public class CustomPizzaUI implements Initializable {
 	public void start(Stage arg0) throws Exception {
 	}
 
+	public static void setOldPizza(ArrayList<Pizza> list) {
+		oldPizzas.clear();
+		oldPizzas.addAll(list);
+	}
+	
 	public static void setPizza(Pizza p) {
 		modPizza = p;
 		toppingIdArrayList = p.getToppings();
