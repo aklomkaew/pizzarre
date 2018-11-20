@@ -50,8 +50,6 @@ public class PaymentPageUI extends Application implements Initializable {
     
     private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
     
-    private static double total;
-    
     private class OrderContents {
 		String itemName;
     	double itemPrice;
