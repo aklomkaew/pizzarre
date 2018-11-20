@@ -32,7 +32,7 @@
             </Button>
          </bottom>
          <top>
-            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" text="#UserName" BorderPane.alignment="CENTER">
+            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" BorderPane.alignment="CENTER">
                <content>
                   <Label text="ADD TO SPECIAL">
                      <font>
