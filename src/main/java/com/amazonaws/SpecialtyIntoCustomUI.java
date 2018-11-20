@@ -152,7 +152,7 @@ public class SpecialtyIntoCustomUI implements Initializable {
 				break;
 			} else {
 				InventoryDb.changeQuantity(list.get(i), pSize, "decrease");
-				NewOrderUI.addIngredient(list.get(i), pSize);
+				//NewOrderUI.addIngredient(list.get(i), pSize);
 				count++;
 			}
 		}

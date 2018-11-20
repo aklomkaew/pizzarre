@@ -141,7 +141,10 @@ public class CustomPizzaUI implements Initializable {
 				list.add(item.toLowerCase());
 			}
 			String pizzaName = "basePizza";
-			list.addAll(RecipeDb.getIngredients(pizzaName));
+			
+			if(!modified) {
+				list.addAll(RecipeDb.getIngredients(pizzaName));
+			}
 
 			int count = 0;
 			boolean flag = false;
@@ -159,7 +162,7 @@ public class CustomPizzaUI implements Initializable {
 					break;
 				} else {
 					InventoryDb.changeQuantity(list.get(i), pSize, "decrease");
-					NewOrderUI.addIngredient(list.get(i), pSize);
+					//NewOrderUI.addIngredient(list.get(i), pSize);
 					count++;
 				}
 			}

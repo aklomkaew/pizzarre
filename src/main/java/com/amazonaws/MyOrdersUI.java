@@ -102,9 +102,6 @@ public class MyOrdersUI extends Application implements Initializable{
 	}
 	
 	public void payOrder(ActionEvent e) {
-
-		
-
 		int index = orderTableView.getSelectionModel().getFocusedIndex();
 		selectedOrder = orderTableView.getItems().get(index);
 		
@@ -139,6 +136,13 @@ public class MyOrdersUI extends Application implements Initializable{
 			alert.showAndWait();
 			return;
 		}
+		if(!orderToEdit.getState()) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("An order you selected is inactive. Cannot modify.");
+			alert.showAndWait();
+			return;
+		}
 		
 		NewOrderUI.setOrder(orderToEdit);
 		
@@ -147,7 +151,31 @@ public class MyOrdersUI extends Application implements Initializable{
 	}
 
 	public void deleteOrder(ActionEvent e) {
-	
+		if(!LoginUI.getUser().isManager()) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Not authorized.");
+			alert.showAndWait();
+			return;
+		}
+		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
+		if (itemToDelete == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select an order to delete.");
+			alert.showAndWait();
+			return;
+		}
+
+		orderObservableList.remove(itemToDelete);
+		orderTableView.setItems(orderObservableList);
+
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Success");
+		alert.setHeaderText("Order " + itemToDelete.getOrderNumber() + " has been deleted.");
+		alert.showAndWait();
+		OrderDb.deleteItem(itemToDelete.getOrderNumber());
+		displayAllOrder();
 	}
 
 	@Override
