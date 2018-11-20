@@ -29,8 +29,6 @@ public class PaymentPageUI extends Application implements Initializable {
 	private TextField paymentTF;
 	@FXML
 	private TextField totalCostTF;
-	@FXML
-	private TextField changeTF;
 
 	private double payment;
 
@@ -59,7 +57,6 @@ public class PaymentPageUI extends Application implements Initializable {
 	public void checkPayment(ActionEvent e) {
 		try {
 			payment = Double.parseDouble(paymentTF.getText());
-			displayChange(e);
 		} catch (NumberFormatException nfe) {
 			Alert.Display("Error", "Payment must be a number.");
 			return;
@@ -68,30 +65,26 @@ public class PaymentPageUI extends Application implements Initializable {
 	}
 
 	private void confirmPayment() {
-		if (payment == total) {
-			// order becomes inactive
-		} else if (payment < total) {
-			// update remainder
+		if(payment < total) {
+			Alert.Display("Error", "Payment must be paid in full.");
+			return;
 		}
-	}
-
-	public void displayChange(ActionEvent e) {
-		double total = Double.parseDouble(totalCostTF.getText());
-		double payment = Double.parseDouble(paymentTF.getText());
-		double change = (-1) * (total - payment);
-
-		if (payment >= total) {
-			String changeString = Double.toString(change);
-			changeTF.setText("$" + changeString);
-			paymentOrder.setInactive();
-		} else {
-			Alert.Display("Error", "Must be paid in full.");
+		else {
+			if(payment > total) {
+				Alert.Display("Information", "Payment processed. Change = $" + (payment - total));
+			}
+			else {
+				Alert.Display("Information", "Payment processed.");
+			}
+			paymentOrder.setState(false);
+			OrderDb.updateOrder(paymentOrder);
 		}
-
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirmPaymentBtn);
 	}
-
-	private static void setPayment(int t) {
-		total = t;
+	
+	public static void setOrder(Order o) {
+		paymentOrder = o;
 	}
 
 	public void goToMainMenu(ActionEvent e) {
