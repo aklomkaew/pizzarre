@@ -76,66 +76,64 @@ public class InventoryUI extends Application implements Initializable {
 			Alert.Display("Error", "Please enter ingredient name.");
 			return;
 		}
-    	try {
-			int quantity = Integer.parseInt(quantityTF.getText()); //checks if quantity is a number
-			
-	
-			if (quantity <= 0)
-			{
+		try {
+			int quantity = Integer.parseInt(quantityTF.getText()); // checks if quantity is a number
+
+			if (quantity <= 0) {
 				Alert.Display("Error", "Quantity must be positive.");
 				return;
-			} 
-			else {
+			} else {
 				addIngredient(e, quantity, ingredientName);
 			}
 		} catch (NumberFormatException ex) {
 			Alert.Display("Error", "Quantity must be a number");
 		}
-    }
-    
-    public void addIngredient(ActionEvent e, int quantity, String ingredientName) { //integration goes here, not checkIngredient
-    	if(InventoryDb.addItem(ingredientName.toLowerCase(), quantity)) {
-    		Alert.Display("Success", "Ingredient has been added!");
-    	}
-    	else {
-    		Alert.Display("Error", "Ingredient with that name already exists");
-    	}
-    	ingredientNameTF.clear();
-    	quantityTF.clear();
-    	updateTable();
-    }
-    
-    public void updateTable() {
+	}
+
+	public void addIngredient(ActionEvent e, int quantity, String ingredientName) { // integration goes here, not
+																					// checkIngredient
+		if (InventoryDb.addItem(ingredientName.toLowerCase(), quantity)) {
+			Alert.Display("Success", "Ingredient has been added!");
+		} else {
+			Alert.Display("Error", "Ingredient with that name already exists");
+		}
+		ingredientNameTF.clear();
+		quantityTF.clear();
+		updateTable();
+	}
+
+	public void updateTable() {
 		List<InventoryItem> list = InventoryDb.retrieveAllItem();
 
-		if(list == null || list.size() < 1) {
+		if (list == null || list.size() < 1) {
 			return;
 		}
-		
+
 		inventoryObservableList.clear();
 		inventoryObservableList.addAll(list);
 	}
-    
-    public void deleteIngredient(ActionEvent e) {
-    	InventoryItem itemToDelete = inventoryTableView.getSelectionModel().getSelectedItem();
-		if(itemToDelete == null) {
+
+	public void deleteIngredient(ActionEvent e) {
+		InventoryItem itemToDelete = inventoryTableView.getSelectionModel().getSelectedItem();
+		if (itemToDelete == null) {
 			Alert.Display("Error", "Select an item to delete.");
 			return;
 		}
-		
+
 		inventoryObservableList.remove(itemToDelete);
 		inventoryTableView.setItems(inventoryObservableList);
 
 		Alert.Display("Success", "Ingredient " + itemToDelete.getName() + " deleted.");
 		InventoryDb.deleteItem(itemToDelete.getName());
 		updateTable();
-    }
+	}
+
 	public void goToManagerUtilities(ActionEvent e) {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
-	
+
 	public void displayAllInventory() {
 		List<InventoryItem> list = InventoryDb.retrieveAllItem();
 
@@ -161,12 +159,13 @@ public class InventoryUI extends Application implements Initializable {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("name"));
 		quantityColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("quantity"));
 		inventoryObservableList = FXCollections.observableArrayList();
-		//inventoryObservableList = FXCollections.observableArrayList(InventoryDB.getAllItems())
-		//inventoryObservableList.add(new InventoryItem("pepperoni", 100));
-		//inventoryObservableList.add(new InventoryItem("greenPepper", 150));
+		// inventoryObservableList =
+		// FXCollections.observableArrayList(InventoryDB.getAllItems())
+		// inventoryObservableList.add(new InventoryItem("pepperoni", 100));
+		// inventoryObservableList.add(new InventoryItem("greenPepper", 150));
 		inventoryTableView.setItems(inventoryObservableList);
 		inventoryTableView.setEditable(true);
-    displayAllInventory();
+		displayAllInventory();
 	}
-	
+
 }

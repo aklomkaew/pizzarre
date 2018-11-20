@@ -29,26 +29,25 @@ public class PaymentPageUI extends Application implements Initializable {
 	private TextField paymentTF;
 	@FXML
 	private TextField totalCostTF;
-	@FXML
-	private TextField changeTF;
-	
-	private double payment;
-	private static double total;
 
-    @FXML
-    private TableView<OrderContents> orderTableView;
-    @FXML
-    private TableColumn<OrderContents, String> itemColumn  = new TableColumn<OrderContents, String>("itemName");
-    @FXML
-    private TableColumn<OrderContents, Double> priceColumn  = new TableColumn<OrderContents, Double>("itemPrice");
-    
-    private ObservableList<OrderContents> orderContentsObservableList = FXCollections.observableArrayList();
-    
-    private static Order paymentOrder;
-    
-    private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>();
-    
-    private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
+	private double payment;
+
+	@FXML
+	private TableView<OrderContents> orderTableView;
+	@FXML
+	private TableColumn<OrderContents, String> itemColumn = new TableColumn<OrderContents, String>("itemName");
+	@FXML
+	private TableColumn<OrderContents, Double> priceColumn = new TableColumn<OrderContents, Double>("itemPrice");
+
+	private ObservableList<OrderContents> orderContentsObservableList = FXCollections.observableArrayList();
+
+	private static Order paymentOrder;
+
+	private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>();
+
+	private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
+
+	private static double total;
     
     private class OrderContents {
 		String itemName;
@@ -73,58 +72,48 @@ public class PaymentPageUI extends Application implements Initializable {
     	}
     	
     }
-	
+
 	public void checkPayment(ActionEvent e) {
 		try {
 			payment = Double.parseDouble(paymentTF.getText());
-			displayChange(e);
-		} catch (NumberFormatException nfe ) {
+		} catch (NumberFormatException nfe) {
 			Alert.Display("Error", "Payment must be a number.");
 			return;
 		}
 		confirmPayment();
 	}
-	
+
 	private void confirmPayment() {
-		if(payment == total) {
-			// order becomes inactive
+		if(payment < total) {
+			Alert.Display("Error", "Payment must be paid in full.");
+			return;
 		}
-		else if(payment < total) {
-			// update remainder
+		else {
+			if(payment > total) {
+				Alert.Display("Information", "Payment processed. Change = $" + (payment - total));
+			}
+			else {
+				Alert.Display("Information", "Payment processed.");
+			}
+			paymentOrder.setState(false);
+			OrderDb.updateOrder(paymentOrder);
 		}
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirmPaymentBtn);
 	}
 	
-	public void displayChange (ActionEvent e) {
-		double total =  Double.parseDouble(totalCostTF.getText());
-		double payment = Double.parseDouble(paymentTF.getText());
-		double change = (-1)*(total - payment);
-		
-		
-		if (payment >= total) {
-		String changeString = Double.toString(change);
-		changeTF.setText("$" + changeString);
-		//OrderDb.setOrderInactive();
-		Alert.Display("Payment Processed",  "Payment fulfilled!");
-		} else {
-			Alert.Display("Error",  "Must be paid in full.");
-		}
-		
+	public static void setOrder(Order o) {
+		paymentOrder = o;
 	}
-  
-  private static void setPayment(int t) {
-		total = t;
-	}
-  
+
 	public void goToMainMenu(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
-
 	@Override
 	public void start(Stage arg0) throws Exception {
-		
-		
+
 	}
 
 	public void displayOrderContents() {
@@ -152,20 +141,21 @@ public class PaymentPageUI extends Application implements Initializable {
 		totalCostTF.setText(Double.toString(getTotal()));
 		orderTableView.setItems(orderContentsObservableList);
 	}
-	
-	public static void setTotal (double t) {
+
+	public static void setTotal(double t) {
 		total = t;
 	}
-	
+
 	public double getTotal() {
 		return total;
 	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
-	
-	public void initializeMyOrder (Order currentOrder) {
+
+	public void initializeMyOrder(Order currentOrder) {
 		orderContentsObservableList.clear();
 		pizzaArrayList.clear();
 		drinkArrayList.clear();
@@ -173,13 +163,12 @@ public class PaymentPageUI extends Application implements Initializable {
 		paymentOrder = currentOrder;
 		pizzaArrayList = paymentOrder.getPizzas();
 		drinkArrayList = paymentOrder.getDrink();
-		
 		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
 		displayOrderContents();
 	}
-	
-	public void initializeAllActiveOrder (Order currentOrder) {
+
+	public void initializeAllActiveOrder(Order currentOrder) {
 		orderContentsObservableList.clear();
 		pizzaArrayList.clear();
 		drinkArrayList.clear();
@@ -190,6 +179,13 @@ public class PaymentPageUI extends Application implements Initializable {
 		
 		//itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
 		//priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
+		// drinkArrayList.clear();
+		orderTableView.getItems().clear();
+		paymentOrder = currentOrder;
+		pizzaArrayList = paymentOrder.getPizzas();
+		// drinkArrayList = paymentOrder.getDrinks();
+		// orderTableView.setEditable(true);
+
 		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
 		orderTableView.getColumns().setAll(itemColumn, priceColumn);

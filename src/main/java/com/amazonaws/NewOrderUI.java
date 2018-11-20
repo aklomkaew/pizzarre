@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -89,10 +90,32 @@ public class NewOrderUI implements Initializable {
 
 	private static HashMap<String, Integer> allIngredients;
 
-	public void viewToppings (ActionEvent e) {
-		
+	public void viewToppings(ActionEvent e) {
+		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		Alert alertInfo = new Alert(AlertType.INFORMATION);
+		alertInfo.setTitle("Information");
+
+		if (obj == null) {
+			alert.setHeaderText("Select a pizza to view topping.");
+			alert.showAndWait();
+			return;
+		}
+
+		int index = orderListView.getSelectionModel().getSelectedIndex();
+
+		if (index > pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
+			alert.setHeaderText("Select a pizza to view topping.");
+			alert.showAndWait();
+			return;
+		} else {
+			alertInfo.setHeaderText(pizzaNameArrayList.get(index) + " has toppings:");
+			alertInfo.setContentText(pizzaArrayList.get(index).toString());
+			alertInfo.showAndWait();
+		}
 	}
-	
+
 	public static ArrayList<String> getDrinks() {
 		return drinkNameArrayList;
 	}
@@ -114,6 +137,16 @@ public class NewOrderUI implements Initializable {
 
 		int modifiedIndex = orderListView.getSelectionModel().getSelectedIndex();
 		Pizza p = pizzaArrayList.get(modifiedIndex);
+
+		if (p.getIsNew() == 0) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Cannot modify.");
+			alert.setContentText("This item has already been processed.");
+			alert.showAndWait();
+			return;
+		}
+
 		CustomPizzaUI.setPizza(p);
 
 		pizzaArrayList.remove(modifiedIndex);
@@ -142,10 +175,39 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void setDiscount(ActionEvent e) {
+		TextInputDialog dialog = new TextInputDialog("20");
+		dialog.setTitle("Discount");
+		dialog.setHeaderText("Set Discount for Order #" + order.getOrderNumber());
+		dialog.setContentText("Enter percent discount: ");
+
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
-		alert.setHeaderText("Method not set for setDiscount()");
-		alert.showAndWait();
+		
+		// Traditional way to get the response value.
+		String result = dialog.showAndWait().get();
+		if (result == null){
+			alert.setHeaderText("No input.");
+			alert.showAndWait();
+			return;
+		}
+		
+		int discount = 0;
+		try {
+			discount = Integer.parseInt(result);
+		}
+		catch(Exception ex) {
+			alert.setHeaderText("Value must be an integer.");
+			alert.showAndWait();
+			return;
+		}
+		
+		order.setDiscount(discount);
+		OrderDb.updateOrder(order);
+		
+		Alert alertInfo = new Alert(AlertType.INFORMATION);
+		alertInfo.setTitle("Success");
+		alertInfo.setHeaderText(order.getDiscount() + "% discount applied to $" + order.getTotal() + " total.");
+		alertInfo.showAndWait();
 	}
 
 	public void confirmOrder(ActionEvent e) {
@@ -159,13 +221,20 @@ public class NewOrderUI implements Initializable {
 			priceTotal = priceTotal + currentDrink.getPrice();
 		}
 		order.setTotal(priceTotal);
-
-		int num = order.getOrderNumber();
-		while (!OrderDb.addOrder(order)) {
-			num++;
-			order.setOrderNumber(num);
+		if(order.getDiscount() > 0) {
+			order.applyDiscount();
 		}
-		
+		int num = order.getOrderNumber();
+
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Success");
+
+		if (!modOrder) {
+			while (!OrderDb.addOrder(order)) {
+				num++;
+				order.setOrderNumber(num);
+			}
+		}
 		for (Drink d : order.getDrink()) {
 			d.setIsNew();
 		}
@@ -174,26 +243,10 @@ public class NewOrderUI implements Initializable {
 		}
 
 		OrderDb.updateOrder(order);
-		User u = LoginUI.getUser();
-		try {
-			u.getOrderList().add(order);
-		} catch (Exception err) {
-			System.out.println("Error cannot add order to user");
-			System.err.println(err.getMessage());
-			return;
-		}
-		UserDb.updateUser(u);
 
-		
+		alert.setHeaderText("Your order " + order.getOrderNumber() + " has been placed! Total is $" + order.getTotal());
 
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Success");
-		alert.setHeaderText("Your order has been placed! Total is $" + order.getTotal());
 		alert.showAndWait();
-
-//		pizzaArrayList.clear(); // clear all list contents after order placed, for next order
-//		pizzaNameArrayList.clear();
-//		drinksArrayList.clear();
 
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
@@ -244,19 +297,19 @@ public class NewOrderUI implements Initializable {
 				modOrder = false;
 			}
 
-			if(pizzaArrayList != null) {
+			if (pizzaArrayList != null) {
 				pizzaArrayList.clear();
 			}
-			if(pizzaNameArrayList != null) {
+			if (pizzaNameArrayList != null) {
 				pizzaNameArrayList.clear();
 			}
-			if(drinkArrayList != null) {
+			if (drinkArrayList != null) {
 				drinkArrayList.clear();
 			}
-			if(drinkNameArrayList != null) {
+			if (drinkNameArrayList != null) {
 				drinkNameArrayList.clear();
 			}
-			if(orderObservableList != null) {
+			if (orderObservableList != null) {
 				orderObservableList.clear();
 			}
 			orderListView.getItems().clear();
@@ -285,15 +338,27 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void removeAllIngredients() {
-		if (allIngredients == null || allIngredients.isEmpty()) {
-			return;
+		for (Pizza p : order.getPizzas()) {
+			if (p.getIsNew() == 1) {
+				for (String str : p.getToppings()) {
+					InventoryDb.changeQuantity(str, 1, "increase");
+				}
+			}
 		}
-		Iterator itr = allIngredients.entrySet().iterator();
-		while (itr.hasNext()) {
-			Map.Entry pair = (Map.Entry) itr.next();
-			InventoryDb.changeQuantity((String) pair.getKey(), (Integer) pair.getValue(), "increase");
-			itr.remove();
+		for (Drink d : order.getDrink()) {
+			if (d.getIsNew() == 1) {
+				InventoryDb.changeQuantity(d.getName(), 1, "increase");
+			}
 		}
+//		if (allIngredients == null || allIngredients.isEmpty()) {
+//			return;
+//		}
+//		Iterator itr = allIngredients.entrySet().iterator();
+//		while (itr.hasNext()) {
+//			Map.Entry pair = (Map.Entry) itr.next();
+//			InventoryDb.changeQuantity((String) pair.getKey(), (Integer) pair.getValue(), "increase");
+//			itr.remove();
+//		}
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
 		drinkArrayList.clear();
@@ -304,27 +369,41 @@ public class NewOrderUI implements Initializable {
 
 	public void removeItem(ActionEvent e) {
 		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+
 		if (obj == null) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error");
 			alert.setHeaderText("Select an item to remove.");
 			alert.showAndWait();
 			return;
 		}
 
 		int index = orderListView.getSelectionModel().getSelectedIndex();
-		orderObservableList.remove(index);
+
 		if (index <= pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
+			if (pizzaArrayList.get(index).getIsNew() == 0) { // not new
+				alert.setHeaderText("This item cannot be removed.");
+				alert.setContentText("This item has already been processed");
+				alert.showAndWait();
+				return;
+			}
 			pizzaNameArrayList.remove(index);
 			for (String str : pizzaArrayList.get(index).getToppings()) {
 				InventoryDb.changeQuantity(str, 1, "increase");
 			}
 			pizzaArrayList.remove(index);
 		} else {
+			if (drinkArrayList.get(index - pizzaNameArrayList.size()).getIsNew() == 0) { // not new
+				alert.setHeaderText("This item cannot be removed.");
+				alert.setContentText("This item has already been processed");
+				alert.showAndWait();
+				return;
+			}
 			InventoryDb.changeQuantity(drinkNameArrayList.get(index - pizzaNameArrayList.size()), 1, "increase");
 			drinkNameArrayList.remove(index - pizzaNameArrayList.size());
 			drinkArrayList.remove(index - pizzaNameArrayList.size());
 		}
+		orderObservableList.remove(index);
 	}
 
 	public void start(Stage arg0) throws Exception {
@@ -333,6 +412,7 @@ public class NewOrderUI implements Initializable {
 
 	public static void setOrder(Order c) {
 		order = c;
+		modOrder = true;
 	}
 
 	@Override
@@ -353,7 +433,7 @@ public class NewOrderUI implements Initializable {
 		pizzaNameArrayList.clear();
 		drinkNameArrayList.clear();
 		orderObservableList.clear();
-    
+
 		pizzaArrayList = order.getPizzas();
 		if (pizzaArrayList != null) {
 			for (int i = 0; i < pizzaArrayList.size(); i++) {
@@ -362,15 +442,15 @@ public class NewOrderUI implements Initializable {
 			}
 		}
 		drinkArrayList = order.getDrink();
-		if(drinkArrayList != null) {
+		if (drinkArrayList != null) {
 			for (Drink d : drinkArrayList) {
 				drinkNameArrayList.add(d.getName());
 			}
 		}
-		/*drinkArrayList = order.getDrink();
-		for (Drink d : drinkArrayList) {
-			drinkNameArrayList.add(d.getName());
-		}*/
+		/*
+		 * drinkArrayList = order.getDrink(); for (Drink d : drinkArrayList) {
+		 * drinkNameArrayList.add(d.getName()); }
+		 */
 
 		combineLists();
 	}
@@ -385,16 +465,16 @@ public class NewOrderUI implements Initializable {
 		return order;
 	}
 
-	public static void addIngredient(String str, int quantity) {
-		if (allIngredients == null) {
-			allIngredients = new HashMap<String, Integer>();
-		}
-		if (!allIngredients.containsKey(str)) {
-			allIngredients.put(str, quantity);
-		} else {
-			allIngredients.put(str, allIngredients.get(str) + quantity);
-		}
-	}
+//	public static void addIngredient(String str, int quantity) {
+//		if (allIngredients == null) {
+//			allIngredients = new HashMap<String, Integer>();
+//		}
+//		if (!allIngredients.containsKey(str)) {
+//			allIngredients.put(str, quantity);
+//		} else {
+//			allIngredients.put(str, allIngredients.get(str) + quantity);
+//		}
+//	}
 
 	public static boolean removeIngredient(String str, int quantity) {
 		boolean status = false;

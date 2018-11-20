@@ -63,38 +63,38 @@ public class RecipeListUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, addRecipeBtn);
 	}
 
-public void viewRecipe(ActionEvent e) { //index in Observable List will match index in RecipeDb
-	RecipeItem item = recipeTableView.getSelectionModel().getSelectedItem();
-	if (item == null) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error");
-		alert.setHeaderText("Select a user to view.");
+	public void viewRecipe(ActionEvent e) { // index in Observable List will match index in RecipeDb
+		RecipeItem item = recipeTableView.getSelectionModel().getSelectedItem();
+		if (item == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Select a user to view.");
+			alert.showAndWait();
+			return;
+		}
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("View Recipe");
+		alert.setHeaderText("Recipe " + item.getName() + " contains:");
+		alert.setContentText(item.toString());
 		alert.showAndWait();
-		return;
 	}
-	Alert alert = new Alert(AlertType.INFORMATION);
-	alert.setTitle("View Recipe");
-	alert.setHeaderText("Recipe " + item.getName() + " contains:");
-	alert.setContentText(item.toString());
-	alert.showAndWait();
-}
 
-public void goToManagerUtilities(ActionEvent e) {
-	
-	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
-	NextStage.goTo(fxmlLoader, backBtn);
-}
-  
+	public void goToManagerUtilities(ActionEvent e) {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
+		NextStage.goTo(fxmlLoader, backBtn);
+	}
+
 	public void deleteRecipe(ActionEvent e) {
 		RecipeItem itemToDelete = recipeTableView.getSelectionModel().getSelectedItem();
-		if(itemToDelete == null) {
+		if (itemToDelete == null) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Select a recipe to delete.");
 			alert.showAndWait();
 			return;
 		}
-		
+
 		recipeObservableList.remove(itemToDelete);
 		recipeTableView.setItems(recipeObservableList);
 
@@ -129,7 +129,8 @@ public void goToManagerUtilities(ActionEvent e) {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { // initializes populates ist with current users
 		nameColumn.setCellValueFactory(new PropertyValueFactory<RecipeItem, String>("name"));
-		//ingredientsColumn.setCellValueFactory(new PropertyValueFactory<RecipeItem, String>("name"));
+		// ingredientsColumn.setCellValueFactory(new PropertyValueFactory<RecipeItem,
+		// String>("name"));
 		ingredientsColumn.setCellValueFactory(new PropertyValueFactory<RecipeItem, ArrayList<String>>("ingredients"));
 		recipeObservableList = FXCollections.observableArrayList();
 		recipeTableView.setItems(recipeObservableList);

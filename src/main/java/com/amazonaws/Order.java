@@ -25,6 +25,7 @@ public class Order {
 	private double total;
 	private String server;
 	private int serverId;
+	private int discount;
 
 	public Order() {
 		this.pizzas = new ArrayList<Pizza>();
@@ -34,6 +35,7 @@ public class Order {
 		this.orderNumber = -1;
 		this.active = true;
 		this.total = 0.0;
+		this.discount = 0;
 	}
 
 	public Order(int num, List<Pizza> list) {
@@ -45,6 +47,7 @@ public class Order {
 		this.pizzas.addAll(list);
 		this.active = true;
 		this.total = 0.0;
+		this.discount = 0;
 	}
 
 	@DynamoDBHashKey(attributeName = "OrderNumber")
@@ -95,6 +98,15 @@ public class Order {
 	public void setTotal(double t) {
 		this.total = t;
 	}
+	
+	@DynamoDBAttribute(attributeName = "Discount")
+	public int getDiscount() {
+		return this.discount;
+	}
+
+	public void setDiscount(int d) {
+		this.discount = d;
+	}
 
 	@DynamoDBTypeConverted(converter = MyPizzaConverter.class)
 	public ArrayList<Pizza> getPizzas() {
@@ -106,10 +118,6 @@ public class Order {
 
 	public void addPizza(Pizza p) {
 		this.pizzas.add(p);
-	}
-	
-	public void clearDrinks() {
-		this.drinks.clear();
 	}
 	
 	@DynamoDBTypeConverted(converter = MyDrinkConverter.class)
@@ -143,6 +151,10 @@ public class Order {
 //		drinkMap = map;
 //	}
 
+	public void applyDiscount() {
+		this.total = this.total * ((100.0 - this.discount)/100.0);
+	}
+	
 	public String toString() {
 		String ret = "";
 
@@ -152,6 +164,7 @@ public class Order {
 				ret += "\n--> Pizza #" + (i + 1) + " has " + pizzas.get(i).toString();
 			}
 		}
+		ret += "\n";
 		if(drinks != null && drinks.size() > 0) {
 			ret += drinks.size() + ((drinks.size() == 1) ? " drink" : " drinks");
 			for (int i = 0; i < drinks.size(); i++) {
