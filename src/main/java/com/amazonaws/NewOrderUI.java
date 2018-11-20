@@ -207,12 +207,13 @@ public class NewOrderUI implements Initializable {
 		
 		order.setDiscount(discount);
 		order.applyDiscount();
-		setCostLabel();
+		updateCost();
 		OrderDb.updateOrder(order);
 		
 		Alert alertInfo = new Alert(AlertType.INFORMATION);
 		alertInfo.setTitle("Success");
-		alertInfo.setHeaderText(order.getDiscount() + "% discount applied to $" + order.getTotal() + " total.");
+		String price = String.format("%.2f", order.getTotal());
+		alertInfo.setHeaderText(order.getDiscount() + "% discount applied to $" + price + " total.");
 		alertInfo.showAndWait();
 	}
 
@@ -423,6 +424,8 @@ public class NewOrderUI implements Initializable {
 			Drink currentDrink = order.getDrink().get(i);
 			order.setTotal(order.getTotal() + currentDrink.getPrice());
 		}
+		order.applyDiscount();
+		
 		setCostLabel();
 	}
 

@@ -90,7 +90,7 @@ public class CustomPizzaUI implements Initializable {
 
 	private static Pizza modPizza = new Pizza();
 	private static ArrayList<String> oldTopping = new ArrayList<String>();
-	
+
 	private static boolean modified = false;
 
 	private static final int SMALL = 1;
@@ -141,8 +141,8 @@ public class CustomPizzaUI implements Initializable {
 				list.add(item.toLowerCase());
 			}
 			String pizzaName = "basePizza";
-			
-			if(!modified) {
+
+			if (!modified) {
 				list.addAll(RecipeDb.getIngredients(pizzaName));
 			}
 
@@ -173,20 +173,20 @@ public class CustomPizzaUI implements Initializable {
 				}
 				return;
 			}
-      
+
 			pizzaName = (modified ? modPizza.getName() : "Custom");
 			ArrayList<String> pList = new ArrayList<String>();
-			
-			if (modified == false) { //stops for example: small, pizza -> small, small, pizza
-			if (pSize == 1) {
-				pizzaName = "small, " + pizzaName;
-			} else if (pSize == 2) {
-				pizzaName = "medium, " + pizzaName;
-			} else {
-				pizzaName = "large, " + pizzaName;
+
+			if (modified == false) { // stops for example: small, pizza -> small, small, pizza
+				if (pSize == 1) {
+					pizzaName = "small, " + pizzaName;
+				} else if (pSize == 2) {
+					pizzaName = "medium, " + pizzaName;
+				} else {
+					pizzaName = "large, " + pizzaName;
+				}
 			}
-			}
-			
+
 			Pizza p = new Pizza(pizzaName, pSize, pList);
 			for (int i = 0; i < list.size(); i++) { // loop that adds and increments pizza's price
 				String topping = list.get(i);
@@ -228,9 +228,8 @@ public class CustomPizzaUI implements Initializable {
 	public void cancelPizza(ActionEvent e) {
 		if (!modified) {
 			removePizza();
-		}
-		else {
-			//removePizza();
+		} else {
+			// removePizza();
 			Order order = NewOrderUI.getOrder();
 			Pizza tmp = new Pizza(modPizza.getName(), modPizza.getSize(), oldTopping);
 			order.addPizza(tmp);
@@ -241,7 +240,7 @@ public class CustomPizzaUI implements Initializable {
 		toppingObservableList.clear();
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
@@ -278,8 +277,8 @@ public class CustomPizzaUI implements Initializable {
 
 	private static String getSize(int num) {
 		String ret = "";
-		switch(num) {
-		case 1: 
+		switch (num) {
+		case 1:
 			ret = "small";
 			break;
 		case 2:
@@ -291,6 +290,7 @@ public class CustomPizzaUI implements Initializable {
 		}
 		return ret;
 	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		if (!toppingIdArrayList.isEmpty()) {
@@ -299,6 +299,6 @@ public class CustomPizzaUI implements Initializable {
 			toppingListView.setItems(toppingObservableList);
 			modified = true;
 		}
-		
+
 	}
 }

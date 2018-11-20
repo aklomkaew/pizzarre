@@ -63,7 +63,6 @@ public class AllOrdersUI extends Application implements Initializable {
 	}
 
 	public void goToManagerUtilities(ActionEvent e) {
-
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
