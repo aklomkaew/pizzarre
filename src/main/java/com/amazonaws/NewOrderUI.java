@@ -90,7 +90,29 @@ public class NewOrderUI implements Initializable {
 	private static HashMap<String, Integer> allIngredients;
 
 	public void viewToppings(ActionEvent e) {
+		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		Alert alertInfo = new Alert(AlertType.INFORMATION);
+		alertInfo.setTitle("Information");
 
+		if (obj == null) {
+			alert.setHeaderText("Select a pizza to view topping.");
+			alert.showAndWait();
+			return;
+		}
+
+		int index = orderListView.getSelectionModel().getSelectedIndex();
+
+		if (index > pizzaNameArrayList.size() - 1) { // -1 since .size() is 1 greater than index
+			alert.setHeaderText("Select a pizza to view topping.");
+			alert.showAndWait();
+			return;
+		} else {
+			alertInfo.setHeaderText(pizzaNameArrayList.get(index) + " has toppings:");
+			alertInfo.setContentText(pizzaArrayList.get(index).toString());
+			alertInfo.showAndWait();
+		}
 	}
 
 	public static ArrayList<String> getDrinks() {
