@@ -19,7 +19,7 @@
    <children>
       <BorderPane maxHeight="600.0" maxWidth="600.0" prefHeight="600.0" prefWidth="600.0">
          <bottom>
-            <Button fx:id="backBtn" alignment="CENTER" mnemonicParsing="false" onAction="#goBack" text="Back" BorderPane.alignment="CENTER">
+            <Button fx:id="backBtn" alignment="CENTER" mnemonicParsing="false" onAction="#goBack" text="Back" textAlignment="CENTER" BorderPane.alignment="CENTER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -130,6 +130,7 @@
                         </Button>
                      </children>
                   </GridPane>
+                  <Label fx:id="costLbl" translateX="-115.0" translateY="65.0" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="100.0" right="50.0" top="50.0" />

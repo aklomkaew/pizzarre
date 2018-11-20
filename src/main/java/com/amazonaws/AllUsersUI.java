@@ -44,6 +44,8 @@ public class AllUsersUI extends Application implements Initializable {
 	@FXML
 	private Button deleteAllUserBtn;
 	@FXML
+	private Button refreshBtn;
+	@FXML
 	private TableView<User> userTableView;
 	@FXML
 	private TableColumn<User, String> nameColumn;
@@ -52,6 +54,10 @@ public class AllUsersUI extends Application implements Initializable {
 
 	private ObservableList<User> userObservableList;
 
+	private void displayAllUser(ActionEvent e) {
+		
+	}
+	
 	public void addUser(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddUserUI.fxml"));
 		NextStage.goTo(fxmlLoader, addUserBtn);

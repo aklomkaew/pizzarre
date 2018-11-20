@@ -70,7 +70,7 @@
             </TitledPane>
          </top>
          <left>
-            <TableView fx:id="orderTableView" prefHeight="539.0" prefWidth="202.0" BorderPane.alignment="CENTER_RIGHT">
+            <TableView fx:id="orderTableView" editable="true" prefHeight="539.0" prefWidth="202.0" BorderPane.alignment="CENTER_RIGHT">
               <columns>
                 <TableColumn fx:id="itemColumn" prefWidth="75.0" text="Item" />
                 <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />

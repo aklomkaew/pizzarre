@@ -46,6 +46,8 @@ public class AllOrdersUI extends Application implements Initializable {
 	@FXML
 	private Button deleteAllOrderBtn;
 	@FXML
+	private Button refreshBtn;
+	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
 	private TableColumn<Order, String> serverColumn;
@@ -55,6 +57,10 @@ public class AllOrdersUI extends Application implements Initializable {
 	private TableColumn<Order, Double> totalColumn;
 
 	private ObservableList<Order> orderObservableList;
+	
+	public void displayAllOrder(ActionEvent e) {
+		
+	}
 
 	public void goToManagerUtilities(ActionEvent e) {
 
