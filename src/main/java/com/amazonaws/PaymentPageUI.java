@@ -50,29 +50,29 @@ public class PaymentPageUI extends Application implements Initializable {
 	private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
 
 	private static double total;
-    
-    public class OrderContents {
-		String itemName;
-    	double itemPrice;
-    	
-    	public OrderContents(){
-    		String itemName = "";
-    		double itemPrice = 0.0;
-    	}
 
-    	public OrderContents(String name, double price){
-    		this.itemName = name;
-    		this.itemPrice = price;
-    	}
-    	
-    	public String getItemName() {
-    		return itemName;
-    	}
-    	
-    	public double getItemPrice() {
-    		return itemPrice;
-    	}
-    }
+	public class OrderContents {
+		String itemName;
+		double itemPrice;
+
+		public OrderContents() {
+			String itemName = "";
+			double itemPrice = 0.0;
+		}
+
+		public OrderContents(String name, double price) {
+			this.itemName = name;
+			this.itemPrice = price;
+		}
+
+		public String getItemName() {
+			return itemName;
+		}
+
+		public double getItemPrice() {
+			return itemPrice;
+		}
+	}
 
 	public void checkPayment(ActionEvent e) {
 		try {
@@ -85,15 +85,13 @@ public class PaymentPageUI extends Application implements Initializable {
 	}
 
 	private void confirmPayment() {
-		if(payment < total) {
+		if (payment < total) {
 			Alert.Display("Error", "Payment must be paid in full.");
 			return;
-		}
-		else {
-			if(payment > total) {
+		} else {
+			if (payment > total) {
 				Alert.Display("Information", "Payment processed. Change = $" + (payment - total));
-			}
-			else {
+			} else {
 				Alert.Display("Information", "Payment processed.");
 			}
 			paymentOrder.setState(false);
@@ -102,25 +100,9 @@ public class PaymentPageUI extends Application implements Initializable {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmPaymentBtn);
 	}
-	
+
 	public static void setOrder(Order o) {
 		paymentOrder = o;
-}
-
-	public void displayChange (ActionEvent e) {
-		double total =  Double.parseDouble(totalCostTF.getText());
-		double payment = Double.parseDouble(paymentTF.getText());
-		double change = (-1)*(total - payment);
-		
-		
-		if (payment >= total) {
-		String changeString = Double.toString(change);
-		changeTF.setText("$" + changeString);
-		paymentOrder.setInactive();
-		} else {
-			Alert.Display("Error",  "Must be paid in full.");
-		}
-		
 	}
 
 	public void goToMainMenu(ActionEvent e) {
@@ -128,9 +110,10 @@ public class PaymentPageUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
-	public void goBack (ActionEvent e) {
-		
+	public void goBack(ActionEvent e) {
+
 	}
+
 	@Override
 	public void start(Stage arg0) throws Exception {
 
@@ -138,40 +121,31 @@ public class PaymentPageUI extends Application implements Initializable {
 
 	public void displayOrderContents() {
 		double totalPrice = 0.0;
-		
+
 		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
 		orderContentsObservableList = FXCollections.observableArrayList();
-		//if (pizzaArrayList == null || pizzaArrayList.size() < 1) {
-			//return;
-		//}
-		for(int i = 0; i < pizzaArrayList.size(); i++) {
-			
+		// if (pizzaArrayList == null || pizzaArrayList.size() < 1) {
+		// return;
+		// }
+		for (int i = 0; i < pizzaArrayList.size(); i++) {
+
 			String itemName = pizzaArrayList.get(i).getName();
 			double itemPrice = pizzaArrayList.get(i).getPrice();
 			totalPrice = totalPrice + itemPrice;
 			orderContentsObservableList.add(new OrderContents(itemName, itemPrice));
 		}
-		
-		for(int i = 0; i < drinkArrayList.size(); i++) {
-				
+
+		for (int i = 0; i < drinkArrayList.size(); i++) {
+
 			String itemName = drinkArrayList.get(i).getName();
 			double itemPrice = drinkArrayList.get(i).getPrice();
 			totalPrice = totalPrice + itemPrice;
 			orderContentsObservableList.add(new OrderContents(itemName, itemPrice));
 		}
-		
-		setTotal(totalPrice);
-		totalCostTF.setText(Double.toString(getTotal()));
+
+		totalCostTF.setText(Double.toString(paymentOrder.getTotal()));
 		orderTableView.setItems(orderContentsObservableList);
-	}
-
-	public static void setTotal(double t) {
-		total = t;
-	}
-
-	public double getTotal() {
-		return total;
 	}
 
 	@Override
