@@ -1,6 +1,7 @@
 package com.amazonaws;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,6 +74,8 @@ public class NewOrderUI implements Initializable {
 	private TableColumn<String, String> nameColumn;
 	@FXML
 	private TableColumn<String, Integer> priceColumn;
+	@FXML
+	private Label costLbl;
 
 	private static Order order;
 
@@ -90,6 +94,11 @@ public class NewOrderUI implements Initializable {
 
 	private static HashMap<String, Integer> allIngredients;
 
+	public void setCostLabel(double orderPrice) {
+		String price = String.format("%.2f", orderPrice);
+		costLbl.setText("Total Price: $"+ price);
+	}
+	
 	public void viewToppings(ActionEvent e) {
 		MultipleSelectionModel<String> obj = orderListView.getSelectionModel();
 		Alert alert = new Alert(AlertType.ERROR);
@@ -453,6 +462,17 @@ public class NewOrderUI implements Initializable {
 		 */
 
 		combineLists();
+		
+		double priceTotal = 0.00;
+		for (int i = 0; i < order.getPizzas().size(); i++) {
+			Pizza currentPizza = order.getPizzas().get(i);
+			priceTotal = priceTotal + currentPizza.getPrice();
+		}
+		for (int i = 0; i < order.getDrink().size(); i++) {
+			Drink currentDrink = order.getDrink().get(i);
+			priceTotal = priceTotal + currentDrink.getPrice();
+		}
+		setCostLabel(priceTotal);
 	}
 
 	public void combineLists() {
