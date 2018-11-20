@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -174,10 +175,39 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void setDiscount(ActionEvent e) {
+		TextInputDialog dialog = new TextInputDialog("20");
+		dialog.setTitle("Discount");
+		dialog.setHeaderText("Set Discount for Order #" + order.getOrderNumber());
+		dialog.setContentText("Enter percent discount: ");
+
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
-		alert.setHeaderText("Method not set for setDiscount()");
-		alert.showAndWait();
+		
+		// Traditional way to get the response value.
+		String result = dialog.showAndWait().get();
+		if (result == null){
+			alert.setHeaderText("No input.");
+			alert.showAndWait();
+			return;
+		}
+		
+		int discount = 0;
+		try {
+			discount = Integer.parseInt(result);
+		}
+		catch(Exception ex) {
+			alert.setHeaderText("Value must be an integer.");
+			alert.showAndWait();
+			return;
+		}
+		
+		order.setDiscount(discount);
+		OrderDb.updateOrder(order);
+		
+		Alert alertInfo = new Alert(AlertType.INFORMATION);
+		alertInfo.setTitle("Success");
+		alertInfo.setHeaderText(order.getDiscount() + "% discount applied to $" + order.getTotal() + " total.");
+		alertInfo.showAndWait();
 	}
 
 	public void confirmOrder(ActionEvent e) {
@@ -191,6 +221,9 @@ public class NewOrderUI implements Initializable {
 			priceTotal = priceTotal + currentDrink.getPrice();
 		}
 		order.setTotal(priceTotal);
+		if(order.getDiscount() > 0) {
+			order.applyDiscount();
+		}
 		int num = order.getOrderNumber();
 
 		Alert alert = new Alert(AlertType.INFORMATION);
