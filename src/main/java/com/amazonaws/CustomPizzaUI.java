@@ -311,6 +311,6 @@ public class CustomPizzaUI implements Initializable {
 			toppingListView.setItems(toppingObservableList);
 			modified = true;
 		}
-
+		sizeTF.setText(getSize(modPizza.getSize()));
 	}
 }
