@@ -33,6 +33,8 @@ public class SpecialtyIntoCustomUI implements Initializable {
 	@FXML
 	private Button confirm;
 	@FXML
+	private Button cancel;
+	@FXML
 	private Button back;
 
 	private String id = null; // names used for database access
@@ -80,6 +82,10 @@ public class SpecialtyIntoCustomUI implements Initializable {
 	String specialtyName;
 	String specialtySize;
 
+	public void cancelSpecialty(ActionEvent e) {
+		
+	}
+	
 	public void addRemoveTopping(ActionEvent e) {
 
 		String id = ((Button) e.getSource()).getId();

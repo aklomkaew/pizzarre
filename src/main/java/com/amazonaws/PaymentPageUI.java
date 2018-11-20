@@ -128,6 +128,9 @@ public class PaymentPageUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
+	public void goBack (ActionEvent e) {
+		
+	}
 	@Override
 	public void start(Stage arg0) throws Exception {
 

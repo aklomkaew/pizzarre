@@ -22,7 +22,7 @@
             <ColorAdjust />
          </effect>
          <top>
-            <TitledPane alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="600.0" text="#UserName" BorderPane.alignment="CENTER">
+            <TitledPane alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <content>
                   <Label alignment="CENTER" prefHeight="35.0" prefWidth="137.0" text="Employees" textAlignment="CENTER">
                      <font>

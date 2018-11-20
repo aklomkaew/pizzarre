@@ -43,6 +43,8 @@ public class MyOrdersUI extends Application implements Initializable {
 	@FXML
 	private Button showBtn;
 	@FXML
+	private Button refreshBtn;
+	@FXML
 	private TableView<Order> orderTableView;
 	@FXML
 	private TableColumn<Order, Integer> orderNumberColumn;
@@ -53,6 +55,10 @@ public class MyOrdersUI extends Application implements Initializable {
 
 	private Order selectedOrder;
 
+	public void refreshOrder(ActionEvent e) {
+		
+	}
+	
 	public void goToMainMenu(ActionEvent e) {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));

@@ -32,7 +32,7 @@
             </Button>
          </bottom>
          <top>
-            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" text="#UserName" BorderPane.alignment="CENTER">
+            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" BorderPane.alignment="CENTER">
                <content>
                   <Label alignment="CENTER" text="ORDER #_">
                      <font>
@@ -130,7 +130,11 @@
                         </Button>
                      </children>
                   </GridPane>
-                  <Label fx:id="costLbl" translateX="-115.0" translateY="65.0" />
+                  <Label fx:id="costLbl" textAlignment="CENTER" translateX="-115.0" translateY="65.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
                </children>
                <BorderPane.margin>
                   <Insets bottom="100.0" right="50.0" top="50.0" />

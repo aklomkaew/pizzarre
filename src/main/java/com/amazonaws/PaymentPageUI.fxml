@@ -82,6 +82,13 @@
                   <Insets left="20.0" />
                </BorderPane.margin>
             </TableView>
-         </left></BorderPane>
+         </left>
+         <bottom>
+            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#goBack" text="Back" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="20.0" />
+               </BorderPane.margin>
+            </Button>
+         </bottom></BorderPane>
    </children>
 </AnchorPane>
