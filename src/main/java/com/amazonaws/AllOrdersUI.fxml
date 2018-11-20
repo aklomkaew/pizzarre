@@ -96,7 +96,7 @@
                   <Button fx:id="deleteAllOrderBtn" mnemonicParsing="false" onAction="#deleteAllOrder" prefHeight="80.0" prefWidth="80.0" text="Delete All Order" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                   <Button fx:id="deleteOrderBtn" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="80.0" prefWidth="80.0" text="Delete Order" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                   <Button fx:id="allActiveOrdersBtn" mnemonicParsing="false" onAction="#goToAllActiveOrders" prefHeight="80.0" prefWidth="80.0" text="All Active Orders" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#displayAllOrder" prefHeight="80.0" prefWidth="80.0" text="Refresh  Orders" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#displayAllOrder" prefHeight="80.0" prefWidth="80.0" text="Refresh" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
          </center></BorderPane>

@@ -55,7 +55,7 @@ public class AllUsersUI extends Application implements Initializable {
 	private ObservableList<User> userObservableList;
 
 	private void displayAllUser(ActionEvent e) {
-		
+		displayAllUser();
 	}
 	
 	public void addUser(ActionEvent e) {

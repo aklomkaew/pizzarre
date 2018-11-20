@@ -59,7 +59,7 @@ public class AllOrdersUI extends Application implements Initializable {
 	private ObservableList<Order> orderObservableList;
 	
 	public void displayAllOrder(ActionEvent e) {
-		
+		displayAllOrder();
 	}
 
 	public void goToManagerUtilities(ActionEvent e) {
