@@ -64,7 +64,7 @@ public class DrinksUI implements Initializable {
 	private static ArrayList<String> drinkIdArrayList = new ArrayList<String>();
 
 	private HashMap<String, Integer> drinkMap = new HashMap<String, Integer>();
-
+	
 	public static ArrayList<String> getDrinkList() {
 		return drinkIdArrayList;
 	}
@@ -161,6 +161,7 @@ public class DrinksUI implements Initializable {
 		 * order.getDrink().add(d); }
 		 */
 		String newName = "";
+		drinkArrayList.clear();
 		for (int i = 0; i < drinkIdArrayList.size(); i++) { // loop that adds and increments pizza's price
 			newName = drinkIdArrayList.get(i);
 			Drink newDrink = new Drink(newName, 2);
@@ -188,12 +189,13 @@ public class DrinksUI implements Initializable {
 
 	public void removeDrink(ActionEvent e) {
 		int index = drinkListView.getSelectionModel().getSelectedIndex();
-		if(drinkArrayList.size() <= index) {
+		if(drinkArrayList.size() > index) {
 			if(drinkArrayList.get(index).getIsNew() == 0) {
 				Alert.Display("Error", "This item cannot be removed.");
 				return;
 			}
 		}
+		
 		drinkIdArrayList.remove(index);
 		drinkObservableList.remove(index);
 		drinkListView.setItems(drinkObservableList);
