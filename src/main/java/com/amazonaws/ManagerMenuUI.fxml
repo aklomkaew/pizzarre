@@ -30,7 +30,7 @@
             </Button>
          </bottom>
          <top>
-            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" style="-fx-border-color: black;" text="#UserName" BorderPane.alignment="CENTER" />
+            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER" />
          </top>
          <center>
             <VBox alignment="CENTER" maxHeight="350.0" maxWidth="200.0" minHeight="350.0" minWidth="200.0" prefHeight="350.0" prefWidth="200.0" BorderPane.alignment="CENTER">

@@ -54,7 +54,7 @@ public class RecipeListUI extends Application implements Initializable {
 	private ObservableList<RecipeItem> recipeObservableList;
 
 	public void displayAllRecipes(ActionEvent e) {
-		
+		displayAllRecipe();
 	}
 	
 	public void addRecipe(ActionEvent e) {

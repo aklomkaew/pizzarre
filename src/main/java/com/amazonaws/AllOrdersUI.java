@@ -59,11 +59,10 @@ public class AllOrdersUI extends Application implements Initializable {
 	private ObservableList<Order> orderObservableList;
 	
 	public void displayAllOrder(ActionEvent e) {
-		
+		displayAllOrder();
 	}
 
 	public void goToManagerUtilities(ActionEvent e) {
-
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}

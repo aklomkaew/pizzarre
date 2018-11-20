@@ -22,7 +22,7 @@
             <ColorAdjust />
          </effect>
          <top>
-            <TitledPane alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="600.0" text="#UserName" BorderPane.alignment="CENTER">
+            <TitledPane alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <content>
                   <Label alignment="CENTER" prefHeight="35.0" prefWidth="137.0" text="Recipes" textAlignment="CENTER">
                      <font>
@@ -86,7 +86,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#displayAllRecipe" prefHeight="55.0" prefWidth="75.0" text="Refresh Recipes" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#displayAllRecipe" prefHeight="55.0" prefWidth="75.0" text="Refresh" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>

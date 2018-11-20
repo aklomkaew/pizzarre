@@ -25,7 +25,7 @@
             <ColorAdjust />
          </effect>
          <top>
-            <TitledPane alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="600.0" text="#UserName" BorderPane.alignment="CENTER">
+            <TitledPane alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <content>
                   <Label alignment="CENTER" prefHeight="35.0" prefWidth="137.0" text="INVENTORY" textAlignment="CENTER">
                      <font>
@@ -98,7 +98,7 @@
                   <Label text="Quantity:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <TextField fx:id="ingredientNameTF" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <TextField fx:id="quantityTF" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#displayAllInventory" prefHeight="60.0" prefWidth="75.0" text="Refresh Inventory" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#displayAllInventory" prefHeight="60.0" prefWidth="75.0" text="Refresh" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
          </right></BorderPane>

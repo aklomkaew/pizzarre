@@ -19,8 +19,6 @@ public class AddUserUI extends Application {
 	private Button backBtn;
 	@FXML
 	private TextField userNameTF;
-	@FXML
-	private TextField idTF;
 	
 	public void addUser (ActionEvent e) {
 		String userName = userNameTF.getText();
