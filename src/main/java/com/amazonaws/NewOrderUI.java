@@ -180,7 +180,7 @@ public class NewOrderUI implements Initializable {
 	}
 
 	public void goToDrinks(ActionEvent e) {
-
+		DrinksUI.setDrinks(order.getDrink());
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
 		NextStage.goTo(fxmlLoader, drink);
 	}

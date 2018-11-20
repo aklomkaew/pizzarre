@@ -65,8 +65,15 @@ public class DrinksUI implements Initializable {
 
 	private HashMap<String, Integer> drinkMap = new HashMap<String, Integer>();
 	
+	private static ArrayList<Drink> oldDrinks = new ArrayList<Drink>();
+	
 	public static ArrayList<String> getDrinkList() {
 		return drinkIdArrayList;
+	}
+	
+	public static void setDrinks(ArrayList<Drink> list) {
+		oldDrinks.clear();
+		oldDrinks.addAll(list);
 	}
 
 	public void selectDrink(ActionEvent e) {
@@ -165,6 +172,12 @@ public class DrinksUI implements Initializable {
 		for (int i = 0; i < drinkIdArrayList.size(); i++) { // loop that adds and increments pizza's price
 			newName = drinkIdArrayList.get(i);
 			Drink newDrink = new Drink(newName, 2);
+			Drink tmp = containsDrink(newName);
+			if(tmp != null) {
+				newDrink = tmp;
+				removeDrink(newName);
+			}
+			
 			drinkArrayList.add(newDrink);
 		}
 		order.getDrink().clear();
@@ -179,6 +192,26 @@ public class DrinksUI implements Initializable {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirm);
 
+	}
+	
+	private Drink containsDrink(String str) {
+		Drink ret = null;
+		for(Drink d : oldDrinks) {
+			if(d.getName().equals(str)) {
+				ret = d;
+				break;
+			}
+		}
+		
+		return ret;
+	}
+	
+	private void removeDrink(String str) {
+		for(int i = 0; i < oldDrinks.size(); i++) {
+			if(oldDrinks.get(i).getName().equals(str)) {
+				oldDrinks.remove(i);
+			}
+		}
 	}
 
 	public void cancelDrink(ActionEvent e) {
