@@ -1,10 +1,5 @@
 package com.amazonaws;
 
-import java.util.*;
-
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
-
 public class Drink {
 	private String name;
 	private double price;

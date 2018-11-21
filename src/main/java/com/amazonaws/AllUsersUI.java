@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +32,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class AllUsersUI extends Application implements Initializable {
+public class AllUsersUI implements Initializable {
 
 	@FXML
 	private Button backBtn;
@@ -118,7 +117,6 @@ public class AllUsersUI extends Application implements Initializable {
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
-	@Override
 	public void start(Stage arg0) throws Exception {
 
 	}

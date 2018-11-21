@@ -1,7 +1,6 @@
 package com.amazonaws;
 
 import java.util.List;
-
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

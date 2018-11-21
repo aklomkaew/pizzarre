@@ -1,11 +1,10 @@
 package com.amazonaws;
+
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.stage.*;
-
 import java.util.ArrayList;
-
 import javafx.geometry.*;
 
 public class Alert {

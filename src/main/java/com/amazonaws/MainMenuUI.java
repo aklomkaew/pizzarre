@@ -3,28 +3,14 @@ package com.amazonaws;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
-public class MainMenuUI extends Application implements Initializable{
-	
+public class MainMenuUI implements Initializable{
 	
     @FXML
     private Button newOrd;
@@ -65,7 +51,6 @@ public void logout (ActionEvent event){
 	
 }
 
-	@Override
 	public void start(Stage arg0) throws Exception {
 		
 		

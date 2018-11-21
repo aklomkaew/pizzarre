@@ -1,8 +1,6 @@
 package com.amazonaws;
 
 import java.util.List;
-
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
-public class AddUserUI extends Application {
+public class AddUserUI {
 	
 	@FXML
 	private Button confirmBtn;
@@ -48,9 +46,8 @@ public class AddUserUI extends Application {
 	}
 
 
-	@Override
+
 	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 	

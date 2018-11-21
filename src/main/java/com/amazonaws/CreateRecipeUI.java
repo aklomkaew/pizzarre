@@ -29,7 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class CreateRecipeUI extends Application implements Initializable {
+public class CreateRecipeUI implements Initializable {
 
 	@FXML
 	private Button backBtn;
@@ -155,7 +155,7 @@ public class CreateRecipeUI extends Application implements Initializable {
 		}
 	}
 
-	@Override
+
 	public void start(Stage stage) throws Exception {
 
 	}

@@ -2,8 +2,6 @@ package com.amazonaws;
 
 import java.util.*;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
-
 public class Pizza {
 	private String name;
 	private ArrayList<String> toppings;

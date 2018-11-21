@@ -3,41 +3,24 @@ package com.amazonaws;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
 public class SpecialtyIntoCustomUI implements Initializable {
 
 	@FXML
-	private Button confirm;
+	private Button confirmBtn;
 	@FXML
-	private Button cancel;
+	private Button cancelBtn;
 	@FXML
-	private Button back;
-
-	private String id = null; // names used for database access
+	private Button backBtn;
 	@FXML
 	private Button pepperoni;
 	@FXML
@@ -197,12 +180,12 @@ public class SpecialtyIntoCustomUI implements Initializable {
 		toppingListView.getItems().clear();
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-		NextStage.goTo(fxmlLoader, confirm);
+		NextStage.goTo(fxmlLoader, confirmBtn);
 	}
 
 	public void goToSpecialty(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
-		NextStage.goTo(fxmlLoader, back);
+		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
 	public void start(Stage arg0) throws Exception {

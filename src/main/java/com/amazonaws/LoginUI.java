@@ -1,9 +1,7 @@
 package com.amazonaws;
 
-import java.awt.TextField;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,10 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
 public class LoginUI extends Application {
 
 	@FXML
@@ -39,13 +35,13 @@ public class LoginUI extends Application {
 	@FXML
 	private Button b9;
 	@FXML
-	private Button ok;
-	@FXML
 	private Button b0;
 	@FXML
-	private Button no;
+	private Button confirmBtn;
 	@FXML
-	private PasswordField password;
+	private Button clearBtn;
+	@FXML
+	private PasswordField passwordPF;
 
 	private static boolean isManager;
 	private static User user;
@@ -69,70 +65,70 @@ public class LoginUI extends Application {
 
 		idNum.add("1");
 		System.out.println("1");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void pressedTwo(ActionEvent e) {
 
 		idNum.add("2");
 		System.out.println("2");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void pressedThree(ActionEvent e) {
 
 		idNum.add("3");
 		System.out.println("3");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void pressedFour(ActionEvent e) {
 
 		idNum.add("4");
 		System.out.println("4");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void pressedFive(ActionEvent e) {
 
 		idNum.add("5");
 		System.out.println("5");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void pressedSix(ActionEvent e) {
 
 		idNum.add("6");
 		System.out.println("6");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void pressedSeven(ActionEvent e) {
 
 		idNum.add("7");
 		System.out.println("7");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void pressedEight(ActionEvent e) {
 
 		idNum.add("8");
 		System.out.println("8");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void pressedNine(ActionEvent e) {
 
 		idNum.add("9");
 		System.out.println("9");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void pressedZero(ActionEvent e) {
 
 		idNum.add("0");
 		System.out.println("0");
-		password.appendText("*");
+		passwordPF.appendText("*");
 	}
 
 	public void confirmInput(ActionEvent e) {
@@ -140,11 +136,11 @@ public class LoginUI extends Application {
 		User u = UserDb.getUser(inputId);
 		if (idNum.size() != 4) {
 			Alert.Display("ERROR", "This appears if the input is wrong.");
-			password.clear();
+			passwordPF.clear();
 			idNum.clear();
 		} else if (u.getUserId() == -1) {
 			Alert.Display("ERROR", "User not found.");
-			password.clear();
+			passwordPF.clear();
 			idNum.clear();
 		} else {
 			if (u.isManager()) {
@@ -156,9 +152,9 @@ public class LoginUI extends Application {
 			}
 
 			idNum.clear();
-			password.clear();
+			passwordPF.clear();
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-			NextStage.goTo(fxmlLoader, ok);
+			NextStage.goTo(fxmlLoader, confirmBtn);
 		}
 	}
 
@@ -181,7 +177,7 @@ public class LoginUI extends Application {
 
 	public void clearInput(ActionEvent e) {
 		idNum.clear();
-		password.clear();
+		passwordPF.clear();
 	}
 
 	public void shutdown(ActionEvent e) {

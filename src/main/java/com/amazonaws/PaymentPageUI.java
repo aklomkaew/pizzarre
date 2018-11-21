@@ -2,10 +2,7 @@ package com.amazonaws;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,12 +16,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class PaymentPageUI extends Application implements Initializable {
+public class PaymentPageUI implements Initializable {
 
 	@FXML
-	private Button confirmPaymentBtn;
+	private Button confirmBtn;
 	@FXML
 	private Button backBtn;
+	@FXML
+	private Button mainMenuBtn;
 	@FXML
 	private TextField paymentTF;
 	@FXML
@@ -49,16 +48,14 @@ public class PaymentPageUI extends Application implements Initializable {
 
 	private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
 
-	private static double total;
-
 	public class OrderContents {
 		String itemName;
 		double itemPrice;
-
-		public OrderContents() {
-			String itemName = "";
-			double itemPrice = 0.0;
-		}
+		
+		public OrderContents(){
+    		String itemName = "";
+    		double itemPrice = 0.0;
+    	}
 
 		public OrderContents(String name, double price) {
 			this.itemName = name;
@@ -90,7 +87,7 @@ public class PaymentPageUI extends Application implements Initializable {
 			return;
 		} else {
 			if (payment > paymentOrder.getTotal()) {
-				Alert.Display("Information", "Payment processed. Change = $" + (payment - total));
+				Alert.Display("Information", "Payment processed. Change = $" + (payment - paymentOrder.getTotal()));
 			} else {
 				Alert.Display("Information", "Payment processed.");
 			}
@@ -98,7 +95,7 @@ public class PaymentPageUI extends Application implements Initializable {
 			OrderDb.updateOrder(paymentOrder);
 		}
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-		NextStage.goTo(fxmlLoader, confirmPaymentBtn);
+		NextStage.goTo(fxmlLoader, confirmBtn);
 	}
 
 	public static void setOrder(Order o) {
@@ -114,25 +111,20 @@ public class PaymentPageUI extends Application implements Initializable {
 
 	}
 
-	@Override
 	public void start(Stage arg0) throws Exception {
 
 	}
 
 	public void displayOrderContents() {
-		double totalPrice = 0.0;
 
 		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, Double>("itemPrice"));
 		orderContentsObservableList = FXCollections.observableArrayList();
-		// if (pizzaArrayList == null || pizzaArrayList.size() < 1) {
-		// return;
-		// }
+
 		for (int i = 0; i < pizzaArrayList.size(); i++) {
 
 			String itemName = pizzaArrayList.get(i).getName();
 			double itemPrice = pizzaArrayList.get(i).getPrice();
-			totalPrice = totalPrice + itemPrice;
 			orderContentsObservableList.add(new OrderContents(itemName, itemPrice));
 		}
 
@@ -140,7 +132,6 @@ public class PaymentPageUI extends Application implements Initializable {
 
 			String itemName = drinkArrayList.get(i).getName();
 			double itemPrice = drinkArrayList.get(i).getPrice();
-			totalPrice = totalPrice + itemPrice;
 			orderContentsObservableList.add(new OrderContents(itemName, itemPrice));
 		}
 

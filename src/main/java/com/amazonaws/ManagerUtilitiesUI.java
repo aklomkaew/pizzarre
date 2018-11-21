@@ -1,25 +1,12 @@
 package com.amazonaws;
 
-
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
-public class ManagerUtilitiesUI extends Application {
-	
+public class ManagerUtilitiesUI {
 	
     @FXML
     private Button allOrderBtn;
@@ -31,8 +18,6 @@ public class ManagerUtilitiesUI extends Application {
     private Button inventoryBtn;
     @FXML
     private Button backBtn;
-	
- 
 
 public void goToAllOrders(ActionEvent e) {
 	
@@ -62,9 +47,8 @@ public void goToMainMenu (ActionEvent e) {
 	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 	NextStage.goTo(fxmlLoader, backBtn);
 }
-	@Override
+
 	public void start(Stage arg0) throws Exception {
-		
 		
 	}
 	
