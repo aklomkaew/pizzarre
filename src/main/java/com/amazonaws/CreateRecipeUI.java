@@ -1,34 +1,21 @@
 package com.amazonaws;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
 public class CreateRecipeUI implements Initializable {
 
 	@FXML
@@ -76,31 +63,26 @@ public class CreateRecipeUI implements Initializable {
 
 	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
 
-	public void addRemoveTopping(ActionEvent e) {
+	public void addRemoveTopping(ActionEvent onClick) {
 
-		String id = ((Button) e.getSource()).getId();
-		String toppingName = ((Button) e.getSource()).getText();
+		String id = ((Button) onClick.getSource()).getId();
+		String toppingName = ((Button) onClick.getSource()).getText();
 
 		if (toppingIdArrayList.contains(id) == false) { // if statements adds topping to the list
 
 			System.out.println(id + " added");
-			toppingIdArrayList.add(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
+			toppingIdArrayList.add(id);
 			toppingObservableList.add(toppingName); // list used to display topping names
 
 		} else { // else statement removes topping from the list
 
 			System.out.println(id + " removed");
-			toppingIdArrayList.remove(id); // USE THIS LIST FOR INVENTORY NAMES (i.e. greenPepper, NOT Green Pepper)
+			toppingIdArrayList.remove(id);
 			toppingObservableList.remove(toppingName); // list used to display topping names
 		}
 	}
 
-	public void confirmRecipe(ActionEvent e) {
-		// This adds the recipe to the database
-		/*
-		 * This will also need to add a button for the new recipe on the specialty
-		 * page's gridpane.
-		 */
+	public void confirmRecipe() {
 
 		String recipeName = recipeNameTF.getText();
 		if (recipeName == null || recipeName.length() == 0) {
@@ -124,44 +106,31 @@ public class CreateRecipeUI implements Initializable {
 			return;
 		}
 		
-
 		System.out.println("The recipe name is " + recipeName + " and the toppings are: " + toppingObservableList);
 		recipeNameTF.clear();
 		toppingIdArrayList.clear();
 		toppingObservableList.clear();
 		toppingListView.setItems(toppingObservableList);
 		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
-		NextStage.goTo(fxmlLoader, confirmBtn);
+		goToRecipeList();
 	}
 
 	public void clearRecipe(ActionEvent e) {
+		
 		recipeNameTF.clear();
 		toppingObservableList.clear();
 		toppingListView.getItems().clear();
 	}
 
-	public void goToRecipeList(ActionEvent e) {
-		try {
+	public void goToRecipeList() {
+
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage recipeListStage = new Stage();
-			recipeListStage.setScene(new Scene(root));
-			recipeListStage.show();
-			Stage createRecipeStage = (Stage) backBtn.getScene().getWindow();
-			createRecipeStage.close();
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
+			NextStage.goTo(fxmlLoader,  backBtn);
 	}
 
-
-	public void start(Stage stage) throws Exception {
-
-	}
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { // initializes populates ist with current users
+		
 		toppingObservableList = FXCollections.observableArrayList();
 		toppingListView.setItems(toppingObservableList);
 	}

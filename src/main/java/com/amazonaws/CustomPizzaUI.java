@@ -12,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class CustomPizzaUI implements Initializable {
 
@@ -108,7 +107,6 @@ public class CustomPizzaUI implements Initializable {
 	}
 
 	public void confirmPizza(ActionEvent e) {
-		// add pizza to order here
 		if (pizzaSize == null) {
 			Alert.Display("ERROR", "Select a size.");
 			return;
@@ -261,9 +259,6 @@ public class CustomPizzaUI implements Initializable {
 			InventoryDb.changeQuantity(list.get(i), pSize, "increase");
 			NewOrderUI.removeIngredient(list.get(i), pSize);
 		}
-	}
-
-	public void start(Stage arg0) throws Exception {
 	}
 
 	public static void setOldPizza(ArrayList<Pizza> list) {

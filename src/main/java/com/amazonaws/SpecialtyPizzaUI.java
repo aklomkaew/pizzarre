@@ -72,19 +72,20 @@ public class SpecialtyPizzaUI {
 	public void confirmSpecialty(ActionEvent e) {
 
 		if (specialtyName != null && specialtySize != null) {
-			goToSpecialtyIntoCustom(e);
+			goToSpecialtyIntoCustom();
 		} else {
 			Alert.Display("Error", "Please select a special and size.");
 		}
 	}
 
-	public void goToSpecialtyIntoCustom(ActionEvent e) { // do not NextStage.goTo this one
+	public void goToSpecialtyIntoCustom() { //fix for initialize in specialtyIntoCustomUI
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyIntoCustomUI.fxml"));
 			Parent root = (Parent) fxmlLoader.load();
 			Stage nextStage = new Stage();
 			nextStage.setScene(new Scene(root, 600, 600));
 			nextStage.setResizable(false);
+			
 			SpecialtyIntoCustomUI display = fxmlLoader.getController();
 			display.getSpecialtyInfo(specialtyName, specialtySize); // passes specialty recipe onto
 																	// BuildSpeciatyIntoCustom.java
@@ -97,13 +98,9 @@ public class SpecialtyPizzaUI {
 		}
 	}
 
-	public void goToOrderScreen(ActionEvent e) {
+	public void goToOrderScreen() {
+		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
-
-	public void start(Stage arg0) throws Exception {
-
-	}
-
 }

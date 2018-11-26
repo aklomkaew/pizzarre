@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 
 public class SpecialtyIntoCustomUI implements Initializable {
 
@@ -101,24 +100,8 @@ public class SpecialtyIntoCustomUI implements Initializable {
 	}
 
 	public void confirmSpecialty(ActionEvent e) { // passes specialty data back to NewOrderUI.java, do not
-													// NextStage.goTo
+		
 		int pSize = getpSize(specialtySize);
-
-//		try {
-//			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-//			Parent root = (Parent) fxmlLoader.load();
-//			Stage nextStage = new Stage();
-//			nextStage.setScene(new Scene(root, 600, 600));
-//			nextStage.setResizable(false);
-//			NewOrderUI display = fxmlLoader.getController();
-//			display.makeSpecialtyPizzaObject(specialtyName, toppingIdArrayList, size);
-//			nextStage.show();
-//			Stage currentStage = (Stage) confirm.getScene().getWindow();
-//			currentStage.close();
-//
-//		} catch (Exception exception) {
-//			exception.printStackTrace();
-//		}
 
 		ArrayList<String> list = new ArrayList<String>();
 		for (String item : toppingObservableList) {
@@ -179,17 +162,17 @@ public class SpecialtyIntoCustomUI implements Initializable {
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-		NextStage.goTo(fxmlLoader, confirmBtn);
+		goToOrderScreen();
 	}
 
 	public void goToSpecialty(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
-
-	public void start(Stage arg0) throws Exception {
-
+	
+	public void goToOrderScreen() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirmBtn);
 	}
 
 	@Override

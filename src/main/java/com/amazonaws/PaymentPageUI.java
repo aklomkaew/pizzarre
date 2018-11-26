@@ -14,7 +14,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 public class PaymentPageUI implements Initializable {
 
@@ -72,6 +71,7 @@ public class PaymentPageUI implements Initializable {
 	}
 
 	public void checkPayment(ActionEvent e) {
+		
 		try {
 			payment = Double.parseDouble(paymentTF.getText());
 		} catch (NumberFormatException nfe) {
@@ -82,6 +82,7 @@ public class PaymentPageUI implements Initializable {
 	}
 
 	private void confirmPayment() {
+		
 		if (payment < paymentOrder.getTotal()) {
 			Alert.Display("Error", "Payment must be paid in full.");
 			return;
@@ -102,16 +103,7 @@ public class PaymentPageUI implements Initializable {
 		paymentOrder = o;
 	}
 
-	public void goToMainMenu(ActionEvent e) {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-		NextStage.goTo(fxmlLoader, backBtn);
-	}
-
 	public void goBack(ActionEvent e) {
-
-	}
-
-	public void start(Stage arg0) throws Exception {
 
 	}
 
@@ -139,6 +131,11 @@ public class PaymentPageUI implements Initializable {
 		orderTableView.setItems(orderContentsObservableList);
 	}
 
+	public void goToMainMenu() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		NextStage.goTo(fxmlLoader, backBtn);
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 

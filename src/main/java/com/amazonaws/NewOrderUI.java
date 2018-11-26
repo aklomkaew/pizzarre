@@ -151,26 +151,7 @@ public class NewOrderUI implements Initializable {
 		pizzaArrayList.remove(modifiedIndex);
 		pizzaNameArrayList.remove(modifiedIndex);
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
-		NextStage.goTo(fxmlLoader, modifyPizzaBtn);
-	}
-
-	public void goToDrinks(ActionEvent e) {
-		DrinksUI.setDrinks(order.getDrink());
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
-		NextStage.goTo(fxmlLoader, drinkBtn);
-	}
-
-	public void goToSpecialty(ActionEvent e) {
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
-		NextStage.goTo(fxmlLoader, specialBtn);
-	}
-
-	public void goToCustom(ActionEvent e) {
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
-		NextStage.goTo(fxmlLoader, customBtn);
+		goToCustom();
 	}
 
 	public void setDiscount(ActionEvent e) {
@@ -257,9 +238,7 @@ public class NewOrderUI implements Initializable {
 		drinkNameArrayList.clear();
 		orderContentsObservableList.clear();
 		orderTableView.getItems().clear();
-		//orderListView.getItems().clear();
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-		NextStage.goTo(fxmlLoader, confirmBtn);
+		goToMainMenu();
 	}
 
 	public void discardOrder(ActionEvent e) {
@@ -288,14 +267,6 @@ public class NewOrderUI implements Initializable {
 					}
 				}
 				OrderDb.updateOrder(order);
-//				User u = LoginUI.getUser();
-//				try {
-//					u.getOrderList().add(order);
-//				} catch (Exception err) {
-//					System.out.println("Error cannot add order to user");
-//					System.err.println(err.getMessage());
-//				}
-//				UserDb.updateUser(u);
 
 				order = null;
 				modOrder = false;
@@ -318,8 +289,7 @@ public class NewOrderUI implements Initializable {
 			}
 			orderTableView.getItems().clear();
 
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-			NextStage.goTo(fxmlLoader, cancelBtn);
+			goToMainMenu();
 		}
 	}
 
@@ -427,6 +397,55 @@ public class NewOrderUI implements Initializable {
 		modOrder = true;
 	}
 
+	public static Order getOrder() {
+		return order;
+	}
+
+	public static boolean removeIngredient(String str, int quantity) {
+		boolean status = false;
+
+		if (allIngredients == null || !allIngredients.containsKey(str)) {
+			status = false;
+		} else {
+			if (allIngredients.get(str) < quantity) {
+				status = false;
+				System.out.println("Ingredient less than amount wanting to remove");
+			} else if (allIngredients.get(str) == quantity) {
+				allIngredients.remove(str);
+				status = true;
+			} else {
+				allIngredients.put(str, allIngredients.get(str) - quantity);
+				status = true;
+			}
+		}
+
+		return status;
+	}
+	
+	public void goToDrinks() {
+		DrinksUI.setDrinks(order.getDrink());
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
+		NextStage.goTo(fxmlLoader, drinkBtn);
+	}
+
+	public void goToSpecialty() {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
+		NextStage.goTo(fxmlLoader, specialBtn);
+	}
+
+	public void goToCustom() {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
+		NextStage.goTo(fxmlLoader, customBtn);
+	}
+	
+	public void goToMainMenu() {
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirmBtn);
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		orderContentsObservableList = FXCollections.observableArrayList();
@@ -478,30 +497,5 @@ public class NewOrderUI implements Initializable {
 		}
 		orderTableView.setItems(orderContentsObservableList);
 		updateCost();
-	}
-
-	public static Order getOrder() {
-		return order;
-	}
-
-	public static boolean removeIngredient(String str, int quantity) {
-		boolean status = false;
-
-		if (allIngredients == null || !allIngredients.containsKey(str)) {
-			status = false;
-		} else {
-			if (allIngredients.get(str) < quantity) {
-				status = false;
-				System.out.println("Ingredient less than amount wanting to remove");
-			} else if (allIngredients.get(str) == quantity) {
-				allIngredients.remove(str);
-				status = true;
-			} else {
-				allIngredients.put(str, allIngredients.get(str) - quantity);
-				status = true;
-			}
-		}
-
-		return status;
 	}
 }

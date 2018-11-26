@@ -16,7 +16,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 public class MyOrdersUI implements Initializable {
 
@@ -54,12 +53,13 @@ public class MyOrdersUI implements Initializable {
 	}
 
 	public Order getOrder() {
+		
 		return selectedOrder;
 	}
 
 	public void displayAllOrder() {
+		
 		List<Order> list = OrderDb.retrieveFilteredItem(LoginUI.getUser().getUserId());
-
 		if (list == null || list.size() < 1) {
 			return;
 		}
@@ -76,6 +76,7 @@ public class MyOrdersUI implements Initializable {
 	}
 
 	public void showOrder(ActionEvent e) {
+		
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -90,6 +91,7 @@ public class MyOrdersUI implements Initializable {
 		} else {
 			status += "not active";
 		}
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("View Order");
 		alert.setHeaderText("Order " + item.getOrderNumber() + " is " + status + ". It contains:");
@@ -98,6 +100,7 @@ public class MyOrdersUI implements Initializable {
 	}
 
 	public void payOrder(ActionEvent e) {
+		
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -115,9 +118,7 @@ public class MyOrdersUI implements Initializable {
 		}
 
 		PaymentPageUI.setOrder(item);
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
-		NextStage.goTo(fxmlLoader, payBtn);
+		goToPaymentPage();
 	}
 
 	public void editOrder(ActionEvent e) {
@@ -138,9 +139,7 @@ public class MyOrdersUI implements Initializable {
 		}
 
 		NewOrderUI.setOrder(orderToEdit);
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-		NextStage.goTo(fxmlLoader, editBtn);
+		goToOrderScreen();
 	}
 
 	public void deleteOrder(ActionEvent e) {
@@ -171,10 +170,18 @@ public class MyOrdersUI implements Initializable {
 		displayAllOrder();
 	}
 
-	public void start(Stage arg0) throws Exception {
-
-	}
-
+    public void goToPaymentPage() {
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
+    	NextStage.goTo(fxmlLoader, payBtn);
+    }
+    
+    public void goToOrderScreen() {
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+    	NextStage.goTo(fxmlLoader, editBtn);
+    }
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		orderNumberColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("orderNumber"));

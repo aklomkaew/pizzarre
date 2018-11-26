@@ -16,7 +16,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 public class RecipeListUI implements Initializable {
 
@@ -48,6 +47,7 @@ public class RecipeListUI implements Initializable {
 	}
 
 	public void viewRecipe(ActionEvent e) { // index in Observable List will match index in RecipeDb
+		
 		RecipeItem item = recipeTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -63,13 +63,8 @@ public class RecipeListUI implements Initializable {
 		alert.showAndWait();
 	}
 
-	public void goToManagerUtilities(ActionEvent e) {
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
-		NextStage.goTo(fxmlLoader, backBtn);
-	}
-
 	public void deleteRecipe(ActionEvent e) {
+		
 		RecipeItem itemToDelete = recipeTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -91,8 +86,8 @@ public class RecipeListUI implements Initializable {
 	}
 
 	public void displayAllRecipe() {
+		
 		List<RecipeItem> list = RecipeDb.retrieveAllItem();
-
 		if (list == null || list.size() < 1) {
 			return;
 		}
@@ -105,10 +100,12 @@ public class RecipeListUI implements Initializable {
 		}
 	}
 
-	public void start(Stage arg0) throws Exception {
+	public void goToManagerUtilities(ActionEvent e) {
 
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
+		NextStage.goTo(fxmlLoader, backBtn);
 	}
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { // initializes populates ist with current users
 		nameColumn.setCellValueFactory(new PropertyValueFactory<RecipeItem, String>("name"));

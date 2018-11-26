@@ -14,7 +14,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 public class InventoryUI implements Initializable {
 
@@ -128,10 +127,6 @@ public class InventoryUI implements Initializable {
 		for (InventoryItem item : inventoryObservableList) {
 			System.out.println("Inventory name = " + item.getName() + " quantity = " + item.getQuantity());
 		}
-	}
-
-	public void start(Stage arg0) throws Exception {
-
 	}
 
 	@Override

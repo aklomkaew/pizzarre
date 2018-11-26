@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 
 public class DrinksUI implements Initializable {
 	@FXML
@@ -217,9 +216,6 @@ public class DrinksUI implements Initializable {
 	public void goToOrderScreen(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
-	}
-
-	public void start(Stage arg0) throws Exception {
 	}
 
 	@Override
