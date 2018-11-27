@@ -19,7 +19,7 @@
    <children>
       <BorderPane maxHeight="600.0" maxWidth="600.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <Button fx:id="cancel" alignment="CENTER" mnemonicParsing="false" onAction="#cancelDrink" text="Cancel" BorderPane.alignment="CENTER">
+            <Button fx:id="cancelBtn" alignment="CENTER" mnemonicParsing="false" onAction="#cancelDrink" text="Cancel" BorderPane.alignment="CENTER">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -116,7 +116,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="remove" maxHeight="80.0" minHeight="80.0" mnemonicParsing="false" onAction="#removeDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Remove Selected Drink" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                        <Button fx:id="removeBtn" maxHeight="80.0" minHeight="80.0" mnemonicParsing="false" onAction="#removeDrink" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: pink;" text="Remove Selected Drink" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -127,7 +127,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="confirm" layoutX="197.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirmDrinks" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: palegreen;" text="Confirm Drinks" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Button fx:id="confirmBtn" layoutX="197.0" layoutY="320.0" mnemonicParsing="false" onAction="#confirmDrinks" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: palegreen;" text="Confirm Drinks" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>

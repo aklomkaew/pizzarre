@@ -1,24 +1,11 @@
 package com.amazonaws;
 
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.amazonaws.PaymentPageUI.OrderContents;
-
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.collections.ObservableList;
@@ -29,24 +16,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
 public class NewOrderUI implements Initializable {
 
 	@FXML
@@ -54,17 +29,19 @@ public class NewOrderUI implements Initializable {
 	@FXML
 	private Button cancelBtn;
 	@FXML
-	private Button drink;
+	private Button drinkBtn;
 	@FXML
-	private Button special;
+	private Button specialBtn;
 	@FXML
-	private Button custom;
+	private Button customBtn;
 	@FXML
-	private Button discount;
+	private Button discountBtn;
 	@FXML
-	private Button confirm;
+	private Button confirmBtn;
 	@FXML
-	private Button modifyPizza;
+	private Button removeBtn;
+	@FXML
+	private Button modifyPizzaBtn;
 	@FXML
 	private Button viewToppingsBtn;
 	@FXML
@@ -80,8 +57,6 @@ public class NewOrderUI implements Initializable {
 	private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
 	private static ArrayList<String> pizzaNameArrayList = new ArrayList<String>(); // to display pizzas on listview
 	private static ArrayList<String> drinkNameArrayList = new ArrayList<String>(); // for drink INGREDIENTS
-	// private static ObservableList<String> orderObservableList =
-	// FXCollections.observableArrayList();
 
 	@FXML
 	private TableView<OrderContents> orderTableView;
@@ -176,26 +151,7 @@ public class NewOrderUI implements Initializable {
 		pizzaArrayList.remove(modifiedIndex);
 		pizzaNameArrayList.remove(modifiedIndex);
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
-		NextStage.goTo(fxmlLoader, modifyPizza);
-	}
-
-	public void goToDrinks(ActionEvent e) {
-		DrinksUI.setDrinks(order.getDrink());
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
-		NextStage.goTo(fxmlLoader, drink);
-	}
-
-	public void goToSpecialty(ActionEvent e) {
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
-		NextStage.goTo(fxmlLoader, special);
-	}
-
-	public void goToCustom(ActionEvent e) {
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
-		NextStage.goTo(fxmlLoader, custom);
+		goToCustom();
 	}
 
 	public void setDiscount(ActionEvent e) {
@@ -282,9 +238,7 @@ public class NewOrderUI implements Initializable {
 		drinkNameArrayList.clear();
 		orderContentsObservableList.clear();
 		orderTableView.getItems().clear();
-		//orderListView.getItems().clear();
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-		NextStage.goTo(fxmlLoader, confirm);
+		goToMainMenu();
 	}
 
 	public void discardOrder(ActionEvent e) {
@@ -313,14 +267,6 @@ public class NewOrderUI implements Initializable {
 					}
 				}
 				OrderDb.updateOrder(order);
-//				User u = LoginUI.getUser();
-//				try {
-//					u.getOrderList().add(order);
-//				} catch (Exception err) {
-//					System.out.println("Error cannot add order to user");
-//					System.err.println(err.getMessage());
-//				}
-//				UserDb.updateUser(u);
 
 				order = null;
 				modOrder = false;
@@ -343,8 +289,7 @@ public class NewOrderUI implements Initializable {
 			}
 			orderTableView.getItems().clear();
 
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
-			NextStage.goTo(fxmlLoader, cancelBtn);
+			goToMainMenu();
 		}
 	}
 
@@ -452,6 +397,55 @@ public class NewOrderUI implements Initializable {
 		modOrder = true;
 	}
 
+	public static Order getOrder() {
+		return order;
+	}
+
+	public static boolean removeIngredient(String str, int quantity) {
+		boolean status = false;
+
+		if (allIngredients == null || !allIngredients.containsKey(str)) {
+			status = false;
+		} else {
+			if (allIngredients.get(str) < quantity) {
+				status = false;
+				System.out.println("Ingredient less than amount wanting to remove");
+			} else if (allIngredients.get(str) == quantity) {
+				allIngredients.remove(str);
+				status = true;
+			} else {
+				allIngredients.put(str, allIngredients.get(str) - quantity);
+				status = true;
+			}
+		}
+
+		return status;
+	}
+	
+	public void goToDrinks() {
+		DrinksUI.setDrinks(order.getDrink());
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
+		NextStage.goTo(fxmlLoader, drinkBtn);
+	}
+
+	public void goToSpecialty() {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
+		NextStage.goTo(fxmlLoader, specialBtn);
+	}
+
+	public void goToCustom() {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
+		NextStage.goTo(fxmlLoader, customBtn);
+	}
+	
+	public void goToMainMenu() {
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		NextStage.goTo(fxmlLoader, confirmBtn);
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		orderContentsObservableList = FXCollections.observableArrayList();
@@ -503,30 +497,5 @@ public class NewOrderUI implements Initializable {
 		}
 		orderTableView.setItems(orderContentsObservableList);
 		updateCost();
-	}
-
-	public static Order getOrder() {
-		return order;
-	}
-
-	public static boolean removeIngredient(String str, int quantity) {
-		boolean status = false;
-
-		if (allIngredients == null || !allIngredients.containsKey(str)) {
-			status = false;
-		} else {
-			if (allIngredients.get(str) < quantity) {
-				status = false;
-				System.out.println("Ingredient less than amount wanting to remove");
-			} else if (allIngredients.get(str) == quantity) {
-				allIngredients.remove(str);
-				status = true;
-			} else {
-				allIngredients.put(str, allIngredients.get(str) - quantity);
-				status = true;
-			}
-		}
-
-		return status;
 	}
 }

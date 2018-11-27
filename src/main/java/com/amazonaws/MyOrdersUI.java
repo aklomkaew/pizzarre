@@ -4,33 +4,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
-public class MyOrdersUI extends Application implements Initializable {
+public class MyOrdersUI implements Initializable {
 
 	@FXML
 	private Button backBtn;
@@ -66,12 +53,13 @@ public class MyOrdersUI extends Application implements Initializable {
 	}
 
 	public Order getOrder() {
+		
 		return selectedOrder;
 	}
 
 	public void displayAllOrder() {
+		
 		List<Order> list = OrderDb.retrieveFilteredItem(LoginUI.getUser().getUserId());
-
 		if (list == null || list.size() < 1) {
 			return;
 		}
@@ -88,6 +76,7 @@ public class MyOrdersUI extends Application implements Initializable {
 	}
 
 	public void showOrder(ActionEvent e) {
+		
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -102,6 +91,7 @@ public class MyOrdersUI extends Application implements Initializable {
 		} else {
 			status += "not active";
 		}
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("View Order");
 		alert.setHeaderText("Order " + item.getOrderNumber() + " is " + status + ". It contains:");
@@ -110,6 +100,7 @@ public class MyOrdersUI extends Application implements Initializable {
 	}
 
 	public void payOrder(ActionEvent e) {
+		
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -127,9 +118,7 @@ public class MyOrdersUI extends Application implements Initializable {
 		}
 
 		PaymentPageUI.setOrder(item);
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
-		NextStage.goTo(fxmlLoader, payBtn);
+		goToPaymentPage();
 	}
 
 	public void editOrder(ActionEvent e) {
@@ -150,9 +139,7 @@ public class MyOrdersUI extends Application implements Initializable {
 		}
 
 		NewOrderUI.setOrder(orderToEdit);
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-		NextStage.goTo(fxmlLoader, editBtn);
+		goToOrderScreen();
 	}
 
 	public void deleteOrder(ActionEvent e) {
@@ -183,11 +170,18 @@ public class MyOrdersUI extends Application implements Initializable {
 		displayAllOrder();
 	}
 
-	@Override
-	public void start(Stage arg0) throws Exception {
-
-	}
-
+    public void goToPaymentPage() {
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
+    	NextStage.goTo(fxmlLoader, payBtn);
+    }
+    
+    public void goToOrderScreen() {
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+    	NextStage.goTo(fxmlLoader, editBtn);
+    }
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		orderNumberColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("orderNumber"));

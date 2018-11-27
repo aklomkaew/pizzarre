@@ -3,34 +3,16 @@ package com.amazonaws;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
 public class CustomPizzaUI implements Initializable {
 
 	@FXML
@@ -125,7 +107,6 @@ public class CustomPizzaUI implements Initializable {
 	}
 
 	public void confirmPizza(ActionEvent e) {
-		// add pizza to order here
 		if (pizzaSize == null) {
 			Alert.Display("ERROR", "Select a size.");
 			return;
@@ -278,9 +259,6 @@ public class CustomPizzaUI implements Initializable {
 			InventoryDb.changeQuantity(list.get(i), pSize, "increase");
 			NewOrderUI.removeIngredient(list.get(i), pSize);
 		}
-	}
-
-	public void start(Stage arg0) throws Exception {
 	}
 
 	public static void setOldPizza(ArrayList<Pizza> list) {

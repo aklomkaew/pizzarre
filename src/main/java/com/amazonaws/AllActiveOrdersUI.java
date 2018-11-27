@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +33,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "unused" })
-public class AllActiveOrdersUI extends Application implements Initializable {
+public class AllActiveOrdersUI implements Initializable {
 	@FXML
 	private Button backBtn;
 	@FXML
@@ -172,7 +171,6 @@ public class AllActiveOrdersUI extends Application implements Initializable {
 		}
 	}
 
-	@Override
 	public void start(Stage arg0) throws Exception {
 
 	}

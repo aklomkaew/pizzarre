@@ -2,44 +2,23 @@ package com.amazonaws;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.ResourceBundle;
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
 public class DrinksUI implements Initializable {
-
 	@FXML
-	private Button confirm;
+	private Button confirmBtn;
 	@FXML
-	private Button cancel;
+	private Button cancelBtn;
 	@FXML
-	private Button remove;
+	private Button removeBtn;
 
 	private String id = null; // string used to get drink from database
 	@FXML
@@ -63,7 +42,7 @@ public class DrinksUI implements Initializable {
 
 	private static ArrayList<String> drinkIdArrayList = new ArrayList<String>();
 
-	private HashMap<String, Integer> drinkMap = new HashMap<String, Integer>();
+	//private HashMap<String, Integer> drinkMap = new HashMap<String, Integer>();
 	
 	private static ArrayList<Drink> oldDrinks = new ArrayList<Drink>();
 	
@@ -190,7 +169,7 @@ public class DrinksUI implements Initializable {
 //		drinkListView.getItems().clear();
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-		NextStage.goTo(fxmlLoader, confirm);
+		NextStage.goTo(fxmlLoader, confirmBtn);
 
 	}
 	
@@ -236,10 +215,7 @@ public class DrinksUI implements Initializable {
 
 	public void goToOrderScreen(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
-		NextStage.goTo(fxmlLoader, cancel);
-	}
-
-	public void start(Stage arg0) throws Exception {
+		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 
 	@Override
