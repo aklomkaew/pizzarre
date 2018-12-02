@@ -54,9 +54,9 @@ public class AllActiveOrdersUI implements Initializable {
 	private TableColumn<Order, Double> totalColumn;
 
 	private ObservableList<Order> orderObservableList;
-	
+
 	private static Order selectedOrder;
-	
+
 	public static Order getOrder() {
 		return selectedOrder;
 	}
@@ -78,7 +78,7 @@ public class AllActiveOrdersUI implements Initializable {
 		}
 		NewOrderUI.setOrder(item);
 		deleteOrder(item);
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, editOrderBtn);
 	}
@@ -88,6 +88,7 @@ public class AllActiveOrdersUI implements Initializable {
 		orderTableView.setItems(orderObservableList);
 		OrderDb.deleteItem(o.getOrderNumber());
 	}
+
 	public void deleteOrder(ActionEvent e) {
 		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
@@ -143,7 +144,7 @@ public class AllActiveOrdersUI implements Initializable {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
 		NextStage.goTo(fxmlLoader, payOrderBtn);
 	}
-	
+
 	private List<Order> getActiveOrders() {
 		List<Order> list = OrderDb.retrieveAllItem();
 
@@ -151,8 +152,8 @@ public class AllActiveOrdersUI implements Initializable {
 			return Collections.emptyList();
 		}
 		List<Order> activeList = new ArrayList<Order>();
-		for(Order item : list) {
-			if(item.getState()) {
+		for (Order item : list) {
+			if (item.getState()) {
 				activeList.add(item);
 			}
 		}

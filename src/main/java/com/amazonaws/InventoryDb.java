@@ -13,90 +13,11 @@ public class InventoryDb extends DatabaseTable {
 		tableName = "my-inventory-table";
 
 		createNewTable(tableName);
-		initTable();
 		retrieveAllItem();
 	}
 
 	public String getTableName() {
 		return tableName;
-	}
-
-	public static void initTable() {
-		System.out.println("\nInitializing table " + tableName);
-/*
-		InventoryItem item = new InventoryItem();
-		item.setName("cheese");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("crust");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("sauce");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("pepperoni");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("sausage");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("groundBeef");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("ham");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("bacon");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("chicken");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("anchovy");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("shrimp");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("tofu");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("mushroom");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("onion");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("greenpepper");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("tomato");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("olive");
-		item.setQuantity(10);
-		mapper.save(item);
-
-		item.setName("pineapple");
-		item.setQuantity(10);
-		mapper.save(item);
-*/		
 	}
 	
 	public static void changeQuantity(String toppingName, int quantity, String option) {

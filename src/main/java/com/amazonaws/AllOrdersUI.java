@@ -44,13 +44,13 @@ public class AllOrdersUI implements Initializable {
 	private TableColumn<Order, Double> totalColumn;
 
 	private ObservableList<Order> orderObservableList;
-	
+
 	public void displayAllOrder(ActionEvent e) {
 		displayAllOrder();
 	}
 
 	public void showOrder() {
-		
+
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -59,14 +59,14 @@ public class AllOrdersUI implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-		
+
 		String status = "";
 		if (item.getState()) {
 			status += "active";
 		} else {
 			status += "not active";
 		}
-		
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("View Order");
 		alert.setHeaderText("Order " + item.getOrderNumber() + " is " + status + ". It contains:");
@@ -75,7 +75,7 @@ public class AllOrdersUI implements Initializable {
 	}
 
 	public void editOrder() {
-		
+
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -84,21 +84,21 @@ public class AllOrdersUI implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-		
-		if(!item.getState()) {
+
+		if (!item.getState()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("An order you selected is inactive. Cannot modify.");
 			alert.showAndWait();
 			return;
 		}
-		
+
 		NewOrderUI.setOrder(item);
 		goToOrderScreen();
 	}
 
 	public void deleteOrder(ActionEvent e) {
-		
+
 		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -120,7 +120,7 @@ public class AllOrdersUI implements Initializable {
 	}
 
 	public void deleteAllOrder(ActionEvent e) {
-		
+
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to delete all order?");
@@ -140,7 +140,7 @@ public class AllOrdersUI implements Initializable {
 	}
 
 	public void displayAllOrder() {
-		
+
 		List<Order> list = OrderDb.retrieveAllItem();
 		if (list == null || list.size() < 1) {
 			orderObservableList.clear();
@@ -153,26 +153,26 @@ public class AllOrdersUI implements Initializable {
 	}
 
 	public void goToAllActiveOrders() {
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllActiveOrdersUI.fxml"));
 		NextStage.goTo(fxmlLoader, allActiveOrdersBtn);
 	}
 
 	public void goToManagerUtilities() {
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
 	public void goToOrderScreen() {
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, editOrderBtn);
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		serverColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("serverId"));
 		orderNumberColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("orderNumber"));
 		totalColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("total"));

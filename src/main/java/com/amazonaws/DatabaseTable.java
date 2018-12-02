@@ -16,37 +16,51 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 
+/**
+ * Represents database table
+ * @author Atchima
+ *
+ */
 public abstract class DatabaseTable {
 
 	protected static AmazonDynamoDB client;
 	protected static DynamoDBMapper mapper;
 	protected static DynamoDB dynamoDb;
 
+	/**
+	 * Class constructor
+	 * @throws Exception
+	 */
 	public DatabaseTable() throws Exception {
 		initDb();
 		dynamoDb = new DynamoDB(client);
 		mapper = new DynamoDBMapper(client);
-		//mapper = new DynamoDBMapper(client, new DynamoDBMapperConfig(ConversionSchemas.V2));
 	}
 
-	public void initDb() throws Exception {
-		/*
-		 * The ProfileCredentialsProvider will return your [default] credential profile
-		 * by reading from the credentials file located at
-		 * (/Users/Atchima/.aws/credentials).
-		 */
+	/**
+	 * Initializes database by assigning client the credentialsProvider
+	 * of AWS by reading from the credentials file located at
+	 * (Users/[username]/.aws/credentials).
+	 * @throws Exception
+	 */
+	private void initDb() throws Exception {
 		ProfileCredentialsProvider credentialsProvider = new ProfileCredentialsProvider();
 		try {
 			credentialsProvider.getCredentials();
 		} catch (Exception e) {
 			throw new AmazonClientException("Cannot load the credentials from the credential profiles file. "
 					+ "Please make sure that your credentials file is at the correct "
-					+ "location (/Users/Atchima/.aws/credentials), and is in valid format.", e);
+					+ "location (/Users/[username]/.aws/credentials), and is in valid format.", e);
 		}
 		client = AmazonDynamoDBClientBuilder.standard().withCredentials(credentialsProvider).withRegion("us-east-2")
 				.build();
 	}
 	
+	/**
+	 * Creates a new database table with name tableName
+	 * If the table already exists, then prints out the message stating so
+	 * @param tableName
+	 */
 	protected void createNewTable(String tableName) {
 		if (dynamoDb.getTable(tableName) != null) {
 			System.out.println(tableName + " already exists.");
@@ -55,70 +69,5 @@ public abstract class DatabaseTable {
 			req.setProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
 			dynamoDb.createTable(req);
 		}
-	}
-
-//	public static AmazonDynamoDB getClient() throws Exception {
-//		if (client == null) {
-//			initDb();
-//		}
-//		return client;
-//	}
-//
-//	public static DynamoDB getDynamoDb() throws Exception {
-//		if(dynamoDb == null) {
-//			if(client == null) {
-//				initDb();
-//			}
-//			dynamoDb = new DynamoDB(client);
-//		}
-//		return dynamoDb;
-//	}
-//
-//	public static DynamoDBMapper getMapper() throws Exception {
-//		if (mapper == null) {
-//			if (client == null) {
-//				initDb();
-//			}
-//			mapper = new DynamoDBMapper(client);
-//		}
-//		return mapper;
-//	}
-
-	public void listAllTables() {
-		DynamoDB dynamoDB = new DynamoDB(client);
-		TableCollection<ListTablesResult> tables = dynamoDB.listTables();
-		Iterator<Table> iterator = tables.iterator();
-
-		System.out.println("All tables: ");
-		while (iterator.hasNext()) {
-			Table table = iterator.next();
-			System.out.println(table.getTableName());
-		}
-	}
-
-	public void printTable(String name) {
-		System.out.println("Printing items in table: " + name);
-		ScanRequest scanRequest = new ScanRequest().withTableName(name);
-		ScanResult result = client.scan(scanRequest);
-		for (Map<String, AttributeValue> item : result.getItems()) {
-			System.out.println(item);
-		}
-	}
-
-	public void deleteTable(String name) throws InterruptedException {
-		DynamoDB dynamoDB = new DynamoDB(client);
-		Table delTable = dynamoDB.getTable(name);
-
-		try {
-			delTable.delete();
-			delTable.waitForDelete();
-			System.out.println("Successfully deleted " + name);
-		} catch (Exception e) {
-			System.err.println("Cannot delete " + name);
-			System.err.println(e.getMessage());
-		}
-
-		System.out.println("\nUpdated list: ");
-		listAllTables();
 	}
 }
