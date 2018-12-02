@@ -20,7 +20,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class PaymentPageUI implements Initializable {
 
@@ -60,7 +59,6 @@ public class PaymentPageUI implements Initializable {
 	 * @author Christopher
 	 *
 	 */
-	
 	public class OrderContents {
 		String itemName;
 		double itemPrice;
@@ -68,7 +66,6 @@ public class PaymentPageUI implements Initializable {
 		/**
     	 * Class constructor
     	 */
-		
 		public OrderContents(){
     		String itemName = "";
     		double itemPrice = 0.0;
@@ -79,7 +76,6 @@ public class PaymentPageUI implements Initializable {
     	 * @param name A string representing the item's name
     	 * @param price A double represnting he item's cost
     	 */
-		
 		public OrderContents(String name, double price) {
 			this.itemName = name;
 			this.itemPrice = price;
@@ -89,7 +85,6 @@ public class PaymentPageUI implements Initializable {
     	 * Returns the item's name
     	 * @return A string representing the item's name
     	 */
-		
 		public String getItemName() {
 			return itemName;
 		}
@@ -98,7 +93,6 @@ public class PaymentPageUI implements Initializable {
     	 * Returns the item's cost
     	 * @return A double representing the item's cost
     	 */
-		
 		public double getItemPrice() {
 			return itemPrice;
 		}
@@ -108,7 +102,6 @@ public class PaymentPageUI implements Initializable {
 	 * Checks that the input is in a double format
 	 * @throws NumberFormatException if input cannot be parsed as a double
 	 */
-	
 	public void checkPayment() {
 		
 		try {
@@ -124,7 +117,6 @@ public class PaymentPageUI implements Initializable {
 	 * Checks that the payment price is equal to or greater than Order's total
 	 * Sets the Order's state equal to false if it is
 	 */
-	
 	private void confirmPayment() {
 		
 		if (payment < paymentOrder.getTotal()) {
@@ -146,7 +138,6 @@ public class PaymentPageUI implements Initializable {
 	/**
 	 * Sets the order being paid for as paymentOrder, how the order is referred as in other method in this class
 	 */
-	
 	public static void setOrder(Order o) {
 		paymentOrder = o;
 	}
@@ -154,7 +145,6 @@ public class PaymentPageUI implements Initializable {
 	/**
 	 * Creates and displays a table of all items on an Order and their prices
 	 */
-	
 	public void displayOrderContents() {
 
 		itemColumn.setCellValueFactory(new PropertyValueFactory<OrderContents, String>("itemName"));
@@ -182,18 +172,25 @@ public class PaymentPageUI implements Initializable {
 	/**
 	 * Display RecipeListUI stage and closes the current (CreateRecipeUI) stage
 	 */
-	
 	public void goToMainMenu() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, mainMenuBtn);
 	}
 	
+	/**
+	 * Display previous stage and closes the current (CreateRecipeUI) stage
+	 * Previous stage could be MyOrdersUI or AllActiveOrdersUI
+	 */
 	public void goBack() {
 		String str = backPage;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(str));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 	
+	/**
+	 * Gets data from the previous page to return to it later
+	 * @param str A string representing data to refer to and return to the previous page
+	 */
 	public static void setBackPage(String str) {
 		backPage = str;
 	}
@@ -203,7 +200,6 @@ public class PaymentPageUI implements Initializable {
 	 * @param location Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		pizzaArrayList.clear();

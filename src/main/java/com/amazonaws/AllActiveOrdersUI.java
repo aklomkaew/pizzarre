@@ -74,9 +74,8 @@ public class AllActiveOrdersUI implements Initializable {
 
 	/**
 	 * Display AllOrdersUI stage and closes the current (AllActiveOrdersUI) stage
-	 * @param e An ActionEvent representing an event triggering this function
 	 */
-	public void goToManagerUtilities(ActionEvent e) {
+	public void goToManagerUtilities() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllOrdersUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
@@ -84,9 +83,8 @@ public class AllActiveOrdersUI implements Initializable {
 
 	/**
 	 * Takes selected Order from list and displays CurrentOrderUI stage with its contents and closes the current (AllActiveOrdersUI) stage
-	 * @param e An ActionEvent representing an event triggering this function
 	 */
-	public void editOrder(ActionEvent e) {
+	public void editOrder() {
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -114,9 +112,8 @@ public class AllActiveOrdersUI implements Initializable {
 
 	/**
 	 * Confirms if an Order was selected before calling {@link #deleteOrder(Order)} and updating the Order list
-	 * @param e An ActionEvent representing an event triggering this function
 	 */
-	public void deleteOrder(ActionEvent e) {
+	public void deleteOrder() {
 		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -132,9 +129,8 @@ public class AllActiveOrdersUI implements Initializable {
 
 	/**
 	 * A method to remove all unpaid orders from the database
-	 * @param e An ActionEvent representing an event triggering this function
 	 */
-	public void deleteAllOrder(ActionEvent e) {
+	public void deleteAllOrder() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to delete all active order?");
@@ -156,9 +152,8 @@ public class AllActiveOrdersUI implements Initializable {
 	/**
 	 * Takes selected Order and loads PaymentPageUI stage with it, closes current (AllActiveOrdersUI) stage
 	 * CustomOrderUI stage with its contents and closes the current (AllActiveOrdersUI) stage
-	 * @param e An ActionEvent representing an event triggering this function
 	 */
-	public void payOrder(ActionEvent e) {
+	public void payOrder() {
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);

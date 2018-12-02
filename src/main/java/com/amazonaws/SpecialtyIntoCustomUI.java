@@ -17,7 +17,6 @@ import javafx.scene.control.ListView;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class SpecialtyIntoCustomUI {
 
@@ -74,7 +73,6 @@ public class SpecialtyIntoCustomUI {
 	/**
 	 * Cancel the making of the specialty pizza
 	 */
-	
 	public void cancelSpecialty() {
 		
 	}
@@ -83,7 +81,6 @@ public class SpecialtyIntoCustomUI {
 	 * Adds or removes toppings from pizza, depending on if topping is on the current pizza
 	 * @param onClick An ActionEvent that adds the button clicked to the pizza, or removes it from the pizza
 	 */
-	
 	public void addRemoveTopping(ActionEvent onClick) {
 
 		String id = ((Button) onClick.getSource()).getId();
@@ -109,7 +106,6 @@ public class SpecialtyIntoCustomUI {
 	 * @param str A string representing the size of the pizza
 	 * @return An int of the current pizza's size
 	 */
-	
 	private static int getpSize(String str) {
 		if (str.equals("small")) {
 			return SMALL;
@@ -124,7 +120,6 @@ public class SpecialtyIntoCustomUI {
 	/**
 	 * Adds the current pizza to the Order, subtracts ingredients from the inventory
 	 */
-	
 	public void confirmSpecialty() { 
 		
 		int pSize = getpSize(specialtySize);
@@ -192,7 +187,6 @@ public class SpecialtyIntoCustomUI {
 	/**
 	 * Display SpecialtyPizzaUI stage and closes the current (SpecialtyIntoCustomUI) stage
 	 */
-    
 	public void goToSpecialty() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
@@ -201,7 +195,6 @@ public class SpecialtyIntoCustomUI {
 	/**
 	 * Display CurrentOrderUI stage and closes the current (SpecialtyIntoCustomUI) stage
 	 */
-    
 	public void goToOrderScreen() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmBtn);
@@ -212,7 +205,6 @@ public class SpecialtyIntoCustomUI {
 	 * @param recipeName A string representing the name of the selected recipe
 	 * @param size A string representing the size of the current pizza
 	 */
-	
 	public void getSpecialtyInfo(String recipeName, String size) { // gets recipe name and size from previous controller
 																	// (SpecialtyPizzaUI.java)
 		this.specialtyName = recipeName;

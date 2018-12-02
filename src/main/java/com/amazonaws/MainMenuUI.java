@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class MainMenuUI {
 
@@ -26,7 +25,6 @@ public class MainMenuUI {
 	/**
 	 * Display AllOrdersUI stage and closes the current (MainMenuUI) stage
 	 */
-    
 	public void goToNewOrder() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
@@ -36,7 +34,6 @@ public class MainMenuUI {
 	/**
 	 * Display MyOrdersUI stage and closes the current (MainMenuUI) stage
 	 */
-    
 	public void goToMyOrders() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MyOrdersUI.fxml"));
@@ -47,7 +44,6 @@ public class MainMenuUI {
 	 * Display ManagerUtilitiesUI stage and closes the current (MainMenuUI) stage
 	 * Only works if user is a manager
 	 */
-    
 	public void goToManagerUtilities() {
 
 		if (LoginUI.getUser().isManager()) {
@@ -61,7 +57,6 @@ public class MainMenuUI {
 	/**
 	 * Display loginUI stage and closes the current (MainMenuUI) stage
 	 */
-    
 	public void logout() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loginUI.fxml"));

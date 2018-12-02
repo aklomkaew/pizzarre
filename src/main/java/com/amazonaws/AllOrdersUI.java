@@ -23,7 +23,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class AllOrdersUI implements Initializable {
 
@@ -56,7 +55,6 @@ public class AllOrdersUI implements Initializable {
 	* Displays information about the selected Order object
 	* Information displayed is located at {@link Order#toString()}
 	*/
-	
 	public void showOrder() {
 
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
@@ -85,7 +83,6 @@ public class AllOrdersUI implements Initializable {
 	/**
 	 * Takes selected Order from list and displays CurrentOrderUI stage with its contents and closes the current (AllActiveOrdersUI) stage
 	 */
-	
 	public void editOrder() {
 
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
@@ -112,8 +109,7 @@ public class AllOrdersUI implements Initializable {
 	/**
 	 * Takes selected Order from list and removes it from the Order database
 	 */
-	
-	public void deleteOrder(ActionEvent e) {
+	public void deleteOrder() {
 
 		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
@@ -138,8 +134,7 @@ public class AllOrdersUI implements Initializable {
 	/**
 	 * A method to remove all orders from the database
 	 */
-	
-	public void deleteAllOrder(ActionEvent e) {
+	public void deleteAllOrder() {
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
@@ -162,7 +157,6 @@ public class AllOrdersUI implements Initializable {
 	/**
 	 * Displays all active orders to the screen
 	 */
-	
 	public void displayAllOrder() {
 
 		List<Order> list = OrderDb.retrieveAllItem();
@@ -179,7 +173,6 @@ public class AllOrdersUI implements Initializable {
 	/**
 	 * Display AllActiveOrdersUI stage and closes the current (AllOrdersUI) stage
 	 */
-	
 	public void goToAllActiveOrders() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllActiveOrdersUI.fxml"));
@@ -189,7 +182,6 @@ public class AllOrdersUI implements Initializable {
 	/**
 	 * Display ManagerUtilitiesUI stage and closes the current (AllOrdersUI) stage
 	 */
-	
 	public void goToManagerUtilities() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
@@ -199,7 +191,6 @@ public class AllOrdersUI implements Initializable {
 	/**
 	 * Display CurrentOrderUI stage and closes the current (AllOrdersUI) stage
 	 */
-	
 	public void goToOrderScreen() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
@@ -211,7 +202,6 @@ public class AllOrdersUI implements Initializable {
 	 * @param location Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 

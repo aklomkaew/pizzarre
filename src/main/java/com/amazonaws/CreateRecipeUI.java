@@ -21,7 +21,6 @@ import javafx.stage.Stage;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class CreateRecipeUI implements Initializable {
 
@@ -74,7 +73,6 @@ public class CreateRecipeUI implements Initializable {
 	 * Adds or removes a topping from the recipe, depending on if the recipe was already in the topping list
 	 * @param onClick An ActionEvent to retrieve contents of button selected
 	 */
-	
 	public void addRemoveTopping(ActionEvent onClick) {
 
 		String id = ((Button) onClick.getSource()).getId();
@@ -97,7 +95,6 @@ public class CreateRecipeUI implements Initializable {
 	/**
 	 * Adds the Recipe object to the recipe database
 	 */
-	
 	public void confirmRecipe() {
 
 		String recipeName = recipeNameTF.getText();
@@ -134,8 +131,7 @@ public class CreateRecipeUI implements Initializable {
 	/**
 	 * Clears the name and toppings from the new recipe
 	 */
-	
-	public void clearRecipe(ActionEvent e) {
+	public void clearRecipe() {
 		
 		recipeNameTF.clear();
 		toppingObservableList.clear();
@@ -145,7 +141,6 @@ public class CreateRecipeUI implements Initializable {
 	/**
 	 * Display RecipeListUI stage and closes the current (CreateRecipeUI) stage
 	 */
-	
 	public void goToRecipeList() {
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
@@ -157,7 +152,6 @@ public class CreateRecipeUI implements Initializable {
 	 * @param location Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { // initializes populates ist with current users
 		

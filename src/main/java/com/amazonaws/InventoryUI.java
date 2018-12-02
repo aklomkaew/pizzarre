@@ -20,7 +20,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class InventoryUI implements Initializable {
 
@@ -50,8 +49,7 @@ public class InventoryUI implements Initializable {
 	/**
 	 * Increases quantity of all inventory items
 	 */
-	
-	public void restock(ActionEvent e) {
+	public void restock() {
 		InventoryDb.restock();
 		displayAllInventory();
 		Alert.Display("Success", "Restock completed");
@@ -61,7 +59,6 @@ public class InventoryUI implements Initializable {
 	 * When adding a new ingredient, checks if a positive quantity was inputted or if inventory item name already exists
 	 * @throws NumberFormatException if integer was not used
 	 */
-	
 	public void checkIngredient() {
 		String ingredientName = ingredientNameTF.getText().toLowerCase();
 		if (ingredientName == null || ingredientName.length() == 0) {
@@ -87,7 +84,6 @@ public class InventoryUI implements Initializable {
 	* @param quantity An integer representing the amount of an item being added to the database
 	* @param ingredientName A string representing the name of the item being added to the database
 	*/
-
 	public void addIngredient(int quantity, String ingredientName) { // integration goes here, not
 																					// checkIngredient
 		if (InventoryDb.addItem(ingredientName.toLowerCase(), quantity)) {
@@ -103,7 +99,6 @@ public class InventoryUI implements Initializable {
 	/**
 	 * Displays the table after adding or removing items from the database
 	 */
-	
 	public void updateTable() {
 		List<InventoryItem> list = InventoryDb.retrieveAllItem();
 
@@ -118,7 +113,6 @@ public class InventoryUI implements Initializable {
 	/**
 	 * Removes an item from the database
 	 */
-	
 	public void deleteIngredient() {
 		InventoryItem itemToDelete = inventoryTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
@@ -137,7 +131,6 @@ public class InventoryUI implements Initializable {
 	/**
 	 * Display ManagerUtilitiesUI stage and closes the current (InventoryUI) stage
 	 */
-	
 	public void goToManagerUtilities() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
@@ -147,7 +140,6 @@ public class InventoryUI implements Initializable {
 	/**
 	* Adds all items from inventory database to the tableview
 	*/
-
 	public void displayAllInventory() {
 		List<InventoryItem> list = InventoryDb.retrieveAllItem();
 
@@ -168,7 +160,6 @@ public class InventoryUI implements Initializable {
 	 * @param location Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("name"));

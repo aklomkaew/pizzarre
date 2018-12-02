@@ -22,7 +22,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class RecipeListUI implements Initializable {
 
@@ -46,8 +45,7 @@ public class RecipeListUI implements Initializable {
 	/**
 	 * Display CreateRecipeUI stage and closes the current (RecipeListUI) stage
 	 */
-	
-	public void addRecipe(ActionEvent e) {
+	public void addRecipe() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateRecipeUI.fxml"));
 		NextStage.goTo(fxmlLoader, addRecipeBtn);
@@ -56,8 +54,7 @@ public class RecipeListUI implements Initializable {
 	/**
 	 * Displays notification of the selected specialty pizza and its toppings
 	 */
-	
-	public void viewRecipe(ActionEvent e) { // index in Observable List will match index in RecipeDb
+	public void viewRecipe() { // index in Observable List will match index in RecipeDb
 		
 		RecipeItem item = recipeTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
@@ -77,8 +74,7 @@ public class RecipeListUI implements Initializable {
 	/**
 	 * Removes the selected recipe from the list and database
 	 */
-	
-	public void deleteRecipe(ActionEvent e) {
+	public void deleteRecipe() {
 		
 		RecipeItem itemToDelete = recipeTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
@@ -103,7 +99,6 @@ public class RecipeListUI implements Initializable {
 	/**
 	 * Displays the list of current recipes
 	 */
-	
 	public void displayAllRecipe() {
 		
 		List<RecipeItem> list = RecipeDb.retrieveAllItem();
@@ -122,7 +117,6 @@ public class RecipeListUI implements Initializable {
 	/**
 	 * Display ManagerUtilitiesUI stage and closes the current (RecipeListUI) stage
 	 */
-	
 	public void goToManagerUtilities() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
@@ -134,7 +128,6 @@ public class RecipeListUI implements Initializable {
 	 * @param location Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { // initializes populates list with current users
 		nameColumn.setCellValueFactory(new PropertyValueFactory<RecipeItem, String>("name"));

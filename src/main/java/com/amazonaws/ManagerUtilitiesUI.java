@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class ManagerUtilitiesUI {
 	
@@ -28,7 +27,6 @@ public class ManagerUtilitiesUI {
     /**
 	 * Display AllOrdersUI stage and closes the current (ManagerUtilitiesUI) stage
 	 */
-    
     public void goToAllOrders() {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllOrdersUI.fxml"));
@@ -38,7 +36,6 @@ public class ManagerUtilitiesUI {
 	/**
 	 * Display AllUsersUI stage and closes the current (ManagerUtilitiesUI) stage
 	 */
-    
     public void goToEmployeeList() {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllUsersUI.fxml"));
@@ -48,7 +45,6 @@ public class ManagerUtilitiesUI {
     /**
 	 * Display RecipeListUI stage and closes the current (ManagerUtilitiesUI) stage
 	 */
-    
     public void goToRecipeList() {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
@@ -58,7 +54,6 @@ public class ManagerUtilitiesUI {
     /**
 	 * Display InventoryUI stage and closes the current (ManagerUtilitiesUI) stage
 	 */
-    
     public void goToInventory() {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("InventoryUI.fxml"));
@@ -68,7 +63,6 @@ public class ManagerUtilitiesUI {
     /**
 	 * Display MainMenuUI stage and closes the current (ManagerUtilitiesUI) stage
 	 */
-    
     public void goToMainMenu () {
 	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));

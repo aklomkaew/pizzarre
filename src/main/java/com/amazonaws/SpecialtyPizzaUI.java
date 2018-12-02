@@ -14,7 +14,6 @@ import javafx.stage.Stage;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class SpecialtyPizzaUI {
 
@@ -53,7 +52,6 @@ public class SpecialtyPizzaUI {
 	 * Selects the specialty's name
 	 * @param onClick An ActionEvent that sets the pizza's name as the button's name
 	 */
-	
 	public void selectSpecialty(ActionEvent onClick) {
 		specialtyName = ((Button) onClick.getSource()).getId(); // sets specialty name equal to text on a button
 		showSpecialty();
@@ -63,7 +61,6 @@ public class SpecialtyPizzaUI {
 	 * Selects the specialty's size
 	 * @param onClick An ActionEvent that sets the size as the button's name
 	 */
-	
 	public void selectSize(ActionEvent onClick) {
 		specialtySize = ((Button) onClick.getSource()).getId();
 		showSpecialty();
@@ -72,7 +69,6 @@ public class SpecialtyPizzaUI {
 	/**
 	 * Displays selected specialty name and size
 	 */
-	
 	public void showSpecialty() {
 		String str = "";
 		if (specialtyName != null) {
@@ -87,8 +83,7 @@ public class SpecialtyPizzaUI {
 	/**
 	 * Clears the selected specialty pizza name and size
 	 */
-	
-	public void clearSpecialty(ActionEvent e) {
+	public void clearSpecialty() {
 		specialtyTF.clear();
 		specialtyName = null;
 		specialtySize = null;
@@ -97,8 +92,7 @@ public class SpecialtyPizzaUI {
 	/**
 	 * Applies the selected specialty name and toppings to the pizza and calls {@link #goToSpecialtyIntoCustom}
 	 */
-	
-	public void confirmSpecialty(ActionEvent e) {
+	public void confirmSpecialty() {
 
 		if (specialtyName != null && specialtySize != null) {
 			goToSpecialtyIntoCustom();
@@ -111,7 +105,6 @@ public class SpecialtyPizzaUI {
 	 * Passes the current specialty pizza's name and toppings to the next (SpecialtyIntoCustomUI) page
 	 * @throws Exception if FXML file not found
 	 */
-	
 	public void goToSpecialtyIntoCustom() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyIntoCustomUI.fxml"));
@@ -135,7 +128,6 @@ public class SpecialtyPizzaUI {
 	/**
 	 * Display CurrentOrderUI stage and closes the current (SpecialtyPizzaUI) stage
 	 */
-	
 	public void goToOrderScreen() {
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));

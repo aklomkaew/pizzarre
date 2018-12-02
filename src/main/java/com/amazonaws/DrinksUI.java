@@ -17,7 +17,6 @@ import javafx.scene.control.ListView;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class DrinksUI implements Initializable {
 	@FXML
@@ -57,7 +56,6 @@ public class DrinksUI implements Initializable {
 	 * Returns a list of drinks
 	 * @return An ArrayList<String> representing drink names
 	 */
-	
 	public static ArrayList<String> getDrinkList() {
 		return drinkIdArrayList;
 	}
@@ -65,7 +63,6 @@ public class DrinksUI implements Initializable {
 	/**
 	 * Sets Order's drinks as the displayed drink list
 	 */
-	
 	public static void setDrinks(ArrayList<Drink> list) {
 		oldDrinks.clear();
 		oldDrinks.addAll(list);
@@ -74,7 +71,6 @@ public class DrinksUI implements Initializable {
 	/**
 	 * Adds selected drinks to drink list
 	 */
-	
 	public void selectDrink(ActionEvent e) {
 		id = ((Button) e.getSource()).getId();
 		System.out.println(id + " added");
@@ -87,7 +83,6 @@ public class DrinksUI implements Initializable {
 	/**
 	 * Confirms selected drinks to current Order object and updates Order price and Inventory database
 	 */
-	
 	public void confirmDrinks(ActionEvent e) {
 		boolean flag = false;
 		if (drinkObservableList.isEmpty()) {
@@ -163,7 +158,6 @@ public class DrinksUI implements Initializable {
 	/**
 	 * Removes a drink from the drink list
 	 */
-	
 	public void cancelDrink() {
 		drinkObservableList.clear();
 		drinkListView.getItems().clear();
@@ -173,7 +167,6 @@ public class DrinksUI implements Initializable {
 	/**
 	 * Removes a drink from the drink list
 	 */
-	
 	public void removeDrink(ActionEvent e) {
 		int index = drinkListView.getSelectionModel().getSelectedIndex();
 		if(drinkArrayList.size() > index) {
@@ -191,7 +184,6 @@ public class DrinksUI implements Initializable {
 	/**
 	 * Display CurrentOrderUI stage and closes the current (DrinksUI) stage
 	 */
-	
 	public void goToOrderScreen() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
@@ -202,7 +194,6 @@ public class DrinksUI implements Initializable {
 	 * @param location Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		drinkIdArrayList.clear();

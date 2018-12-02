@@ -70,7 +70,7 @@ public class LoginUI extends Application {
 	 * Checks if the current passcode matches any user's password Proceeds to the
 	 * next stage if it does
 	 */
-	public void confirmInput(ActionEvent e) {
+	public void confirmInput() {
 		String inputId = getPasscode(idNum);
 		User u = UserDb.getUser(inputId);
 		if (idNum.size() != 4) {

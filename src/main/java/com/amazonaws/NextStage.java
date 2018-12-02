@@ -11,7 +11,6 @@ import javafx.stage.Stage;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class NextStage {
 	
@@ -21,7 +20,6 @@ public class NextStage {
 	 * @param closeStageBtn A button representing an element on the current stage as a reference point to close the current stage
 	 * @throws Exception if either parameter is not valid
 	 */
-	
 	public static void goTo(FXMLLoader fxmlLoader, Button closeStageBtn) {
 		try {
 			

@@ -18,7 +18,6 @@ import javafx.scene.control.TextField;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class CustomPizzaUI implements Initializable {
 
@@ -92,7 +91,6 @@ public class CustomPizzaUI implements Initializable {
 	 * Loads a text label with the current size of the pizza
 	 * @param onClick An ActionEvent that sets the label string equal to the button selected's contents
 	 */
-
 	public void selectSize(ActionEvent onClick) {
 		pizzaSize = ((Button) onClick.getSource()).getId();
 		sizeTF.setText(pizzaSize);
@@ -102,7 +100,6 @@ public class CustomPizzaUI implements Initializable {
 	 * Adds or removes toppings from the current pizza, depending on if the pizza already has the topping on it
 	 * @param onClick An ActionEvent that adds or removes the contents of the button pressed
 	 */
-	
 	public void addTopping(ActionEvent onClick) {
 
 		String id = ((Button) onClick.getSource()).getId();
@@ -127,7 +124,6 @@ public class CustomPizzaUI implements Initializable {
 	 * Adds the current pizza to the Order
 	 * Replaces the old pizza if it is a modified pizza
 	 */
-	
 	public void confirmPizza() {
 		if (pizzaSize == null) {
 			Alert.Display("ERROR", "Select a size.");
@@ -220,7 +216,6 @@ public class CustomPizzaUI implements Initializable {
 	 * @param str A string representation of the pizza's size
 	 * @return An int representation of the pizza's size
 	 */
-	
 	private static int getpSize(String str) {
 		if (str.equals("small")) {
 			return SMALL;
@@ -235,7 +230,6 @@ public class CustomPizzaUI implements Initializable {
 	/**
 	 * Clears list of toppings added to the pizza
 	 */
-	
 	public void clearPizza() {
 		toppingObservableList.clear();
 		toppingIdArrayList.clear();
@@ -245,7 +239,6 @@ public class CustomPizzaUI implements Initializable {
 	/**
 	 * Deletes the pizza from the order then goes to NewOrderUI
 	 */
-	
 	public void cancelPizza() {
 		if (!modified) {
 			removePizza();
@@ -269,7 +262,6 @@ public class CustomPizzaUI implements Initializable {
 	/**
 	 * Adds ingredients back to the inventory if pizza deleted
 	 */
-	
 	public static void removePizza() {
 		if (toppingObservableList.isEmpty()) {
 			return;
@@ -287,7 +279,7 @@ public class CustomPizzaUI implements Initializable {
 			CurrentOrderUI.removeIngredient(list.get(i), pSize);
 		}
 	}
-
+	
 	public static void setOldPizza(ArrayList<Pizza> list) {
 		oldPizzas.clear();
 		oldPizzas.addAll(list);
@@ -297,7 +289,6 @@ public class CustomPizzaUI implements Initializable {
 	 * Loads a modified pizza's toppings and size into the interface
 	 * @param p A Pizza object selected from CurrentOrderUI
 	 */
-	
 	public static void setPizza(Pizza p) {
 		modPizza = p;
 		toppingIdArrayList = p.getToppings();
@@ -312,7 +303,6 @@ public class CustomPizzaUI implements Initializable {
 	 * Loads a text label with the selected size of the pizza if the pizza is being modified
 	 * @param size A string representing the size of the pizza
 	 */
-	
 	public void setSizeText(String size) {
 		sizeTF.setText(size);
 	}
@@ -322,7 +312,6 @@ public class CustomPizzaUI implements Initializable {
 	 * @param num An int that is the pizza's size
 	 * @return A string representing the pizza's size
 	 */
-	
 	private static String getSize(int num) {
 		String ret = "";
 		switch (num) {
@@ -345,7 +334,6 @@ public class CustomPizzaUI implements Initializable {
 	 * @param location Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		if (!toppingIdArrayList.isEmpty()) {
