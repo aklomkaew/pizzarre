@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
+@SuppressWarnings("restriction")
 public class LoginUI extends Application {
 
 	@FXML
@@ -47,8 +48,6 @@ public class LoginUI extends Application {
 	private static User user;
 	private static Manager manager;
 
-	private String idInput;
-	// private GridPane pad;
 	private ArrayList<String> idNum = new ArrayList<String>();
 
 	public String getID(String id) {

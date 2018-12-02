@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
+@SuppressWarnings("restriction")
 public class DrinksUI implements Initializable {
 	@FXML
 	private Button confirmBtn;
@@ -20,7 +21,7 @@ public class DrinksUI implements Initializable {
 	@FXML
 	private Button removeBtn;
 
-	private String id = null; // string used to get drink from database
+	private String id = null; 
 	@FXML
 	private Button soda;
 	@FXML

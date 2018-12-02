@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
+@SuppressWarnings("restriction")
 public class SpecialtyIntoCustomUI implements Initializable {
 
 	@FXML
@@ -153,7 +154,6 @@ public class SpecialtyIntoCustomUI implements Initializable {
 
 		Order order = CurrentOrderUI.getOrder();
 		order.addPizza(p);
-		Order o = CurrentOrderUI.getOrder();
 
 		Alert.Display("Success", "Pizza " + specialtyName + " is added to your order!");
 

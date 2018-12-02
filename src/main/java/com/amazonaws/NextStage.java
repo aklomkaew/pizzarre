@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+@SuppressWarnings("restriction")
 public class NextStage {
 	
 	public static void goTo(FXMLLoader fxmlLoader, Button closeStageBtn) {

@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+@SuppressWarnings("restriction")
 public class CustomPizzaUI implements Initializable {
 
 	@FXML

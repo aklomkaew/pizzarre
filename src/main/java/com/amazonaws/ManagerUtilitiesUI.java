@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
+@SuppressWarnings("restriction")
 public class ManagerUtilitiesUI {
 	
     @FXML

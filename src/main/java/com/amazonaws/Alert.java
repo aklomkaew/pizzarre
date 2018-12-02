@@ -28,6 +28,6 @@ public class Alert {
 
 		Scene scene = new Scene(layout);
 		window.setScene(scene);
-		window.showAndWait(); // This means the window has to be closed to continue.
+		window.showAndWait(); 
 	}
 }
