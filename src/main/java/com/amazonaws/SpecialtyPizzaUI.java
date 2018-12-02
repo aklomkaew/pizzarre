@@ -100,7 +100,7 @@ public class SpecialtyPizzaUI {
 
 	public void goToOrderScreen() {
 		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 }

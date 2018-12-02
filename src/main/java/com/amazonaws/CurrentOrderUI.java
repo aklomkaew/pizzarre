@@ -255,17 +255,25 @@ public class CurrentOrderUI implements Initializable {
 		} else if (option.get() == ButtonType.OK) {
 			if (!modOrder) {
 				removeAllIngredients();
+				updateCost();
 			} else {
 				for (int i = 0; i < order.getPizzas().size(); i++) {
-					if (order.getPizzas().get(i).getIsNew() == 1) {
+					Pizza p = order.getPizzas().get(i);
+					if (p.getIsNew() == 1) {
+						for(String topping : p.getToppings()) {
+							InventoryDb.changeQuantity(topping, p.getSize(), "increase");
+						}
 						order.getPizzas().remove(i);
 					}
 				}
 				for (int i = 0; i < order.getDrink().size(); i++) {
-					if (order.getDrink().get(i).getIsNew() == 1) {
+					Drink d = order.getDrink().get(i);
+					if (d.getIsNew() == 1) {
+						InventoryDb.changeQuantity(d.getName(), 1, "increase");
 						order.getDrink().remove(i);
 					}
 				}
+				updateCost();
 				OrderDb.updateOrder(order);
 
 				order = null;
@@ -324,15 +332,7 @@ public class CurrentOrderUI implements Initializable {
 				InventoryDb.changeQuantity(d.getName(), 1, "increase");
 			}
 		}
-//		if (allIngredients == null || allIngredients.isEmpty()) {
-//			return;
-//		}
-//		Iterator itr = allIngredients.entrySet().iterator();
-//		while (itr.hasNext()) {
-//			Map.Entry pair = (Map.Entry) itr.next();
-//			InventoryDb.changeQuantity((String) pair.getKey(), (Integer) pair.getValue(), "increase");
-//			itr.remove();
-//		}
+		
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
 		drinkArrayList.clear();
@@ -373,7 +373,7 @@ public class CurrentOrderUI implements Initializable {
 		updateCost();
 	}
 	
-	private void updateCost() {
+	public void updateCost() {
 		order.setTotal(0);
 		for (int i = 0; i < order.getPizzas().size(); i++) {
 			Pizza currentPizza = order.getPizzas().get(i);

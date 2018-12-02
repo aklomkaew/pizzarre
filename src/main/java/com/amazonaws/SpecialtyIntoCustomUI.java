@@ -99,7 +99,7 @@ public class SpecialtyIntoCustomUI implements Initializable {
 		return -1; // should never get here
 	}
 
-	public void confirmSpecialty(ActionEvent e) { // passes specialty data back to NewOrderUI.java, do not
+	public void confirmSpecialty(ActionEvent e) { 
 		
 		int pSize = getpSize(specialtySize);
 
@@ -124,7 +124,6 @@ public class SpecialtyIntoCustomUI implements Initializable {
 				break;
 			} else {
 				InventoryDb.changeQuantity(list.get(i), pSize, "decrease");
-				//NewOrderUI.addIngredient(list.get(i), pSize);
 				count++;
 			}
 		}
@@ -171,7 +170,7 @@ public class SpecialtyIntoCustomUI implements Initializable {
 	}
 	
 	public void goToOrderScreen() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmBtn);
 	}
 

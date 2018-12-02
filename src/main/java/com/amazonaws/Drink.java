@@ -73,4 +73,12 @@ public class Drink {
 	public double getPrice() {
 		return this.price;
 	}
+	
+	/**
+	 * Gets the drink's name
+	 * @return A string representing the drink's name
+	 */
+	public String toString() {
+		return this.name;
+	}
 }

@@ -201,7 +201,7 @@ public class CustomPizzaUI implements Initializable {
 			toppingIdArrayList.clear();
 			toppingListView.getItems().clear();
 
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 			NextStage.goTo(fxmlLoader, confirmBtn);
 		}
 	}

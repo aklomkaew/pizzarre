@@ -128,19 +128,7 @@ public class DrinksUI implements Initializable {
 			}
 			return;
 		}
-
-//		Iterator it = drinkMap.entrySet().iterator();
-//		Order order = NewOrderUI.getOrder();
-//		while(it.hasNext()) {
-//			Map.Entry pair = (Map.Entry)it.next();
-//			String item = (String) pair.getKey();
-//			int quantity = (int) pair.getValue();
-//			Drink d = new Drink(item, 2);
-//			order.getDrink().add(d);
-//			//order.getDrinkQuantity().add(quantity);
-//		}
-
-		// NewOrderUI.addDrinks(drinkIdArrayList);
+		
 		Order order = CurrentOrderUI.getOrder();
 		/*
 		 * for(String item : drinkObservableList) { Drink d = new Drink(item, 2);
@@ -168,7 +156,7 @@ public class DrinksUI implements Initializable {
 //		drinkIdArrayList.clear();
 //		drinkListView.getItems().clear();
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmBtn);
 
 	}
@@ -214,7 +202,7 @@ public class DrinksUI implements Initializable {
 	}
 
 	public void goToOrderScreen(ActionEvent e) {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 

@@ -36,8 +36,11 @@ public class InventoryDb extends DatabaseTable {
 		if(option.equals("increase")) {
 			item.setQuantity(item.getQuantity() + quantity);
 		}
-		else {
+		else if(option.equals("decrease")){
 			item.setQuantity(item.getQuantity() - quantity);
+		}
+		else {
+			System.out.println("Incorrect option type");
 		}
 		mapper.save(item);
 	}
