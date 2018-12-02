@@ -71,41 +71,6 @@ public class DrinksUI implements Initializable {
 			return;
 		}
 
-//		for(String item : drinkObservableList) {
-//			if(!drinkMap.containsKey(item)) {
-//				drinkMap.put(item, 1);
-//			}
-//			else {
-//				drinkMap.put(item, drinkMap.get(item) + 1);
-//			}
-//		}
-
-//		Iterator itr = drinkMap.entrySet().iterator();
-//		ArrayList<String> count = new ArrayList<String>();
-//		while(itr.hasNext()) {
-//			Map.Entry pair = (Map.Entry)itr.next();
-//			String item = (String) pair.getKey();
-//			int quantity = (int) pair.getValue();
-//			int num = InventoryDb.getQuantityOfItem(item);
-//			
-//			if(num == -1) {
-//				Alert.Display("Error", "Item " + item + " not in the inventory.");
-//				flag = true;
-//				break;
-//			}
-//			if(num < 1) {
-//				Alert.Display("Error", "Not enough " + item
-//						+ " in the inventory. Ask your manager to restock the inventory");
-//				flag = true;
-//				break;
-//			}
-//			else {
-//				InventoryDb.changeQuantity(item, quantity, "decrease");
-//				NewOrderUI.addIngredient(item, quantity);
-//				count.add(item);
-//			}
-//		}
-
 		int count = 0;
 		for (String item : drinkObservableList) {
 			int num = InventoryDb.getQuantityOfItem(item);
@@ -115,8 +80,6 @@ public class DrinksUI implements Initializable {
 				break;
 			} else {
 				InventoryDb.changeQuantity(item, 1, "decrease");
-				//NewOrderUI.addIngredient(item, 1);
-				
 				count++;
 			}
 		}
@@ -130,10 +93,6 @@ public class DrinksUI implements Initializable {
 		}
 		
 		Order order = CurrentOrderUI.getOrder();
-		/*
-		 * for(String item : drinkObservableList) { Drink d = new Drink(item, 2);
-		 * order.getDrink().add(d); }
-		 */
 		String newName = "";
 		drinkArrayList.clear();
 		for (int i = 0; i < drinkIdArrayList.size(); i++) { // loop that adds and increments pizza's price
@@ -151,10 +110,6 @@ public class DrinksUI implements Initializable {
 		order.setDrink(drinkArrayList);
 
 		Alert.Display("Success", "Your drink has been added to your order!");
-
-//		drinkObservableList.clear();
-//		drinkIdArrayList.clear();
-//		drinkListView.getItems().clear();
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmBtn);

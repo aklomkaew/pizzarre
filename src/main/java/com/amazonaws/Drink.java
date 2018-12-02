@@ -1,5 +1,10 @@
 package com.amazonaws;
 
+/**
+ * Represents a drink
+ * @author Atchima
+ *
+ */
 public class Drink {
 	private static double DRINK_PRICE = 2;
 	private String name;

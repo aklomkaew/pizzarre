@@ -17,7 +17,7 @@ import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 
 /**
- * Represents database table
+ * Represents the base class of all database table
  * @author Atchima
  *
  */

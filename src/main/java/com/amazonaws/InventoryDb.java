@@ -4,10 +4,19 @@ import java.util.*;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
+/**
+ * Represents the Inventory Database
+ * @author Atchima
+ *
+ */
 public class InventoryDb extends DatabaseTable {
 
 	private static String tableName;
 
+	/**
+	 * Class constructor
+	 * @throws Exception
+	 */
 	public InventoryDb() throws Exception {
 		super();
 		tableName = "my-inventory-table";

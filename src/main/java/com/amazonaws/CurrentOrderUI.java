@@ -50,8 +50,10 @@ public class CurrentOrderUI implements Initializable {
 	private static Order order;
 
 	private static boolean modOrder;
+	
+	private static int oldDiscount;
 
-	private static int modifiedIndex; // used to keep track of index of piza being modified
+	private static int modifiedIndex; 
 
 	private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
 	private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
@@ -65,6 +67,7 @@ public class CurrentOrderUI implements Initializable {
 	@FXML
 	private TableColumn<OrderContents, Double> priceColumn;
 	private ObservableList<OrderContents> orderContentsObservableList;
+	
 	public class OrderContents { //used for tableview
 		String itemName;
     	double itemPrice;
@@ -155,7 +158,7 @@ public class CurrentOrderUI implements Initializable {
 	}
 
 	public void setDiscount(ActionEvent e) {
-		TextInputDialog dialog = new TextInputDialog("20");
+		TextInputDialog dialog = new TextInputDialog(Integer.toString(order.getDiscount()));
 		dialog.setTitle("Discount");
 		dialog.setHeaderText("Set Discount for Order #" + order.getOrderNumber());
 		dialog.setContentText("Enter percent discount: ");
@@ -163,7 +166,6 @@ public class CurrentOrderUI implements Initializable {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		
-		// Traditional way to get the response value.
 		String result = "";
 		try {
 			result = dialog.showAndWait().get();
@@ -182,6 +184,7 @@ public class CurrentOrderUI implements Initializable {
 			return;
 		}
 		
+		oldDiscount = order.getDiscount();
 		order.setDiscount(discount);
 		order.applyDiscount();
 		updateCost();
@@ -254,6 +257,7 @@ public class CurrentOrderUI implements Initializable {
 			return;
 		} else if (option.get() == ButtonType.OK) {
 			if (!modOrder) {
+				order.setDiscount(oldDiscount);
 				removeAllIngredients();
 				updateCost();
 			} else {
@@ -273,6 +277,7 @@ public class CurrentOrderUI implements Initializable {
 						order.getDrink().remove(i);
 					}
 				}
+				order.setDiscount(oldDiscount);
 				updateCost();
 				OrderDb.updateOrder(order);
 
