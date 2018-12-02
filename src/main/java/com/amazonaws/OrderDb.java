@@ -8,39 +8,45 @@ import java.util.Map;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
+/**
+ * Represents the Order Database
+ * @author Atchima
+ *
+ */
 public class OrderDb extends DatabaseTable {
 
 	private static String tableName;
 
+	/**
+	 * Class constructor, calls its base class DatabaseTable
+	 * @throws Exception
+	 */
 	public OrderDb() throws Exception {
 		super();
 		tableName = "my-orders-table";
 
 		createNewTable(tableName);
-		//initTable();
 		retrieveAllItem();
 	}
 
+	/**
+	 * Gets the name of the database table
+	 * @return A string representing the database's table name
+	 */
 	public String getTableName() {
 		return tableName;
 	}
 
-	public static void initTable() {
-		System.out.println("\nInitializing table " + tableName);
-		
-		Pizza p = new Pizza();
-		p.setName("testPizza");
-		List<Pizza> list = new ArrayList<Pizza>(Arrays.asList(p));
-		
-		Order c = new Order(1, list);
-		c.setServerName("server1");
-		c.setTotal(100);
-		mapper.save(c);
-	}
-
+	/**
+	 * Adds an order to the Order Database with the specified Order object
+	 * @param c An Order object representing the order to be added to the Order Database
+	 * @return True if the Order object can be added, false otherwise
+	 * If the Order object's orderNumber already exists in the Order Database,
+	 * then the Order object cannot be added
+	 */
 	public static boolean addOrder(Order c) {
 		boolean status = false;
-		// if order presents, then don't add it
+		
 		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
 		attributeValues.put(":val1", new AttributeValue().withN(Integer.toString(c.getOrderNumber())));
 		
@@ -56,6 +62,13 @@ public class OrderDb extends DatabaseTable {
 		return status;
 	}
 	
+	/**
+	 * Deletes an order from the Order Database with the specified orderNumber
+	 * @param num An integer representing the orderNumber
+	 * @return True if the Order object can be deleted, false otherwise
+	 * If the Order object is not found in the Order Database,
+	 * then the Order object cannot be deleted
+	 */
 	public static boolean deleteItem(int num) {
 		boolean status = false;
 		
@@ -79,10 +92,18 @@ public class OrderDb extends DatabaseTable {
 		return status;
 	}
 	
+	/**
+	 * Updates the existing Order object in the Order Database
+	 * @param obj An Order object representing the object to be updated in the Order Database
+	 */
 	public static void updateOrder(Order obj) {
 		mapper.save(obj);
 	}
 	
+	/**
+	 * Retrieves all Order object that exists in the Order Database
+	 * @return A list of Order representing all Order object in the Order Database
+	 */
 	public static ArrayList<Order> retrieveAllItem() {
 		List<Order> itemList = mapper.scan(Order.class, new DynamoDBScanExpression());
 
@@ -98,6 +119,11 @@ public class OrderDb extends DatabaseTable {
 		return ret;
 	}
 	
+	/**
+	 * Retrieves all Order object that exists in the Order Database filtered by the specified orderNumber
+	 * @param id An integer representing the orderNumber 
+	 * @return A list of Order representing all filtered Order object in the Order Database
+	 */
 	public static List<Order> retrieveFilteredItem(int id) {
 		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
 		attributeValues.put(":val1", new AttributeValue().withN(Integer.toString(id)));
