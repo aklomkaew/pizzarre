@@ -38,6 +38,7 @@ public class PaymentPageUI implements Initializable {
 	private TextField changeTF;
 
 	private double payment;
+	private static String backPage;
 
 	@FXML
 	private TableView<OrderContents> orderTableView;
@@ -184,7 +185,17 @@ public class PaymentPageUI implements Initializable {
 	
 	public void goToMainMenu() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
+		NextStage.goTo(fxmlLoader, mainMenuBtn);
+	}
+	
+	public void goBack() {
+		String str = backPage;
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(str));
 		NextStage.goTo(fxmlLoader, backBtn);
+	}
+	
+	public static void setBackPage(String str) {
+		backPage = str;
 	}
 	
 	/**
@@ -195,7 +206,6 @@ public class PaymentPageUI implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		pizzaArrayList.clear();
 		drinkArrayList.clear();
 		orderTableView.getItems().clear();

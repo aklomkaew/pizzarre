@@ -150,6 +150,7 @@ public class MyOrdersUI implements Initializable {
 		}
 
 		PaymentPageUI.setOrder(item);
+		PaymentPageUI.setBackPage("MyOrdersUI.fxml");
 		goToPaymentPage();
 	}
 

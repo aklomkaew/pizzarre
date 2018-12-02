@@ -176,6 +176,7 @@ public class AllActiveOrdersUI implements Initializable {
 		}
 
 		PaymentPageUI.setOrder(item);
+		PaymentPageUI.setBackPage("AllActiveOrdersUI.fxml");
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
 		NextStage.goTo(fxmlLoader, payOrderBtn);
