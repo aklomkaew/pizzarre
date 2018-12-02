@@ -104,7 +104,6 @@ public class AllUsersUI implements Initializable {
 	}
 
 	public void goToAddUser() {
-		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddUserUI.fxml"));
 		NextStage.goTo(fxmlLoader, addUserBtn);
 	}

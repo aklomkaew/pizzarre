@@ -9,6 +9,7 @@ import javafx.geometry.*;
 
 public class Alert {
 
+	@SuppressWarnings("restriction")
 	public static void Display(String title, String message) {
 		Stage window = new Stage();
 
