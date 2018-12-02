@@ -1,33 +1,30 @@
 package com.amazonaws;
 
-import java.util.ArrayList;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+/**
+ * Represents a manager
+ * @author Atchima
+ *
+ */
 @DynamoDBTable(tableName = "my-users-table")
 public class Manager extends User {
 
+	/**
+	 * Class constructor, calls its base class User
+	 */
 	public Manager() {
 		super();
 		manager = true;
 	}
 
+	/**
+	 * Creates a manager with specified id and name
+	 * @param id An integer representing the manager's ID
+	 * @param n A string representing the manager's name
+	 */
 	public Manager(int id, String n) {
 		super(id, n);
 		manager = true;
 	}
-
-	public Manager(int id, String n, ArrayList<Order> list) {
-		super(id, n, list);
-		manager = true;
-	}
-
-	public void restock() throws Exception {
-		// inventory restock
-		InventoryDb.restock();
-	}
-
-	public boolean addUser(int id, User u) {
-		return UserDb.addUser(id, u);
-	}
-
 }

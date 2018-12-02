@@ -2,13 +2,21 @@ package com.amazonaws;
 
 import java.util.*;
 
+/**
+ * Represents a pizza
+ * @author Atchima
+ *
+ */
 public class Pizza {
 	private String name;
 	private ArrayList<String> toppings;
-	private int size;	// S = 1, M = 2, L = 3
+	private int size;	
 	private double price;
 	private int isNew;		// 0 is false, 1 is true
 	
+	/**
+	 * Class constructor
+	 */
 	public Pizza() {
 		this.name = "";
 		this.size = 0;
@@ -17,6 +25,12 @@ public class Pizza {
 		isNew = 1;
 	}
 	
+	/**
+	 * Creates a pizza with the specified name, size, and list of toppings
+	 * @param n A string representing the pizza's name
+	 * @param s An integer representing the pizza's size
+	 * @param list An ArrayList of string representing the pizza's list of toppings
+	 */
 	public Pizza(String n, int s, ArrayList<String> list) {
 		this.name = n;
 		this.size = s;
@@ -26,6 +40,11 @@ public class Pizza {
 		this.price = list.size() + getPriceBySize(size) - 3; //cheese, crust, and sauce are technically toppings that increment price
 	}
 	
+	/**
+	 * Gets the pizza's price by its size
+	 * @param s
+	 * @return
+	 */
 	private double getPriceBySize(int s) {
 		double ret = 5.0;
 		switch(s) {

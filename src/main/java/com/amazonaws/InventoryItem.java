@@ -4,6 +4,11 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+/**
+ * Represents an inventory item stored in the inventory database
+ * @author Atchima
+ *
+ */
 @DynamoDBTable(tableName = "my-inventory-table")
 public class InventoryItem {
 	private String name;
@@ -18,7 +23,7 @@ public class InventoryItem {
 	}
 
 	/**
-	 * 
+	 * Creates an inventory item with the specified name and quantity
 	 * @param n A string representing the inventory item's name
 	 * @param q An integer representing the inventory item's quantity
 	 */
@@ -28,7 +33,7 @@ public class InventoryItem {
 	}
 
 	/**
-	 * Creates an inventory item with a specified name
+	 * Creates an inventory item with the specified name
 	 * @param n
 	 */
 	public InventoryItem(String n) {

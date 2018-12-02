@@ -4,139 +4,45 @@ import java.util.*;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
+/**
+ * Represents the Recipe Database
+ * @author Atchima
+ *
+ */
 public class RecipeDb extends DatabaseTable {
 
 	private static String tableName;
 	
+	/**
+	 * Class constructor, calls its base class DatabaseTable
+	 * @throws Exception
+	 */
 	public RecipeDb() throws Exception {
 		super();
 		tableName = "my-recipe-table";
 
 		createNewTable(tableName);
-		initTable();
 		retrieveAllItem();
 	}
-	
+
+	/**
+	 * Gets the name of the database table
+	 * @return A string representing the database's table name
+	 */
 	public String getTableName() {
 		return tableName;
 	}
-
-	public static void initTable() { 
-		System.out.println("\nInitializing table " + tableName);
-		
-		ArrayList<String> baseList = new ArrayList<String>();
-		baseList.add("crust");
-		baseList.add("sauce");
-		baseList.add("cheese");
-//		
-//		RecipeItem item = new RecipeItem("basePizza", baseList);
-//		mapper.save(item);
-//		
-//		RecipeItem i2 = new RecipeItem("cheesePizza", baseList);
-//		mapper.save(i2);
-//		
-//		RecipeItem i3 = new RecipeItem("pepperoniPizza");
-//		i3.getIngredients().addAll(baseList);
-//		i3.getIngredients().add("pepperoni");
-//		mapper.save(i3);
-//		
-//		RecipeItem i4 = new RecipeItem("hawaiianPizza");
-//		i4.getIngredients().addAll(baseList);
-//		i4.getIngredients().add("pineapple");
-//		mapper.save(i4);
-//		
-//		RecipeItem i5 = new RecipeItem("vegetarianPizza");
-//		i5.getIngredients().addAll(baseList);
-//		i5.getIngredients().add("pineapple");
-//		i5.getIngredients().add("greenPepper");
-//		i5.getIngredients().add("onion");
-//		i5.getIngredients().add("mushroom");
-//		i5.getIngredients().add("spinach");
-//		mapper.save(i5);
-		
-		 RecipeItem dailySpecialPizza = new RecipeItem("dailySpecialPizza");
-		 dailySpecialPizza.getIngredients().addAll(baseList);
-		 dailySpecialPizza.getIngredients().add("pepperoni");
-		 dailySpecialPizza.getIngredients().add("sausage");
-		 dailySpecialPizza.getIngredients().add("groundBeef");
-		 dailySpecialPizza.getIngredients().add("onion");
-		 dailySpecialPizza.getIngredients().add("mushroom");
-		 dailySpecialPizza.getIngredients().add("olive");
-		 mapper.save(dailySpecialPizza);
-		 
-		 RecipeItem meatzzaPizza = new RecipeItem("meatzzaPizza");
-		 meatzzaPizza.getIngredients().addAll(baseList);
-		 meatzzaPizza.getIngredients().add("pepperoni");
-		 meatzzaPizza.getIngredients().add("sausage");
-		 meatzzaPizza.getIngredients().add("groundBeef");
-		 meatzzaPizza.getIngredients().add("ham");
-		 mapper.save(meatzzaPizza);
-		 
-		 RecipeItem hawaiianPizza = new RecipeItem("hawaiianPizza");
-		 hawaiianPizza.getIngredients().addAll(baseList);
-		 hawaiianPizza.getIngredients().add("bacon");
-		 hawaiianPizza.getIngredients().add("pineapple");
-		 hawaiianPizza.getIngredients().add("ham");
-		 mapper.save(hawaiianPizza);
-		 
-		 RecipeItem classicPizza = new RecipeItem("classicPizza");
-		 classicPizza.getIngredients().addAll(baseList);
-		 classicPizza.getIngredients().add("pepperoni");
-		 classicPizza.getIngredients().add("onion");
-		 classicPizza.getIngredients().add("greenPepper");
-		 classicPizza.getIngredients().add("mushroom");
-		 mapper.save(classicPizza);
-		 
-		 RecipeItem veggiePizza = new RecipeItem("veggiePizza");
-		 veggiePizza.getIngredients().addAll(baseList);
-		 veggiePizza.getIngredients().add("mushroom");
-		 veggiePizza.getIngredients().add("tomato");
-		 veggiePizza.getIngredients().add("onion");
-		 veggiePizza.getIngredients().add("greenPepper");
-		 veggiePizza.getIngredients().add("olive");
-		 mapper.save(veggiePizza);
-		 
-		 RecipeItem sicilianPizza = new RecipeItem("sicilianPizza");
-		 sicilianPizza.getIngredients().addAll(baseList);
-		 sicilianPizza.getIngredients().add("anchovy");
-		 sicilianPizza.getIngredients().add("onion");
-		 sicilianPizza.getIngredients().add("tomato");
-		 mapper.save(sicilianPizza);
-
-//		ArrayList<String> baseList = new ArrayList<String>();
-//		baseList.add("crust");
-//		baseList.add("sauce");
-//		baseList.add("cheese");
-//		
-//		RecipeItem item = new RecipeItem("basePizza", baseList);
-//		mapper.save(item);
-//		
-//		RecipeItem i2 = new RecipeItem("cheesePizza", baseList);
-//		mapper.save(i2);
-//		
-//		RecipeItem i3 = new RecipeItem("pepperoniPizza");
-//		i3.getIngredients().addAll(baseList);
-//		i3.getIngredients().add("pepperoni");
-//		mapper.save(i3);
-//		
-//		RecipeItem i4 = new RecipeItem("hawaiianPizza");
-//		i4.getIngredients().addAll(baseList);
-//		i4.getIngredients().add("pineapple");
-//		mapper.save(i4);
-//		
-//		RecipeItem i5 = new RecipeItem("vegetarianPizza");
-//		i5.getIngredients().addAll(baseList);
-//		i5.getIngredients().add("pineapple");
-//		i5.getIngredients().add("greenPepper");
-//		i5.getIngredients().add("onion");
-//		i5.getIngredients().add("mushroom");
-//		i5.getIngredients().add("spinach");
-//		mapper.save(i5);
-	}
 	
+	/**
+	 * Adds a recipe to the Recipe Database with the specified Recipe object
+	 * @param item A RecipeItem object representing the recipe to be added to the Recipe Database
+	 * @return True if the RecipeItem object can be added, false otherwise
+	 * If the RecipeItem object already exists in the Recipe Database,
+	 * then the RecipeItem object cannot be added
+	 */
 	public static boolean addRecipe(RecipeItem item) {
 		boolean status = false;
-		// if order presents, then don't add it
+		
 		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
 		attributeValues.put(":val1", new AttributeValue().withS(item.getName()));
 		
@@ -152,11 +58,13 @@ public class RecipeDb extends DatabaseTable {
 		return status;
 	}
 	
-	// add item to table
-	// remove item
-	// set itemQuantity
-	// restock
-	
+	/**
+	 * Deletes a recipe from the Recipe Database with the specified recipe's name
+	 * @param n A string representing the recipe's name
+	 * @return True if the RecipeItem object can be deleted, false otherwise
+	 * If the RecipeItem object is not found in the Recipe Database,
+	 * then the RecipeItem object cannot be deleted
+	 */
 	public static boolean deleteItem(String n) {
 		boolean status = false;
 		
@@ -180,6 +88,10 @@ public class RecipeDb extends DatabaseTable {
 		return status;
 	}
 	
+	/**
+	 * Retrieves all RecipeItem object that exists in the Recipe Database
+	 * @return A list of RecipeItem representing all RecipeItem object in the Recipe Database
+	 */
 	public static List<RecipeItem> retrieveAllItem() {
 		List<RecipeItem> itemList = mapper.scan(RecipeItem.class, new DynamoDBScanExpression());
 
@@ -191,6 +103,11 @@ public class RecipeDb extends DatabaseTable {
 		return itemList;
 	}
 	
+	/**
+	 * Gets all ingredients for the specified recipe's name
+	 * @param name A string representing the recipe's name
+	 * @return An ArrayList of string representing the list of ingredients
+	 */
 	public static ArrayList<String> getIngredients(String name) {
 		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
 		attributeValues.put(":val1", new AttributeValue().withS(name));
@@ -200,7 +117,6 @@ public class RecipeDb extends DatabaseTable {
 		
 		List<RecipeItem> recipeItem = mapper.scan(RecipeItem.class, scanExpression);
 		
-		// should be only one recipe
 		ArrayList<String> ret = new ArrayList<String>();
 		ret.addAll(recipeItem.get(0).getIngredients());
 		
