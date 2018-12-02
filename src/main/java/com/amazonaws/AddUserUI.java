@@ -4,6 +4,7 @@ import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 public class AddUserUI {
@@ -12,6 +13,8 @@ public class AddUserUI {
 	private Button confirmBtn;
 	@FXML
 	private Button backBtn;
+	@FXML
+	private CheckBox managerCheckBox;
 	@FXML
 	private TextField userNameTF;
 	
