@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +17,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Represents an interface displaying all Order objects
+ * 
+ * @author Christopher
+ *
+ */
+@SuppressWarnings("restriction")
 public class AllOrdersUI implements Initializable {
 
 	@FXML
@@ -44,13 +50,13 @@ public class AllOrdersUI implements Initializable {
 	private TableColumn<Order, Double> totalColumn;
 
 	private ObservableList<Order> orderObservableList;
-	
-	public void displayAllOrder(ActionEvent e) {
-		displayAllOrder();
-	}
 
+	/**
+	* Displays information about the selected Order object
+	* Information displayed is located at {@link Order#toString()}
+	*/
 	public void showOrder() {
-		
+
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -59,14 +65,14 @@ public class AllOrdersUI implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-		
+
 		String status = "";
 		if (item.getState()) {
 			status += "active";
 		} else {
 			status += "not active";
 		}
-		
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("View Order");
 		alert.setHeaderText("Order " + item.getOrderNumber() + " is " + status + ". It contains:");
@@ -74,8 +80,11 @@ public class AllOrdersUI implements Initializable {
 		alert.showAndWait();
 	}
 
+	/**
+	 * Takes selected Order from list and displays CurrentOrderUI stage with its contents and closes the current (AllActiveOrdersUI) stage
+	 */
 	public void editOrder() {
-		
+
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -84,21 +93,24 @@ public class AllOrdersUI implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-		
-		if(!item.getState()) {
+
+		if (!item.getState()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("An order you selected is inactive. Cannot modify.");
 			alert.showAndWait();
 			return;
 		}
-		
-		NewOrderUI.setOrder(item);
+
+		CurrentOrderUI.setOrder(item);
 		goToOrderScreen();
 	}
 
-	public void deleteOrder(ActionEvent e) {
-		
+	/**
+	 * Takes selected Order from list and removes it from the Order database
+	 */
+	public void deleteOrder() {
+
 		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -119,8 +131,11 @@ public class AllOrdersUI implements Initializable {
 		displayAllOrder();
 	}
 
-	public void deleteAllOrder(ActionEvent e) {
-		
+	/**
+	 * A method to remove all orders from the database
+	 */
+	public void deleteAllOrder() {
+
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to delete all order?");
@@ -139,8 +154,11 @@ public class AllOrdersUI implements Initializable {
 		displayAllOrder();
 	}
 
+	/**
+	 * Displays all active orders to the screen
+	 */
 	public void displayAllOrder() {
-		
+
 		List<Order> list = OrderDb.retrieveAllItem();
 		if (list == null || list.size() < 1) {
 			orderObservableList.clear();
@@ -152,27 +170,41 @@ public class AllOrdersUI implements Initializable {
 		orderObservableList.addAll(list);
 	}
 
+	/**
+	 * Display AllActiveOrdersUI stage and closes the current (AllOrdersUI) stage
+	 */
 	public void goToAllActiveOrders() {
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllActiveOrdersUI.fxml"));
 		NextStage.goTo(fxmlLoader, allActiveOrdersBtn);
 	}
 
+	/**
+	 * Display ManagerUtilitiesUI stage and closes the current (AllOrdersUI) stage
+	 */
 	public void goToManagerUtilities() {
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
+	/**
+	 * Display CurrentOrderUI stage and closes the current (AllOrdersUI) stage
+	 */
 	public void goToOrderScreen() {
-		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, editOrderBtn);
 	}
 
+	/**
+	 * Creates a two-column table displaying an Order's number and that Order's total then loads it with all Orders
+	 * @param location Required for initialize method, unused
+	 * @param resources Required for initialize method, unused
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		serverColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("serverId"));
 		orderNumberColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("orderNumber"));
 		totalColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("total"));

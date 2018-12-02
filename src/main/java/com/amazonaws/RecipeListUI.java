@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -17,6 +16,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Represents interface to view the list of specialty pizzas
+ * 
+ * @author Christopher
+ *
+ */
+@SuppressWarnings("restriction")
 public class RecipeListUI implements Initializable {
 
 	@FXML
@@ -36,18 +42,20 @@ public class RecipeListUI implements Initializable {
 
 	private ObservableList<RecipeItem> recipeObservableList;
 
-	public void displayAllRecipes(ActionEvent e) {
-		displayAllRecipe();
-	}
-	
-	public void addRecipe(ActionEvent e) {
+	/**
+	 * Display CreateRecipeUI stage and closes the current (RecipeListUI) stage
+	 */
+	public void addRecipe() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreateRecipeUI.fxml"));
 		NextStage.goTo(fxmlLoader, addRecipeBtn);
 	}
 
-	public void viewRecipe(ActionEvent e) { // index in Observable List will match index in RecipeDb
-		
+	/**
+	 * Displays notification of the selected specialty pizza and its toppings
+	 */
+	public void viewRecipe() {
+
 		RecipeItem item = recipeTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -63,8 +71,11 @@ public class RecipeListUI implements Initializable {
 		alert.showAndWait();
 	}
 
-	public void deleteRecipe(ActionEvent e) {
-		
+	/**
+	 * Removes the selected recipe from the list and database
+	 */
+	public void deleteRecipe() {
+
 		RecipeItem itemToDelete = recipeTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -85,8 +96,11 @@ public class RecipeListUI implements Initializable {
 		displayAllRecipe();
 	}
 
+	/**
+	 * Displays the list of current recipes
+	 */
 	public void displayAllRecipe() {
-		
+
 		List<RecipeItem> list = RecipeDb.retrieveAllItem();
 		if (list == null || list.size() < 1) {
 			return;
@@ -100,17 +114,25 @@ public class RecipeListUI implements Initializable {
 		}
 	}
 
-	public void goToManagerUtilities(ActionEvent e) {
+	/**
+	 * Display ManagerUtilitiesUI stage and closes the current (RecipeListUI) stage
+	 */
+	public void goToManagerUtilities() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
-	
+
+	/**
+	 * Creates a two-column table displaying a RecipeItem's name and list of
+	 * toppings an calls {@link #displayAllRecipe()}
+	 * 
+	 * @param location  Required for initialize method, unused
+	 * @param resources Required for initialize method, unused
+	 */
 	@Override
-	public void initialize(URL location, ResourceBundle resources) { // initializes populates ist with current users
+	public void initialize(URL location, ResourceBundle resources) {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<RecipeItem, String>("name"));
-		// ingredientsColumn.setCellValueFactory(new PropertyValueFactory<RecipeItem,
-		// String>("name"));
 		ingredientsColumn.setCellValueFactory(new PropertyValueFactory<RecipeItem, ArrayList<String>>("ingredients"));
 		recipeObservableList = FXCollections.observableArrayList();
 		recipeTableView.setItems(recipeObservableList);

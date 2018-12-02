@@ -15,54 +15,43 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 
+/**
+ * Represents the User Database
+ * @author Atchima
+ *
+ */
 public class UserDb extends DatabaseTable {
 
 	private static String tableName;
 
+	/**
+	 * Class constructor, calls its base class DatabaseTable
+	 * @throws Exception
+	 */
 	public UserDb() throws Exception {
 		super();
 		tableName = "my-users-table";
 
 		createNewTable(tableName);
-		initTable();
 		retrieveAllItem();
 	}
 
+	/**
+	 * Gets the name of the database table
+	 * @return A string representing the database's table name
+	 */
 	public String getTableName() {
 		return tableName;
 	}
 
-	public static void initTable() {
-		System.out.println("\nInitializing table " + tableName);
-		
-		Manager m = new Manager(0, "Manager Smith");
-		mapper.save(m);
-		System.out.println("Save manager successfully");
-		
-		User u = new User(1, "User");
-		mapper.save(u);
-		System.out.println("Save user successfully");
-		
-//		Manager m = new Manager();
-//		m.setName("Main Boo");
-//		m.setUserId(0);
-//		mapper.save(m);
-//		System.out.println("Save manager successful");
-		
-//		User u = new User();
-//		u.setName("John Doe");
-//		u.setUserId(1);
-//		mapper.save(u);
-//
-//		u.setName("Bob Marley");
-//		u.setUserId(2);
-//		mapper.save(u);
-//
-//		u.setName("Mary Allen");
-//		u.setUserId(3);
-//		mapper.save(u);
-	}
-
+	/**
+	 * Adds a user to the User Database with the specified user's ID and User object
+	 * @param id An integer representing the user's ID
+	 * @param u A User representing a User object
+	 * @return True if the User object can be added, false otherwise
+	 * If the User object with the specified ID already exists in the User Database,
+	 * then the User object cannot be added
+	 */
 	public static boolean addUser(int id, User u) {
 		boolean status = false;
 		
@@ -78,7 +67,6 @@ public class UserDb extends DatabaseTable {
 			status = true;
 		}
 		else {
-			// do alert that the id is taken
 			System.out.println("Id is taken");
 			status = false;
 		}
@@ -86,10 +74,21 @@ public class UserDb extends DatabaseTable {
 		return status;
 	}
 	
+	/**
+	 * Updates the existing User object in the User Database
+	 * @param u A User object representing the object to be updated in the User Database
+	 */
 	public static void updateUser(User u) {
 		mapper.save(u);
 	}
 	
+	/**
+	 * Deletes a user from the User Database with the specified ID
+	 * @param id An integer representing the user's ID
+	 * @return True if the user can be deleted, false otherwise
+	 * If the user is not found in the User Database,
+	 * then the user cannot be deleted
+	 */
 	public static boolean deleteUser(int id) {
 		boolean status = false;
 		
@@ -113,6 +112,10 @@ public class UserDb extends DatabaseTable {
 		return status;
 	}
 
+	/**
+	 * Retrieves all User object that exists in the User Database
+	 * @return A list of User representing all User object in the User Database
+	 */
 	public static List<User> retrieveAllItem() {
 		List<User> itemList = mapper.scan(User.class, new DynamoDBScanExpression());
 
@@ -124,10 +127,18 @@ public class UserDb extends DatabaseTable {
 		return itemList;
 	}
 
-	public static <T extends User> T getUser(String password) {
+	/**
+	 * Gets the User object from the specified passcode
+	 * @param password A string representing the user's passcode
+	 * @return A generic type of User depending on the type of user specified by the passcode.
+	 * Returns Manager if the user is a manager, User if the user is an employee, and null
+	 * if the user is not found
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends User> T getUser(String passcode) {
 		boolean manager = false;
 		Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-		attributeValues.put(":val1", new AttributeValue().withS(password));
+		attributeValues.put(":val1", new AttributeValue().withS(passcode));
 		
 		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
 				.withFilterExpression("Passcode = :val1").withExpressionAttributeValues(attributeValues);

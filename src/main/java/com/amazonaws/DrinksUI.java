@@ -12,6 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
+/**
+ * Represents interface to add Drink objects to an Order object
+ * 
+ * @author Christopher
+ *
+ */
+@SuppressWarnings("restriction")
 public class DrinksUI implements Initializable {
 	@FXML
 	private Button confirmBtn;
@@ -20,7 +27,7 @@ public class DrinksUI implements Initializable {
 	@FXML
 	private Button removeBtn;
 
-	private String id = null; // string used to get drink from database
+	private String id = null;
 	@FXML
 	private Button soda;
 	@FXML
@@ -42,69 +49,47 @@ public class DrinksUI implements Initializable {
 
 	private static ArrayList<String> drinkIdArrayList = new ArrayList<String>();
 
-	//private HashMap<String, Integer> drinkMap = new HashMap<String, Integer>();
-	
 	private static ArrayList<Drink> oldDrinks = new ArrayList<Drink>();
-	
+
+	/**
+	 * Returns a list of drinks
+	 * 
+	 * @return An ArrayList<String> representing drink names
+	 */
 	public static ArrayList<String> getDrinkList() {
 		return drinkIdArrayList;
 	}
-	
+
+	/**
+	 * Sets Order's drinks as the displayed drink list
+	 */
 	public static void setDrinks(ArrayList<Drink> list) {
 		oldDrinks.clear();
 		oldDrinks.addAll(list);
 	}
 
+	/**
+	 * Adds selected drinks to drink list
+	 */
 	public void selectDrink(ActionEvent e) {
 		id = ((Button) e.getSource()).getId();
 		System.out.println(id + " added");
 		drinkIdArrayList.add(id);
 		drinkObservableList.add(id);
 
-		drinkListView.setItems(drinkObservableList); // displays toppings in the list
+		drinkListView.setItems(drinkObservableList);
 	}
 
+	/**
+	 * Confirms selected drinks to current Order object and updates Order price and
+	 * Inventory database
+	 */
 	public void confirmDrinks(ActionEvent e) {
 		boolean flag = false;
 		if (drinkObservableList.isEmpty()) {
 			Alert.Display("Information", "No drink was added");
 			return;
 		}
-
-//		for(String item : drinkObservableList) {
-//			if(!drinkMap.containsKey(item)) {
-//				drinkMap.put(item, 1);
-//			}
-//			else {
-//				drinkMap.put(item, drinkMap.get(item) + 1);
-//			}
-//		}
-
-//		Iterator itr = drinkMap.entrySet().iterator();
-//		ArrayList<String> count = new ArrayList<String>();
-//		while(itr.hasNext()) {
-//			Map.Entry pair = (Map.Entry)itr.next();
-//			String item = (String) pair.getKey();
-//			int quantity = (int) pair.getValue();
-//			int num = InventoryDb.getQuantityOfItem(item);
-//			
-//			if(num == -1) {
-//				Alert.Display("Error", "Item " + item + " not in the inventory.");
-//				flag = true;
-//				break;
-//			}
-//			if(num < 1) {
-//				Alert.Display("Error", "Not enough " + item
-//						+ " in the inventory. Ask your manager to restock the inventory");
-//				flag = true;
-//				break;
-//			}
-//			else {
-//				InventoryDb.changeQuantity(item, quantity, "decrease");
-//				NewOrderUI.addIngredient(item, quantity);
-//				count.add(item);
-//			}
-//		}
 
 		int count = 0;
 		for (String item : drinkObservableList) {
@@ -115,8 +100,6 @@ public class DrinksUI implements Initializable {
 				break;
 			} else {
 				InventoryDb.changeQuantity(item, 1, "decrease");
-				//NewOrderUI.addIngredient(item, 1);
-				
 				count++;
 			}
 		}
@@ -124,111 +107,116 @@ public class DrinksUI implements Initializable {
 		if (flag) {
 			for (int i = 0; i < count; i++) {
 				InventoryDb.changeQuantity(drinkObservableList.get(i), 1, "increase");
-				NewOrderUI.removeIngredient(drinkObservableList.get(i), 1);
 			}
 			return;
 		}
 
-//		Iterator it = drinkMap.entrySet().iterator();
-//		Order order = NewOrderUI.getOrder();
-//		while(it.hasNext()) {
-//			Map.Entry pair = (Map.Entry)it.next();
-//			String item = (String) pair.getKey();
-//			int quantity = (int) pair.getValue();
-//			Drink d = new Drink(item, 2);
-//			order.getDrink().add(d);
-//			//order.getDrinkQuantity().add(quantity);
-//		}
-
-		// NewOrderUI.addDrinks(drinkIdArrayList);
-		Order order = NewOrderUI.getOrder();
-		/*
-		 * for(String item : drinkObservableList) { Drink d = new Drink(item, 2);
-		 * order.getDrink().add(d); }
-		 */
+		Order order = CurrentOrderUI.getOrder();
 		String newName = "";
 		drinkArrayList.clear();
-		for (int i = 0; i < drinkIdArrayList.size(); i++) { // loop that adds and increments pizza's price
+		for (int i = 0; i < drinkIdArrayList.size(); i++) {
 			newName = drinkIdArrayList.get(i);
 			Drink newDrink = new Drink(newName, 2);
 			Drink tmp = containsDrink(newName);
-			if(tmp != null) {
+			if (tmp != null) {
 				newDrink = tmp;
 				removeDrink(newName);
 			}
-			
+
 			drinkArrayList.add(newDrink);
 		}
 		order.getDrink().clear();
 		order.setDrink(drinkArrayList);
 
-		Alert.Display("Success", "Your drink has been added to your order!");
-
-//		drinkObservableList.clear();
-//		drinkIdArrayList.clear();
-//		drinkListView.getItems().clear();
-
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmBtn);
 
 	}
-	
+
+	/**
+	 * Checks if the specified drink name is already present in the oldDrinks list
+	 * 
+	 * @param str A string representing a drink's name
+	 * @return Null if the oldDrink list doesn't contain str, Drink object with the
+	 *         str name otherwise
+	 */
 	private Drink containsDrink(String str) {
 		Drink ret = null;
-		for(Drink d : oldDrinks) {
-			if(d.getName().equals(str)) {
+		for (Drink d : oldDrinks) {
+			if (d.getName().equals(str)) {
 				ret = d;
 				break;
 			}
 		}
-		
+
 		return ret;
 	}
-	
+
+	/**
+	 * Removes the specified drink name from the oldDrinks list
+	 * 
+	 * @param str A string representing a drink's name
+	 */
 	private void removeDrink(String str) {
-		for(int i = 0; i < oldDrinks.size(); i++) {
-			if(oldDrinks.get(i).getName().equals(str)) {
+		for (int i = 0; i < oldDrinks.size(); i++) {
+			if (oldDrinks.get(i).getName().equals(str)) {
 				oldDrinks.remove(i);
 			}
 		}
 	}
 
-	public void cancelDrink(ActionEvent e) {
+	/**
+	 * Removes a drink from the drink list
+	 */
+	public void cancelDrink() {
 		drinkObservableList.clear();
 		drinkListView.getItems().clear();
-		goToOrderScreen(e);
+		goToOrderScreen();
 	}
 
-	public void removeDrink(ActionEvent e) {
+	/**
+	 * Removes a drink from the drink list
+	 */
+	public void removeDrink() {
 		int index = drinkListView.getSelectionModel().getSelectedIndex();
-		if(drinkArrayList.size() > index) {
-			if(drinkArrayList.get(index).getIsNew() == 0) {
+		if (drinkArrayList.size() > index) {
+			if (drinkArrayList.get(index).getIsNew() == 0) {
 				Alert.Display("Error", "This item cannot be removed.");
 				return;
 			}
 		}
-		
+
 		drinkIdArrayList.remove(index);
 		drinkObservableList.remove(index);
 		drinkListView.setItems(drinkObservableList);
 	}
 
-	public void goToOrderScreen(ActionEvent e) {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+	/**
+	 * Display CurrentOrderUI stage and closes the current (DrinksUI) stage
+	 */
+	public void goToOrderScreen() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 
+	/**
+	 * Displays current drinks on Order and updates inventory database if changes
+	 * made on CurrentOrderUI
+	 * 
+	 * @param location  Required for initialize method, unused
+	 * @param resources Required for initialize method, unused
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		drinkIdArrayList.clear();
 		drinkObservableList.clear();
 		drinkArrayList.clear();
-		
-		drinkIdArrayList.addAll(NewOrderUI.getDrinks());
-		
-		Order order = NewOrderUI.getOrder();
+
+		drinkIdArrayList.addAll(CurrentOrderUI.getDrinks());
+
+		Order order = CurrentOrderUI.getOrder();
 		drinkArrayList.addAll(order.getDrink());
-		
+
 		drinkObservableList.addAll(drinkIdArrayList);
 		drinkListView.setItems(drinkObservableList);
 

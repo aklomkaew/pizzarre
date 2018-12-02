@@ -1,3 +1,4 @@
+
 package com.amazonaws;
 
 import java.net.URL;
@@ -6,7 +7,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -18,6 +18,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Represents an interface to display all users with the user database
+ * 
+ * @author Christopher
+ *
+ */
+@SuppressWarnings("restriction")
 public class AllUsersUI implements Initializable {
 
 	@FXML
@@ -39,7 +46,10 @@ public class AllUsersUI implements Initializable {
 
 	private ObservableList<User> userObservableList;
 
-	public void deleteUser(ActionEvent e) {
+	/**
+	* Removes the selected user from the list and from the database
+	*/
+	public void deleteUser() {
 		
 		User userToDelete = userTableView.getSelectionModel().getSelectedItem();
 		if (userToDelete == null) {
@@ -65,7 +75,10 @@ public class AllUsersUI implements Initializable {
 		displayAllUser();
 	}
 
-	public void deleteAllUser(ActionEvent e) {
+	/**
+	* Removes all users from the list and from the database
+	*/
+	public void deleteAllUser() {
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
@@ -87,6 +100,9 @@ public class AllUsersUI implements Initializable {
 		}
 	}
 
+	/**
+	* Displays all User objects in a list
+	*/
 	public void displayAllUser() {
 		
 		List<User> list = UserDb.retrieveAllItem();
@@ -103,18 +119,28 @@ public class AllUsersUI implements Initializable {
 		}
 	}
 
+	/**
+	 * Display AddUserUI stage and closes the current (AllUsersUI) stage
+	 */
 	public void goToAddUser() {
-		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddUserUI.fxml"));
 		NextStage.goTo(fxmlLoader, addUserBtn);
 	}
 
+	/**
+	 * Display ManagerUtilitiesUI stage and closes the current (AllUsersUI) stage
+	 */
 	public void goToManagerUtilities() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 	
+	/**
+	 * Creates a viewable list and populates it with all users in user database by calling {@link #displayAllUser()}
+	 * @param location Required for initialize method, unused
+	 * @param resources Required for initialize method, unused
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		

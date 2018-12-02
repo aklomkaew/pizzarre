@@ -2,14 +2,12 @@ package com.amazonaws;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -22,7 +20,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class NewOrderUI implements Initializable {
+/**
+ * Represents an interface an Order object's contents and ways to modify the contents
+ * @author Christopher
+ *
+ */
+@SuppressWarnings("restriction")
+public class CurrentOrderUI implements Initializable {
 
 	@FXML
 	private Button backBtn;
@@ -50,8 +54,10 @@ public class NewOrderUI implements Initializable {
 	private static Order order;
 
 	private static boolean modOrder;
+	
+	private static int oldDiscount;
 
-	private static int modifiedIndex; // used to keep track of index of piza being modified
+	private static int modifiedIndex; 
 
 	private ArrayList<Drink> drinkArrayList = new ArrayList<Drink>();
 	private ArrayList<Pizza> pizzaArrayList = new ArrayList<Pizza>(); // for pizza objects
@@ -65,37 +71,63 @@ public class NewOrderUI implements Initializable {
 	@FXML
 	private TableColumn<OrderContents, Double> priceColumn;
 	private ObservableList<OrderContents> orderContentsObservableList;
+	
+	/**
+	 * Represents an object used to place an Order in tableview
+	 * @author Christopher
+	 *
+	 */
 	public class OrderContents { //used for tableview
 		String itemName;
     	double itemPrice;
     	
+    	/**
+    	 * Class constructor
+    	 */
     	public OrderContents(){
     		String itemName = "";
     		double itemPrice = 0.0;
     	}
 
+    	/**
+    	 * Creates an OrderContents with the specified name and price
+    	 * @param name A string representing the item's name
+    	 * @param price A double represnting he item's cost
+    	 */
     	public OrderContents(String name, double price){
     		this.itemName = name;
     		this.itemPrice = price;
     	}
     	
+    	/**
+    	 * Returns the item's name
+    	 * @return A string representing the item's name
+    	 */
     	public String getItemName() {
     		return itemName;
     	}
     	
+    	/**
+    	 * Returns the item's cost
+    	 * @return A double representing the item's cost
+    	 */
     	public double getItemPrice() {
     		return itemPrice;
     	}
     }
-	
-	private static HashMap<String, Integer> allIngredients;
 
+	/**
+	 * Displays the total cost of everything added together within the Order
+	 */
 	public void setCostLabel() {
 		String price = String.format("%.2f", order.getTotal());
 		costLbl.setText("Total Price: $" + price);
 	}
 	
-	public void viewToppings(ActionEvent e) {
+	/**
+	 * Displays the selected pizza's toppings
+	 */
+	public void viewToppings() {
 		int index = orderTableView.getSelectionModel().getSelectedIndex();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
@@ -113,15 +145,27 @@ public class NewOrderUI implements Initializable {
 		}
 	}
 
+	/**
+	 * Returns the drink's name of the order
+	 * @return An ArrayList<String> of names representing drinks on an order
+	 */
 	public static ArrayList<String> getDrinks() {
 		return drinkNameArrayList;
 	}
 	
+	/**
+	 * Returns the tableview's selected item's index in the list
+	 * @return An integer representing the currently selected index on the CurrentOrderUI tableview
+	 */
 	public static int getModifiedIndex() {
 		return modifiedIndex;
 	}
 
-	public void modifyPizza(ActionEvent e) {
+	/**
+	 * Takes the pizza in the selected tableview index and calls {@link #goToCustom()} with that pizza's contents
+	 * @return An integer representing the currently selected index on the CurrentOrderUI tableview
+	 */
+	public void modifyPizza() {
 		int index = orderTableView.getSelectionModel().getSelectedIndex();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
@@ -141,7 +185,6 @@ public class NewOrderUI implements Initializable {
 			return;
 		}
 
-		CustomPizzaUI.setOldPizza(order.getPizzas());
 		CustomPizzaUI.setPizza(p);
 		
 		for(String str : p.getToppings()) {
@@ -154,8 +197,12 @@ public class NewOrderUI implements Initializable {
 		goToCustom();
 	}
 
-	public void setDiscount(ActionEvent e) {
-		TextInputDialog dialog = new TextInputDialog("20");
+	/**
+	 * Applies a percentile reduction to the Order variable: total
+	 * @throws Exception if no Integer input
+	 */
+	public void setDiscount() {
+		TextInputDialog dialog = new TextInputDialog(Integer.toString(order.getDiscount()));
 		dialog.setTitle("Discount");
 		dialog.setHeaderText("Set Discount for Order #" + order.getOrderNumber());
 		dialog.setContentText("Enter percent discount: ");
@@ -163,7 +210,6 @@ public class NewOrderUI implements Initializable {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		
-		// Traditional way to get the response value.
 		String result = "";
 		try {
 			result = dialog.showAndWait().get();
@@ -182,6 +228,7 @@ public class NewOrderUI implements Initializable {
 			return;
 		}
 		
+		oldDiscount = order.getDiscount();
 		order.setDiscount(discount);
 		order.applyDiscount();
 		updateCost();
@@ -194,9 +241,11 @@ public class NewOrderUI implements Initializable {
 		alertInfo.showAndWait();
 	}
 
-	public void confirmOrder(ActionEvent e) {
+	/**
+	 * Adds the Order object to the Order database
+	 */
+	public void confirmOrder() {
 		order.setTotal(0);
-		double price = 0.0;
 		for (int i = 0; i < order.getPizzas().size(); i++) {
 			Pizza currentPizza = order.getPizzas().get(i);
 			order.setTotal(order.getTotal() + currentPizza.getPrice());
@@ -205,6 +254,15 @@ public class NewOrderUI implements Initializable {
 			Drink currentDrink = order.getDrink().get(i);
 			order.setTotal(order.getTotal() + currentDrink.getPrice());
 		}
+		
+		if(order.getTotal() == 0.0) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Empty order.");
+			alert.showAndWait();
+			return;
+		}
+		
 		if(order.getDiscount() > 0) {
 			order.applyDiscount();
 		}
@@ -220,16 +278,15 @@ public class NewOrderUI implements Initializable {
 			}
 		}
 		for (Drink d : order.getDrink()) {
-			d.setIsNew();
+			d.setIsNew(0);
 		}
 		for (Pizza p : order.getPizzas()) {
-			p.setIsNew();
+			p.setIsNew(0);
 		}
 
 		OrderDb.updateOrder(order);
 
 		alert.setHeaderText("Your order " + order.getOrderNumber() + " has been placed! Total is $" + order.getTotal());
-
 		alert.showAndWait();
 
 		pizzaArrayList.clear();
@@ -241,7 +298,14 @@ public class NewOrderUI implements Initializable {
 		goToMainMenu();
 	}
 
-	public void discardOrder(ActionEvent e) {
+	/**
+	 * Deletes the Order object and undoes any inventory database changes caused by the current Order then returns to the MainMenuUI stage
+	 */
+	public void discardOrder() {
+		if(order.getTotal() == 0.0) {
+			goToMainMenu();
+			return;
+		}
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to cancel your order?");
@@ -254,18 +318,30 @@ public class NewOrderUI implements Initializable {
 			return;
 		} else if (option.get() == ButtonType.OK) {
 			if (!modOrder) {
-				removeAllIngredients();
+				if(order != null) {
+					order.setDiscount(oldDiscount);
+					updateCost();
+					removeAllIngredients();
+				}
 			} else {
 				for (int i = 0; i < order.getPizzas().size(); i++) {
-					if (order.getPizzas().get(i).getIsNew() == 1) {
+					Pizza p = order.getPizzas().get(i);
+					if (p.getIsNew() == 1) {
+						for(String topping : p.getToppings()) {
+							InventoryDb.changeQuantity(topping, p.getSize(), "increase");
+						}
 						order.getPizzas().remove(i);
 					}
 				}
 				for (int i = 0; i < order.getDrink().size(); i++) {
-					if (order.getDrink().get(i).getIsNew() == 1) {
+					Drink d = order.getDrink().get(i);
+					if (d.getIsNew() == 1) {
+						InventoryDb.changeQuantity(d.getName(), 1, "increase");
 						order.getDrink().remove(i);
 					}
 				}
+				order.setDiscount(oldDiscount);
+				updateCost();
 				OrderDb.updateOrder(order);
 
 				order = null;
@@ -293,7 +369,14 @@ public class NewOrderUI implements Initializable {
 		}
 	}
 
-	public void goBack(ActionEvent e) {
+	/**
+	 * Returns to the MainMenuUI stage and closes the current (CurrentOrderUI) stage
+	 */
+	public void goBack() {
+		if(order.getTotal() == 0.0) {
+			goToMainMenu();
+			return;
+		}
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to return without saving order?");
@@ -305,12 +388,17 @@ public class NewOrderUI implements Initializable {
 		} else if (option.get() == ButtonType.CANCEL) {
 			return;
 		} else if (option.get() == ButtonType.OK) {
-			removeAllIngredients();
+			if(order != null) {
+				removeAllIngredients();
+			}
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 			NextStage.goTo(fxmlLoader, backBtn);
 		}
 	}
 
+	/**
+	 * Increases the inventory item quantity in the database when item is removed from the Order
+	 */
 	public void removeAllIngredients() {
 		for (Pizza p : order.getPizzas()) {
 			if (p.getIsNew() == 1) {
@@ -324,15 +412,7 @@ public class NewOrderUI implements Initializable {
 				InventoryDb.changeQuantity(d.getName(), 1, "increase");
 			}
 		}
-//		if (allIngredients == null || allIngredients.isEmpty()) {
-//			return;
-//		}
-//		Iterator itr = allIngredients.entrySet().iterator();
-//		while (itr.hasNext()) {
-//			Map.Entry pair = (Map.Entry) itr.next();
-//			InventoryDb.changeQuantity((String) pair.getKey(), (Integer) pair.getValue(), "increase");
-//			itr.remove();
-//		}
+		
 		pizzaArrayList.clear();
 		pizzaNameArrayList.clear();
 		drinkArrayList.clear();
@@ -341,7 +421,10 @@ public class NewOrderUI implements Initializable {
 		order = null;
 	}
 
-	public void removeItem(ActionEvent e) {
+	/**
+	 * Removes an item from the Order
+	 */
+	public void removeItem() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		int index = orderTableView.getSelectionModel().getSelectedIndex();
@@ -373,7 +456,10 @@ public class NewOrderUI implements Initializable {
 		updateCost();
 	}
 	
-	private void updateCost() {
+	/**
+	 * Updates the total cost of the Order
+	 */
+	public void updateCost() {
 		order.setTotal(0);
 		for (int i = 0; i < order.getPizzas().size(); i++) {
 			Pizza currentPizza = order.getPizzas().get(i);
@@ -388,64 +474,74 @@ public class NewOrderUI implements Initializable {
 		setCostLabel();
 	}
 
+	/**
+	 * Notification of successful stage transversal
+	 * @param arg0 A Stage representation, unused
+	 * @throws Exception, will not throw an exception
+	 */
 	public void start(Stage arg0) throws Exception {
 		System.out.println("In start");
 	}
 
+	/**
+	 * Signals the current Order is not a new Order
+	 * @param Order An Order representing an Order that already exists in the database
+	 */
 	public static void setOrder(Order c) {
 		order = c;
 		modOrder = true;
 	}
 
+	/**
+	 * Returns the current Order
+	 * @return an Order representing what is displayed on CurrentOrderUI
+	 */
 	public static Order getOrder() {
 		return order;
 	}
-
-	public static boolean removeIngredient(String str, int quantity) {
-		boolean status = false;
-
-		if (allIngredients == null || !allIngredients.containsKey(str)) {
-			status = false;
-		} else {
-			if (allIngredients.get(str) < quantity) {
-				status = false;
-				System.out.println("Ingredient less than amount wanting to remove");
-			} else if (allIngredients.get(str) == quantity) {
-				allIngredients.remove(str);
-				status = true;
-			} else {
-				allIngredients.put(str, allIngredients.get(str) - quantity);
-				status = true;
-			}
-		}
-
-		return status;
-	}
 	
+	/**
+	 * Sets DrinksUI drink list, display DrinksUI stage and closes the current (CurrentOrderUI) stage
+	 */
 	public void goToDrinks() {
 		DrinksUI.setDrinks(order.getDrink());
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
 		NextStage.goTo(fxmlLoader, drinkBtn);
 	}
 
+	/**
+	 * Display SpecialtyPizzaUI stage and closes the current (CurrentOrderUI) stage
+	 */
 	public void goToSpecialty() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, specialBtn);
 	}
 
+	/**
+	 * Display CustomPizzaUI stage and closes the current (CurrentOrderUI) stage
+	 */
 	public void goToCustom() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, customBtn);
 	}
 	
+	/**
+	 * Display MainMenuUI stage and closes the current (CurrentOrderUI) stage
+	 */
 	public void goToMainMenu() {
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmBtn);
 	}
 	
+	/**
+	 * Creates a two-column table displaying an Order's item and that item's total
+	 * Loads the table with Order data if not a new Order
+	 * @param location Required for initialize method, unused
+	 * @param resources Required for initialize method, unused
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		orderContentsObservableList = FXCollections.observableArrayList();
