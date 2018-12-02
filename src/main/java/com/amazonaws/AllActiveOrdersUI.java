@@ -32,7 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-@SuppressWarnings({ "unused" })
+@SuppressWarnings({ "unused", "restriction" })
 public class AllActiveOrdersUI implements Initializable {
 	@FXML
 	private Button backBtn;

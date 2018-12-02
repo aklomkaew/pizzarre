@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+@SuppressWarnings("restriction")
 public class RecipeListUI implements Initializable {
 
 	@FXML

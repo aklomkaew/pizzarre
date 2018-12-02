@@ -18,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+@SuppressWarnings("restriction")
 public class AllUsersUI implements Initializable {
 
 	@FXML

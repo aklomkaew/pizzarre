@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+@SuppressWarnings("restriction")
 public class CurrentOrderUI implements Initializable {
 
 	@FXML
@@ -199,7 +200,6 @@ public class CurrentOrderUI implements Initializable {
 
 	public void confirmOrder(ActionEvent e) {
 		order.setTotal(0);
-		double price = 0.0;
 		for (int i = 0; i < order.getPizzas().size(); i++) {
 			Pizza currentPizza = order.getPizzas().get(i);
 			order.setTotal(order.getTotal() + currentPizza.getPrice());

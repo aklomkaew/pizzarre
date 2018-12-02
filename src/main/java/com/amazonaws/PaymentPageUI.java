@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+@SuppressWarnings("restriction")
 public class PaymentPageUI implements Initializable {
 
 	@FXML
