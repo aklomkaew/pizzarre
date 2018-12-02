@@ -32,6 +32,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+
+/**
+ * Represents interface to display a list of all unpaid tabs/orders within the system
+ * Orders displayed on this interface only if (Order.getState() == true)
+ * @author Christopher
+ *
+ */
+
 @SuppressWarnings({ "unused", "restriction" })
 public class AllActiveOrdersUI implements Initializable {
 	@FXML
@@ -57,16 +65,29 @@ public class AllActiveOrdersUI implements Initializable {
 
 	private static Order selectedOrder;
 
+	/**
+	 * Gets the selected Order object
+	 * @return An Order object representing an unpaid order
+	 */
+	
 	public static Order getOrder() {
 		return selectedOrder;
 	}
 
+	/**
+	 * Display AllOrdersUI stage and closes the current (AllActiveOrdersUI) stage
+	 */
+	
 	public void goToManagerUtilities(ActionEvent e) {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllOrdersUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
+	/**
+	 * Takes selected Order from list and displays CurrentOrderUI stage with its contents and closes the current (AllActiveOrdersUI) stage
+	 */
+	
 	public void editOrder(ActionEvent e) {
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
@@ -83,12 +104,21 @@ public class AllActiveOrdersUI implements Initializable {
 		NextStage.goTo(fxmlLoader, editOrderBtn);
 	}
 
+	/**
+	 * Takes selected Order from list and removes it from the Order database
+	 * @param An Order object representing the Order being deleted
+	 */
+	
 	private void deleteOrder(Order o) {
 		orderObservableList.remove(o);
 		orderTableView.setItems(orderObservableList);
 		OrderDb.deleteItem(o.getOrderNumber());
 	}
 
+	/**
+	 * Confirms if an Order was selected before calling {@link #deleteOrder(Order)} and updating the Order list
+	 */
+	
 	public void deleteOrder(ActionEvent e) {
 		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
@@ -103,6 +133,10 @@ public class AllActiveOrdersUI implements Initializable {
 		displayAllActiveOrder();
 	}
 
+	/**
+	 * A method to remove all unpaid orders from the database
+	 */
+	
 	public void deleteAllOrder(ActionEvent e) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
@@ -122,6 +156,11 @@ public class AllActiveOrdersUI implements Initializable {
 		}
 	}
 
+	/**
+	 * Takes selected Order and loads PaymentPageUI stage with it, closes current (AllActiveOrdersUI) stage
+	 * CustomOrderUI stage with its contents and closes the current (AllActiveOrdersUI) stage
+	 */
+	
 	public void payOrder(ActionEvent e) {
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
@@ -145,6 +184,11 @@ public class AllActiveOrdersUI implements Initializable {
 		NextStage.goTo(fxmlLoader, payOrderBtn);
 	}
 
+	/**
+	 * Loads a list with active Orders
+	 * @return a List displaying all Orders where (Order.getState() == true);
+	 */
+	
 	private List<Order> getActiveOrders() {
 		List<Order> list = OrderDb.retrieveAllItem();
 
@@ -160,6 +204,10 @@ public class AllActiveOrdersUI implements Initializable {
 		return activeList;
 	}
 
+	/**
+	 * Displays all active orders to the screen
+	 */
+	
 	public void displayAllActiveOrder() {
 		List<Order> activeList = getActiveOrders();
 
@@ -172,10 +220,13 @@ public class AllActiveOrdersUI implements Initializable {
 		}
 	}
 
-	public void start(Stage arg0) throws Exception {
-
+	/**
+	 * Creates a two-column table displaying an Order's number and that Order's total then loads it with all active Orders
 	}
-
+	 * @param location Required for initialize method, unused
+	 * @param resources Required for initialize method, unused
+	 */
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		serverColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("serverId"));

@@ -5,6 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
+/**
+ * Represents interface to navigate to specific program functionality
+ * @author Christopher
+ *
+ */
+
 @SuppressWarnings("restriction")
 public class MainMenuUI {
 
@@ -17,19 +23,32 @@ public class MainMenuUI {
 	@FXML
 	private Button logOutBtn;
 
-	public void goToNewOrder(ActionEvent e) {
+	/**
+	 * Display AllOrdersUI stage and closes the current (MainMenuUI) stage
+	 */
+    
+	public void goToNewOrder() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, newOrd);
 	}
 
-	public void goToMyOrders(ActionEvent e) {
+	/**
+	 * Display MyOrdersUI stage and closes the current (MainMenuUI) stage
+	 */
+    
+	public void goToMyOrders() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MyOrdersUI.fxml"));
 		NextStage.goTo(fxmlLoader, myOrds);
 	}
-
-	public void goToManagerUtilities(ActionEvent e) {
+	
+	/**
+	 * Display ManagerUtilitiesUI stage and closes the current (MainMenuUI) stage
+	 * Only works if user is a manager
+	 */
+    
+	public void goToManagerUtilities() {
 
 		if (LoginUI.getUser().isManager()) {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
@@ -39,7 +58,11 @@ public class MainMenuUI {
 		}
 	}
 
-	public void logout(ActionEvent event) {
+	/**
+	 * Display loginUI stage and closes the current (MainMenuUI) stage
+	 */
+    
+	public void logout() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loginUI.fxml"));
 		NextStage.goTo(fxmlLoader, logOutBtn);

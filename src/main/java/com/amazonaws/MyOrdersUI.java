@@ -17,6 +17,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Represents interface displaying the user's orders
+ * @author Christopher
+ *
+ */
+
 @SuppressWarnings("restriction")
 public class MyOrdersUI implements Initializable {
 
@@ -43,21 +49,38 @@ public class MyOrdersUI implements Initializable {
 
 	private Order selectedOrder;
 
-	public void refreshOrder(ActionEvent e) {
-		
+	/**
+	 *Button that when clicked automatically refreshes the list 
+	 */
+	
+	public void refreshOrder() {
+		displayAllOrder();
 	}
 	
-	public void goToMainMenu(ActionEvent e) {
+	/**
+	 * Display MainMenuUI stage and closes the current (MyOrdersUI) stage
+	 */
+	
+	public void goToMainMenu() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
+	 /**
+	  *Returns the selected order
+	  *@return an order representing the Order selected on the list
+	  */
+	
 	public Order getOrder() {
 		
 		return selectedOrder;
 	}
 
+	/**
+	  *Displays a list of the user's current orders
+	  */
+	
 	public void displayAllOrder() {
 		
 		List<Order> list = OrderDb.retrieveFilteredItem(LoginUI.getUser().getUserId());
@@ -76,6 +99,10 @@ public class MyOrdersUI implements Initializable {
 		orderObservableList.addAll(activeOrder);
 	}
 
+	 /**
+	  *Shows the contents on the selected Order
+	  */
+	
 	public void showOrder(ActionEvent e) {
 		
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
@@ -100,7 +127,11 @@ public class MyOrdersUI implements Initializable {
 		alert.showAndWait();
 	}
 
-	public void payOrder(ActionEvent e) {
+	/**
+	 *Gets the selected Order then calls {@link #goToPaymentPage}  and loads the payment screen with the order's data
+	 */
+	
+	public void payOrder() {
 		
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
@@ -122,7 +153,12 @@ public class MyOrdersUI implements Initializable {
 		goToPaymentPage();
 	}
 
-	public void editOrder(ActionEvent e) {
+	/**
+	 * Takes the selected Order, sets it as a modified order, then calls {@link #goToOrderScreen} and loads the order screen with the order's data
+	 * Modified orders cannot have previously added items removed or modified, total excluded
+	 */
+	
+	public void editOrder() {
 		Order orderToEdit = orderTableView.getSelectionModel().getSelectedItem();
 		if (orderToEdit == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -143,7 +179,11 @@ public class MyOrdersUI implements Initializable {
 		goToOrderScreen();
 	}
 
-	public void deleteOrder(ActionEvent e) {
+	/**
+	 * Removes the selected Order from the list and user's order list
+	 */
+	
+	public void deleteOrder() {
 		if (!LoginUI.getUser().isManager()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -171,17 +211,31 @@ public class MyOrdersUI implements Initializable {
 		displayAllOrder();
 	}
 
+	/**
+	 * Display PaymentPageUI stage and closes the current (MyOrdersUI) stage
+	 */
+	
     public void goToPaymentPage() {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
     	NextStage.goTo(fxmlLoader, payBtn);
     }
     
+    /**
+	 * Display CurrentOrderUI stage and closes the current (MyOrdersUI) stage
+	 */
+    
     public void goToOrderScreen() {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
     	NextStage.goTo(fxmlLoader, editBtn);
     }
+    
+	/**
+	 * Creates a two-column table displaying an Order's number and that Order's total then calls {@link #displayAllOrder()}
+	 * @param location Required for initialize method, unused
+	 * @param resources Required for initialize method, unused
+	 */
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

@@ -7,6 +7,12 @@ import javafx.stage.*;
 import java.util.ArrayList;
 import javafx.geometry.*;
 
+/**
+ * Represents interface to display a notification the user must acknowledge before continuing
+ * @author Christopher
+ *
+ */
+
 public class Alert {
 
 	@SuppressWarnings("restriction")
