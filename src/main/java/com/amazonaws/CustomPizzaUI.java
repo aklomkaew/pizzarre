@@ -170,7 +170,11 @@ public class CustomPizzaUI implements Initializable {
 			if (flag) {
 				for (int i = 0; i < count; i++) {
 					InventoryDb.changeQuantity(list.get(i), pSize, "increase");
-					CurrentOrderUI.removeIngredient(list.get(i), pSize);
+					toppingObservableList.clear();
+					toppingIdArrayList.clear();
+					toppingListView.getItems().clear();
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
+					NextStage.goTo(fxmlLoader, confirmBtn);
 				}
 				return;
 			}
@@ -193,13 +197,11 @@ public class CustomPizzaUI implements Initializable {
 				String topping = list.get(i);
 				p.addTopping(topping);
 			}
-			p.setPrice(pSize * p.getToppings().size());
+			p.updatePrice();
 
 			Order order = CurrentOrderUI.getOrder();
 			
 			order.addPizza(p);
-
-			Alert.Display("Success", "Custom Pizza is added to your order!");
 
 			toppingObservableList.clear();
 			toppingIdArrayList.clear();
@@ -237,7 +239,7 @@ public class CustomPizzaUI implements Initializable {
 	}
 
 	/**
-	 * Deletes the pizza from the order then goes to NewOrderUI
+	 * Deletes the pizza from the order then goes to CurrentOrderUI
 	 */
 	public void cancelPizza() {
 		if (!modified) {
@@ -255,7 +257,7 @@ public class CustomPizzaUI implements Initializable {
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 

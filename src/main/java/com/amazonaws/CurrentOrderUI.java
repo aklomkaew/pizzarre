@@ -259,6 +259,15 @@ public class CurrentOrderUI implements Initializable {
 			Drink currentDrink = order.getDrink().get(i);
 			order.setTotal(order.getTotal() + currentDrink.getPrice());
 		}
+		
+		if(order.getTotal() == 0.0) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Empty order.");
+			alert.showAndWait();
+			return;
+		}
+		
 		if(order.getDiscount() > 0) {
 			order.applyDiscount();
 		}
@@ -274,16 +283,15 @@ public class CurrentOrderUI implements Initializable {
 			}
 		}
 		for (Drink d : order.getDrink()) {
-			d.setIsNew();
+			d.setIsNew(0);
 		}
 		for (Pizza p : order.getPizzas()) {
-			p.setIsNew();
+			p.setIsNew(0);
 		}
 
 		OrderDb.updateOrder(order);
 
 		alert.setHeaderText("Your order " + order.getOrderNumber() + " has been placed! Total is $" + order.getTotal());
-
 		alert.showAndWait();
 
 		pizzaArrayList.clear();
@@ -299,6 +307,10 @@ public class CurrentOrderUI implements Initializable {
 	 * Deletes the Order object and undoes any inventory database changes caused by the current Order then returns to the MainMenuUI stage
 	 */
 	public void discardOrder() {
+		if(order.getTotal() == 0.0) {
+			goToMainMenu();
+			return;
+		}
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to cancel your order?");
@@ -311,9 +323,11 @@ public class CurrentOrderUI implements Initializable {
 			return;
 		} else if (option.get() == ButtonType.OK) {
 			if (!modOrder) {
-				order.setDiscount(oldDiscount);
-				removeAllIngredients();
-				updateCost();
+				if(order != null) {
+					order.setDiscount(oldDiscount);
+					updateCost();
+					removeAllIngredients();
+				}
 			} else {
 				for (int i = 0; i < order.getPizzas().size(); i++) {
 					Pizza p = order.getPizzas().get(i);
@@ -364,6 +378,10 @@ public class CurrentOrderUI implements Initializable {
 	 * Returns to the MainMenuUI stage and closes the current (CurrentOrderUI) stage
 	 */
 	public void goBack() {
+		if(order.getTotal() == 0.0) {
+			goToMainMenu();
+			return;
+		}
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to return without saving order?");
@@ -375,7 +393,9 @@ public class CurrentOrderUI implements Initializable {
 		} else if (option.get() == ButtonType.CANCEL) {
 			return;
 		} else if (option.get() == ButtonType.OK) {
-			removeAllIngredients();
+			if(order != null) {
+				removeAllIngredients();
+			}
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 			NextStage.goTo(fxmlLoader, backBtn);
 		}

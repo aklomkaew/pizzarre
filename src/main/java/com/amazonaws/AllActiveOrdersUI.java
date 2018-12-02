@@ -66,7 +66,7 @@ public class AllActiveOrdersUI implements Initializable {
 
 	/**
 	 * Gets the selected Order object
-	 * @return An Order object representing an unpaid order
+	 * @return An Order object representing a selected order
 	 */
 	public static Order getOrder() {
 		return selectedOrder;

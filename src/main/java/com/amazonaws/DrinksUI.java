@@ -128,8 +128,6 @@ public class DrinksUI implements Initializable {
 		order.getDrink().clear();
 		order.setDrink(drinkArrayList);
 
-		Alert.Display("Success", "Your drink has been added to your order!");
-
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmBtn);
 

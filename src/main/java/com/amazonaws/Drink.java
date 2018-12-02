@@ -50,14 +50,15 @@ public class Drink {
 	}
 	
 	/**
-	 * Sets drink's isNew status to 0, or false
+	 * Sets the drink's state 
+	 * @param An integer representing the drink's state
 	 */
-	public void setIsNew() {
-		this.isNew = 0;
+	public void setIsNew(int flag) {
+		this.isNew = flag;
 	}
 	
 	/**
-	 * Gets drink's isNew status
+	 * Gets the drink's state
 	 * @return An integer isNew, which returns 0 for not new and returns 1 for new
 	 */
 	public int getIsNew() {
@@ -65,7 +66,7 @@ public class Drink {
 	}
 	
 	/**
-	 * Sets the drink's price
+	 * Sets the drink's price to the default drink price
 	 */
 	public void setPrice() {
 		this.price = DRINK_PRICE;

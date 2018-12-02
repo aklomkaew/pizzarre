@@ -175,8 +175,6 @@ public class SpecialtyIntoCustomUI {
 		Order order = CurrentOrderUI.getOrder();
 		order.addPizza(p);
 
-		Alert.Display("Success", "Pizza " + specialtyName + " is added to your order!");
-
 		toppingObservableList.clear();
 		toppingIdArrayList.clear();
 		toppingListView.getItems().clear();
