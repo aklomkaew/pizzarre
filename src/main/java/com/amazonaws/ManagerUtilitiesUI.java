@@ -5,12 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
-/**
- * Represents interface to navigate to specific program manager functionality
- * @author Christopher
- *
- */
-
 public class ManagerUtilitiesUI {
 	
     @FXML
@@ -24,51 +18,31 @@ public class ManagerUtilitiesUI {
     @FXML
     private Button backBtn;
 
-	/**
-	 * Display AllOrdersUI stage and closes the current (ManagerUtilitiesUI) stage
-	 */
-    
-    public void goToAllOrders() {
+    public void goToAllOrders(ActionEvent e) {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllOrdersUI.fxml"));
     	NextStage.goTo(fxmlLoader, allOrderBtn);
     }
 
-	/**
-	 * Display AllUsersUI stage and closes the current (ManagerUtilitiesUI) stage
-	 */
-    
-    public void goToEmployeeList() {
+    public void goToEmployeeList(ActionEvent e) {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllUsersUI.fxml"));
     	NextStage.goTo(fxmlLoader, employeeBtn);
     }
 
-	/**
-	 * Display RecipeListUI stage and closes the current (ManagerUtilitiesUI) stage
-	 */
-    
-    public void goToRecipeList() {
+    public void goToRecipeList(ActionEvent e) {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
     	NextStage.goTo(fxmlLoader, recipeBtn);
     }
 
-	/**
-	 * Display InventoryUI stage and closes the current (ManagerUtilitiesUI) stage
-	 */
-    
-    public void goToInventory() {
+    public void goToInventory(ActionEvent e) {
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("InventoryUI.fxml"));
     	NextStage.goTo(fxmlLoader, inventoryBtn);
     }
 
-	/**
-	 * Display MainMenuUI stage and closes the current (ManagerUtilitiesUI) stage
-	 */
-    
-    public void goToMainMenu () {
+    public void goToMainMenu (ActionEvent e) {
 	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
     	NextStage.goTo(fxmlLoader, backBtn);

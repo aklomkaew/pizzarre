@@ -15,12 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-/**
- * Represents an interface for displaying the inventory database
- * @author Christopher
- *
- */
-
 public class InventoryUI implements Initializable {
 
 	@FXML
@@ -46,22 +40,13 @@ public class InventoryUI implements Initializable {
 
 	private ObservableList<InventoryItem> inventoryObservableList;
 
-	/**
-	 * Increases quantity of al inventory items
-	 */
-	
-	public void restock() {
+	public void restock(ActionEvent e) {
 		InventoryDb.restock();
 		displayAllInventory();
 		Alert.Display("Success", "Restock completed");
 	}
 
-	/**
-	 * When adding a new ingredient, checks if a positive quantity was inputted or if inventory item name already exists
-	 * @throws NumberFormatException if integer was not used
-	 */
-	
-	public void checkIngredient() {
+	public void checkIngredient(ActionEvent e) { // don't add integration code to this method, do it to addIngredient
 		String ingredientName = ingredientNameTF.getText().toLowerCase();
 		if (ingredientName == null || ingredientName.length() == 0) {
 			Alert.Display("Error", "Please enter ingredient name.");
@@ -74,21 +59,15 @@ public class InventoryUI implements Initializable {
 				Alert.Display("Error", "Quantity must be positive.");
 				return;
 			} else {
-				addIngredient(quantity, ingredientName);
+				addIngredient(e, quantity, ingredientName);
 			}
 		} catch (NumberFormatException ex) {
 			Alert.Display("Error", "Quantity must be a number");
 		}
 	}
 
-	/**
-	 * Adds the item to the inventory database
-	 * @param quantity An integer representing the amount of an item being added to the database
-	 * @param ingredientName A string representing the name of the item being added to the database
-	 */
-	
-	public void addIngredient(int quantity, String ingredientName) {
-																					
+	public void addIngredient(ActionEvent e, int quantity, String ingredientName) { // integration goes here, not
+																					// checkIngredient
 		if (InventoryDb.addItem(ingredientName.toLowerCase(), quantity)) {
 			Alert.Display("Success", "Ingredient has been added!");
 		} else {
@@ -99,10 +78,6 @@ public class InventoryUI implements Initializable {
 		updateTable();
 	}
 
-	/**
-	 * Displays the table after adding or removing items from the database
-	 */
-	
 	public void updateTable() {
 		List<InventoryItem> list = InventoryDb.retrieveAllItem();
 
@@ -114,11 +89,7 @@ public class InventoryUI implements Initializable {
 		inventoryObservableList.addAll(list);
 	}
 
-	/**
-	 * Removes an item from the database
-	 */
-	
-	public void deleteIngredient() {
+	public void deleteIngredient(ActionEvent e) {
 		InventoryItem itemToDelete = inventoryTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
 			Alert.Display("Error", "Select an item to delete.");
@@ -133,20 +104,16 @@ public class InventoryUI implements Initializable {
 		updateTable();
 	}
 
-	/**
-	 * Display ManagerUtilitiesUI stage and closes the current (InventoryUI) stage
-	 */
-	
-	public void goToManagerUtilities() {
+	public void goToManagerUtilities(ActionEvent e) {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
-	/**
-	 * Adds all items from inventory database to the tableview
-	 */
-	
+	public void displayAllInventory(ActionEvent e) {
+		displayAllInventory();
+	}
+
 	public void displayAllInventory() {
 		List<InventoryItem> list = InventoryDb.retrieveAllItem();
 
@@ -162,17 +129,15 @@ public class InventoryUI implements Initializable {
 		}
 	}
 
-	/**
-	 * Creates a two-column table displaying an InventoryItem's name and quantity then calls {@link #displayAllInventory}
-	 * @param location Required for initialize method, unused
-	 * @param resources Required for initialize method, unused
-	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("name"));
 		quantityColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("quantity"));
 		inventoryObservableList = FXCollections.observableArrayList();
+		// inventoryObservableList =
+		// FXCollections.observableArrayList(InventoryDB.getAllItems())
+		// inventoryObservableList.add(new InventoryItem("pepperoni", 100));
+		// inventoryObservableList.add(new InventoryItem("greenPepper", 150));
 		inventoryTableView.setItems(inventoryObservableList);
 		inventoryTableView.setEditable(true);
 		displayAllInventory();

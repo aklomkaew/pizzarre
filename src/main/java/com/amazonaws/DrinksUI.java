@@ -12,12 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
-/**
- * Represents interface to add Drink objects to an Order object
- * @author Christopher
- *
- */
-
 public class DrinksUI implements Initializable {
 	@FXML
 	private Button confirmBtn;
@@ -52,28 +46,15 @@ public class DrinksUI implements Initializable {
 	
 	private static ArrayList<Drink> oldDrinks = new ArrayList<Drink>();
 	
-	/**
-	 * Returns a list of drinks
-	 * @return An ArrayList<String> representing drink names
-	 */
-	
 	public static ArrayList<String> getDrinkList() {
 		return drinkIdArrayList;
 	}
-	
-	/**
-	 * Sets Order's drinks as the displayed drink list
-	 */
 	
 	public static void setDrinks(ArrayList<Drink> list) {
 		oldDrinks.clear();
 		oldDrinks.addAll(list);
 	}
 
-	/**
-	 * Adds selected drinks to drink list
-	 */
-	
 	public void selectDrink(ActionEvent e) {
 		id = ((Button) e.getSource()).getId();
 		System.out.println(id + " added");
@@ -83,11 +64,7 @@ public class DrinksUI implements Initializable {
 		drinkListView.setItems(drinkObservableList); // displays toppings in the list
 	}
 
-	/**
-	 * Confirms selected drinks to current Order object and updates Order price and Inventory database
-	 */
-	
-	public void confirmDrinks() {
+	public void confirmDrinks(ActionEvent e) {
 		boolean flag = false;
 		if (drinkObservableList.isEmpty()) {
 			Alert.Display("Information", "No drink was added");
@@ -159,20 +136,12 @@ public class DrinksUI implements Initializable {
 		}
 	}
 
-	/**
-	 * Removes all drinks from the drink list
-	 */
-	
-	public void cancelDrink() {
+	public void cancelDrink(ActionEvent e) {
 		drinkObservableList.clear();
 		drinkListView.getItems().clear();
-		goToOrderScreen();
+		goToOrderScreen(e);
 	}
 
-	/**
-	 * Removes a drink from the drink list
-	 */
-	
 	public void removeDrink(ActionEvent e) {
 		int index = drinkListView.getSelectionModel().getSelectedIndex();
 		if(drinkArrayList.size() > index) {
@@ -187,21 +156,11 @@ public class DrinksUI implements Initializable {
 		drinkListView.setItems(drinkObservableList);
 	}
 
-	/**
-	 * Display CurrentOrderUI stage and closes the current (DrinksUI) stage
-	 */
-	
-	public void goToOrderScreen() {
+	public void goToOrderScreen(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
 	}
 
-	/**
-	 * Displays current drinks on Order and updates inventory database if changes made on CurrentOrderUI
-	 * @param location Required for initialize method, unused
-	 * @param resources Required for initialize method, unused
-	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		drinkIdArrayList.clear();

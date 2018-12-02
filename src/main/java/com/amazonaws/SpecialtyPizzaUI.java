@@ -9,12 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-/**
- * Represents interface to select the specialty pizza requested
- * @author Christopher
- *
- */
-
 public class SpecialtyPizzaUI {
 
 	@FXML
@@ -48,31 +42,17 @@ public class SpecialtyPizzaUI {
 	@FXML
 	private TextField specialtyTF;
 
-	/**
-	 * Selects the specialty's name
-	 * @param onClick An ActionEvent that sets the pizza's name as the button's name
-	 */
-	
-	public void selectSpecialty(ActionEvent onClick) {
-		specialtyName = ((Button) onClick.getSource()).getId(); // sets specialty name equal to text on a button
-		showSpecialty();
+	public void selectSpecialty(ActionEvent e) {
+		specialtyName = ((Button) e.getSource()).getId(); // sets specialty name equal to text on a button
+		showSpecialty(e);
 	}
 
-	/**
-	 * Selects the specialty's size
-	 * @param onClick An ActionEvent that sets the size as the button's name
-	 */
-	
-	public void selectSize(ActionEvent onClick) {
-		specialtySize = ((Button) onClick.getSource()).getId();
-		showSpecialty();
+	public void selectSize(ActionEvent e) {
+		specialtySize = ((Button) e.getSource()).getId();
+		showSpecialty(e);
 	}
 
-	/**
-	 * Displays selected specialty name and size
-	 */
-	
-	public void showSpecialty() {
+	public void showSpecialty(ActionEvent e) {
 		String str = "";
 		if (specialtyName != null) {
 			str += specialtyName;
@@ -83,20 +63,12 @@ public class SpecialtyPizzaUI {
 		specialtyTF.setText(str);
 	}
 
-	/**
-	 * Clears the selected specialty pizza name and size
-	 */
-	
 	public void clearSpecialty(ActionEvent e) {
 		specialtyTF.clear();
 		specialtyName = null;
 		specialtySize = null;
 	}
 
-	/**
-	 * Applies the selected specialty name and toppings to the pizza and calls {@link #goToSpecialtyIntoCustom}
-	 */
-	
 	public void confirmSpecialty(ActionEvent e) {
 
 		if (specialtyName != null && specialtySize != null) {
@@ -106,10 +78,6 @@ public class SpecialtyPizzaUI {
 		}
 	}
 
-	/**
-	 * Passes the current specialty pizza's name and toppings to the next (SpecialtyIntoCustomUI) page
-	 */
-	
 	public void goToSpecialtyIntoCustom() { //fix for initialize in specialtyIntoCustomUI
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyIntoCustomUI.fxml"));
@@ -130,10 +98,6 @@ public class SpecialtyPizzaUI {
 		}
 	}
 
-	/**
-	 * Display CurrentOrderUI stage and closes the current (SpecialtyPizzaUI) stage
-	 */
-	
 	public void goToOrderScreen() {
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));

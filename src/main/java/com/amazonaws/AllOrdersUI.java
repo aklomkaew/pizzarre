@@ -18,12 +18,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-/**
- * Represents an interface displaying all Order objects
- * @author Christopher
- *
- */
-
 public class AllOrdersUI implements Initializable {
 
 	@FXML
@@ -51,11 +45,10 @@ public class AllOrdersUI implements Initializable {
 
 	private ObservableList<Order> orderObservableList;
 
-	/**
-	 * Displays information about the selected Order object
-	 * Information displayed is located at {@link Order#toString()}
-	 */
-	
+	public void displayAllOrder(ActionEvent e) {
+		displayAllOrder();
+	}
+
 	public void showOrder() {
 
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
@@ -81,10 +74,6 @@ public class AllOrdersUI implements Initializable {
 		alert.showAndWait();
 	}
 
-	/**
-	 * Takes selected Order from list and displays CurrentOrderUI stage with its contents and closes the current (AllActiveOrdersUI) stage
-	 */
-	
 	public void editOrder() {
 
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
@@ -108,11 +97,7 @@ public class AllOrdersUI implements Initializable {
 		goToOrderScreen();
 	}
 
-	/**
-	 * Takes selected Order from list and removes it from the Order database
-	 */
-	
-	public void deleteOrder() {
+	public void deleteOrder(ActionEvent e) {
 
 		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
 		if (itemToDelete == null) {
@@ -134,10 +119,6 @@ public class AllOrdersUI implements Initializable {
 		displayAllOrder();
 	}
 
-	/**
-	 * A method to remove all orders from the database
-	 */
-	
 	public void deleteAllOrder(ActionEvent e) {
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -158,10 +139,6 @@ public class AllOrdersUI implements Initializable {
 		displayAllOrder();
 	}
 
-	/**
-	 * Displays all active orders to the screen
-	 */
-	
 	public void displayAllOrder() {
 
 		List<Order> list = OrderDb.retrieveAllItem();
@@ -175,43 +152,24 @@ public class AllOrdersUI implements Initializable {
 		orderObservableList.addAll(list);
 	}
 
-
-	/**
-	 * Display AllActiveOrdersUI stage and closes the current (AllOrdersUI) stage
-	 */
-	
 	public void goToAllActiveOrders() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllActiveOrdersUI.fxml"));
 		NextStage.goTo(fxmlLoader, allActiveOrdersBtn);
 	}
 
-	/**
-	 * Display ManagerUtilitiesUI stage and closes the current (AllOrdersUI) stage
-	 */
-	
 	public void goToManagerUtilities() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManagerUtilitiesUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
-	/**
-	 * Display CurrentOrderUI stage and closes the current (AllOrdersUI) stage
-	 */
-	
 	public void goToOrderScreen() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, editOrderBtn);
 	}
 
-	/**
-	 * Creates a two-column table displaying an Order's number and that Order's total then loads it with all Orders
-	 * @param location Required for initialize method, unused
-	 * @param resources Required for initialize method, unused
-	 */
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 

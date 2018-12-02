@@ -22,12 +22,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-/**
- * Represents an interface an Order object's contents and ways to modify the contents
- * @author Christopher
- *
- */
-
 public class CurrentOrderUI implements Initializable {
 
 	@FXML
@@ -74,49 +68,23 @@ public class CurrentOrderUI implements Initializable {
 	private TableColumn<OrderContents, Double> priceColumn;
 	private ObservableList<OrderContents> orderContentsObservableList;
 	
-	/**
-	 * Represents an object used to place an Order in tableview
-	 * @author Christopher
-	 *
-	 */
-	
 	public class OrderContents { //used for tableview
 		String itemName;
     	double itemPrice;
-    	
-    	/**
-    	 * Class constructor
-    	 */
     	
     	public OrderContents(){
     		String itemName = "";
     		double itemPrice = 0.0;
     	}
 
-    	/**
-    	 * Creates an OrderContents with the specified name and price
-    	 * @param name A string representing the item's name
-    	 * @param price A double represnting he item's cost
-    	 */
-    	
     	public OrderContents(String name, double price){
     		this.itemName = name;
     		this.itemPrice = price;
     	}
     	
-    	/**
-    	 * Returns the item's name
-    	 * @return A string representing the item's name
-    	 */
-    	
     	public String getItemName() {
     		return itemName;
     	}
-    	
-    	/**
-    	 * Returns the item's cost
-    	 * @return A double representing the item's cost
-    	 */
     	
     	public double getItemPrice() {
     		return itemPrice;
@@ -125,20 +93,12 @@ public class CurrentOrderUI implements Initializable {
 	
 	private static HashMap<String, Integer> allIngredients;
 
-	/**
-	 * Displays the total cost of everything added together within the Order
-	 */
-	
 	public void setCostLabel() {
 		String price = String.format("%.2f", order.getTotal());
 		costLbl.setText("Total Price: $" + price);
 	}
 	
-	/**
-	 * Displays the selected pizza's toppings
-	 */
-	
-	public void viewToppings() {
+	public void viewToppings(ActionEvent e) {
 		int index = orderTableView.getSelectionModel().getSelectedIndex();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
@@ -156,30 +116,15 @@ public class CurrentOrderUI implements Initializable {
 		}
 	}
 
-	/**
-	 * Returns the drink's name of the order
-	 * @return An ArrayList<String> of names representing drinks on an order
-	 */
-	
 	public static ArrayList<String> getDrinks() {
 		return drinkNameArrayList;
 	}
-	
-	/**
-	 * Returns the tableview's selected item's index in the list
-	 * @return An int representing the currently selected index on the CurrentOrderUI tableview
-	 */
 	
 	public static int getModifiedIndex() {
 		return modifiedIndex;
 	}
 
-	/**
-	 * Takes the pizza in the selected tableview index and calls {@link #goToCustom()} with that pizza's contents
-	 * @return An int representing the currently selected index on the CurrentOrderUI tableview
-	 */
-	
-	public void modifyPizza() {
+	public void modifyPizza(ActionEvent e) {
 		int index = orderTableView.getSelectionModel().getSelectedIndex();
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
@@ -212,12 +157,7 @@ public class CurrentOrderUI implements Initializable {
 		goToCustom();
 	}
 
-	/**
-	 * Applies a percentile reduction to the Order variable: total
-	 * @throws Exception if no Integer input
-	 */
-	
-	public void setDiscount() {
+	public void setDiscount(ActionEvent e) {
 		TextInputDialog dialog = new TextInputDialog(Integer.toString(order.getDiscount()));
 		dialog.setTitle("Discount");
 		dialog.setHeaderText("Set Discount for Order #" + order.getOrderNumber());
@@ -257,11 +197,7 @@ public class CurrentOrderUI implements Initializable {
 		alertInfo.showAndWait();
 	}
 
-	/**
-	 * Adds the Order object to the Order database
-	 */
-	
-	public void confirmOrder() {
+	public void confirmOrder(ActionEvent e) {
 		order.setTotal(0);
 		double price = 0.0;
 		for (int i = 0; i < order.getPizzas().size(); i++) {
@@ -308,10 +244,6 @@ public class CurrentOrderUI implements Initializable {
 		goToMainMenu();
 	}
 
-	/**
-	 * Deletes the Order object and undoes any inventory database changes caused by the current Order then returns to the MainMenuUI stage
-	 */
-	
 	public void discardOrder(ActionEvent e) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
@@ -374,11 +306,7 @@ public class CurrentOrderUI implements Initializable {
 		}
 	}
 
-	/**
-	 * Returns to the MainMenuUI stage and closes the current (CurrentOrderUI) stage
-	 */
-	
-	public void goBack() {
+	public void goBack(ActionEvent e) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation");
 		alert.setHeaderText("Are you sure you want to return without saving order?");
@@ -396,10 +324,6 @@ public class CurrentOrderUI implements Initializable {
 		}
 	}
 
-	/**
-	 * Increases the inventory item quantity in the database when item is removed from the Order
-	 */
-	
 	public void removeAllIngredients() {
 		for (Pizza p : order.getPizzas()) {
 			if (p.getIsNew() == 1) {
@@ -422,11 +346,7 @@ public class CurrentOrderUI implements Initializable {
 		order = null;
 	}
 
-	/**
-	 * Removes an item from the Order
-	 */
-	
-	public void removeItem() {
+	public void removeItem(ActionEvent e) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		int index = orderTableView.getSelectionModel().getSelectedIndex();
@@ -458,10 +378,6 @@ public class CurrentOrderUI implements Initializable {
 		updateCost();
 	}
 	
-	/**
-	 * Updates the total cost of the Order
-	 */
-	
 	public void updateCost() {
 		order.setTotal(0);
 		for (int i = 0; i < order.getPizzas().size(); i++) {
@@ -477,39 +393,18 @@ public class CurrentOrderUI implements Initializable {
 		setCostLabel();
 	}
 
-	/**
-	 * Notification of successful stage transversal
-	 */
-	
 	public void start(Stage arg0) throws Exception {
 		System.out.println("In start");
 	}
 
-	/**
-	 * Signals the current Order is not a new Order
-	 * @param Order An Order representing an Order that already exists in the database
-	 */
-	
 	public static void setOrder(Order c) {
 		order = c;
 		modOrder = true;
 	}
 
-	/**
-	 * Returns the current Order
-	 * @return an Order representing what is displayed on CurrentOrderUI
-	 */
-	
 	public static Order getOrder() {
 		return order;
 	}
-
-	/**
-	 * Returns the current Order
-	 * @param str A string representing the ingredient's name
-	 * @param quantity An int representing the ingredient's amount
-	 * @return a boolean
-	 */
 
 	public static boolean removeIngredient(String str, int quantity) {
 		boolean status = false;
@@ -532,52 +427,29 @@ public class CurrentOrderUI implements Initializable {
 		return status;
 	}
 	
-	/**
-	 * Display DrinksUI stage and closes the current (CurrentOrderUI) stage
-	 */
-	
 	public void goToDrinks() {
 		DrinksUI.setDrinks(order.getDrink());
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DrinksUI.fxml"));
 		NextStage.goTo(fxmlLoader, drinkBtn);
 	}
 
-	/**
-	 * Display SpecialtyPizzaUI stage and closes the current (CurrentOrderUI) stage
-	 */
-	
 	public void goToSpecialty() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, specialBtn);
 	}
 
-	/**
-	 * Display CustomPizzaUI stage and closes the current (CurrentOrderUI) stage
-	 */
-	
 	public void goToCustom() {
 
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, customBtn);
 	}
 	
-	/**
-	 * Display MainMenuUI stage and closes the current (CurrentOrderUI) stage
-	 */
-	
 	public void goToMainMenu() {
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmBtn);
 	}
-	
-	/**
-	 * Creates a two-column table displaying an Order's item and that item's total
-	 * Loads the table with Order data if not a new Order
-	 * @param location Required for initialize method, unused
-	 * @param resources Required for initialize method, unused
-	 */
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

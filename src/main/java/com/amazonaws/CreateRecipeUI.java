@@ -16,12 +16,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-/**
- * Represents interface to add a new recipe to the recipe database
- * @author Christopher
- *
- */
-
 public class CreateRecipeUI implements Initializable {
 
 	@FXML
@@ -68,11 +62,6 @@ public class CreateRecipeUI implements Initializable {
 	private ObservableList<String> toppingObservableList;
 
 	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
-	
-	/**
-	 * Adds or removes a topping from the recipe, depending on if the recipe was already in the topping list
-	 * @param onClick An ActionEvent to retrieve contents of button selected
-	 */
 
 	public void addRemoveTopping(ActionEvent onClick) {
 
@@ -93,10 +82,6 @@ public class CreateRecipeUI implements Initializable {
 		}
 	}
 
-	/**
-	 * Adds the Recipe object to the recipe database
-	 */
-	
 	public void confirmRecipe() {
 
 		String recipeName = recipeNameTF.getText();
@@ -130,35 +115,21 @@ public class CreateRecipeUI implements Initializable {
 		goToRecipeList();
 	}
 
-	/**
-	 * Clears the name and toppings from the new recipe
-	 */
-	
-	public void clearRecipe() {
+	public void clearRecipe(ActionEvent e) {
 		
 		recipeNameTF.clear();
 		toppingObservableList.clear();
 		toppingListView.getItems().clear();
 	}
-	
-	/**
-	 * Display RecipeListUI stage and closes the current (CreateRecipeUI) stage
-	 */
-	
+
 	public void goToRecipeList() {
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
 			NextStage.goTo(fxmlLoader,  backBtn);
 	}
 
-	/**
-	 * Creates and display a a list of current toppings selected
-	 * @param location Required for initialize method, unused
-	 * @param resources Required for initialize method, unused
-	 */
-	
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources) { // initializes populates ist with current users
 		
 		toppingObservableList = FXCollections.observableArrayList();
 		toppingListView.setItems(toppingObservableList);

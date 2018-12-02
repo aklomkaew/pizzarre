@@ -7,12 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
-/**
- * Represents interface to add a new user (employee or manager) to the user database
- * @author Christopher
- *
- */
-
 @SuppressWarnings("restriction")
 public class AddUserUI {
 
@@ -25,12 +19,6 @@ public class AddUserUI {
 	@FXML
 	private TextField userNameTF;
 
-	/**
-	 * Creates and adds a new user to the user database then returns to AllUsersUI
-	 * Can create and add users (also known as employees) and managers
-	 * A name must be manually set to run the method
-	 */
-	
 	public void addUser() {
 		String userName = userNameTF.getText();
 		if (userName == null || userName.length() == 0) {
@@ -55,19 +43,11 @@ public class AddUserUI {
 		goToAllUsers();
 	}
 
-	/**
-	 * Displays notification no user was added and calls {@link #goToAllUsers()}
-	 */
-	
 	public void cancelNewUser() {
 		Alert.Display("Information", "Leaving page without saving");
 		goToAllUsers();
 	}
 
-	/**
-	 * Display AllUsersUI stage and closes the current (AddUserUI) stage
-	 */
-	
 	public void goToAllUsers() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllUsersUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
