@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
  * @author Christopher
  *
  */
-
 @SuppressWarnings("restriction")
 public class AddUserUI {
 
@@ -30,7 +29,6 @@ public class AddUserUI {
 	 * Can create and add users (also known as employees) and managers
 	 * A name must be manually set to run the method
 	 */
-	
 	public void addUser() {
 		String userName = userNameTF.getText();
 		if (userName == null || userName.length() == 0) {
@@ -58,7 +56,6 @@ public class AddUserUI {
 	/**
 	 * Displays notification no user was added and calls {@link #goToAllUsers()}
 	 */
-	
 	public void cancelNewUser() {
 		Alert.Display("Information", "Leaving page without saving");
 		goToAllUsers();
@@ -67,7 +64,6 @@ public class AddUserUI {
 	/**
 	 * Display AllUsersUI stage and closes the current (AddUserUI) stage
 	 */
-	
 	public void goToAllUsers() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AllUsersUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);

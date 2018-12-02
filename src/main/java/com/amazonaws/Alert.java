@@ -12,9 +12,13 @@ import javafx.geometry.*;
  * @author Christopher
  *
  */
-
 public class Alert {
 
+	/**
+	 * Displays a modal dialog with the specified title and message
+	 * @param title A string representing a title
+	 * @param message A string representing a message
+	 */
 	@SuppressWarnings("restriction")
 	public static void Display(String title, String message) {
 		Stage window = new Stage();
