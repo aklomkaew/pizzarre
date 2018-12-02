@@ -59,7 +59,7 @@ public abstract class DatabaseTable {
 	/**
 	 * Creates a new database table with name tableName
 	 * If the table already exists, then prints out the message stating so
-	 * @param tableName
+	 * @param tableName A string representing table name
 	 */
 	protected void createNewTable(String tableName) {
 		if (dynamoDb.getTable(tableName) != null) {
