@@ -12,7 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
-public class SpecialtyIntoCustomUI implements Initializable {
+/**
+ * Represents interface to modify a specialty pizza's toppings for an Order item
+ * @author Christopher
+ *
+ */
+
+public class SpecialtyIntoCustomUI {
 
 	@FXML
 	private Button confirmBtn;
@@ -64,13 +70,22 @@ public class SpecialtyIntoCustomUI implements Initializable {
 	String specialtyName;
 	String specialtySize;
 
-	public void cancelSpecialty(ActionEvent e) {
+	/**
+	 * Cancel the making of the specialty pizza
+	 */
+	
+	public void cancelSpecialty() {
 		
 	}
 	
-	public void addRemoveTopping(ActionEvent e) {
+	/**
+	 * Adds or removes toppings from pizza, depending on if topping is on the current pizza
+	 * @param onClick An ActionEvent that adds the button clicked to the pizza, or removes it from the pizza
+	 */
+	
+	public void addRemoveTopping(ActionEvent onClick) {
 
-		String id = ((Button) e.getSource()).getId();
+		String id = ((Button) onClick.getSource()).getId();
 
 		if (toppingIdArrayList.contains(id) == false) { // if statements adds topping to the list
 
@@ -88,6 +103,12 @@ public class SpecialtyIntoCustomUI implements Initializable {
 		toppingListView.setItems(toppingObservableList); // displays toppings in the list
 	}
 
+	/**
+	 * Takes a size String representation and enumerates it into a size integer
+	 * @param str A string representing the size of the pizza
+	 * @return An int of the current pizza's size
+	 */
+	
 	private static int getpSize(String str) {
 		if (str.equals("small")) {
 			return SMALL;
@@ -99,7 +120,11 @@ public class SpecialtyIntoCustomUI implements Initializable {
 		return -1; // should never get here
 	}
 
-	public void confirmSpecialty(ActionEvent e) { 
+	/**
+	 * Adds the current pizza to the Order, subtracts ingredients from the inventory
+	 */
+	
+	public void confirmSpecialty() { 
 		
 		int pSize = getpSize(specialtySize);
 
@@ -164,21 +189,32 @@ public class SpecialtyIntoCustomUI implements Initializable {
 		goToOrderScreen();
 	}
 
+	/**
+	 * Display SpecialtyPizzaUI stage and closes the current (SpecialtyIntoCustomUI) stage
+	 */
+    
+	
 	public void goToSpecialty(ActionEvent e) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpecialtyPizzaUI.fxml"));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
+	
+	/**
+	 * Display CurrentOrderUI stage and closes the current (SpecialtyIntoCustomUI) stage
+	 */
+    
 	
 	public void goToOrderScreen() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, confirmBtn);
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-
-	}
-
+	/**
+	 * Gets the recipe name and size from the previous stage and loads the current stage with it
+	 * @param recipeName A string representing the name of the selected recipe
+	 * @param size A string representing the size of the current pizza
+	 */
+	
 	public void getSpecialtyInfo(String recipeName, String size) { // gets recipe name and size from previous controller
 																	// (SpecialtyPizzaUI.java)
 		this.specialtyName = recipeName;
