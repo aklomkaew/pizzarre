@@ -9,15 +9,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 /**
  * Represents interface to add a new recipe to the recipe database
+ * 
  * @author Christopher
  *
  */
@@ -70,7 +68,9 @@ public class CreateRecipeUI implements Initializable {
 	private ArrayList<String> toppingIdArrayList = new ArrayList<String>();
 
 	/**
-	 * Adds or removes a topping from the recipe, depending on if the recipe was already in the topping list
+	 * Adds or removes a topping from the recipe, depending on if the recipe was
+	 * already in the topping list
+	 * 
 	 * @param onClick An ActionEvent to retrieve contents of button selected
 	 */
 	public void addRemoveTopping(ActionEvent onClick) {
@@ -78,17 +78,17 @@ public class CreateRecipeUI implements Initializable {
 		String id = ((Button) onClick.getSource()).getId();
 		String toppingName = ((Button) onClick.getSource()).getText();
 
-		if (toppingIdArrayList.contains(id) == false) { // if statements adds topping to the list
+		if (toppingIdArrayList.contains(id) == false) {
 
 			System.out.println(id + " added");
 			toppingIdArrayList.add(id);
-			toppingObservableList.add(toppingName); // list used to display topping names
+			toppingObservableList.add(toppingName);
 
-		} else { // else statement removes topping from the list
+		} else {
 
 			System.out.println(id + " removed");
 			toppingIdArrayList.remove(id);
-			toppingObservableList.remove(toppingName); // list used to display topping names
+			toppingObservableList.remove(toppingName);
 		}
 	}
 
@@ -111,28 +111,27 @@ public class CreateRecipeUI implements Initializable {
 		ArrayList<String> list = new ArrayList<String>();
 		list.addAll(toppingObservableList);
 		RecipeItem item = new RecipeItem(recipeName, list);
-		if(RecipeDb.addRecipe(item)) {
+		if (RecipeDb.addRecipe(item)) {
 			Alert.Display("Success", "Recipe " + recipeName + " has been added");
-		}
-		else {
+		} else {
 			Alert.Display("Error", "Recipe " + recipeName + " already exists.");
 			return;
 		}
-		
+
 		System.out.println("The recipe name is " + recipeName + " and the toppings are: " + toppingObservableList);
 		recipeNameTF.clear();
 		toppingIdArrayList.clear();
 		toppingObservableList.clear();
 		toppingListView.setItems(toppingObservableList);
-		
+
 		goToRecipeList();
 	}
-	
+
 	/**
 	 * Clears the name and toppings from the new recipe
 	 */
 	public void clearRecipe() {
-		
+
 		recipeNameTF.clear();
 		toppingObservableList.clear();
 		toppingListView.getItems().clear();
@@ -143,18 +142,19 @@ public class CreateRecipeUI implements Initializable {
 	 */
 	public void goToRecipeList() {
 
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
-			NextStage.goTo(fxmlLoader,  backBtn);
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RecipeListUI.fxml"));
+		NextStage.goTo(fxmlLoader, backBtn);
 	}
-	
+
 	/**
 	 * Creates and display a a list of current toppings selected
-	 * @param location Required for initialize method, unused
+	 * 
+	 * @param location  Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
 	@Override
-	public void initialize(URL location, ResourceBundle resources) { // initializes populates ist with current users
-		
+	public void initialize(URL location, ResourceBundle resources) {
+
 		toppingObservableList = FXCollections.observableArrayList();
 		toppingListView.setItems(toppingObservableList);
 	}

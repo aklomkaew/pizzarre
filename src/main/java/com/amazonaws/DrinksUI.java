@@ -14,6 +14,7 @@ import javafx.scene.control.ListView;
 
 /**
  * Represents interface to add Drink objects to an Order object
+ * 
  * @author Christopher
  *
  */
@@ -26,7 +27,7 @@ public class DrinksUI implements Initializable {
 	@FXML
 	private Button removeBtn;
 
-	private String id = null; 
+	private String id = null;
 	@FXML
 	private Button soda;
 	@FXML
@@ -48,18 +49,17 @@ public class DrinksUI implements Initializable {
 
 	private static ArrayList<String> drinkIdArrayList = new ArrayList<String>();
 
-	//private HashMap<String, Integer> drinkMap = new HashMap<String, Integer>();
-	
 	private static ArrayList<Drink> oldDrinks = new ArrayList<Drink>();
-	
+
 	/**
 	 * Returns a list of drinks
+	 * 
 	 * @return An ArrayList<String> representing drink names
 	 */
 	public static ArrayList<String> getDrinkList() {
 		return drinkIdArrayList;
 	}
-	
+
 	/**
 	 * Sets Order's drinks as the displayed drink list
 	 */
@@ -77,11 +77,12 @@ public class DrinksUI implements Initializable {
 		drinkIdArrayList.add(id);
 		drinkObservableList.add(id);
 
-		drinkListView.setItems(drinkObservableList); // displays toppings in the list
+		drinkListView.setItems(drinkObservableList);
 	}
 
 	/**
-	 * Confirms selected drinks to current Order object and updates Order price and Inventory database
+	 * Confirms selected drinks to current Order object and updates Order price and
+	 * Inventory database
 	 */
 	public void confirmDrinks(ActionEvent e) {
 		boolean flag = false;
@@ -106,23 +107,22 @@ public class DrinksUI implements Initializable {
 		if (flag) {
 			for (int i = 0; i < count; i++) {
 				InventoryDb.changeQuantity(drinkObservableList.get(i), 1, "increase");
-				CurrentOrderUI.removeIngredient(drinkObservableList.get(i), 1);
 			}
 			return;
 		}
-		
+
 		Order order = CurrentOrderUI.getOrder();
 		String newName = "";
 		drinkArrayList.clear();
-		for (int i = 0; i < drinkIdArrayList.size(); i++) { // loop that adds and increments pizza's price
+		for (int i = 0; i < drinkIdArrayList.size(); i++) {
 			newName = drinkIdArrayList.get(i);
 			Drink newDrink = new Drink(newName, 2);
 			Drink tmp = containsDrink(newName);
-			if(tmp != null) {
+			if (tmp != null) {
 				newDrink = tmp;
 				removeDrink(newName);
 			}
-			
+
 			drinkArrayList.add(newDrink);
 		}
 		order.getDrink().clear();
@@ -132,22 +132,34 @@ public class DrinksUI implements Initializable {
 		NextStage.goTo(fxmlLoader, confirmBtn);
 
 	}
-	
+
+	/**
+	 * Checks if the specified drink name is already present in the oldDrinks list
+	 * 
+	 * @param str A string representing a drink's name
+	 * @return Null if the oldDrink list doesn't contain str, Drink object with the
+	 *         str name otherwise
+	 */
 	private Drink containsDrink(String str) {
 		Drink ret = null;
-		for(Drink d : oldDrinks) {
-			if(d.getName().equals(str)) {
+		for (Drink d : oldDrinks) {
+			if (d.getName().equals(str)) {
 				ret = d;
 				break;
 			}
 		}
-		
+
 		return ret;
 	}
-	
+
+	/**
+	 * Removes the specified drink name from the oldDrinks list
+	 * 
+	 * @param str A string representing a drink's name
+	 */
 	private void removeDrink(String str) {
-		for(int i = 0; i < oldDrinks.size(); i++) {
-			if(oldDrinks.get(i).getName().equals(str)) {
+		for (int i = 0; i < oldDrinks.size(); i++) {
+			if (oldDrinks.get(i).getName().equals(str)) {
 				oldDrinks.remove(i);
 			}
 		}
@@ -165,15 +177,15 @@ public class DrinksUI implements Initializable {
 	/**
 	 * Removes a drink from the drink list
 	 */
-	public void removeDrink(ActionEvent e) {
+	public void removeDrink() {
 		int index = drinkListView.getSelectionModel().getSelectedIndex();
-		if(drinkArrayList.size() > index) {
-			if(drinkArrayList.get(index).getIsNew() == 0) {
+		if (drinkArrayList.size() > index) {
+			if (drinkArrayList.get(index).getIsNew() == 0) {
 				Alert.Display("Error", "This item cannot be removed.");
 				return;
 			}
 		}
-		
+
 		drinkIdArrayList.remove(index);
 		drinkObservableList.remove(index);
 		drinkListView.setItems(drinkObservableList);
@@ -188,8 +200,10 @@ public class DrinksUI implements Initializable {
 	}
 
 	/**
-	 * Displays current drinks on Order and updates inventory database if changes made on CurrentOrderUI
-	 * @param location Required for initialize method, unused
+	 * Displays current drinks on Order and updates inventory database if changes
+	 * made on CurrentOrderUI
+	 * 
+	 * @param location  Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
 	@Override
@@ -197,12 +211,12 @@ public class DrinksUI implements Initializable {
 		drinkIdArrayList.clear();
 		drinkObservableList.clear();
 		drinkArrayList.clear();
-		
+
 		drinkIdArrayList.addAll(CurrentOrderUI.getDrinks());
-		
+
 		Order order = CurrentOrderUI.getOrder();
 		drinkArrayList.addAll(order.getDrink());
-		
+
 		drinkObservableList.addAll(drinkIdArrayList);
 		drinkListView.setItems(drinkObservableList);
 

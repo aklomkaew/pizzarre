@@ -32,10 +32,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-
 /**
- * Represents interface to display a list of all unpaid tabs/orders within the system
- * Orders displayed on this interface only if (Order.getState() == true)
+ * Represents interface to display a list of all unpaid tabs/orders within the
+ * system Orders displayed on this interface only if (Order.getState() == true)
+ * 
  * @author Christopher
  *
  */
@@ -66,6 +66,7 @@ public class AllActiveOrdersUI implements Initializable {
 
 	/**
 	 * Gets the selected Order object
+	 * 
 	 * @return An Order object representing a selected order
 	 */
 	public static Order getOrder() {
@@ -82,7 +83,8 @@ public class AllActiveOrdersUI implements Initializable {
 	}
 
 	/**
-	 * Takes selected Order from list and displays CurrentOrderUI stage with its contents and closes the current (AllActiveOrdersUI) stage
+	 * Takes selected Order from list and displays CurrentOrderUI stage with its
+	 * contents and closes the current (AllActiveOrdersUI) stage
 	 */
 	public void editOrder() {
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
@@ -102,6 +104,7 @@ public class AllActiveOrdersUI implements Initializable {
 
 	/**
 	 * Takes selected Order from list and removes it from the Order database
+	 * 
 	 * @param An Order object representing the Order being deleted
 	 */
 	private void deleteOrder(Order o) {
@@ -111,7 +114,8 @@ public class AllActiveOrdersUI implements Initializable {
 	}
 
 	/**
-	 * Confirms if an Order was selected before calling {@link #deleteOrder(Order)} and updating the Order list
+	 * Confirms if an Order was selected before calling {@link #deleteOrder(Order)}
+	 * and updating the Order list
 	 */
 	public void deleteOrder() {
 		Order itemToDelete = orderTableView.getSelectionModel().getSelectedItem();
@@ -150,8 +154,9 @@ public class AllActiveOrdersUI implements Initializable {
 	}
 
 	/**
-	 * Takes selected Order and loads PaymentPageUI stage with it, closes current (AllActiveOrdersUI) stage
-	 * CustomOrderUI stage with its contents and closes the current (AllActiveOrdersUI) stage
+	 * Takes selected Order and loads PaymentPageUI stage with it, closes current
+	 * (AllActiveOrdersUI) stage CustomOrderUI stage with its contents and closes
+	 * the current (AllActiveOrdersUI) stage
 	 */
 	public void payOrder() {
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
@@ -179,6 +184,7 @@ public class AllActiveOrdersUI implements Initializable {
 
 	/**
 	 * Loads a list with active Orders
+	 * 
 	 * @return a List displaying all Orders where (Order.getState() == true);
 	 */
 	private List<Order> getActiveOrders() {
@@ -212,8 +218,10 @@ public class AllActiveOrdersUI implements Initializable {
 	}
 
 	/**
-	 * Creates a two-column table displaying an Order's number and that Order's total then loads it with all active Orders
-	 * @param location Required for initialize method, unused
+	 * Creates a two-column table displaying an Order's number and that Order's
+	 * total then loads it with all active Orders
+	 * 
+	 * @param location  Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
 	@Override

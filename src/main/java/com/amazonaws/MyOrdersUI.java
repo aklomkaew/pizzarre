@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * Represents interface displaying the user's orders
+ * 
  * @author Christopher
  *
  */
@@ -49,12 +49,12 @@ public class MyOrdersUI implements Initializable {
 	private Order selectedOrder;
 
 	/**
-	 *Button that when clicked automatically refreshes the list 
+	 * Button that when clicked automatically refreshes the list
 	 */
 	public void refreshOrder() {
 		displayAllOrder();
 	}
-	
+
 	/**
 	 * Display MainMenuUI stage and closes the current (MyOrdersUI) stage
 	 */
@@ -64,28 +64,29 @@ public class MyOrdersUI implements Initializable {
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
 
-	 /**
-	  *Returns the selected order
-	  *@return an order representing the Order selected on the list
-	  */
+	/**
+	 * Returns the selected order
+	 * 
+	 * @return an order representing the Order selected on the list
+	 */
 	public Order getOrder() {
-		
+
 		return selectedOrder;
 	}
 
 	/**
-	  *Displays a list of the user's current orders
-	  */
+	 * Displays a list of the user's current orders
+	 */
 	public void displayAllOrder() {
-		
+
 		List<Order> list = OrderDb.retrieveFilteredItem(LoginUI.getUser().getUserId());
 		if (list == null || list.size() < 1) {
 			return;
 		}
-		
+
 		ArrayList<Order> activeOrder = new ArrayList<Order>();
-		for(Order o : list) {
-			if(o.getState()) {
+		for (Order o : list) {
+			if (o.getState()) {
 				activeOrder.add(o);
 			}
 		}
@@ -94,11 +95,11 @@ public class MyOrdersUI implements Initializable {
 		orderObservableList.addAll(activeOrder);
 	}
 
-	 /**
-	  *Shows the contents on the selected Order
-	  */
+	/**
+	 * Shows the contents on the selected Order
+	 */
 	public void showOrder() {
-		
+
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -113,7 +114,7 @@ public class MyOrdersUI implements Initializable {
 		} else {
 			status += "not active";
 		}
-		
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("View Order");
 		alert.setHeaderText("Order " + item.getOrderNumber() + " is " + status + ". It contains:");
@@ -122,10 +123,11 @@ public class MyOrdersUI implements Initializable {
 	}
 
 	/**
-	 *Gets the selected Order then calls {@link #goToPaymentPage}  and loads the payment screen with the order's data
+	 * Gets the selected Order then calls {@link #goToPaymentPage} and loads the
+	 * payment screen with the order's data
 	 */
 	public void payOrder() {
-		
+
 		Order item = orderTableView.getSelectionModel().getSelectedItem();
 		if (item == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -148,8 +150,10 @@ public class MyOrdersUI implements Initializable {
 	}
 
 	/**
-	 * Takes the selected Order, sets it as a modified order, then calls {@link #goToOrderScreen} and loads the order screen with the order's data
-	 * Modified orders cannot have previously added items removed or modified, total excluded
+	 * Takes the selected Order, sets it as a modified order, then calls
+	 * {@link #goToOrderScreen} and loads the order screen with the order's data
+	 * Modified orders cannot have previously added items removed or modified, total
+	 * excluded
 	 */
 	public void editOrder() {
 		Order orderToEdit = orderTableView.getSelectionModel().getSelectedItem();
@@ -206,24 +210,26 @@ public class MyOrdersUI implements Initializable {
 	/**
 	 * Display PaymentPageUI stage and closes the current (MyOrdersUI) stage
 	 */
-    public void goToPaymentPage() {
-    	
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
-    	NextStage.goTo(fxmlLoader, payBtn);
-    }
-    
-    /**
+	public void goToPaymentPage() {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PaymentPageUI.fxml"));
+		NextStage.goTo(fxmlLoader, payBtn);
+	}
+
+	/**
 	 * Display CurrentOrderUI stage and closes the current (MyOrdersUI) stage
 	 */
-    public void goToOrderScreen() {
-    	
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
-    	NextStage.goTo(fxmlLoader, editBtn);
-    }
-    
+	public void goToOrderScreen() {
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
+		NextStage.goTo(fxmlLoader, editBtn);
+	}
+
 	/**
-	 * Creates a two-column table displaying an Order's number and that Order's total then calls {@link #displayAllOrder()}
-	 * @param location Required for initialize method, unused
+	 * Creates a two-column table displaying an Order's number and that Order's
+	 * total then calls {@link #displayAllOrder()}
+	 * 
+	 * @param location  Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
 	@Override

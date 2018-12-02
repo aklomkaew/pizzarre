@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import javafx.geometry.*;
 
 /**
- * Represents interface to display a notification the user must acknowledge before continuing
+ * Represents interface to display a notification the user must acknowledge
+ * before continuing
+ * 
  * @author Christopher
  *
  */
@@ -16,7 +18,8 @@ public class Alert {
 
 	/**
 	 * Displays a modal dialog with the specified title and message
-	 * @param title A string representing a title
+	 * 
+	 * @param title   A string representing a title
 	 * @param message A string representing a message
 	 */
 	@SuppressWarnings("restriction")
@@ -38,6 +41,6 @@ public class Alert {
 
 		Scene scene = new Scene(layout);
 		window.setScene(scene);
-		window.showAndWait(); 
+		window.showAndWait();
 	}
 }

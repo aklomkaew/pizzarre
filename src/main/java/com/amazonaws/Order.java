@@ -10,6 +10,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
 /**
  * Represents an order
+ * 
  * @author Atchima
  *
  */
@@ -38,7 +39,8 @@ public class Order {
 
 	/**
 	 * Creates an order with the specified orderNumber and list of Pizza
-	 * @param num An integer representing the order's orderNumber
+	 * 
+	 * @param num  An integer representing the order's orderNumber
 	 * @param list A list of Pizza representing the order's pizzas
 	 */
 	public Order(int num, List<Pizza> list) {
@@ -53,6 +55,7 @@ public class Order {
 
 	/**
 	 * Gets the order's orderNumber
+	 * 
 	 * @return An integer representing the order's orderNumber
 	 */
 	@DynamoDBHashKey(attributeName = "OrderNumber")
@@ -62,6 +65,7 @@ public class Order {
 
 	/**
 	 * Sets the order's orderNumber
+	 * 
 	 * @param num An integer representing the order's number
 	 */
 	public void setOrderNumber(int num) {
@@ -70,6 +74,7 @@ public class Order {
 
 	/**
 	 * Gets the order's state
+	 * 
 	 * @return True if the order is active, false otherwise
 	 */
 	@DynamoDBTypeConverted(converter = MyBooleanConverter.class)
@@ -79,6 +84,7 @@ public class Order {
 
 	/**
 	 * Sets the order's state
+	 * 
 	 * @param s A boolean representing the order's state
 	 */
 	public void setState(boolean s) {
@@ -94,6 +100,7 @@ public class Order {
 
 	/**
 	 * Gets the order's server name
+	 * 
 	 * @return A string representing the order's server name
 	 */
 	@DynamoDBAttribute(attributeName = "Server")
@@ -103,6 +110,7 @@ public class Order {
 
 	/**
 	 * Sets the order's server name
+	 * 
 	 * @param u A string representing the order's server name
 	 */
 	public void setServerName(String u) {
@@ -111,6 +119,7 @@ public class Order {
 
 	/**
 	 * Gets the order's server ID
+	 * 
 	 * @return An integer representing the order's server ID
 	 */
 	@DynamoDBAttribute(attributeName = "ServerId")
@@ -120,6 +129,7 @@ public class Order {
 
 	/**
 	 * Sets the order's server ID
+	 * 
 	 * @param id An integer representing the order's server ID
 	 */
 	public void setServerId(int id) {
@@ -128,6 +138,7 @@ public class Order {
 
 	/**
 	 * Gets the order's total cost
+	 * 
 	 * @return A double representing the order's total cost
 	 */
 	@DynamoDBAttribute(attributeName = "Total")
@@ -138,6 +149,7 @@ public class Order {
 
 	/**
 	 * Sets the order's total cost
+	 * 
 	 * @param t A double representing the order's total cost
 	 */
 	public void setTotal(double t) {
@@ -146,7 +158,8 @@ public class Order {
 
 	/**
 	 * Rounds up the order's total cost to the nearest hundredth decimal
-	 * @param value A double representing the order's total
+	 * 
+	 * @param value  A double representing the order's total
 	 * @param places An integer representing the number of decimal places
 	 * @return A double representing the rounded order's total cost
 	 */
@@ -161,6 +174,7 @@ public class Order {
 
 	/**
 	 * Gets the order's discount
+	 * 
 	 * @return A double representing the order's discount
 	 */
 	@DynamoDBAttribute(attributeName = "Discount")
@@ -170,6 +184,7 @@ public class Order {
 
 	/**
 	 * Sets the order's discount
+	 * 
 	 * @param d A double representing the order's discount
 	 */
 	public void setDiscount(int d) {
@@ -178,6 +193,7 @@ public class Order {
 
 	/**
 	 * Gets the order's list of Pizza
+	 * 
 	 * @return An ArrayList of Pizza representing the order's pizzas
 	 */
 	@DynamoDBTypeConverted(converter = MyPizzaConverter.class)
@@ -187,6 +203,7 @@ public class Order {
 
 	/**
 	 * Sets the order's list of Pizza
+	 * 
 	 * @param list An ArrayList of Pizza representing the order's pizzas
 	 */
 	public void setPizzas(ArrayList<Pizza> list) {
@@ -195,7 +212,9 @@ public class Order {
 
 	/**
 	 * Adds a pizza to the order's list of Pizza
-	 * @param p A Pizza representing a pizza to be added to the order's list of Pizza
+	 * 
+	 * @param p A Pizza representing a pizza to be added to the order's list of
+	 *          Pizza
 	 */
 	public void addPizza(Pizza p) {
 		this.pizzas.add(p);
@@ -203,6 +222,7 @@ public class Order {
 
 	/**
 	 * Gets the order's list of drink
+	 * 
 	 * @return An ArrayList of Drink representing the order's list of drink
 	 */
 	@DynamoDBTypeConverted(converter = MyDrinkConverter.class)
@@ -216,6 +236,7 @@ public class Order {
 
 	/**
 	 * Sets the order's list of drink
+	 * 
 	 * @param list An ArrayList of Drink representing the order's list of drink
 	 */
 	public void setDrink(ArrayList<Drink> list) {
@@ -231,6 +252,7 @@ public class Order {
 
 	/**
 	 * Gets the string of all item in the order
+	 * 
 	 * @return A string representing information of all item in the order
 	 */
 	public String toString() {
@@ -246,8 +268,7 @@ public class Order {
 		if (drinks != null && drinks.size() > 0) {
 			ret += drinks.size() + ((drinks.size() == 1) ? " drink" : " drinks");
 			for (int i = 0; i < drinks.size(); i++) {
-				ret += "\n--> Drink #" + (i + 1) + " has " // + drinkQuantity.get(i) + " "
-						+ drinks.get(i).toString();
+				ret += "\n--> Drink #" + (i + 1) + " has " + drinks.get(i).toString();
 			}
 		}
 

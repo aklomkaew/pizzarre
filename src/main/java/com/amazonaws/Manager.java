@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 /**
  * Represents a manager
+ * 
  * @author Atchima
  *
  */
@@ -20,8 +21,9 @@ public class Manager extends User {
 
 	/**
 	 * Creates a manager with specified id and name
+	 * 
 	 * @param id An integer representing the manager's ID
-	 * @param n A string representing the manager's name
+	 * @param n  A string representing the manager's name
 	 */
 	public Manager(int id, String n) {
 		super(id, n);

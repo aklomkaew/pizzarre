@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * Represents an interface for displaying the inventory database
+ * 
  * @author Christopher
  *
  */
@@ -52,11 +52,12 @@ public class InventoryUI implements Initializable {
 	public void restock() {
 		InventoryDb.restock();
 		displayAllInventory();
-		Alert.Display("Success", "Restock completed");
 	}
 
 	/**
-	 * When adding a new ingredient, checks if a positive quantity was inputted or if inventory item name already exists
+	 * When adding a new ingredient, checks if a positive quantity was inputted or
+	 * if inventory item name already exists
+	 * 
 	 * @throws NumberFormatException if integer was not used
 	 */
 	public void checkIngredient() {
@@ -80,12 +81,14 @@ public class InventoryUI implements Initializable {
 	}
 
 	/**
-	* Adds the item to the inventory database
-	* @param quantity An integer representing the amount of an item being added to the database
-	* @param ingredientName A string representing the name of the item being added to the database
-	*/
-	public void addIngredient(int quantity, String ingredientName) { // integration goes here, not
-																					// checkIngredient
+	 * Adds the item to the inventory database
+	 * 
+	 * @param quantity       An integer representing the amount of an item being
+	 *                       added to the database
+	 * @param ingredientName A string representing the name of the item being added
+	 *                       to the database
+	 */
+	public void addIngredient(int quantity, String ingredientName) {
 		if (InventoryDb.addItem(ingredientName.toLowerCase(), quantity)) {
 			Alert.Display("Success", "Ingredient has been added!");
 		} else {
@@ -138,8 +141,8 @@ public class InventoryUI implements Initializable {
 	}
 
 	/**
-	* Adds all items from inventory database to the tableview
-	*/
+	 * Adds all items from inventory database to the tableview
+	 */
 	public void displayAllInventory() {
 		List<InventoryItem> list = InventoryDb.retrieveAllItem();
 
@@ -156,8 +159,10 @@ public class InventoryUI implements Initializable {
 	}
 
 	/**
-	 * Creates a two-column table displaying an InventoryItem's name and quantity then calls {@link #displayAllInventory}
-	 * @param location Required for initialize method, unused
+	 * Creates a two-column table displaying an InventoryItem's name and quantity
+	 * then calls {@link #displayAllInventory}
+	 * 
+	 * @param location  Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
 	@Override
@@ -165,10 +170,6 @@ public class InventoryUI implements Initializable {
 		nameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("name"));
 		quantityColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("quantity"));
 		inventoryObservableList = FXCollections.observableArrayList();
-		// inventoryObservableList =
-		// FXCollections.observableArrayList(InventoryDB.getAllItems())
-		// inventoryObservableList.add(new InventoryItem("pepperoni", 100));
-		// inventoryObservableList.add(new InventoryItem("greenPepper", 150));
 		inventoryTableView.setItems(inventoryObservableList);
 		inventoryTableView.setEditable(true);
 		displayAllInventory();

@@ -19,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * Represents an interface displaying all Order objects
+ * 
  * @author Christopher
  *
  */

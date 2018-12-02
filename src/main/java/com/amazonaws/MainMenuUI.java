@@ -1,12 +1,12 @@
 package com.amazonaws;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 /**
  * Represents interface to navigate to specific program functionality
+ * 
  * @author Christopher
  *
  */
@@ -39,7 +39,7 @@ public class MainMenuUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MyOrdersUI.fxml"));
 		NextStage.goTo(fxmlLoader, myOrds);
 	}
-	
+
 	/**
 	 * Display ManagerUtilitiesUI stage and closes the current (MainMenuUI) stage
 	 * Only works if user is a manager

@@ -1,8 +1,12 @@
 package com.amazonaws;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,11 +15,12 @@ import javafx.stage.Stage;
 
 /**
  * Represents interface to select the specialty pizza requested
+ * 
  * @author Christopher
  *
  */
 @SuppressWarnings("restriction")
-public class SpecialtyPizzaUI {
+public class SpecialtyPizzaUI implements Initializable {
 
 	@FXML
 	private Button confirmBtn;
@@ -24,7 +29,7 @@ public class SpecialtyPizzaUI {
 	@FXML
 	private Button clearBtn;
 	@FXML
-	private String specialtyName; // names used for display purposes
+	private String specialtyName;
 	@FXML
 	private String specialtySize;
 	@FXML
@@ -48,17 +53,22 @@ public class SpecialtyPizzaUI {
 	@FXML
 	private TextField specialtyTF;
 
+	private static String oldName;
+	private static String oldSize;
+
 	/**
 	 * Selects the specialty's name
+	 * 
 	 * @param onClick An ActionEvent that sets the pizza's name as the button's name
 	 */
 	public void selectSpecialty(ActionEvent onClick) {
-		specialtyName = ((Button) onClick.getSource()).getId(); // sets specialty name equal to text on a button
+		specialtyName = ((Button) onClick.getSource()).getId();
 		showSpecialty();
 	}
 
 	/**
 	 * Selects the specialty's size
+	 * 
 	 * @param onClick An ActionEvent that sets the size as the button's name
 	 */
 	public void selectSize(ActionEvent onClick) {
@@ -69,7 +79,7 @@ public class SpecialtyPizzaUI {
 	/**
 	 * Displays selected specialty name and size
 	 */
-	public void showSpecialty() {
+	private void showSpecialty() {
 		String str = "";
 		if (specialtyName != null) {
 			str += specialtyName;
@@ -78,6 +88,17 @@ public class SpecialtyPizzaUI {
 			str += " " + specialtySize;
 		}
 		specialtyTF.setText(str);
+	}
+
+	/**
+	 * Sets the old specialty pizza's name and size
+	 * 
+	 * @param name A string representing the old specialty pizza's name
+	 * @param size A string representing the old specialty pizza's size
+	 */
+	public static void setName(String name, String size) {
+		oldName = name;
+		oldSize = size;
 	}
 
 	/**
@@ -90,11 +111,14 @@ public class SpecialtyPizzaUI {
 	}
 
 	/**
-	 * Applies the selected specialty name and toppings to the pizza and calls {@link #goToSpecialtyIntoCustom}
+	 * Applies the selected specialty name and toppings to the pizza and calls
+	 * {@link #goToSpecialtyIntoCustom}
 	 */
 	public void confirmSpecialty() {
 
 		if (specialtyName != null && specialtySize != null) {
+			oldName = "";
+			oldSize = "";
 			goToSpecialtyIntoCustom();
 		} else {
 			Alert.Display("Error", "Please select a special and size.");
@@ -102,7 +126,9 @@ public class SpecialtyPizzaUI {
 	}
 
 	/**
-	 * Passes the current specialty pizza's name and toppings to the next (SpecialtyIntoCustomUI) page
+	 * Passes the current specialty pizza's name and toppings to the next
+	 * (SpecialtyIntoCustomUI) page
+	 * 
 	 * @throws Exception if FXML file not found
 	 */
 	public void goToSpecialtyIntoCustom() {
@@ -112,10 +138,10 @@ public class SpecialtyPizzaUI {
 			Stage nextStage = new Stage();
 			nextStage.setScene(new Scene(root, 600, 600));
 			nextStage.setResizable(false);
-			
+
 			SpecialtyIntoCustomUI display = fxmlLoader.getController();
 			display.getSpecialtyInfo(specialtyName, specialtySize);
-			
+
 			nextStage.show();
 			Stage currentStage = (Stage) confirmBtn.getScene().getWindow();
 			currentStage.close();
@@ -129,8 +155,24 @@ public class SpecialtyPizzaUI {
 	 * Display CurrentOrderUI stage and closes the current (SpecialtyPizzaUI) stage
 	 */
 	public void goToOrderScreen() {
-		
+		oldName = "";
+		oldSize = "";
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, cancelBtn);
+	}
+
+	/**
+	 * Sets the previously selected name and size if applicable
+	 * 
+	 * @param location  Required for initialize method, unused
+	 * @param resources Required for initialize method, unused
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		if (oldName != null && oldSize != null && oldName != "" && oldSize != "") {
+			specialtyName = oldName;
+			specialtySize = oldSize;
+			specialtyTF.setText(oldName + " " + oldSize);
+		}
 	}
 }

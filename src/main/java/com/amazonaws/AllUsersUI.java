@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -21,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * Represents an interface to display all users with the user database
+ * 
  * @author Christopher
  *
  */

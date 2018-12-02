@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * Represents interface to pay for an order
+ * 
  * @author Christopher
  *
  */
@@ -56,43 +56,47 @@ public class PaymentPageUI implements Initializable {
 
 	/**
 	 * Represents an object used to display an Order in tableview
+	 * 
 	 * @author Christopher
 	 *
 	 */
 	public class OrderContents {
 		String itemName;
 		double itemPrice;
-		
-		/**
-    	 * Class constructor
-    	 */
-		public OrderContents(){
-    		String itemName = "";
-    		double itemPrice = 0.0;
-    	}
 
-    	/**
-    	 * Creates an OrderContents with the specified name and price
-    	 * @param name A string representing the item's name
-    	 * @param price A double represnting he item's cost
-    	 */
+		/**
+		 * Class constructor
+		 */
+		public OrderContents() {
+			String itemName = "";
+			double itemPrice = 0.0;
+		}
+
+		/**
+		 * Creates an OrderContents with the specified name and price
+		 * 
+		 * @param name  A string representing the item's name
+		 * @param price A double represnting he item's cost
+		 */
 		public OrderContents(String name, double price) {
 			this.itemName = name;
 			this.itemPrice = price;
 		}
 
 		/**
-    	 * Returns the item's name
-    	 * @return A string representing the item's name
-    	 */
+		 * Returns the item's name
+		 * 
+		 * @return A string representing the item's name
+		 */
 		public String getItemName() {
 			return itemName;
 		}
 
 		/**
-    	 * Returns the item's cost
-    	 * @return A double representing the item's cost
-    	 */
+		 * Returns the item's cost
+		 * 
+		 * @return A double representing the item's cost
+		 */
 		public double getItemPrice() {
 			return itemPrice;
 		}
@@ -100,10 +104,11 @@ public class PaymentPageUI implements Initializable {
 
 	/**
 	 * Checks that the input is in a double format
+	 * 
 	 * @throws NumberFormatException if input cannot be parsed as a double
 	 */
 	public void checkPayment() {
-		
+
 		try {
 			payment = Double.parseDouble(paymentTF.getText());
 		} catch (NumberFormatException nfe) {
@@ -114,11 +119,11 @@ public class PaymentPageUI implements Initializable {
 	}
 
 	/**
-	 * Checks that the payment price is equal to or greater than Order's total
-	 * Sets the Order's state equal to false if it is
+	 * Checks that the payment price is equal to or greater than Order's total Sets
+	 * the Order's state equal to false if it is
 	 */
 	private void confirmPayment() {
-		
+
 		if (payment < paymentOrder.getTotal()) {
 			Alert.Display("Error", "Payment must be paid in full.");
 			return;
@@ -136,7 +141,10 @@ public class PaymentPageUI implements Initializable {
 	}
 
 	/**
-	 * Sets the order being paid for as paymentOrder, how the order is referred as in other method in this class
+	 * Sets the order being paid for as paymentOrder, how the order is referred as
+	 * in other method in this class
+	 * 
+	 * @param o An Order object representing a payment order
 	 */
 	public static void setOrder(Order o) {
 		paymentOrder = o;
@@ -176,28 +184,31 @@ public class PaymentPageUI implements Initializable {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuUI.fxml"));
 		NextStage.goTo(fxmlLoader, mainMenuBtn);
 	}
-	
+
 	/**
-	 * Display previous stage and closes the current (CreateRecipeUI) stage
-	 * Previous stage could be MyOrdersUI or AllActiveOrdersUI
+	 * Display previous stage and closes the current (CreateRecipeUI) stage Previous
+	 * stage could be MyOrdersUI or AllActiveOrdersUI
 	 */
 	public void goBack() {
 		String str = backPage;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(str));
 		NextStage.goTo(fxmlLoader, backBtn);
 	}
-	
+
 	/**
 	 * Gets data from the previous page to return to it later
-	 * @param str A string representing data to refer to and return to the previous page
+	 * 
+	 * @param str A string representing data to refer to and return to the previous
+	 *            page
 	 */
 	public static void setBackPage(String str) {
 		backPage = str;
 	}
-	
+
 	/**
 	 * Display's the current Order's total and its contents
-	 * @param location Required for initialize method, unused
+	 * 
+	 * @param location  Required for initialize method, unused
 	 * @param resources Required for initialize method, unused
 	 */
 	@Override

@@ -2,14 +2,12 @@ package com.amazonaws;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -117,8 +115,6 @@ public class CurrentOrderUI implements Initializable {
     		return itemPrice;
     	}
     }
-	
-	private static HashMap<String, Integer> allIngredients;
 
 	/**
 	 * Displays the total cost of everything added together within the Order
@@ -159,7 +155,7 @@ public class CurrentOrderUI implements Initializable {
 	
 	/**
 	 * Returns the tableview's selected item's index in the list
-	 * @return An int representing the currently selected index on the CurrentOrderUI tableview
+	 * @return An integer representing the currently selected index on the CurrentOrderUI tableview
 	 */
 	public static int getModifiedIndex() {
 		return modifiedIndex;
@@ -167,7 +163,7 @@ public class CurrentOrderUI implements Initializable {
 
 	/**
 	 * Takes the pizza in the selected tableview index and calls {@link #goToCustom()} with that pizza's contents
-	 * @return An int representing the currently selected index on the CurrentOrderUI tableview
+	 * @return An integer representing the currently selected index on the CurrentOrderUI tableview
 	 */
 	public void modifyPizza() {
 		int index = orderTableView.getSelectionModel().getSelectedIndex();
@@ -189,7 +185,6 @@ public class CurrentOrderUI implements Initializable {
 			return;
 		}
 
-		CustomPizzaUI.setOldPizza(order.getPizzas());
 		CustomPizzaUI.setPizza(p);
 		
 		for(String str : p.getToppings()) {
@@ -503,33 +498,6 @@ public class CurrentOrderUI implements Initializable {
 	 */
 	public static Order getOrder() {
 		return order;
-	}
-
-	/**
-	 * Returns the current Order
-	 * @param str A string representing the ingredient's name
-	 * @param quantity An int representing the ingredient's amount
-	 * @return a boolean
-	 */
-	public static boolean removeIngredient(String str, int quantity) {
-		boolean status = false;
-
-		if (allIngredients == null || !allIngredients.containsKey(str)) {
-			status = false;
-		} else {
-			if (allIngredients.get(str) < quantity) {
-				status = false;
-				System.out.println("Ingredient less than amount wanting to remove");
-			} else if (allIngredients.get(str) == quantity) {
-				allIngredients.remove(str);
-				status = true;
-			} else {
-				allIngredients.put(str, allIngredients.get(str) - quantity);
-				status = true;
-			}
-		}
-
-		return status;
 	}
 	
 	/**

@@ -11,6 +11,7 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 
 /**
  * Represents the base class of all database table
+ * 
  * @author Atchima
  *
  */
@@ -22,6 +23,7 @@ public abstract class DatabaseTable {
 
 	/**
 	 * Class constructor
+	 * 
 	 * @throws Exception
 	 */
 	public DatabaseTable() throws Exception {
@@ -31,9 +33,10 @@ public abstract class DatabaseTable {
 	}
 
 	/**
-	 * Initializes database by assigning client the credentialsProvider
-	 * of AWS by reading from the credentials file located at
+	 * Initializes database by assigning client the credentialsProvider of AWS by
+	 * reading from the credentials file located at
 	 * (Users/[username]/.aws/credentials).
+	 * 
 	 * @throws Exception
 	 */
 	private void initDb() throws Exception {
@@ -48,10 +51,11 @@ public abstract class DatabaseTable {
 		client = AmazonDynamoDBClientBuilder.standard().withCredentials(credentialsProvider).withRegion("us-east-2")
 				.build();
 	}
-	
+
 	/**
-	 * Creates a new database table with name tableName
-	 * If the table already exists, then prints out the message stating so
+	 * Creates a new database table with name tableName If the table already exists,
+	 * then prints out the message stating so
+	 * 
 	 * @param tableName A string representing table name
 	 */
 	protected void createNewTable(String tableName) {

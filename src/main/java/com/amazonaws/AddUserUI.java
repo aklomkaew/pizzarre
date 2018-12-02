@@ -8,7 +8,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 /**
- * Represents interface to add a new user (employee or manager) to the user database
+ * Represents interface to add a new user (employee or manager) to the user
+ * database
+ * 
  * @author Christopher
  *
  */
@@ -26,8 +28,8 @@ public class AddUserUI {
 
 	/**
 	 * Creates and adds a new user to the user database then returns to AllUsersUI
-	 * Can create and add users (also known as employees) and managers
-	 * A name must be manually set to run the method
+	 * Can create and add users (also known as employees) and managers A name must
+	 * be manually set to run the method
 	 */
 	public void addUser() {
 		String userName = userNameTF.getText();
@@ -39,17 +41,18 @@ public class AddUserUI {
 		List<User> list = UserDb.retrieveAllItem();
 		int id = list.size();
 		User u = new User(id, userName);
-		
-		if(managerCheckBox.isSelected()) {
+
+		if (managerCheckBox.isSelected()) {
 			u.setManager(true);
 		}
-		
+
 		while (!UserDb.addUser(id, u)) {
 			id++;
 			u.setUserId(id);
 		}
 
-		Alert.Display("Success", (managerCheckBox.isSelected() ? "Manager " : "Employee ") + userName + " has been added. Id is " + u.getUserId());
+		Alert.Display("Success", (managerCheckBox.isSelected() ? "Manager " : "Employee ") + userName
+				+ " has been added. Id is " + u.getUserId());
 		goToAllUsers();
 	}
 
