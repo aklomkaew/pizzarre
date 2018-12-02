@@ -22,7 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class NewOrderUI implements Initializable {
+public class CurrentOrderUI implements Initializable {
 
 	@FXML
 	private Button backBtn;

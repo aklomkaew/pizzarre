@@ -124,7 +124,7 @@ public class DrinksUI implements Initializable {
 		if (flag) {
 			for (int i = 0; i < count; i++) {
 				InventoryDb.changeQuantity(drinkObservableList.get(i), 1, "increase");
-				NewOrderUI.removeIngredient(drinkObservableList.get(i), 1);
+				CurrentOrderUI.removeIngredient(drinkObservableList.get(i), 1);
 			}
 			return;
 		}
@@ -141,7 +141,7 @@ public class DrinksUI implements Initializable {
 //		}
 
 		// NewOrderUI.addDrinks(drinkIdArrayList);
-		Order order = NewOrderUI.getOrder();
+		Order order = CurrentOrderUI.getOrder();
 		/*
 		 * for(String item : drinkObservableList) { Drink d = new Drink(item, 2);
 		 * order.getDrink().add(d); }
@@ -224,9 +224,9 @@ public class DrinksUI implements Initializable {
 		drinkObservableList.clear();
 		drinkArrayList.clear();
 		
-		drinkIdArrayList.addAll(NewOrderUI.getDrinks());
+		drinkIdArrayList.addAll(CurrentOrderUI.getDrinks());
 		
-		Order order = NewOrderUI.getOrder();
+		Order order = CurrentOrderUI.getOrder();
 		drinkArrayList.addAll(order.getDrink());
 		
 		drinkObservableList.addAll(drinkIdArrayList);

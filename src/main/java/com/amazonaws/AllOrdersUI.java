@@ -93,7 +93,7 @@ public class AllOrdersUI implements Initializable {
 			return;
 		}
 
-		NewOrderUI.setOrder(item);
+		CurrentOrderUI.setOrder(item);
 		goToOrderScreen();
 	}
 
@@ -166,7 +166,7 @@ public class AllOrdersUI implements Initializable {
 
 	public void goToOrderScreen() {
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, editOrderBtn);
 	}
 

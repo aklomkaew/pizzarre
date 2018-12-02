@@ -132,7 +132,7 @@ public class SpecialtyIntoCustomUI implements Initializable {
 		if (flag) {
 			for (int i = 0; i < count; i++) {
 				InventoryDb.changeQuantity(list.get(i), pSize, "increase");
-				NewOrderUI.removeIngredient(list.get(i), pSize);
+				CurrentOrderUI.removeIngredient(list.get(i), pSize);
 			}
 			return;
 		}
@@ -152,9 +152,9 @@ public class SpecialtyIntoCustomUI implements Initializable {
 			p.addTopping(topping);
 		};
 
-		Order order = NewOrderUI.getOrder();
+		Order order = CurrentOrderUI.getOrder();
 		order.addPizza(p);
-		Order o = NewOrderUI.getOrder();
+		Order o = CurrentOrderUI.getOrder();
 
 		Alert.Display("Success", "Pizza " + specialtyName + " is added to your order!");
 

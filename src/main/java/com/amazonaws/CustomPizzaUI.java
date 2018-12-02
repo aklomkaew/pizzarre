@@ -152,7 +152,7 @@ public class CustomPizzaUI implements Initializable {
 			if (flag) {
 				for (int i = 0; i < count; i++) {
 					InventoryDb.changeQuantity(list.get(i), pSize, "increase");
-					NewOrderUI.removeIngredient(list.get(i), pSize);
+					CurrentOrderUI.removeIngredient(list.get(i), pSize);
 				}
 				return;
 			}
@@ -177,7 +177,7 @@ public class CustomPizzaUI implements Initializable {
 			}
 			p.setPrice(pSize * p.getToppings().size());
 
-			Order order = NewOrderUI.getOrder();
+			Order order = CurrentOrderUI.getOrder();
 			
 //			for (int i = 0; i < oldPizzas.size(); i++) { // loop that adds and increments pizza's price
 //				newName = drinkIdArrayList.get(i);
@@ -228,7 +228,7 @@ public class CustomPizzaUI implements Initializable {
 			removePizza();
 		} else {
 			// removePizza();
-			Order order = NewOrderUI.getOrder();
+			Order order = CurrentOrderUI.getOrder();
 			Pizza tmp = new Pizza(modPizza.getName(), modPizza.getSize(), oldTopping);
 			order.addPizza(tmp);
 			modPizza = null;
@@ -257,7 +257,7 @@ public class CustomPizzaUI implements Initializable {
 		int pSize = getpSize(pizzaSize);
 		for (int i = 0; i < list.size(); i++) {
 			InventoryDb.changeQuantity(list.get(i), pSize, "increase");
-			NewOrderUI.removeIngredient(list.get(i), pSize);
+			CurrentOrderUI.removeIngredient(list.get(i), pSize);
 		}
 	}
 

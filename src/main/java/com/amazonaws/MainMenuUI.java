@@ -18,7 +18,7 @@ public class MainMenuUI {
 	
     public void goToNewOrder(ActionEvent e) {
     	
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, newOrd);
 	}
 

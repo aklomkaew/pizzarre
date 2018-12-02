@@ -76,10 +76,10 @@ public class AllActiveOrdersUI implements Initializable {
 			alert.showAndWait();
 			return;
 		}
-		NewOrderUI.setOrder(item);
+		CurrentOrderUI.setOrder(item);
 		deleteOrder(item);
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NewOrderUI.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CurrentOrderUI.fxml"));
 		NextStage.goTo(fxmlLoader, editOrderBtn);
 	}
 
