@@ -62,6 +62,7 @@ public class DrinksUI implements Initializable {
 
 	/**
 	 * Sets Order's drinks as the displayed drink list
+	 * @param list An ArrayList<Drink> representing the rinks on the current order
 	 */
 	public static void setDrinks(ArrayList<Drink> list) {
 		oldDrinks.clear();
@@ -70,9 +71,10 @@ public class DrinksUI implements Initializable {
 
 	/**
 	 * Adds selected drinks to drink list
+	 * @param onClick An ActionEvent representing clicking a button
 	 */
-	public void selectDrink(ActionEvent e) {
-		id = ((Button) e.getSource()).getId();
+	public void selectDrink(ActionEvent onClick) {
+		id = ((Button) onClick.getSource()).getId();
 		System.out.println(id + " added");
 		drinkIdArrayList.add(id);
 		drinkObservableList.add(id);
@@ -84,7 +86,7 @@ public class DrinksUI implements Initializable {
 	 * Confirms selected drinks to current Order object and updates Order price and
 	 * Inventory database
 	 */
-	public void confirmDrinks(ActionEvent e) {
+	public void confirmDrinks() {
 		boolean flag = false;
 		if (drinkObservableList.isEmpty()) {
 			Alert.Display("Information", "No drink was added");
@@ -92,39 +94,47 @@ public class DrinksUI implements Initializable {
 		}
 
 		int count = 0;
-		for (String item : drinkObservableList) {
+		String item = "";
+		for (int i = drinkArrayList.size(); i < drinkIdArrayList.size(); i++) {
+			item = drinkIdArrayList.get(i);
 			int num = InventoryDb.getQuantityOfItem(item);
-			if (num == -1) {
+			if (num == 0) {
 				Alert.Display("Error", "Item " + item + " not in inventory.");
 				flag = true;
 				break;
 			} else {
-				InventoryDb.changeQuantity(item, 1, "decrease");
+					InventoryDb.changeQuantity(drinkIdArrayList.get(i), 1, "decrease");
 				count++;
 			}
 		}
 
 		if (flag) {
-			for (int i = 0; i < count; i++) {
-				InventoryDb.changeQuantity(drinkObservableList.get(i), 1, "increase");
+			for (int i = 0; i < count; i++)
+			{
+					InventoryDb.changeQuantity(drinkIdArrayList.get(i), 1, "increase");
 			}
 			return;
 		}
 
 		Order order = CurrentOrderUI.getOrder();
 		String newName = "";
-		drinkArrayList.clear();
-		for (int i = 0; i < drinkIdArrayList.size(); i++) {
+		
+		oldDrinks.clear();
+		
+		for(int i = 0; i < drinkArrayList.size(); i++)
+		{
+			oldDrinks.add(drinkArrayList.get(i));
+		}
+		
+		if(oldDrinks.size() != drinkIdArrayList.size()) {
+		for (int i = oldDrinks.size(); i < drinkIdArrayList.size(); i++)
+		{
 			newName = drinkIdArrayList.get(i);
 			Drink newDrink = new Drink(newName, 2);
-			Drink tmp = containsDrink(newName);
-			if (tmp != null) {
-				newDrink = tmp;
-				removeDrink(newName);
-			}
-
 			drinkArrayList.add(newDrink);
+			}
 		}
+		 
 		order.getDrink().clear();
 		order.setDrink(drinkArrayList);
 
@@ -169,6 +179,15 @@ public class DrinksUI implements Initializable {
 	 * Removes a drink from the drink list
 	 */
 	public void cancelDrink() {
+		for(int i = drinkArrayList.size()-1; i >= 0; i--) {
+		if(drinkArrayList.get(i).getIsNew() == 1)
+		{
+			drinkArrayList.remove(i);
+		}
+	}
+		Order order = CurrentOrderUI.getOrder();
+		order.getDrink().clear();
+		order.setDrink(drinkArrayList);
 		drinkObservableList.clear();
 		drinkListView.getItems().clear();
 		goToOrderScreen();
@@ -219,12 +238,21 @@ public class DrinksUI implements Initializable {
 
 		drinkObservableList.addAll(drinkIdArrayList);
 		drinkListView.setItems(drinkObservableList);
-
+		
 		if (!drinkIdArrayList.isEmpty()) {
+			for (int i = 0; i < drinkIdArrayList.size(); i++)
+			{
+				if (drinkArrayList.get(i).getIsNew() == 1) {
+						InventoryDb.changeQuantity(drinkIdArrayList.get(i), 1, "increase");
+				}
+			}
+		}
+
+		/*if (!drinkIdArrayList.isEmpty()) {
 			for (String str : drinkIdArrayList) {
 				InventoryDb.changeQuantity(str, 1, "increase");
 			}
-		}
+		}*/
 	}
 
 }

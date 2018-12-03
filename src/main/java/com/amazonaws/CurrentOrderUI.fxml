@@ -33,14 +33,7 @@
             </Button>
          </bottom>
          <top>
-            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" BorderPane.alignment="CENTER">
-               <content>
-                  <Label alignment="CENTER" text="ORDER #_">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-               </content></TitledPane>
+            <TitledPane alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="167.0" BorderPane.alignment="CENTER" />
          </top>
          <right>
             <VBox alignment="CENTER_RIGHT" maxWidth="420.0" minWidth="150.0" prefHeight="440.0" prefWidth="290.0" BorderPane.alignment="CENTER">
